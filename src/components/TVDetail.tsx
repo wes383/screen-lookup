@@ -106,7 +106,7 @@ export default function TVDetail() {
             getTVDetails(id, currentLanguage),
             getTVLogos(id, imageLanguage),
             getTVContentRatings(id),
-            getTVWatchProviders(id),
+            getTVWatchProviders(id, countryCode),
             getTVKeywords(id),
             getTVCredits(id, currentLanguage),
             getTVAlternativeTitles(id),

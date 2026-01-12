@@ -111,7 +111,7 @@ export default function MovieDetail() {
                     getMovieDetails(id, currentLanguage),
                     getMovieLogos(id, imageLanguage),
                     getMovieCertification(id, countryCode),
-                    getWatchProviders(id),
+                    getWatchProviders(id, countryCode),
                     getMovieKeywords(id),
                     getMovieCredits(id, currentLanguage),
                     getMovieAlternativeTitles(id),

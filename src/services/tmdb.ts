@@ -20,27 +20,38 @@ export interface MovieDetails {
     production_companies: { id: number; logo_path: string | null; name: string; origin_country: string }[];
 }
 
+const USE_DIRECT_API = import.meta.env.VITE_USE_DIRECT_API === 'true';
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-const ACCESS_TOKEN = import.meta.env.VITE_TMDB_ACCESS_TOKEN; // Alternative
+const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
-const BASE_URL = 'https://api.themoviedb.org/3';
+// Helper function to build API URL
+const buildApiUrl = (path: string, params: Record<string, string> = {}): string => {
+    if (USE_DIRECT_API && API_KEY) {
+        // Development mode: direct API call
+        const url = new URL(`${TMDB_BASE_URL}/${path}`);
+        url.searchParams.append('api_key', API_KEY);
+        
+        Object.entries(params).forEach(([key, value]) => {
+            url.searchParams.append(key, value);
+        });
+        
+        return url.toString();
+    } else {
+        // Production mode: use serverless function
+        const url = new URL('/api/tmdb', window.location.origin);
+        url.searchParams.append('path', path);
+        
+        Object.entries(params).forEach(([key, value]) => {
+            url.searchParams.append(key, value);
+        });
+        
+        return url.toString();
+    }
+};
 
 export const getMovieDetails = async (id: string, language: string = 'en-US'): Promise<MovieDetails> => {
-    let url = `${BASE_URL}/movie/${id}?language=${language}`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `&api_key=${API_KEY}`;
-    } else {
-        console.warn("No TMDB API Key or Access Token found.");
-    }
-
-    const response = await fetch(url, { headers });
+    const url = buildApiUrl(`movie/${id}`, { language });
+    const response = await fetch(url);
 
     if (!response.ok) {
         throw new Error('Failed to fetch movie details');
@@ -62,43 +73,23 @@ export interface MovieLogo {
 }
 
 export const getMovieLogos = async (id: string, language: string = 'en'): Promise<MovieLogo[]> => {
-    let url = `${BASE_URL}/movie/${id}/images?include_image_language=${language},null`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `&api_key=${API_KEY}`;
-    }
-
-    const response = await fetch(url, { headers });
-
-    if (!response.ok) {
+    const url = buildApiUrl(`movie/${id}/images`, { include_image_language: `${language},null` });
+    
+    try {
+        const response = await fetch(url);
+        if (!response.ok) return [];
+        const data = await response.json();
+        return data.logos || [];
+    } catch {
         return [];
     }
-
-    const data = await response.json();
-    return data.logos || [];
 }
 
 export const getMovieCertification = async (id: string, countryCode: string = 'US'): Promise<string | null> => {
-    let url = `${BASE_URL}/movie/${id}/release_dates`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `?api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`movie/${id}/release_dates`);
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return null;
 
         const data = await response.json();
@@ -139,22 +130,11 @@ export interface CountryReleaseDates {
 }
 
 export const getMovieReleaseDates = async (id: string): Promise<CountryReleaseDates[]> => {
-    let url = `${BASE_URL}/movie/${id}/release_dates`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `?api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`movie/${id}/release_dates`);
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return [];
-
         const data = await response.json();
         return data.results || [];
     } catch {
@@ -176,22 +156,11 @@ export interface WatchProviderData {
 }
 
 export const getWatchProviders = async (id: string, country: string = 'US'): Promise<WatchProviderData | null> => {
-    let url = `${BASE_URL}/movie/${id}/watch/providers`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `?api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`movie/${id}/watch/providers`);
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return null;
-
         const data = await response.json();
         return data.results?.[country] || null;
     } catch {
@@ -205,22 +174,11 @@ export interface Keyword {
 }
 
 export const getMovieKeywords = async (id: string): Promise<Keyword[]> => {
-    let url = `${BASE_URL}/movie/${id}/keywords`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `?api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`movie/${id}/keywords`);
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return [];
-
         const data = await response.json();
         return data.keywords || [];
     } catch {
@@ -249,22 +207,11 @@ export interface MovieCredits {
 }
 
 export const getMovieCredits = async (id: string, language: string = 'en-US'): Promise<MovieCredits> => {
-    let url = `${BASE_URL}/movie/${id}/credits?language=${language}`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `&api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`movie/${id}/credits`, { language });
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return { cast: [], crew: [] };
-
         const data = await response.json();
         return { cast: data.cast || [], crew: data.crew || [] };
     } catch {
@@ -279,22 +226,11 @@ export interface AlternativeTitle {
 }
 
 export const getMovieAlternativeTitles = async (id: string): Promise<AlternativeTitle[]> => {
-    let url = `${BASE_URL}/movie/${id}/alternative_titles`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `?api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`movie/${id}/alternative_titles`);
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return [];
-
         const data = await response.json();
         return data.titles || [];
     } catch {
@@ -316,22 +252,11 @@ export interface MovieVideo {
 }
 
 export const getMovieVideos = async (id: string): Promise<MovieVideo[]> => {
-    let url = `${BASE_URL}/movie/${id}/videos`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `?api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`movie/${id}/videos`);
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return [];
-
         const data = await response.json();
         return data.results || [];
     } catch {
@@ -432,42 +357,21 @@ export interface TVDetails {
 }
 
 export const getTVDetails = async (id: string, language: string = 'en-US'): Promise<TVDetails> => {
-    let url = `${BASE_URL}/tv/${id}?append_to_response=external_ids&language=${language}`;
+    const url = buildApiUrl(`tv/${id}`, { 
+        append_to_response: 'external_ids',
+        language 
+    });
 
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `&api_key=${API_KEY}`;
-    }
-
-    try {
-        const response = await fetch(url, { headers });
-        if (!response.ok) throw new Error('Failed to fetch TV details');
-        return response.json();
-    } catch (error) {
-        throw error;
-    }
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Failed to fetch TV details');
+    return response.json();
 };
 
 export const getTVCredits = async (id: string, language: string = 'en-US'): Promise<MovieCredits> => {
-    let url = `${BASE_URL}/tv/${id}/aggregate_credits?language=${language}`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `&api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`tv/${id}/aggregate_credits`, { language });
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return { cast: [], crew: [] };
         const data = await response.json();
 
@@ -494,23 +398,13 @@ export const getTVCredits = async (id: string, language: string = 'en-US'): Prom
 };
 
 export const getTVKeywords = async (id: string): Promise<Keyword[]> => {
-    let url = `${BASE_URL}/tv/${id}/keywords`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `?api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`tv/${id}/keywords`);
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return [];
         const data = await response.json();
-        return data.results || []; // distinct from movies which returns 'keywords'
+        return data.results || [];
     } catch {
         return [];
     }
@@ -522,20 +416,10 @@ export interface ContentRating {
 }
 
 export const getTVContentRatings = async (id: string): Promise<ContentRating[]> => {
-    let url = `${BASE_URL}/tv/${id}/content_ratings`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `?api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`tv/${id}/content_ratings`);
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return [];
         const data = await response.json();
         return data.results || [];
@@ -545,20 +429,10 @@ export const getTVContentRatings = async (id: string): Promise<ContentRating[]> 
 };
 
 export const getTVVideos = async (id: string): Promise<MovieVideo[]> => {
-    let url = `${BASE_URL}/tv/${id}/videos`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `?api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`tv/${id}/videos`);
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return [];
         const data = await response.json();
         return data.results || [];
@@ -568,43 +442,23 @@ export const getTVVideos = async (id: string): Promise<MovieVideo[]> => {
 };
 
 export const getTVAlternativeTitles = async (id: string): Promise<AlternativeTitle[]> => {
-    let url = `${BASE_URL}/tv/${id}/alternative_titles`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `?api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`tv/${id}/alternative_titles`);
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return [];
         const data = await response.json();
-        return data.results || []; // distinct from movies which returns 'titles'
+        return data.results || [];
     } catch {
         return [];
     }
 };
 
 export const getTVWatchProviders = async (id: string, country: string = 'US'): Promise<WatchProviderData | null> => {
-    let url = `${BASE_URL}/tv/${id}/watch/providers`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `?api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`tv/${id}/watch/providers`);
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return null;
         const data = await response.json();
         return data.results?.[country] || null;
@@ -614,20 +468,10 @@ export const getTVWatchProviders = async (id: string, country: string = 'US'): P
 };
 
 export const getTVLogos = async (id: string, language: string = 'en'): Promise<MovieLogo[]> => {
-    let url = `${BASE_URL}/tv/${id}/images?include_image_language=${language},null`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `&api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`tv/${id}/images`, { include_image_language: `${language},null` });
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return [];
         const data = await response.json();
         return data.logos || [];
@@ -635,6 +479,7 @@ export const getTVLogos = async (id: string, language: string = 'en'): Promise<M
         return [];
     }
 };
+
 export interface Episode {
     air_date: string;
     episode_number: number;
@@ -663,20 +508,10 @@ export interface SeasonDetails {
 }
 
 export const getTVSeasonDetails = async (tvId: string, seasonNumber: number, language: string = 'en-US'): Promise<SeasonDetails | null> => {
-    let url = `${BASE_URL}/tv/${tvId}/season/${seasonNumber}?language=${language}`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `&api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`tv/${tvId}/season/${seasonNumber}`, { language });
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return null;
         return response.json();
     } catch {
@@ -691,7 +526,7 @@ export interface PersonDetails {
     biography: string;
     birthday: string | null;
     deathday: string | null;
-    gender: number; // 0: Not set, 1: Female, 2: Male, 3: Non-binary
+    gender: number;
     known_for_department: string;
     place_of_birth: string | null;
     popularity: number;
@@ -720,8 +555,8 @@ export interface PersonCombinedCredits {
 
 export interface PersonCreditItem {
     id: number;
-    title?: string; // Movie
-    name?: string; // TV
+    title?: string;
+    name?: string;
     media_type: 'movie' | 'tv';
     character?: string;
     job?: string;
@@ -743,24 +578,16 @@ export interface PersonImage {
 }
 
 export const getPersonDetails = async (id: string, language: string = 'en-US'): Promise<PersonDetails | null> => {
-    let url = `${BASE_URL}/person/${id}?append_to_response=combined_credits,external_ids,images&language=${language}`;
-
-    const headers: HeadersInit = {
-        'accept': 'application/json',
-    };
-
-    if (ACCESS_TOKEN) {
-        headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
-    } else if (API_KEY) {
-        url += `&api_key=${API_KEY}`;
-    }
+    const url = buildApiUrl(`person/${id}`, { 
+        append_to_response: 'combined_credits,external_ids,images',
+        language 
+    });
 
     try {
-        const response = await fetch(url, { headers });
+        const response = await fetch(url);
         if (!response.ok) return null;
         return response.json();
     } catch {
         return null;
     }
 };
-
