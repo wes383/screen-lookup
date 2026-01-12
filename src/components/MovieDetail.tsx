@@ -2,10 +2,32 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getMovieDetails, getMovieLogos, getMovieCertification, getWatchProviders, getMovieKeywords, getMovieCredits, getMovieAlternativeTitles, getMovieReleaseDates, getMovieVideos, getImageUrl, type MovieDetails, type MovieLogo, type WatchProviderData, type Keyword, type MovieCredits, type AlternativeTitle, type CountryReleaseDates, type MovieVideo } from '../services/tmdb';
 import { X, User } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function MovieDetail() {
+    const { t, i18n } = useTranslation();
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
+
+    const translateStatus = (status: string | undefined): string => {
+        if (!status) return t('common.unknown');
+        const statusKey = status.replace(/([A-Z])/g, '$1').toLowerCase();
+        const translation = t(`movie.${statusKey}`);
+        return translation !== `movie.${statusKey}` ? translation : status;
+    };
+
+    const translateLanguageSafe = (langCode: string | undefined): string => {
+        if (!langCode) return t('common.unknown');
+        const translation = t(`common.languages.${langCode}`);
+        return translation !== `common.languages.${langCode}` ? translation : langCode;
+    };
+
+    const translateCountrySafe = (countryCode: string | undefined): string => {
+        if (!countryCode) return t('common.unknown');
+        const translation = t(`common.countries.${countryCode}`);
+        return translation !== `common.countries.${countryCode}` ? translation : countryCode;
+    };
+
     const [movie, setMovie] = useState<MovieDetails | null>(null);
     const [logo, setLogo] = useState<MovieLogo | null>(null);
     const [certification, setCertification] = useState<string | null>(null);
@@ -24,6 +46,10 @@ export default function MovieDetail() {
     const [isDateHovered, setIsDateHovered] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     useEffect(() => {
         if (showFullCast) {
@@ -72,25 +98,30 @@ export default function MovieDetail() {
     useEffect(() => {
         if (!id) return;
 
-        setLoading(true);
-        setError('');
+        const fetchData = async () => {
+            setLoading(true);
+            setError('');
 
-        Promise.all([
-            getMovieDetails(id),
-            getMovieLogos(id),
-            getMovieCertification(id),
-            getWatchProviders(id),
-            getMovieKeywords(id),
-            getMovieCredits(id),
-            getMovieAlternativeTitles(id),
-            getMovieReleaseDates(id),
-            getMovieVideos(id)
-        ])
-            .then(([movieData, logos, cert, providers, kw, creds, altTitles, releases, vids]) => {
+            try {
+                const currentLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja-JP' : i18n.language === 'ko' ? 'ko-KR' : i18n.language === 'es' ? 'es-ES' : i18n.language === 'fr' ? 'fr-FR' : i18n.language === 'de' ? 'de-DE' : i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'it' ? 'it-IT' : i18n.language === 'pt' ? 'pt-PT' : 'en-US';
+                const imageLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja' : i18n.language === 'ko' ? 'ko' : i18n.language === 'es' ? 'es' : i18n.language === 'fr' ? 'fr' : i18n.language === 'de' ? 'de' : i18n.language === 'ru' ? 'ru' : i18n.language === 'it' ? 'it' : i18n.language === 'pt' ? 'pt' : 'en';
+                const countryCode = i18n.language === 'zh' ? 'CN' : i18n.language === 'zh-TW' ? 'TW' : i18n.language === 'ja' ? 'JP' : i18n.language === 'ko' ? 'KR' : i18n.language === 'es' ? 'ES' : i18n.language === 'fr' ? 'FR' : i18n.language === 'de' ? 'DE' : i18n.language === 'ru' ? 'RU' : i18n.language === 'it' ? 'IT' : i18n.language === 'pt' ? 'PT' : 'US';
+
+                const [movieData, logos, cert, providers, kw, creds, altTitles, releases, vids] = await Promise.all([
+                    getMovieDetails(id, currentLanguage),
+                    getMovieLogos(id, imageLanguage),
+                    getMovieCertification(id, countryCode),
+                    getWatchProviders(id),
+                    getMovieKeywords(id),
+                    getMovieCredits(id, currentLanguage),
+                    getMovieAlternativeTitles(id),
+                    getMovieReleaseDates(id),
+                    getMovieVideos(id)
+                ]);
+
                 setMovie(movieData);
-                // Prefer English logo, otherwise first available
-                const engLogo = logos.find(l => l.iso_639_1 === 'en') || logos[0] || null;
-                setLogo(engLogo);
+                const currentLogo = logos.find(l => l.iso_639_1 === imageLanguage) || logos[0] || null;
+                setLogo(currentLogo);
                 setCertification(cert);
                 setWatchProviders(providers);
                 setKeywords(kw);
@@ -98,18 +129,21 @@ export default function MovieDetail() {
                 setAlternativeTitles(altTitles);
                 setReleaseDates(releases);
                 setVideos(vids);
-            })
-            .catch((err) => {
+            } catch (err) {
                 console.error(err);
                 setError('Failed to load movie details. Check ID or API Key.');
-            })
-            .finally(() => setLoading(false));
-    }, [id]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [id, i18n.language]);
 
     if (loading) {
         return (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white', backgroundColor: '#121212' }}>
-                Loading...
+                {t('common.loading')}
             </div>
         );
     }
@@ -117,9 +151,9 @@ export default function MovieDetail() {
     if (error || !movie) {
         return (
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white', backgroundColor: '#121212' }}>
-                <p>{error || 'Movie not found'}</p>
+                <p>{error || t('movie.notFound')}</p>
                 <button onClick={() => navigate('/')} style={{ marginTop: '20px', padding: '8px 16px', borderRadius: '4px', border: 'none', background: '#333', color: 'white', cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>
-                    Go Back
+                    {t('common.goBack')}
                 </button>
             </div>
         );
@@ -140,7 +174,7 @@ export default function MovieDetail() {
             <div style={{
                 position: 'relative',
                 width: '100%',
-                height: '80vh', // Occupy top portion of viewport
+                height: '80vh',
             }}>
                 {/* Background Image */}
                 <div style={{
@@ -221,8 +255,15 @@ export default function MovieDetail() {
                                 onMouseLeave={() => setIsCertHovered(false)}
                                 style={{
                                     cursor: 'pointer',
-                                    textDecoration: isCertHovered ? 'underline' : 'none',
-                                    textUnderlineOffset: '4px'
+                                    border: '1.5px solid rgba(255, 255, 255, 0.6)',
+                                    padding: '0px 6px',
+                                    borderRadius: '4px',
+                                    backgroundColor: isCertHovered ? 'rgba(255, 255, 255, 0.9)' : 'transparent',
+                                    color: isCertHovered ? '#121212' : 'inherit',
+                                    transition: 'background-color 0.2s, color 0.2s',
+                                    display: 'inline-block',
+                                    fontSize: '16px',
+                                    textShadow: 'none'
                                 }}>
                                 {certification}
                             </span>
@@ -267,7 +308,7 @@ export default function MovieDetail() {
                         fontWeight: 600,
                         color: '#fff'
                     }}>
-                        Overview
+                        {t('movie.overview')}
                     </h3>
                     <p style={{
                         fontSize: '1.125rem',
@@ -289,7 +330,7 @@ export default function MovieDetail() {
                             onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                             onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                         >
-                            Homepage
+                            {t('common.homepage')}
                         </a>
                     )}
 
@@ -303,7 +344,7 @@ export default function MovieDetail() {
                                     onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                                     onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                                 >
-                                    Trailers
+                                    {t('movie.trailers')}
                                 </span>
                             );
                         } else if (validTrailers.length === 1) {
@@ -316,7 +357,7 @@ export default function MovieDetail() {
                                     onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                                     onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                                 >
-                                    Trailer
+                                    {t('common.trailer')}
                                 </a>
                             );
                         }
@@ -331,7 +372,7 @@ export default function MovieDetail() {
                             onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                             onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                         >
-                            IMDb
+                            {t('common.imdb')}
                         </a>
                     )}
                     <a
@@ -342,7 +383,7 @@ export default function MovieDetail() {
                         onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                         onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                     >
-                        TMDB
+                        {t('common.tmdb')}
                     </a>
                     {movie.imdb_id && (
                         <a
@@ -353,7 +394,7 @@ export default function MovieDetail() {
                             onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                             onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                         >
-                            Trakt
+                            {t('common.trakt')}
                         </a>
                     )}
                     <a
@@ -364,47 +405,49 @@ export default function MovieDetail() {
                         onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                         onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                     >
-                        Letterboxd
+                        {t('common.letterboxd')}
                     </a>
                     <a
-                        href={`https://www.metacritic.com/search/${encodeURIComponent(movie.title)}/?page=1&category=2`}
+                        href={`https://www.metacritic.com/search/${encodeURIComponent(movie.original_title)}/?page=1&category=2`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
                         onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                         onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                     >
-                        Metacritic
+                        {t('common.metacritic')}
                     </a>
+                    {(i18n.language === 'zh' || i18n.language === 'zh-TW') && (
+                        <a
+                            href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(movie.original_title)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                            {t('common.douban')}
+                        </a>
+                    )}
                     <a
-                        href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(movie.title)}`}
+                        href={`https://www.rottentomatoes.com/search?search=${encodeURIComponent(movie.original_title)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
                         onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                         onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                     >
-                        Douban
+                        {t('common.rottentomatoes')}
                     </a>
                     <a
-                        href={`https://www.rottentomatoes.com/search?search=${encodeURIComponent(movie.title)}`}
+                        href={`https://www.justwatch.com/us/search?q=${encodeURIComponent(movie.original_title)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
                         onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                         onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                     >
-                        Rotten Tomatoes
-                    </a>
-                    <a
-                        href={`https://www.justwatch.com/us/search?q=${encodeURIComponent(movie.title)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                    >
-                        JustWatch
+                        {t('movie.justWatch')}
                     </a>
                 </div>
 
@@ -420,37 +463,42 @@ export default function MovieDetail() {
                                 fontWeight: 600,
                                 color: '#fff'
                             }}>
-                                Director
+                                {t('movie.director')}
                             </h3>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                 {credits.crew.filter(c => c.job === 'Director').map(c => (
                                     <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                                        {c.profile_path ? (
-                                            <img
-                                                src={getImageUrl(c.profile_path, 'w185')}
-                                                alt={c.name}
-                                                style={{
+                                        <div
+                                            onClick={() => navigate(`/person/${c.id}`)}
+                                            style={{ cursor: 'pointer' }}
+                                        >
+                                            {c.profile_path ? (
+                                                <img
+                                                    src={getImageUrl(c.profile_path, 'w185')}
+                                                    alt={c.name}
+                                                    style={{
+                                                        width: '50px',
+                                                        height: '50px',
+                                                        borderRadius: '50%',
+                                                        objectFit: 'cover'
+                                                    }}
+                                                />
+                                            ) : (
+                                                <div style={{
                                                     width: '50px',
                                                     height: '50px',
                                                     borderRadius: '50%',
-                                                    objectFit: 'cover'
-                                                }}
-                                            />
-                                        ) : (
-                                            <div style={{
-                                                width: '50px',
-                                                height: '50px',
-                                                borderRadius: '50%',
-                                                backgroundColor: '#333',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                color: '#888'
-                                            }}>
-                                                <User size={24} />
-                                            </div>
-                                        )}
-                                        <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: '18px', color: '#ccc', cursor: 'pointer' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
+                                                    backgroundColor: '#333',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    color: '#888'
+                                                }}>
+                                                    <User size={24} />
+                                                </div>
+                                            )}
+                                        </div>
+                                        <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
                                     </div>
                                 ))}
                             </div>
@@ -466,39 +514,44 @@ export default function MovieDetail() {
                                 fontWeight: 600,
                                 color: '#fff'
                             }}>
-                                Cast
+                                {t('movie.cast')}
                             </h3>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                 {credits.cast.slice(0, 10).map(c => (
                                     <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                                        {c.profile_path ? (
-                                            <img
-                                                src={getImageUrl(c.profile_path, 'w185')}
-                                                alt={c.name}
-                                                style={{
+                                        <div
+                                            onClick={() => navigate(`/person/${c.id}`)}
+                                            style={{ cursor: 'pointer' }}
+                                        >
+                                            {c.profile_path ? (
+                                                <img
+                                                    src={getImageUrl(c.profile_path, 'w185')}
+                                                    alt={c.name}
+                                                    style={{
+                                                        width: '50px',
+                                                        height: '50px',
+                                                        borderRadius: '50%',
+                                                        objectFit: 'cover'
+                                                    }}
+                                                />
+                                            ) : (
+                                                <div style={{
                                                     width: '50px',
                                                     height: '50px',
                                                     borderRadius: '50%',
-                                                    objectFit: 'cover'
-                                                }}
-                                            />
-                                        ) : (
-                                            <div style={{
-                                                width: '50px',
-                                                height: '50px',
-                                                borderRadius: '50%',
-                                                backgroundColor: '#333',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                color: '#888'
-                                            }}>
-                                                <User size={24} />
-                                            </div>
-                                        )}
+                                                    backgroundColor: '#333',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    color: '#888'
+                                                }}>
+                                                    <User size={24} />
+                                                </div>
+                                            )}
+                                        </div>
                                         <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline' }}>
-                                            <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: '18px', color: '#ccc', cursor: 'pointer' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
-                                            <span style={{ fontSize: '16px', color: '#666' }}>as</span>
+                                            <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
+                                            <span style={{ fontSize: '16px', color: '#666' }}>{t('common.as')}</span>
                                             <span style={{ fontSize: '18px', color: '#999' }}>{c.character}</span>
                                         </div>
                                     </div>
@@ -521,7 +574,7 @@ export default function MovieDetail() {
                                     fontFamily: 'Inter, sans-serif'
                                 }}
                             >
-                                Full Cast & Crew
+                                {t('movie.fullCastAndCrew')}
                             </button>
                         </div>
                     )}
@@ -534,12 +587,12 @@ export default function MovieDetail() {
                                 fontWeight: 600,
                                 color: '#fff'
                             }}>
-                                Where to Watch
+                                {t('movie.whereToWatch')}
                             </h3>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                 {watchProviders.flatrate && watchProviders.flatrate.length > 0 && (
                                     <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                                        <span style={{ fontSize: '14px', color: '#999', minWidth: '50px', paddingTop: '2px' }}>Stream</span>
+                                        <span style={{ fontSize: '14px', color: '#999', minWidth: '60px', paddingTop: '2px' }}>{t('common.stream')}</span>
                                         <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                                             {watchProviders.flatrate.map(p => (
                                                 <span key={p.provider_id} style={{
@@ -557,7 +610,7 @@ export default function MovieDetail() {
                                 )}
                                 {watchProviders.rent && watchProviders.rent.length > 0 && (
                                     <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                                        <span style={{ fontSize: '14px', color: '#999', minWidth: '50px', paddingTop: '2px' }}>Rent</span>
+                                        <span style={{ fontSize: '14px', color: '#999', minWidth: '60px', paddingTop: '2px' }}>{t('common.rent')}</span>
                                         <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                                             {watchProviders.rent.map(p => (
                                                 <span key={p.provider_id} style={{
@@ -575,7 +628,7 @@ export default function MovieDetail() {
                                 )}
                                 {watchProviders.buy && watchProviders.buy.length > 0 && (
                                     <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                                        <span style={{ fontSize: '14px', color: '#999', minWidth: '50px', paddingTop: '2px' }}>Buy</span>
+                                        <span style={{ fontSize: '14px', color: '#999', minWidth: '60px', paddingTop: '2px' }}>{t('common.buy')}</span>
                                         <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                                             {watchProviders.buy.map(p => (
                                                 <span key={p.provider_id} style={{
@@ -593,7 +646,7 @@ export default function MovieDetail() {
                                 )}
                             </div>
                             <p style={{ fontSize: '14px', color: '#666', marginTop: '12px' }}>
-                                Provided by JustWatch
+                                {t('common.providedBy')} JustWatch
                             </p>
                         </div>
                     )}
@@ -601,13 +654,13 @@ export default function MovieDetail() {
                     {/* Movie Info */}
                     {(() => {
                         const infoItems = [
-                            { label: 'Status', value: movie.status },
-                            { label: 'Original Language', value: new Intl.DisplayNames(['en'], { type: 'language' }).of(movie.original_language) },
-                            { label: 'Spoken Languages', value: movie.spoken_languages.map(l => l.name).join(', ') },
-                            movie.budget > 0 ? { label: 'Budget', value: `$${movie.budget.toLocaleString()}` } : null,
-                            movie.revenue > 0 ? { label: 'Revenue', value: `$${movie.revenue.toLocaleString()}` } : null,
-                            { label: 'Production Countries', value: movie.production_countries.map(c => c.name).join(', ') }
-                        ].filter((item): item is { label: string; value: string | undefined } => Boolean(item));
+                            { label: t('movie.status'), value: translateStatus(movie.status) },
+                            { label: t('common.originalLanguage'), value: translateLanguageSafe(movie.original_language) },
+                            { label: t('common.spokenLanguages'), value: movie.spoken_languages.map(l => translateLanguageSafe(l.iso_639_1)).join(', ') || t('common.unknown') },
+                            movie.budget > 0 ? { label: t('movie.budget'), value: `$${movie.budget.toLocaleString()}` } : null,
+                            movie.revenue > 0 ? { label: t('movie.revenue'), value: `$${movie.revenue.toLocaleString()}` } : null,
+                            { label: t('common.productionCountries'), value: movie.production_countries.map(c => translateCountrySafe(c.iso_3166_1)).join(', ') || t('common.unknown') }
+                        ].filter((item): item is { label: string; value: string } => item !== null && item.value !== undefined);
 
                         const gridCols = infoItems.length <= 4 ? 'auto auto' : 'auto auto auto';
 
@@ -647,7 +700,7 @@ export default function MovieDetail() {
                                 fontWeight: 600,
                                 color: '#fff'
                             }}>
-                                Production Companies
+                                {t('common.productionCompanies')}
                             </h3>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                 {movie.production_companies.map(c => (
@@ -668,7 +721,7 @@ export default function MovieDetail() {
                                 fontWeight: 600,
                                 color: '#fff'
                             }}>
-                                Keywords
+                                {t('movie.keywords')}
                             </h3>
                             <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                                 {keywords.map(k => (
@@ -720,7 +773,7 @@ export default function MovieDetail() {
                                 justifyContent: 'space-between',
                                 alignItems: 'center'
                             }}>
-                                <h2 style={{ color: '#fff', margin: 0 }}>Full Cast & Crew</h2>
+                                <h2 style={{ color: '#fff', margin: 0 }}>{t('movie.fullCastAndCrew')}</h2>
                                 <button
                                     onClick={() => setShowFullCast(false)}
                                     style={{
@@ -747,11 +800,11 @@ export default function MovieDetail() {
                             }}>
                                 {/* Full Cast Column */}
                                 <div>
-                                    <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>Cast</h3>
+                                    <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>{t('movie.cast')}</h3>
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                         {credits.cast.map(c => (
-                                            <div key={c.id}>
-                                                <div style={{ color: '#ccc', fontWeight: 500 }}>{c.name}</div>
+                                            <div key={c.id} onClick={() => navigate(`/person/${c.id}`)} style={{ cursor: 'pointer' }}>
+                                                <div style={{ color: '#ccc', fontWeight: 500, textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</div>
                                                 <div style={{ color: '#666', fontSize: '14px' }}>{c.character}</div>
                                             </div>
                                         ))}
@@ -760,11 +813,11 @@ export default function MovieDetail() {
 
                                 {/* Full Crew Column */}
                                 <div>
-                                    <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>Crew</h3>
+                                    <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>{t('movie.crew')}</h3>
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                         {credits.crew.map((c, idx) => (
-                                            <div key={`${c.id}-${idx}`}>
-                                                <div style={{ color: '#ccc', fontWeight: 500 }}>{c.name}</div>
+                                            <div key={`${c.id}-${idx}`} onClick={() => navigate(`/person/${c.id}`)} style={{ cursor: 'pointer' }}>
+                                                <div style={{ color: '#ccc', fontWeight: 500, textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</div>
                                                 <div style={{ color: '#666', fontSize: '14px' }}>{c.job} ({c.department})</div>
                                             </div>
                                         ))}
@@ -807,7 +860,7 @@ export default function MovieDetail() {
                                 justifyContent: 'space-between',
                                 alignItems: 'center'
                             }}>
-                                <h2 style={{ color: '#fff', margin: 0 }}>Alternative Titles</h2>
+                                <h2 style={{ color: '#fff', margin: 0 }}>{t('movie.alternativeTitles')}</h2>
                                 <button
                                     onClick={() => setShowAlternativeTitles(false)}
                                     style={{
@@ -835,7 +888,7 @@ export default function MovieDetail() {
                                         <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
                                             <span style={{ color: '#fff', fontWeight: 500 }}>{movie?.original_title}</span>
                                             <span style={{ color: '#999', fontSize: '14px' }}>
-                                                {movie?.original_language && new Intl.DisplayNames(['en'], { type: 'language' }).of(movie.original_language)} (Original)
+                                                {movie?.original_language && new Intl.DisplayNames(['en'], { type: 'language' }).of(movie.original_language)} ({t('movie.original')})
                                             </span>
                                         </div>
                                         {alternativeTitles.map((t, idx) => (
@@ -846,7 +899,7 @@ export default function MovieDetail() {
                                         ))}
                                     </div>
                                 ) : (
-                                    <p style={{ color: '#ccc' }}>No alternative titles found.</p>
+                                    <p style={{ color: '#ccc' }}>{t('movie.noAlternativeTitlesFound')}</p>
                                 )}
                             </div>
                         </div>
@@ -885,7 +938,7 @@ export default function MovieDetail() {
                                 justifyContent: 'space-between',
                                 alignItems: 'center'
                             }}>
-                                <h2 style={{ color: '#fff', margin: 0 }}>Release Information</h2>
+                                <h2 style={{ color: '#fff', margin: 0 }}>{t('movie.releaseInformation')}</h2>
                                 <button
                                     onClick={() => setShowReleaseDates(false)}
                                     style={{
@@ -936,7 +989,7 @@ export default function MovieDetail() {
                                         ))}
                                     </div>
                                 ) : (
-                                    <p style={{ color: '#ccc' }}>No release dates found.</p>
+                                    <p style={{ color: '#ccc' }}>{t('movie.noReleaseDatesFound')}</p>
                                 )}
                             </div>
                         </div>
@@ -975,7 +1028,7 @@ export default function MovieDetail() {
                                 justifyContent: 'space-between',
                                 alignItems: 'center'
                             }}>
-                                <h2 style={{ color: '#fff', margin: 0 }}>Trailers</h2>
+                                <h2 style={{ color: '#fff', margin: 0 }}>{t('movie.trailers')}</h2>
                                 <button
                                     onClick={() => setShowTrailers(false)}
                                     style={{
@@ -1007,7 +1060,7 @@ export default function MovieDetail() {
                                             style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px', textDecoration: 'none', alignItems: 'center' }}
                                         >
                                             <span style={{ color: '#fff', fontWeight: 500 }}>{video.name}</span>
-                                            <span style={{ color: '#999', fontSize: '14px' }}>Watch</span>
+                                            <span style={{ color: '#999', fontSize: '14px' }}>{t('common.watch')}</span>
                                         </a>
                                     ))}
                                 </div>

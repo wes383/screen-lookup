@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getPersonDetails, getImageUrl, type PersonDetails, type PersonCreditItem } from '../services/tmdb';
-import { User } from 'lucide-react';
+import { User, Film } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function PersonDetail() {
+    const { t, i18n } = useTranslation();
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const [person, setPerson] = useState<PersonDetails | null>(null);
@@ -14,7 +16,8 @@ export default function PersonDetail() {
         if (!id) return;
         const fetchData = async () => {
             setLoading(true);
-            const data = await getPersonDetails(id);
+            const currentLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja-JP' : i18n.language === 'ko' ? 'ko-KR' : i18n.language === 'es' ? 'es-ES' : i18n.language === 'fr' ? 'fr-FR' : i18n.language === 'de' ? 'de-DE' : i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'it' ? 'it-IT' : i18n.language === 'pt' ? 'pt-PT' : 'en-US';
+            const data = await getPersonDetails(id, currentLanguage);
             if (data) {
                 setPerson(data);
             } else {
@@ -23,12 +26,12 @@ export default function PersonDetail() {
             setLoading(false);
         };
         fetchData();
-    }, [id]);
+    }, [id, i18n.language]);
 
     if (loading) {
         return (
             <div style={{ minHeight: '100vh', backgroundColor: '#121212', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#fff' }}>
-                Loading...
+                {t('common.loading')}
             </div>
         );
     }
@@ -36,7 +39,7 @@ export default function PersonDetail() {
     if (error || !person) {
         return (
             <div style={{ minHeight: '100vh', backgroundColor: '#121212', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#fff' }}>
-                {error || 'Something went wrong'}
+                {error || t('person.notFound')}
             </div>
         );
     }
@@ -52,11 +55,59 @@ export default function PersonDetail() {
         return age;
     };
 
-    const genderText = person.gender === 1 ? 'Female' : person.gender === 2 ? 'Male' : person.gender === 3 ? 'Non-binary' : 'Unknown';
+    const genderText = person.gender === 1 ? t('person.female') : person.gender === 2 ? t('person.male') : person.gender === 3 ? t('person.nonBinary') : t('common.unknown');
 
-    const allCredits = person.combined_credits?.cast
-        .filter((c): c is PersonCreditItem => (c.popularity || 0) > 10)
-        .sort((a, b) => (b.popularity || 0) - (a.popularity || 0)) || [];
+    const translateKnownFor = (department: string | undefined): string => {
+        if (!department) return t('common.unknown');
+        const departmentMap: { [key: string]: string } = {
+            'Acting': t('person.knownForActing'),
+            'Directing': t('person.knownForDirecting'),
+            'Writing': t('person.knownForWriting'),
+            'Production': t('person.knownForProduction'),
+            'Sound': t('person.knownForSound'),
+            'Camera': t('person.knownForCamera'),
+            'Editing': t('person.knownForEditing'),
+            'Art': t('person.knownForArt'),
+            'Costume & Make-Up': t('person.knownForCostumeMakeUp'),
+            'Visual Effects': t('person.knownForVisualEffects'),
+            'Crew': t('person.knownForCrew')
+        };
+        return departmentMap[department] || department;
+    };
+
+    const allCredits = [
+        ...(person.combined_credits?.cast || []),
+        ...(person.combined_credits?.crew || [])
+    ];
+
+    const creditsMap = new Map<number, { credit: PersonCreditItem; characters: Set<string>; jobs: Set<string> }>();
+    
+    allCredits.forEach(c => {
+        const existing = creditsMap.get(c.id);
+        if (existing) {
+            if (c.character) {
+                existing.characters.add(c.character);
+            }
+            if (c.job) {
+                existing.jobs.add(c.job);
+            }
+        } else {
+            const characters = new Set<string>();
+            const jobs = new Set<string>();
+            if (c.character) characters.add(c.character);
+            if (c.job) jobs.add(c.job);
+            creditsMap.set(c.id, { credit: { ...c }, characters, jobs });
+        }
+    });
+    
+    const sortedCredits = Array.from(creditsMap.values())
+        .map(({ credit, characters, jobs }) => ({
+            ...credit,
+            character: Array.from(characters).join(', ') || undefined,
+            job: Array.from(jobs).join(', ') || undefined
+        }))
+        .filter((c) => (c.popularity || 0) > 10)
+        .sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
 
     return (
         <div style={{ minHeight: '100vh', backgroundColor: '#121212', color: '#fff', fontFamily: 'Inter, sans-serif' }}>
@@ -85,29 +136,29 @@ export default function PersonDetail() {
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', marginBottom: '24px', color: '#ccc', fontSize: '16px' }}>
                         {person.known_for_department && (
                             <div>
-                                <span style={{ color: '#888' }}>Known For: </span>
-                                <span>{person.known_for_department}</span>
+                                <span style={{ color: '#888' }}>{t('person.knownFor')}: </span>
+                                <span>{translateKnownFor(person.known_for_department)}</span>
                             </div>
                         )}
                         <div>
-                            <span style={{ color: '#888' }}>Gender: </span>
+                            <span style={{ color: '#888' }}>{t('person.gender')}: </span>
                             <span>{genderText}</span>
                         </div>
                         {person.birthday && (
                             <div>
-                                <span style={{ color: '#888' }}>Born: </span>
-                                <span>{new Date(person.birthday).toLocaleDateString()} ({calculateAge(person.birthday, person.deathday)} years old)</span>
+                                <span style={{ color: '#888' }}>{t('common.born')}: </span>
+                                <span>{new Date(person.birthday).toLocaleDateString()} ({calculateAge(person.birthday, person.deathday)} {t('common.yearsOld')})</span>
                             </div>
                         )}
                         {person.deathday && (
                             <div>
-                                <span style={{ color: '#888' }}>Died: </span>
+                                <span style={{ color: '#888' }}>{t('common.died')}: </span>
                                 <span>{new Date(person.deathday).toLocaleDateString()}</span>
                             </div>
                         )}
                         {person.place_of_birth && (
                             <div>
-                                <span style={{ color: '#888' }}>Birthplace: </span>
+                                <span style={{ color: '#888' }}>{t('common.birthplace')}: </span>
                                 <span>{person.place_of_birth}</span>
                             </div>
                         )}
@@ -118,25 +169,25 @@ export default function PersonDetail() {
                     <div style={{ display: 'flex', gap: '16px', marginBottom: '24px' }}>
                         {person.homepage && (
                             <a href={person.homepage} target="_blank" rel="noopener noreferrer" style={{ color: '#fff', textDecoration: 'none', fontSize: '16px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>
-                                Homepage
+                                {t('common.homepage')}
                             </a>
                         )}
                         {(person.imdb_id || person.external_ids?.imdb_id) && (
                             <a href={`https://www.imdb.com/name/${person.imdb_id || person.external_ids?.imdb_id}`} target="_blank" rel="noopener noreferrer" style={{ color: '#fff', textDecoration: 'none', fontSize: '16px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>
-                                IMDb
+                                {t('common.imdb')}
                             </a>
                         )}
                         <a href={`https://www.themoviedb.org/person/${person.id}`} target="_blank" rel="noopener noreferrer" style={{ color: '#fff', textDecoration: 'none', fontSize: '16px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>
-                            TMDB
+                            {t('common.tmdb')}
                         </a>
                         {person.external_ids?.instagram_id && (
                             <a href={`https://www.instagram.com/${person.external_ids.instagram_id}`} target="_blank" rel="noopener noreferrer" style={{ color: '#fff', textDecoration: 'none', fontSize: '16px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>
-                                Instagram
+                                {t('common.instagram')}
                             </a>
                         )}
                         {person.external_ids?.twitter_id && (
                             <a href={`https://twitter.com/${person.external_ids.twitter_id}`} target="_blank" rel="noopener noreferrer" style={{ color: '#fff', textDecoration: 'none', fontSize: '16px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>
-                                Twitter
+                                {t('common.twitter')}
                             </a>
                         )}
                     </div>
@@ -144,7 +195,7 @@ export default function PersonDetail() {
                     {/* Biography */}
                     {person.biography && (
                         <div>
-                            <h3 style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '12px' }}>Biography</h3>
+                            <h3 style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '12px' }}>{t('common.biography')}</h3>
                             <p style={{ fontSize: '16px', lineHeight: 1.7, color: '#ccc', whiteSpace: 'pre-line' }}>
                                 {person.biography}
                             </p>
@@ -155,56 +206,33 @@ export default function PersonDetail() {
 
             {/* Filmography */}
             <div style={{ padding: '0 80px 80px' }}>
-                {/* Movie Credits */}
-                {sortedMovieCredits.length > 0 && (
+                {sortedCredits.length > 0 && (
                     <div style={{ marginBottom: '48px' }}>
-                        <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '24px' }}>Movie Credits ({sortedMovieCredits.length})</h3>
+                        <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '24px' }}>{t('person.filmography')}</h3>
                         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-                            {sortedMovieCredits.map(credit => (
-                                <div
-                                    key={`movie-${credit.id}-${credit.character}`}
-                                    onClick={() => navigate(`/movie/${credit.id}`)}
-                                    style={{ minWidth: '140px', width: '140px', cursor: 'pointer' }}
-                                >
-                                    <div style={{ height: '210px', backgroundColor: '#333', borderRadius: '8px', overflow: 'hidden', marginBottom: '8px' }}>
-                                        {credit.poster_path ? (
-                                            <img src={getImageUrl(credit.poster_path, 'w342')} alt={credit.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                        ) : (
-                                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '12px' }}>No Poster</div>
-                                        )}
+                            {sortedCredits.map(credit => {
+                                const roles = [credit.character, credit.job].filter(Boolean);
+                                return (
+                                    <div
+                                        key={`${credit.media_type}-${credit.id}`}
+                                        onClick={() => navigate(`/${credit.media_type}/${credit.id}`)}
+                                        style={{ minWidth: '140px', width: '140px', cursor: 'pointer' }}
+                                    >
+                                        <div style={{ height: '210px', backgroundColor: '#333', borderRadius: '8px', overflow: 'hidden', marginBottom: '8px' }}>
+                                            {credit.poster_path ? (
+                                                <img src={getImageUrl(credit.poster_path, 'w342')} alt={credit.title || credit.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                            ) : (
+                                                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>
+                                                    <Film size={48} />
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div style={{ fontSize: '14px', color: '#fff', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{credit.title || credit.name}</div>
+                                        {roles.length > 0 && <div style={{ fontSize: '13px', color: '#999', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{roles.join(', ')}</div>}
+                                        <div style={{ fontSize: '13px', color: '#666' }}>{(credit.release_date || credit.first_air_date) ? new Date(credit.release_date || credit.first_air_date!).getFullYear() : t('common.tba')}</div>
                                     </div>
-                                    <div style={{ fontSize: '14px', color: '#fff', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{credit.title}</div>
-                                    {credit.character && <div style={{ fontSize: '13px', color: '#999', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{credit.character}</div>}
-                                    <div style={{ fontSize: '13px', color: '#666' }}>{credit.release_date ? new Date(credit.release_date).getFullYear() : 'TBA'}</div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {/* TV Credits */}
-                {sortedTVCredits.length > 0 && (
-                    <div style={{ marginBottom: '48px' }}>
-                        <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '24px' }}>TV Credits ({sortedTVCredits.length})</h3>
-                        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-                            {sortedTVCredits.map(credit => (
-                                <div
-                                    key={`tv-${credit.id}-${credit.character}`}
-                                    onClick={() => navigate(`/tv/${credit.id}`)}
-                                    style={{ minWidth: '140px', width: '140px', cursor: 'pointer' }}
-                                >
-                                    <div style={{ height: '210px', backgroundColor: '#333', borderRadius: '8px', overflow: 'hidden', marginBottom: '8px' }}>
-                                        {credit.poster_path ? (
-                                            <img src={getImageUrl(credit.poster_path, 'w342')} alt={credit.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                        ) : (
-                                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '12px' }}>No Poster</div>
-                                        )}
-                                    </div>
-                                    <div style={{ fontSize: '14px', color: '#fff', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{credit.name}</div>
-                                    {credit.character && <div style={{ fontSize: '13px', color: '#999', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{credit.character}</div>}
-                                    <div style={{ fontSize: '13px', color: '#666' }}>{credit.first_air_date ? new Date(credit.first_air_date).getFullYear() : 'TBA'}</div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
                 )}
@@ -212,7 +240,7 @@ export default function PersonDetail() {
                 {/* Images Gallery */}
                 {person.images?.profiles && person.images.profiles.length > 1 && (
                     <div>
-                        <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '24px' }}>Photos ({person.images.profiles.length})</h3>
+                        <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '24px' }}>{t('common.photos')}</h3>
                         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', maxHeight: '432px', overflow: 'hidden' }}>
                             {person.images.profiles.map((img, i) => (
                                 <img

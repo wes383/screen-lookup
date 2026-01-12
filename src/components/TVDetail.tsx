@@ -1,11 +1,47 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getTVDetails, getTVLogos, getTVContentRatings, getTVWatchProviders, getTVKeywords, getTVCredits, getTVAlternativeTitles, getTVVideos, getTVSeasonDetails, getImageUrl, type TVDetails, type MovieLogo, type WatchProviderData, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails } from '../services/tmdb';
+import { getTVDetails, getTVLogos, getTVContentRatings, getTVWatchProviders, getTVKeywords, getTVCredits, getTVAlternativeTitles, getTVVideos, getTVSeasonDetails, getImageUrl, type TVDetails, type MovieLogo, type WatchProviderData, type WatchProvider, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails } from '../services/tmdb';
 import { X, User, PlayCircle, Film } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function TVDetail() {
+    const { t, i18n } = useTranslation();
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
+
+    const translateStatus = (status: string | undefined): string => {
+        if (!status) return t('common.unknown');
+        const statusKey = status.replace(/([A-Z])/g, '$1').toLowerCase();
+        const translation = t(`tv.${statusKey}`);
+        return translation !== `tv.${statusKey}` ? translation : status;
+    };
+
+    const translateType = (type: string | undefined): string => {
+        if (!type) return t('common.unknown');
+        const typeMap: { [key: string]: string } = {
+            'Scripted': t('tv.typeScripted'),
+            'Reality': t('tv.typeReality'),
+            'Documentary': t('tv.typeDocumentary'),
+            'News': t('tv.typeNews'),
+            'Talk Show': t('tv.typeTalkShow'),
+            'Miniseries': t('tv.typeMiniseries'),
+            'Video': t('tv.typeVideo')
+        };
+        return typeMap[type] || type;
+    };
+
+    const translateLanguageSafe = (langCode: string | undefined): string => {
+        if (!langCode) return t('common.unknown');
+        const translation = t(`common.languages.${langCode}`);
+        return translation !== `common.languages.${langCode}` ? translation : langCode;
+    };
+
+    const translateCountrySafe = (countryCode: string | undefined): string => {
+        if (!countryCode) return t('common.unknown');
+        const translation = t(`common.countries.${countryCode}`);
+        return translation !== `common.countries.${countryCode}` ? translation : countryCode;
+    };
+
     const [tv, setTV] = useState<TVDetails | null>(null);
     const [logo, setLogo] = useState<MovieLogo | null>(null);
     const [contentRating, setContentRating] = useState<string | null>(null);
@@ -24,7 +60,10 @@ export default function TVDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    // Season Details State
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const [selectedSeasonDetails, setSelectedSeasonDetails] = useState<SeasonDetails | null>(null);
     const [showSeasonDetails, setShowSeasonDetails] = useState(false);
     const [loadingSeason, setLoadingSeason] = useState(false);
@@ -32,10 +71,11 @@ export default function TVDetail() {
     const handleSeasonClick = async (seasonNumber: number) => {
         if (!id) return;
         setLoadingSeason(true);
-        setSelectedSeasonDetails(null); // Reset previous data
+        setSelectedSeasonDetails(null);
         setShowSeasonDetails(true);
         try {
-            const data = await getTVSeasonDetails(id, seasonNumber);
+            const currentLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja-JP' : i18n.language === 'ko' ? 'ko-KR' : i18n.language === 'es' ? 'es-ES' : i18n.language === 'fr' ? 'fr-FR' : i18n.language === 'de' ? 'de-DE' : i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'it' ? 'it-IT' : i18n.language === 'pt' ? 'pt-PT' : 'en-US';
+            const data = await getTVSeasonDetails(id, seasonNumber, currentLanguage);
             setSelectedSeasonDetails(data);
         } catch (err) {
             console.error(err);
@@ -58,24 +98,31 @@ export default function TVDetail() {
         setLoading(true);
         setError('');
 
+        const currentLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja-JP' : i18n.language === 'ko' ? 'ko-KR' : i18n.language === 'es' ? 'es-ES' : i18n.language === 'fr' ? 'fr-FR' : i18n.language === 'de' ? 'de-DE' : i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'it' ? 'it-IT' : i18n.language === 'pt' ? 'pt-PT' : 'en-US';
+        const imageLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja' : i18n.language === 'ko' ? 'ko' : i18n.language === 'es' ? 'es' : i18n.language === 'fr' ? 'fr' : i18n.language === 'de' ? 'de' : i18n.language === 'ru' ? 'ru' : i18n.language === 'it' ? 'it' : i18n.language === 'pt' ? 'pt' : 'en';
+        const countryCode = i18n.language === 'zh' ? 'CN' : i18n.language === 'zh-TW' ? 'TW' : i18n.language === 'ja' ? 'JP' : i18n.language === 'ko' ? 'KR' : i18n.language === 'es' ? 'ES' : i18n.language === 'fr' ? 'FR' : i18n.language === 'de' ? 'DE' : i18n.language === 'ru' ? 'RU' : i18n.language === 'it' ? 'IT' : i18n.language === 'pt' ? 'PT' : 'US';
+
         Promise.all([
-            getTVDetails(id),
-            getTVLogos(id),
+            getTVDetails(id, currentLanguage),
+            getTVLogos(id, imageLanguage),
             getTVContentRatings(id),
             getTVWatchProviders(id),
             getTVKeywords(id),
-            getTVCredits(id),
+            getTVCredits(id, currentLanguage),
             getTVAlternativeTitles(id),
             getTVVideos(id)
         ])
             .then(([tvData, logos, ratings, providers, kw, creds, altTitles, vids]) => {
                 setTV(tvData);
-                const engLogo = logos.find(l => l.iso_639_1 === 'en') || logos[0] || null;
-                setLogo(engLogo);
+                const currentLogo = logos.find(l => l.iso_639_1 === imageLanguage) || logos[0] || null;
+                setLogo(currentLogo);
 
                 setContentRatings(ratings);
-                const usRating = ratings.find(r => r.iso_3166_1 === 'US')?.rating || ratings[0]?.rating || null;
-                setContentRating(usRating);
+                // Try to find rating for current country first, then fallback to US, then first available
+                const countryRating = ratings.find(r => r.iso_3166_1 === countryCode)?.rating || 
+                                     ratings.find(r => r.iso_3166_1 === 'US')?.rating || 
+                                     ratings[0]?.rating || null;
+                setContentRating(countryRating);
 
                 setWatchProviders(providers);
                 setKeywords(kw);
@@ -88,12 +135,12 @@ export default function TVDetail() {
                 setError('Failed to load TV details. Check ID or API Key.');
             })
             .finally(() => setLoading(false));
-    }, [id]);
+    }, [id, i18n.language]);
 
     if (loading) {
         return (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white', backgroundColor: '#121212' }}>
-                Loading...
+                {t('common.loading')}
             </div>
         );
     }
@@ -101,9 +148,9 @@ export default function TVDetail() {
     if (error || !tv) {
         return (
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white', backgroundColor: '#121212' }}>
-                <p>{error || 'TV Show not found'}</p>
+                <p>{error || t('tv.notFound')}</p>
                 <button onClick={() => navigate('/')} style={{ marginTop: '20px', padding: '8px 16px', borderRadius: '4px', border: 'none', background: '#333', color: 'white', cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>
-                    Go Back
+                    {t('common.goBack')}
                 </button>
             </div>
         );
@@ -206,8 +253,15 @@ export default function TVDetail() {
                                 onMouseLeave={() => setIsCertHovered(false)}
                                 style={{
                                     cursor: 'pointer',
-                                    textDecoration: isCertHovered ? 'underline' : 'none',
-                                    textUnderlineOffset: '4px'
+                                    border: '1.5px solid rgba(255, 255, 255, 0.6)',
+                                    padding: '0px 6px',
+                                    borderRadius: '4px',
+                                    backgroundColor: isCertHovered ? 'rgba(255, 255, 255, 0.9)' : 'transparent',
+                                    color: isCertHovered ? '#121212' : 'inherit',
+                                    transition: 'background-color 0.2s, color 0.2s',
+                                    display: 'inline-block',
+                                    fontSize: '16px',
+                                    textShadow: 'none'
                                 }}>
                                 {contentRating}
                             </span>
@@ -221,9 +275,9 @@ export default function TVDetail() {
                         {new Date(tv.first_air_date).getFullYear()}
                     </span>
                     <span>•</span>
-                    <span>{tv.number_of_seasons} Seasons</span>
+                    <span>{tv.number_of_seasons} {t('tv.seasons')}</span>
                     <span>•</span>
-                    <span>{tv.number_of_episodes} Episodes</span>
+                    <span>{tv.number_of_episodes} {t('tv.episodes')}</span>
                     {runtime > 0 && (
                         <>
                             <span>•</span>
@@ -254,7 +308,7 @@ export default function TVDetail() {
                         fontWeight: 600,
                         color: '#fff'
                     }}>
-                        Overview
+                        {t('tv.overview')}
                     </h3>
                     <p style={{
                         fontSize: '1.125rem',
@@ -276,7 +330,7 @@ export default function TVDetail() {
                             onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                             onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                         >
-                            Homepage
+                            {t('common.homepage')}
                         </a>
                     )}
 
@@ -290,7 +344,7 @@ export default function TVDetail() {
                                     onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                                     onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                                 >
-                                    Trailers
+                                    {t('tv.trailers')}
                                 </span>
                             );
                         } else if (validTrailers.length === 1) {
@@ -303,7 +357,7 @@ export default function TVDetail() {
                                     onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                                     onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                                 >
-                                    Trailer
+                                    {t('common.trailer')}
                                 </a>
                             );
                         }
@@ -319,7 +373,7 @@ export default function TVDetail() {
                             onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                             onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                         >
-                            IMDb
+                            {t('common.imdb')}
                         </a>
                     )}
                     <a
@@ -330,7 +384,7 @@ export default function TVDetail() {
                         onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                         onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                     >
-                        TMDB
+                        {t('common.tmdb')}
                     </a>
                     {tv.external_ids?.imdb_id && (
                         <a
@@ -341,48 +395,50 @@ export default function TVDetail() {
                             onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                             onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                         >
-                            Trakt
+                            {t('common.trakt')}
                         </a>
                     )}
                     <a
-                        href={`https://www.metacritic.com/search/${encodeURIComponent(tv.name)}/?page=1&category=1`}
+                        href={`https://www.metacritic.com/search/${encodeURIComponent(tv.original_name)}/?page=1&category=1`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
                         onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                         onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                     >
-                        Metacritic
+                        {t('common.metacritic')}
+                    </a>
+                    {(i18n.language === 'zh' || i18n.language === 'zh-TW') && (
+                        <a
+                            href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(tv.original_name)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                            {t('common.douban')}
+                        </a>
+                    )}
+                    <a
+                        href={`https://www.rottentomatoes.com/search?search=${encodeURIComponent(tv.original_name)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                    >
+                        {t('common.rottentomatoes')}
                     </a>
                     <a
-                        href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(tv.name)}`}
+                        href={`https://www.justwatch.com/us/search?q=${encodeURIComponent(tv.original_name)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
                         onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                         onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                     >
-                        Douban
-                    </a>
-                    <a
-                        href={`https://www.rottentomatoes.com/search?search=${encodeURIComponent(tv.name)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                    >
-                        Rotten Tomatoes
-                    </a>
-                    <a
-                        href={`https://www.justwatch.com/us/search?q=${encodeURIComponent(tv.name)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                    >
-                        JustWatch
+                        {t('tv.justWatch')}
                     </a>
                 </div>
 
@@ -396,37 +452,42 @@ export default function TVDetail() {
                                 fontWeight: 600,
                                 color: '#fff'
                             }}>
-                                Created By
+                                {t('tv.createdBy')}
                             </h3>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                 {tv.created_by.map(c => (
                                     <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                                        {c.profile_path ? (
-                                            <img
-                                                src={getImageUrl(c.profile_path, 'w185')}
-                                                alt={c.name}
-                                                style={{
+                                        <div
+                                            onClick={() => navigate(`/person/${c.id}`)}
+                                            style={{ cursor: 'pointer' }}
+                                        >
+                                            {c.profile_path ? (
+                                                <img
+                                                    src={getImageUrl(c.profile_path, 'w185')}
+                                                    alt={c.name}
+                                                    style={{
+                                                        width: '50px',
+                                                        height: '50px',
+                                                        borderRadius: '50%',
+                                                        objectFit: 'cover'
+                                                    }}
+                                                />
+                                            ) : (
+                                                <div style={{
                                                     width: '50px',
                                                     height: '50px',
                                                     borderRadius: '50%',
-                                                    objectFit: 'cover'
-                                                }}
-                                            />
-                                        ) : (
-                                            <div style={{
-                                                width: '50px',
-                                                height: '50px',
-                                                borderRadius: '50%',
-                                                backgroundColor: '#333',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                color: '#888'
-                                            }}>
-                                                <User size={24} />
-                                            </div>
-                                        )}
-                                        <span style={{ fontSize: '18px', color: '#ccc' }}>{c.name}</span>
+                                                    backgroundColor: '#333',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    color: '#888'
+                                                }}>
+                                                    <User size={24} />
+                                                </div>
+                                            )}
+                                        </div>
+                                        <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
                                     </div>
                                 ))}
                             </div>
@@ -444,39 +505,44 @@ export default function TVDetail() {
                                 fontWeight: 600,
                                 color: '#fff'
                             }}>
-                                Cast
+                                {t('tv.cast')}
                             </h3>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                 {credits.cast.slice(0, 10).map(c => (
                                     <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                                        {c.profile_path ? (
-                                            <img
-                                                src={getImageUrl(c.profile_path, 'w185')}
-                                                alt={c.name}
-                                                style={{
+                                        <div
+                                            onClick={() => navigate(`/person/${c.id}`)}
+                                            style={{ cursor: 'pointer' }}
+                                        >
+                                            {c.profile_path ? (
+                                                <img
+                                                    src={getImageUrl(c.profile_path, 'w185')}
+                                                    alt={c.name}
+                                                    style={{
+                                                        width: '50px',
+                                                        height: '50px',
+                                                        borderRadius: '50%',
+                                                        objectFit: 'cover'
+                                                    }}
+                                                />
+                                            ) : (
+                                                <div style={{
                                                     width: '50px',
                                                     height: '50px',
                                                     borderRadius: '50%',
-                                                    objectFit: 'cover'
-                                                }}
-                                            />
-                                        ) : (
-                                            <div style={{
-                                                width: '50px',
-                                                height: '50px',
-                                                borderRadius: '50%',
-                                                backgroundColor: '#333',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                color: '#888'
-                                            }}>
-                                                <User size={24} />
-                                            </div>
-                                        )}
+                                                    backgroundColor: '#333',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    color: '#888'
+                                                }}>
+                                                    <User size={24} />
+                                                </div>
+                                            )}
+                                        </div>
                                         <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flex: 1, minWidth: 0 }}>
-                                            <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: '18px', color: '#ccc', whiteSpace: 'nowrap', cursor: 'pointer' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
-                                            <span style={{ fontSize: '16px', color: '#666', whiteSpace: 'nowrap' }}>as</span>
+                                            <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: '18px', color: '#ccc', whiteSpace: 'nowrap', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
+                                            <span style={{ fontSize: '16px', color: '#666', whiteSpace: 'nowrap' }}>{t('common.as')}</span>
                                             <span style={{ fontSize: '18px', color: '#999', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flex: 1 }} title={c.character}>{c.character}</span>
                                         </div>
                                     </div>
@@ -499,7 +565,7 @@ export default function TVDetail() {
                                     fontFamily: 'Inter, sans-serif'
                                 }}
                             >
-                                Full Cast & Crew
+                                {t('tv.fullCastAndCrew')}
                             </button>
                         </div>
                     )}
@@ -515,7 +581,7 @@ export default function TVDetail() {
                             fontWeight: 600,
                             color: '#fff'
                         }}>
-                            Seasons
+                            {t('tv.seasons')}
                         </h3>
                         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
                             {tv.seasons.map(season => (
@@ -545,10 +611,10 @@ export default function TVDetail() {
                                     </div>
                                     <div style={{ fontSize: '14px', color: '#fff', fontWeight: 500 }}>{season.name}</div>
                                     <div style={{ fontSize: '13px', color: '#999' }}>
-                                        {season.episode_count} Episodes
+                                        {season.episode_count} {t('tv.episodes')}
                                     </div>
                                     <div style={{ fontSize: '13px', color: '#999' }}>
-                                        {season.air_date ? new Date(season.air_date).getFullYear() : 'TBA'}
+                                        {season.air_date ? new Date(season.air_date).getFullYear() : t('common.tba')}
                                     </div>
                                 </div>
                             ))}
@@ -562,18 +628,18 @@ export default function TVDetail() {
                     {watchProviders && (watchProviders.flatrate || watchProviders.rent || watchProviders.buy) && (
                         <div style={{ marginTop: '32px' }}>
                             <h3 style={{ fontSize: '1.2rem', marginBottom: '24px', fontWeight: 600, color: '#fff' }}>
-                                Where to Watch
+                                {t('tv.whereToWatch')}
                             </h3>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                 {['flatrate', 'rent', 'buy'].map(type => {
-                                    const items = watchProviders[type as keyof WatchProviderData] as any[];
+                                    const items = watchProviders[type as keyof WatchProviderData] as WatchProvider[];
                                     if (!items || items.length === 0) return null;
-                                    const label = type === 'flatrate' ? 'Stream' : type === 'rent' ? 'Rent' : 'Buy';
+                                    const label = type === 'flatrate' ? t('common.stream') : type === 'rent' ? t('common.rent') : t('common.buy');
                                     return (
                                         <div key={type} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
                                             <span style={{ fontSize: '14px', color: '#999', minWidth: '50px', paddingTop: '2px' }}>{label}</span>
                                             <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                                                {items.map((p: any) => (
+                                                {items.map((p: WatchProvider) => (
                                                     <span key={p.provider_id} style={{ fontSize: '13px', color: '#ccc', border: '1px solid rgba(255,255,255,0.8)', padding: '2px 5px', borderRadius: '6px' }}>
                                                         {p.provider_name}
                                                     </span>
@@ -583,27 +649,27 @@ export default function TVDetail() {
                                     );
                                 })}
                             </div>
-                            <p style={{ fontSize: '14px', color: '#666', marginTop: '12px' }}>Provided by JustWatch</p>
+                            <p style={{ fontSize: '14px', color: '#666', marginTop: '12px' }}>{t('common.providedBy')} JustWatch</p>
                         </div>
                     )}
 
                     {/* TV Info */}
                     {(() => {
                         const infoItems = [
-                            { label: 'Status', value: tv.status },
-                            { label: 'First Air Date', value: tv.first_air_date ? new Date(tv.first_air_date).toLocaleDateString() : 'Unknown' },
-                            { label: 'Last Air Date', value: tv.last_air_date ? new Date(tv.last_air_date).toLocaleDateString() : 'Unknown' },
-                            { label: 'Type', value: tv.type },
+                            { label: t('tv.status'), value: translateStatus(tv.status) },
+                            { label: t('tv.firstAirDate'), value: tv.first_air_date ? new Date(tv.first_air_date).toLocaleDateString() : t('common.unknown') },
+                            { label: t('tv.lastAirDate'), value: tv.last_air_date ? new Date(tv.last_air_date).toLocaleDateString() : t('common.unknown') },
+                            { label: t('tv.type'), value: translateType(tv.type) },
                             tv.next_episode_to_air ? {
-                                label: 'Next Episode',
+                                label: t('tv.nextEpisode'),
                                 value: `${tv.next_episode_to_air.name} (S${tv.next_episode_to_air.season_number}E${tv.next_episode_to_air.episode_number}) - ${new Date(tv.next_episode_to_air.air_date).toLocaleDateString()}`
                             } : null,
-                            runtime > 0 ? { label: 'Episode Runtime', value: `${runtime}m` } : null,
-                            { label: 'Original Language', value: new Intl.DisplayNames(['en'], { type: 'language' }).of(tv.original_language) },
-                            { label: 'Spoken Languages', value: tv.spoken_languages.map(l => l.name).join(', ') },
-                            { label: 'Production Countries', value: tv.production_countries.map(c => c.name).join(', ') },
-                            { label: 'Networks', value: tv.networks.map(n => n.name).join(', ') }
-                        ].filter((item): item is { label: string; value: string | undefined } => Boolean(item));
+                            runtime > 0 ? { label: t('tv.episodeRuntime'), value: `${runtime}m` } : null,
+                            { label: t('common.originalLanguage'), value: translateLanguageSafe(tv.original_language) },
+                            { label: t('common.spokenLanguages'), value: tv.spoken_languages.map(l => translateLanguageSafe(l.iso_639_1)).join(', ') || t('common.unknown') },
+                            { label: t('common.productionCountries'), value: tv.production_countries.map(c => translateCountrySafe(c.iso_3166_1)).join(', ') || t('common.unknown') },
+                            { label: t('tv.network'), value: tv.networks.map(n => n.name).join(', ') || t('common.unknown') }
+                        ].filter((item): item is { label: string; value: string } => item !== null && item.value !== undefined);
 
                         const gridCols = infoItems.length <= 4 ? 'auto auto' : 'auto auto auto';
 
@@ -634,7 +700,7 @@ export default function TVDetail() {
                                 fontWeight: 600,
                                 color: '#fff'
                             }}>
-                                Production Companies
+                                {t('common.productionCompanies')}
                             </h3>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                 {tv.production_companies.map(c => (
@@ -649,7 +715,7 @@ export default function TVDetail() {
                     {/* Keywords */}
                     {keywords.length > 0 && (
                         <div style={{ marginTop: '24px' }}>
-                            <h3 style={{ fontSize: '1.2rem', marginBottom: '24px', fontWeight: 600, color: '#fff' }}>Keywords</h3>
+                            <h3 style={{ fontSize: '1.2rem', marginBottom: '24px', fontWeight: 600, color: '#fff' }}>{t('tv.keywords')}</h3>
                             <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                                 {keywords.map(k => (
                                     <span key={k.id} style={{ fontSize: '13px', color: '#ccc', border: '1px solid rgba(255,255,255,0.8)', padding: '2px 5px', borderRadius: '6px' }}>{k.name}</span>
@@ -665,27 +731,27 @@ export default function TVDetail() {
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowFullCast(false)}>
                     <div style={{ backgroundColor: '#1a1a1a', borderRadius: '24px', width: '100%', maxWidth: '800px', height: '90vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
                         <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <h2 style={{ color: '#fff', margin: 0 }}>Full Cast & Crew</h2>
+                            <h2 style={{ color: '#fff', margin: 0 }}>{t('tv.fullCastAndCrew')}</h2>
                             <button onClick={() => setShowFullCast(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
                         <div style={{ padding: '24px', overflowY: 'auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
                             <div>
-                                <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>Cast</h3>
+                                <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>{t('tv.cast')}</h3>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                     {credits.cast.map(c => (
-                                        <div key={c.id}>
-                                            <div style={{ color: '#ccc', fontWeight: 500 }}>{c.name}</div>
+                                        <div key={c.id} onClick={() => navigate(`/person/${c.id}`)} style={{ cursor: 'pointer' }}>
+                                            <div style={{ color: '#ccc', fontWeight: 500, textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</div>
                                             <div style={{ color: '#666', fontSize: '14px' }}>{c.character}</div>
                                         </div>
                                     ))}
                                 </div>
                             </div>
                             <div>
-                                <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>Crew</h3>
+                                <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>{t('tv.crew')}</h3>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                     {credits.crew.map((c, idx) => (
-                                        <div key={`${c.id}-${idx}`}>
-                                            <div style={{ color: '#ccc', fontWeight: 500 }}>{c.name}</div>
+                                        <div key={`${c.id}-${idx}`} onClick={() => navigate(`/person/${c.id}`)} style={{ cursor: 'pointer' }}>
+                                            <div style={{ color: '#ccc', fontWeight: 500, textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</div>
                                             <div style={{ color: '#666', fontSize: '14px' }}>{c.job} ({c.department})</div>
                                         </div>
                                     ))}
@@ -701,7 +767,7 @@ export default function TVDetail() {
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowAlternativeTitles(false)}>
                     <div style={{ backgroundColor: '#1a1a1a', borderRadius: '24px', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
                         <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <h2 style={{ color: '#fff', margin: 0 }}>Alternative Titles</h2>
+                            <h2 style={{ color: '#fff', margin: 0 }}>{t('tv.alternativeTitles')}</h2>
                             <button onClick={() => setShowAlternativeTitles(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
                         <div style={{ padding: '24px', overflowY: 'auto' }}>
@@ -710,17 +776,17 @@ export default function TVDetail() {
                                     <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
                                         <span style={{ color: '#fff', fontWeight: 500 }}>{tv?.original_name}</span>
                                         <span style={{ color: '#999', fontSize: '14px' }}>
-                                            {tv?.original_language && new Intl.DisplayNames(['en'], { type: 'language' }).of(tv.original_language)} (Original)
+                                            {tv?.original_language && new Intl.DisplayNames(['en'], { type: 'language' }).of(tv.original_language)} ({t('tv.original')})
                                         </span>
                                     </div>
-                                    {alternativeTitles.map((t, idx) => (
+                                    {alternativeTitles.map((title, idx) => (
                                         <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
-                                            <span style={{ color: '#fff', fontWeight: 500 }}>{t.title}</span>
-                                            <span style={{ color: '#999', fontSize: '14px' }}>{new Intl.DisplayNames(['en'], { type: 'region' }).of(t.iso_3166_1)}</span>
+                                            <span style={{ color: '#fff', fontWeight: 500 }}>{title.title}</span>
+                                            <span style={{ color: '#999', fontSize: '14px' }}>{new Intl.DisplayNames(['en'], { type: 'region' }).of(title.iso_3166_1)}</span>
                                         </div>
                                     ))}
                                 </div>
-                            ) : (<p style={{ color: '#ccc' }}>No alternative titles found.</p>)}
+                            ) : (<p style={{ color: '#ccc' }}>{t('tv.noAlternativeTitlesFound')}</p>)}
                         </div>
                     </div>
                 </div>
@@ -731,7 +797,7 @@ export default function TVDetail() {
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowTrailers(false)}>
                     <div style={{ backgroundColor: '#1a1a1a', borderRadius: '24px', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
                         <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <h2 style={{ color: '#fff', margin: 0 }}>Trailers</h2>
+                            <h2 style={{ color: '#fff', margin: 0 }}>{t('tv.trailers')}</h2>
                             <button onClick={() => setShowTrailers(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
                         <div style={{ padding: '24px', overflowY: 'auto' }}>
@@ -739,7 +805,7 @@ export default function TVDetail() {
                                 {videos.filter(v => v.site === 'YouTube' && v.type === 'Trailer' && v.official).map((video, idx) => (
                                     <a key={idx} href={`https://www.youtube.com/watch?v=${video.key}`} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px', textDecoration: 'none', alignItems: 'center' }}>
                                         <span style={{ color: '#fff', fontWeight: 500 }}>{video.name}</span>
-                                        <span style={{ color: '#999', fontSize: '14px' }}>Watch</span>
+                                        <span style={{ color: '#999', fontSize: '14px' }}>{t('common.watch')}</span>
                                     </a>
                                 ))}
                             </div>
@@ -753,7 +819,7 @@ export default function TVDetail() {
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowContentRatings(false)}>
                     <div style={{ backgroundColor: '#1a1a1a', borderRadius: '24px', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
                         <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <h2 style={{ color: '#fff', margin: 0 }}>Content Ratings</h2>
+                            <h2 style={{ color: '#fff', margin: 0 }}>{t('tv.contentRatings')}</h2>
                             <button onClick={() => setShowContentRatings(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
                         <div style={{ padding: '24px', overflowY: 'auto' }}>
@@ -766,7 +832,7 @@ export default function TVDetail() {
                                         </div>
                                     ))}
                                 </div>
-                            ) : (<p style={{ color: '#ccc' }}>No content ratings found.</p>)}
+                            ) : (<p style={{ color: '#ccc' }}>{t('tv.noContentRatingsFound')}</p>)}
                         </div>
                     </div>
                 </div>
@@ -778,11 +844,11 @@ export default function TVDetail() {
                         <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <div>
                                 <h2 style={{ color: '#fff', margin: 0 }}>
-                                    {selectedSeasonDetails ? selectedSeasonDetails.name : 'Season Details'}
+                                    {selectedSeasonDetails ? selectedSeasonDetails.name : t('tv.seasonDetails')}
                                 </h2>
                                 {selectedSeasonDetails && (
                                     <p style={{ color: '#999', margin: '4px 0 0 0', fontSize: '14px' }}>
-                                        {selectedSeasonDetails.air_date ? new Date(selectedSeasonDetails.air_date).getFullYear() : ''} • {selectedSeasonDetails.episodes.length} Episodes
+                                        {selectedSeasonDetails.air_date ? new Date(selectedSeasonDetails.air_date).getFullYear() : ''} • {selectedSeasonDetails.episodes.length} {t('tv.episodes')}
                                     </p>
                                 )}
                             </div>
@@ -792,7 +858,7 @@ export default function TVDetail() {
                         <div style={{ padding: '24px', overflowY: 'auto', flex: 1 }}>
                             {loadingSeason ? (
                                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                                    <p style={{ color: '#fff' }}>Loading season details...</p>
+                                    <p style={{ color: '#fff' }}>{t('common.loading')}</p>
                                 </div>
                             ) : selectedSeasonDetails ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -822,19 +888,19 @@ export default function TVDetail() {
                                                             <span style={{ fontSize: '14px', color: '#999' }}>{episode.runtime}m</span>
                                                         )}
                                                         <span style={{ color: '#999', fontSize: '14px', whiteSpace: 'nowrap' }}>
-                                                            {episode.air_date ? new Date(episode.air_date).toLocaleDateString() : 'TBA'}
+                                                            {episode.air_date ? new Date(episode.air_date).toLocaleDateString() : t('common.tba')}
                                                         </span>
                                                     </div>
                                                 </div>
                                                 <p style={{ color: '#ccc', fontSize: '14px', lineHeight: 1.5, margin: 0 }}>
-                                                    {episode.overview || 'No overview available.'}
+                                                    {episode.overview || t('common.noOverview')}
                                                 </p>
                                             </div>
                                         </div>
                                     ))}
                                 </div>
                             ) : (
-                                <p style={{ color: '#ccc', textAlign: 'center' }}>Failed to load season details.</p>
+                                <p style={{ color: '#ccc', textAlign: 'center' }}>{t('tv.failedToLoadSeasonDetails')}</p>
                             )}
                         </div>
                     </div>

@@ -25,16 +25,8 @@ const ACCESS_TOKEN = import.meta.env.VITE_TMDB_ACCESS_TOKEN; // Alternative
 
 const BASE_URL = 'https://api.themoviedb.org/3';
 
-export const getMovieDetails = async (id: string): Promise<MovieDetails> => {
-    // options object removed as it was unused
-
-    // If using API Key instead of Access Token (common for older integrations)
-    // url would be: \`\${BASE_URL}/movie/\${id}?api_key=\${API_KEY}&language=en-US\`
-
-    let url = `${BASE_URL}/movie/${id}?language=en-US`;
-
-    // Prefer Access Token if available, otherwise fallback to API Key query param if implemented
-    // For this implementation, we'll try to support both roughly, but Authorization header is cleaner.
+export const getMovieDetails = async (id: string, language: string = 'en-US'): Promise<MovieDetails> => {
+    let url = `${BASE_URL}/movie/${id}?language=${language}`;
 
     const headers: HeadersInit = {
         'accept': 'application/json',
@@ -69,8 +61,8 @@ export interface MovieLogo {
     iso_639_1: string | null;
 }
 
-export const getMovieLogos = async (id: string): Promise<MovieLogo[]> => {
-    let url = `${BASE_URL}/movie/${id}/images?include_image_language=en,null`;
+export const getMovieLogos = async (id: string, language: string = 'en'): Promise<MovieLogo[]> => {
+    let url = `${BASE_URL}/movie/${id}/images?include_image_language=${language},null`;
 
     const headers: HeadersInit = {
         'accept': 'application/json',
@@ -92,7 +84,7 @@ export const getMovieLogos = async (id: string): Promise<MovieLogo[]> => {
     return data.logos || [];
 }
 
-export const getMovieCertification = async (id: string): Promise<string | null> => {
+export const getMovieCertification = async (id: string, countryCode: string = 'US'): Promise<string | null> => {
     let url = `${BASE_URL}/movie/${id}/release_dates`;
 
     const headers: HeadersInit = {
@@ -110,7 +102,13 @@ export const getMovieCertification = async (id: string): Promise<string | null> 
         if (!response.ok) return null;
 
         const data = await response.json();
-        // Try to find US certification first, then fallback to any available
+        // Try to find certification for the specified country first
+        const countryRelease = data.results?.find((r: { iso_3166_1: string }) => r.iso_3166_1 === countryCode);
+        if (countryRelease?.release_dates?.length) {
+            const cert = countryRelease.release_dates.find((rd: { certification: string }) => rd.certification)?.certification;
+            if (cert) return cert;
+        }
+        // Fallback to US certification
         const usRelease = data.results?.find((r: { iso_3166_1: string }) => r.iso_3166_1 === 'US');
         if (usRelease?.release_dates?.length) {
             const cert = usRelease.release_dates.find((rd: { certification: string }) => rd.certification)?.certification;
@@ -250,8 +248,8 @@ export interface MovieCredits {
     crew: CrewMember[];
 }
 
-export const getMovieCredits = async (id: string): Promise<MovieCredits> => {
-    let url = `${BASE_URL}/movie/${id}/credits`;
+export const getMovieCredits = async (id: string, language: string = 'en-US'): Promise<MovieCredits> => {
+    let url = `${BASE_URL}/movie/${id}/credits?language=${language}`;
 
     const headers: HeadersInit = {
         'accept': 'application/json',
@@ -260,7 +258,7 @@ export const getMovieCredits = async (id: string): Promise<MovieCredits> => {
     if (ACCESS_TOKEN) {
         headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
     } else if (API_KEY) {
-        url += `?api_key=${API_KEY}`;
+        url += `&api_key=${API_KEY}`;
     }
 
     try {
@@ -433,8 +431,8 @@ export interface TVDetails {
     } | null;
 }
 
-export const getTVDetails = async (id: string): Promise<TVDetails> => {
-    let url = `${BASE_URL}/tv/${id}?append_to_response=external_ids`;
+export const getTVDetails = async (id: string, language: string = 'en-US'): Promise<TVDetails> => {
+    let url = `${BASE_URL}/tv/${id}?append_to_response=external_ids&language=${language}`;
 
     const headers: HeadersInit = {
         'accept': 'application/json',
@@ -455,8 +453,8 @@ export const getTVDetails = async (id: string): Promise<TVDetails> => {
     }
 };
 
-export const getTVCredits = async (id: string): Promise<MovieCredits> => {
-    let url = `${BASE_URL}/tv/${id}/aggregate_credits`;
+export const getTVCredits = async (id: string, language: string = 'en-US'): Promise<MovieCredits> => {
+    let url = `${BASE_URL}/tv/${id}/aggregate_credits?language=${language}`;
 
     const headers: HeadersInit = {
         'accept': 'application/json',
@@ -465,7 +463,7 @@ export const getTVCredits = async (id: string): Promise<MovieCredits> => {
     if (ACCESS_TOKEN) {
         headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
     } else if (API_KEY) {
-        url += `?api_key=${API_KEY}`;
+        url += `&api_key=${API_KEY}`;
     }
 
     try {
@@ -615,8 +613,8 @@ export const getTVWatchProviders = async (id: string, country: string = 'US'): P
     }
 };
 
-export const getTVLogos = async (id: string): Promise<MovieLogo[]> => {
-    let url = `${BASE_URL}/tv/${id}/images?include_image_language=en,null`;
+export const getTVLogos = async (id: string, language: string = 'en'): Promise<MovieLogo[]> => {
+    let url = `${BASE_URL}/tv/${id}/images?include_image_language=${language},null`;
 
     const headers: HeadersInit = {
         'accept': 'application/json',
@@ -664,8 +662,8 @@ export interface SeasonDetails {
     vote_average: number;
 }
 
-export const getTVSeasonDetails = async (tvId: string, seasonNumber: number): Promise<SeasonDetails | null> => {
-    let url = `${BASE_URL}/tv/${tvId}/season/${seasonNumber}`;
+export const getTVSeasonDetails = async (tvId: string, seasonNumber: number, language: string = 'en-US'): Promise<SeasonDetails | null> => {
+    let url = `${BASE_URL}/tv/${tvId}/season/${seasonNumber}?language=${language}`;
 
     const headers: HeadersInit = {
         'accept': 'application/json',
@@ -674,7 +672,7 @@ export const getTVSeasonDetails = async (tvId: string, seasonNumber: number): Pr
     if (ACCESS_TOKEN) {
         headers['Authorization'] = `Bearer ${ACCESS_TOKEN}`;
     } else if (API_KEY) {
-        url += `?api_key=${API_KEY}`;
+        url += `&api_key=${API_KEY}`;
     }
 
     try {
@@ -744,8 +742,8 @@ export interface PersonImage {
     vote_average: number;
 }
 
-export const getPersonDetails = async (id: string): Promise<PersonDetails | null> => {
-    let url = `${BASE_URL}/person/${id}?append_to_response=combined_credits,external_ids,images`;
+export const getPersonDetails = async (id: string, language: string = 'en-US'): Promise<PersonDetails | null> => {
+    let url = `${BASE_URL}/person/${id}?append_to_response=combined_credits,external_ids,images&language=${language}`;
 
     const headers: HeadersInit = {
         'accept': 'application/json',
