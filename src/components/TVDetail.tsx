@@ -1,0 +1,845 @@
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getTVDetails, getTVLogos, getTVContentRatings, getTVWatchProviders, getTVKeywords, getTVCredits, getTVAlternativeTitles, getTVVideos, getTVSeasonDetails, getImageUrl, type TVDetails, type MovieLogo, type WatchProviderData, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails } from '../services/tmdb';
+import { X, User, PlayCircle, Film } from 'lucide-react';
+
+export default function TVDetail() {
+    const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
+    const [tv, setTV] = useState<TVDetails | null>(null);
+    const [logo, setLogo] = useState<MovieLogo | null>(null);
+    const [contentRating, setContentRating] = useState<string | null>(null);
+    const [contentRatings, setContentRatings] = useState<ContentRating[]>([]);
+    const [watchProviders, setWatchProviders] = useState<WatchProviderData | null>(null);
+    const [keywords, setKeywords] = useState<Keyword[]>([]);
+    const [credits, setCredits] = useState<MovieCredits>({ cast: [], crew: [] });
+    const [showFullCast, setShowFullCast] = useState(false);
+    const [isFullCastHovered, setIsFullCastHovered] = useState(false);
+    const [alternativeTitles, setAlternativeTitles] = useState<AlternativeTitle[]>([]);
+    const [showAlternativeTitles, setShowAlternativeTitles] = useState(false);
+    const [showTrailers, setShowTrailers] = useState(false);
+    const [showContentRatings, setShowContentRatings] = useState(false);
+    const [videos, setVideos] = useState<MovieVideo[]>([]);
+    const [isCertHovered, setIsCertHovered] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+
+    // Season Details State
+    const [selectedSeasonDetails, setSelectedSeasonDetails] = useState<SeasonDetails | null>(null);
+    const [showSeasonDetails, setShowSeasonDetails] = useState(false);
+    const [loadingSeason, setLoadingSeason] = useState(false);
+
+    const handleSeasonClick = async (seasonNumber: number) => {
+        if (!id) return;
+        setLoadingSeason(true);
+        setSelectedSeasonDetails(null); // Reset previous data
+        setShowSeasonDetails(true);
+        try {
+            const data = await getTVSeasonDetails(id, seasonNumber);
+            setSelectedSeasonDetails(data);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoadingSeason(false);
+        }
+    };
+
+    useEffect(() => {
+        const toggleOverflow = (shouldHide: boolean) => {
+            document.body.style.overflow = shouldHide ? 'hidden' : '';
+        };
+        toggleOverflow(showFullCast || showAlternativeTitles || showContentRatings || showTrailers || showSeasonDetails);
+        return () => { document.body.style.overflow = ''; };
+    }, [showFullCast, showAlternativeTitles, showContentRatings, showTrailers, showSeasonDetails]);
+
+    useEffect(() => {
+        if (!id) return;
+
+        setLoading(true);
+        setError('');
+
+        Promise.all([
+            getTVDetails(id),
+            getTVLogos(id),
+            getTVContentRatings(id),
+            getTVWatchProviders(id),
+            getTVKeywords(id),
+            getTVCredits(id),
+            getTVAlternativeTitles(id),
+            getTVVideos(id)
+        ])
+            .then(([tvData, logos, ratings, providers, kw, creds, altTitles, vids]) => {
+                setTV(tvData);
+                const engLogo = logos.find(l => l.iso_639_1 === 'en') || logos[0] || null;
+                setLogo(engLogo);
+
+                setContentRatings(ratings);
+                const usRating = ratings.find(r => r.iso_3166_1 === 'US')?.rating || ratings[0]?.rating || null;
+                setContentRating(usRating);
+
+                setWatchProviders(providers);
+                setKeywords(kw);
+                setCredits(creds);
+                setAlternativeTitles(altTitles);
+                setVideos(vids);
+            })
+            .catch((err) => {
+                console.error(err);
+                setError('Failed to load TV details. Check ID or API Key.');
+            })
+            .finally(() => setLoading(false));
+    }, [id]);
+
+    if (loading) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white', backgroundColor: '#121212' }}>
+                Loading...
+            </div>
+        );
+    }
+
+    if (error || !tv) {
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white', backgroundColor: '#121212' }}>
+                <p>{error || 'TV Show not found'}</p>
+                <button onClick={() => navigate('/')} style={{ marginTop: '20px', padding: '8px 16px', borderRadius: '4px', border: 'none', background: '#333', color: 'white', cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>
+                    Go Back
+                </button>
+            </div>
+        );
+    }
+
+    const backgroundUrl = getImageUrl(tv.backdrop_path || tv.poster_path, 'original');
+    const runtime = tv.episode_run_time?.[0] || 0;
+
+    return (
+        <div style={{
+            minHeight: '100vh',
+            width: '100%',
+            backgroundColor: '#121212',
+            fontFamily: 'Inter, sans-serif',
+            color: 'white',
+            overflowX: 'hidden'
+        }}>
+            {/* Hero Section */}
+            <div style={{
+                position: 'relative',
+                width: '100%',
+                height: '80vh',
+            }}>
+                {/* Background Image */}
+                <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundImage: `url(${backgroundUrl})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'top center',
+                    opacity: 0.85
+                }} />
+
+                {/* Gradient Fade */}
+                <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(to bottom, transparent 0%, rgba(18,18,18,0.01) 20%, rgba(18,18,18,0.1) 40%, rgba(18,18,18,0.4) 60%, rgba(18,18,18,0.8) 80%, #121212 100%)'
+                }} />
+            </div>
+
+            {/* Content Section */}
+            <div style={{
+                padding: '0 60px 80px 80px',
+                marginTop: '-120px',
+                position: 'relative',
+                zIndex: 10
+            }}>
+                {logo ? (
+                    <img
+                        onClick={() => setShowAlternativeTitles(true)}
+                        src={getImageUrl(logo.file_path, 'original')}
+                        alt={tv.name}
+                        style={{
+                            maxHeight: '120px',
+                            maxWidth: '400px',
+                            marginBottom: '16px',
+                            objectFit: 'contain',
+                            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))',
+                            cursor: 'pointer'
+                        }}
+                    />
+                ) : (
+                    <h1
+                        onClick={() => setShowAlternativeTitles(true)}
+                        style={{
+                            fontSize: '4rem',
+                            margin: '0 0 16px 0',
+                            fontWeight: 700,
+                            lineHeight: 1.1,
+                            textShadow: '0 2px 4px rgba(0,0,0,0.5)',
+                            cursor: 'pointer'
+                        }}>
+                        {tv.name}
+                    </h1>
+                )}
+
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    color: '#e0e0e0',
+                    marginBottom: '32px',
+                    fontSize: '18px',
+                    fontWeight: 500,
+                    textShadow: '0 1px 2px rgba(0,0,0,0.5)',
+                    flexWrap: 'wrap'
+                }}>
+                    {contentRating && (
+                        <>
+                            <span
+                                onClick={() => setShowContentRatings(true)}
+                                onMouseEnter={() => setIsCertHovered(true)}
+                                onMouseLeave={() => setIsCertHovered(false)}
+                                style={{
+                                    cursor: 'pointer',
+                                    textDecoration: isCertHovered ? 'underline' : 'none',
+                                    textUnderlineOffset: '4px'
+                                }}>
+                                {contentRating}
+                            </span>
+                            <span>•</span>
+                        </>
+                    )}
+                    <span
+                        style={{
+                            cursor: 'default',
+                        }}>
+                        {new Date(tv.first_air_date).getFullYear()}
+                    </span>
+                    <span>•</span>
+                    <span>{tv.number_of_seasons} Seasons</span>
+                    <span>•</span>
+                    <span>{tv.number_of_episodes} Episodes</span>
+                    {runtime > 0 && (
+                        <>
+                            <span>•</span>
+                            <span>{Math.floor(runtime / 60)}h {runtime % 60}m</span>
+                        </>
+                    )}
+                    <span>•</span>
+                    <span>{tv.genres.map(g => g.name).join(', ')}</span>
+                </div>
+
+                <div style={{ maxWidth: '800px' }}>
+                    {tv.tagline && (
+                        <p style={{
+                            fontSize: '18px',
+                            fontStyle: 'italic',
+                            color: 'rgba(255, 255, 255, 0.6)',
+                            marginBottom: '24px',
+                            fontWeight: 300,
+                            lineHeight: 1.4
+                        }}>
+                            {tv.tagline}
+                        </p>
+                    )}
+
+                    <h3 style={{
+                        fontSize: '1.2rem',
+                        marginBottom: '16px',
+                        fontWeight: 600,
+                        color: '#fff'
+                    }}>
+                        Overview
+                    </h3>
+                    <p style={{
+                        fontSize: '1.125rem',
+                        lineHeight: 1.6,
+                        color: '#ccc',
+                    }}>
+                        {tv.overview}
+                    </p>
+                </div>
+
+                {/* External Links */}
+                <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                    {tv.homepage && (
+                        <a
+                            href={tv.homepage}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                            Homepage
+                        </a>
+                    )}
+
+                    {(() => {
+                        const validTrailers = videos.filter(v => v.site === 'YouTube' && v.type === 'Trailer' && v.official);
+                        if (validTrailers.length > 1) {
+                            return (
+                                <span
+                                    onClick={() => setShowTrailers(true)}
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px', cursor: 'pointer' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    Trailers
+                                </span>
+                            );
+                        } else if (validTrailers.length === 1) {
+                            return (
+                                <a
+                                    href={`https://www.youtube.com/watch?v=${validTrailers[0].key}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    Trailer
+                                </a>
+                            );
+                        }
+                        return null;
+                    })()}
+
+                    {tv.external_ids?.imdb_id && (
+                        <a
+                            href={`https://www.imdb.com/title/${tv.external_ids.imdb_id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                            IMDb
+                        </a>
+                    )}
+                    <a
+                        href={`https://www.themoviedb.org/tv/${tv.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                    >
+                        TMDB
+                    </a>
+                    {tv.external_ids?.imdb_id && (
+                        <a
+                            href={`https://trakt.tv/shows/${tv.external_ids.imdb_id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                            Trakt
+                        </a>
+                    )}
+                    <a
+                        href={`https://www.metacritic.com/search/${encodeURIComponent(tv.name)}/?page=1&category=1`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                    >
+                        Metacritic
+                    </a>
+                    <a
+                        href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(tv.name)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                    >
+                        Douban
+                    </a>
+                    <a
+                        href={`https://www.rottentomatoes.com/search?search=${encodeURIComponent(tv.name)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                    >
+                        Rotten Tomatoes
+                    </a>
+                    <a
+                        href={`https://www.justwatch.com/us/search?q=${encodeURIComponent(tv.name)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                    >
+                        JustWatch
+                    </a>
+                </div>
+
+                <div style={{ maxWidth: '800px' }}>
+                    {/* Created By */}
+                    {tv.created_by.length > 0 && (
+                        <div style={{ marginTop: '32px' }}>
+                            <h3 style={{
+                                fontSize: '1.2rem',
+                                marginBottom: '16px',
+                                fontWeight: 600,
+                                color: '#fff'
+                            }}>
+                                Created By
+                            </h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                {tv.created_by.map(c => (
+                                    <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                                        {c.profile_path ? (
+                                            <img
+                                                src={getImageUrl(c.profile_path, 'w185')}
+                                                alt={c.name}
+                                                style={{
+                                                    width: '50px',
+                                                    height: '50px',
+                                                    borderRadius: '50%',
+                                                    objectFit: 'cover'
+                                                }}
+                                            />
+                                        ) : (
+                                            <div style={{
+                                                width: '50px',
+                                                height: '50px',
+                                                borderRadius: '50%',
+                                                backgroundColor: '#333',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                color: '#888'
+                                            }}>
+                                                <User size={24} />
+                                            </div>
+                                        )}
+                                        <span style={{ fontSize: '18px', color: '#ccc' }}>{c.name}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+
+
+                    {/* Cast */}
+                    {credits.cast.length > 0 && (
+                        <div style={{ marginTop: '32px' }}>
+                            <h3 style={{
+                                fontSize: '1.2rem',
+                                marginBottom: '16px',
+                                fontWeight: 600,
+                                color: '#fff'
+                            }}>
+                                Cast
+                            </h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                {credits.cast.slice(0, 10).map(c => (
+                                    <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                                        {c.profile_path ? (
+                                            <img
+                                                src={getImageUrl(c.profile_path, 'w185')}
+                                                alt={c.name}
+                                                style={{
+                                                    width: '50px',
+                                                    height: '50px',
+                                                    borderRadius: '50%',
+                                                    objectFit: 'cover'
+                                                }}
+                                            />
+                                        ) : (
+                                            <div style={{
+                                                width: '50px',
+                                                height: '50px',
+                                                borderRadius: '50%',
+                                                backgroundColor: '#333',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                color: '#888'
+                                            }}>
+                                                <User size={24} />
+                                            </div>
+                                        )}
+                                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flex: 1, minWidth: 0 }}>
+                                            <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: '18px', color: '#ccc', whiteSpace: 'nowrap', cursor: 'pointer' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
+                                            <span style={{ fontSize: '16px', color: '#666', whiteSpace: 'nowrap' }}>as</span>
+                                            <span style={{ fontSize: '18px', color: '#999', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flex: 1 }} title={c.character}>{c.character}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <button
+                                onClick={() => setShowFullCast(true)}
+                                onMouseEnter={() => setIsFullCastHovered(true)}
+                                onMouseLeave={() => setIsFullCastHovered(false)}
+                                style={{
+                                    marginTop: '16px',
+                                    background: 'none',
+                                    border: 'none',
+                                    color: 'rgba(255, 255, 255, 0.8)',
+                                    fontSize: '18px',
+                                    cursor: 'pointer',
+                                    textDecoration: isFullCastHovered ? 'underline' : 'none',
+                                    textUnderlineOffset: '4px',
+                                    padding: 0,
+                                    fontFamily: 'Inter, sans-serif'
+                                }}
+                            >
+                                Full Cast & Crew
+                            </button>
+                        </div>
+                    )}
+
+                </div>
+
+                {/* Seasons (Full Width) */}
+                {tv.seasons.length > 0 && (
+                    <div style={{ marginTop: '32px', marginBottom: '32px' }}>
+                        <h3 style={{
+                            fontSize: '1.2rem',
+                            marginBottom: '16px',
+                            fontWeight: 600,
+                            color: '#fff'
+                        }}>
+                            Seasons
+                        </h3>
+                        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                            {tv.seasons.map(season => (
+                                <div
+                                    key={season.id}
+                                    onClick={() => handleSeasonClick(season.season_number)}
+                                    style={{ width: '140px', cursor: 'pointer' }}
+                                >
+                                    <div style={{
+                                        height: '210px',
+                                        backgroundColor: '#333',
+                                        borderRadius: '8px',
+                                        overflow: 'hidden',
+                                        marginBottom: '8px'
+                                    }}>
+                                        {season.poster_path ? (
+                                            <img
+                                                src={getImageUrl(season.poster_path, 'w342')}
+                                                alt={season.name}
+                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                            />
+                                        ) : (
+                                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>
+                                                <Film size={48} />
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div style={{ fontSize: '14px', color: '#fff', fontWeight: 500 }}>{season.name}</div>
+                                    <div style={{ fontSize: '13px', color: '#999' }}>
+                                        {season.episode_count} Episodes
+                                    </div>
+                                    <div style={{ fontSize: '13px', color: '#999' }}>
+                                        {season.air_date ? new Date(season.air_date).getFullYear() : 'TBA'}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                <div style={{ maxWidth: '800px' }}>
+
+                    {/* Watch Providers - reused simple logic */}
+                    {watchProviders && (watchProviders.flatrate || watchProviders.rent || watchProviders.buy) && (
+                        <div style={{ marginTop: '32px' }}>
+                            <h3 style={{ fontSize: '1.2rem', marginBottom: '24px', fontWeight: 600, color: '#fff' }}>
+                                Where to Watch
+                            </h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                {['flatrate', 'rent', 'buy'].map(type => {
+                                    const items = watchProviders[type as keyof WatchProviderData] as any[];
+                                    if (!items || items.length === 0) return null;
+                                    const label = type === 'flatrate' ? 'Stream' : type === 'rent' ? 'Rent' : 'Buy';
+                                    return (
+                                        <div key={type} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                                            <span style={{ fontSize: '14px', color: '#999', minWidth: '50px', paddingTop: '2px' }}>{label}</span>
+                                            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                                                {items.map((p: any) => (
+                                                    <span key={p.provider_id} style={{ fontSize: '13px', color: '#ccc', border: '1px solid rgba(255,255,255,0.8)', padding: '2px 5px', borderRadius: '6px' }}>
+                                                        {p.provider_name}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            <p style={{ fontSize: '14px', color: '#666', marginTop: '12px' }}>Provided by JustWatch</p>
+                        </div>
+                    )}
+
+                    {/* TV Info */}
+                    {(() => {
+                        const infoItems = [
+                            { label: 'Status', value: tv.status },
+                            { label: 'First Air Date', value: tv.first_air_date ? new Date(tv.first_air_date).toLocaleDateString() : 'Unknown' },
+                            { label: 'Last Air Date', value: tv.last_air_date ? new Date(tv.last_air_date).toLocaleDateString() : 'Unknown' },
+                            { label: 'Type', value: tv.type },
+                            tv.next_episode_to_air ? {
+                                label: 'Next Episode',
+                                value: `${tv.next_episode_to_air.name} (S${tv.next_episode_to_air.season_number}E${tv.next_episode_to_air.episode_number}) - ${new Date(tv.next_episode_to_air.air_date).toLocaleDateString()}`
+                            } : null,
+                            runtime > 0 ? { label: 'Episode Runtime', value: `${runtime}m` } : null,
+                            { label: 'Original Language', value: new Intl.DisplayNames(['en'], { type: 'language' }).of(tv.original_language) },
+                            { label: 'Spoken Languages', value: tv.spoken_languages.map(l => l.name).join(', ') },
+                            { label: 'Production Countries', value: tv.production_countries.map(c => c.name).join(', ') },
+                            { label: 'Networks', value: tv.networks.map(n => n.name).join(', ') }
+                        ].filter((item): item is { label: string; value: string | undefined } => Boolean(item));
+
+                        const gridCols = infoItems.length <= 4 ? 'auto auto' : 'auto auto auto';
+
+                        return (
+                            <div style={{
+                                marginTop: '24px',
+                                display: 'grid',
+                                gridTemplateColumns: gridCols,
+                                gap: '10px 80px',
+                                justifyContent: 'start'
+                            }}>
+                                {infoItems.map((item, index) => (
+                                    <div key={index}>
+                                        <h3 style={{ fontSize: '1.2rem', marginBottom: '8px', fontWeight: 600, color: '#fff' }}>{item.label}</h3>
+                                        <p style={{ fontSize: '14px', color: '#ccc' }}>{item.value}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        );
+                    })()}
+
+                    {/* Production Companies */}
+                    {tv.production_companies.length > 0 && (
+                        <div style={{ marginTop: '24px' }}>
+                            <h3 style={{
+                                fontSize: '1.2rem',
+                                marginBottom: '16px',
+                                fontWeight: 600,
+                                color: '#fff'
+                            }}>
+                                Production Companies
+                            </h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                {tv.production_companies.map(c => (
+                                    <span key={c.id} style={{ fontSize: '14px', color: '#ccc' }}>
+                                        {c.name} {c.origin_country ? `(${c.origin_country})` : ''}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Keywords */}
+                    {keywords.length > 0 && (
+                        <div style={{ marginTop: '24px' }}>
+                            <h3 style={{ fontSize: '1.2rem', marginBottom: '24px', fontWeight: 600, color: '#fff' }}>Keywords</h3>
+                            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                                {keywords.map(k => (
+                                    <span key={k.id} style={{ fontSize: '13px', color: '#ccc', border: '1px solid rgba(255,255,255,0.8)', padding: '2px 5px', borderRadius: '6px' }}>{k.name}</span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            {/* Full Cast & Crew Modal */}
+            {showFullCast && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowFullCast(false)}>
+                    <div style={{ backgroundColor: '#1a1a1a', borderRadius: '24px', width: '100%', maxWidth: '800px', height: '90vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+                        <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <h2 style={{ color: '#fff', margin: 0 }}>Full Cast & Crew</h2>
+                            <button onClick={() => setShowFullCast(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
+                        </div>
+                        <div style={{ padding: '24px', overflowY: 'auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
+                            <div>
+                                <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>Cast</h3>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                    {credits.cast.map(c => (
+                                        <div key={c.id}>
+                                            <div style={{ color: '#ccc', fontWeight: 500 }}>{c.name}</div>
+                                            <div style={{ color: '#666', fontSize: '14px' }}>{c.character}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div>
+                                <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>Crew</h3>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                    {credits.crew.map((c, idx) => (
+                                        <div key={`${c.id}-${idx}`}>
+                                            <div style={{ color: '#ccc', fontWeight: 500 }}>{c.name}</div>
+                                            <div style={{ color: '#666', fontSize: '14px' }}>{c.job} ({c.department})</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Alternative Titles Modal */}
+            {showAlternativeTitles && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowAlternativeTitles(false)}>
+                    <div style={{ backgroundColor: '#1a1a1a', borderRadius: '24px', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+                        <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <h2 style={{ color: '#fff', margin: 0 }}>Alternative Titles</h2>
+                            <button onClick={() => setShowAlternativeTitles(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
+                        </div>
+                        <div style={{ padding: '24px', overflowY: 'auto' }}>
+                            {alternativeTitles.length > 0 ? (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
+                                        <span style={{ color: '#fff', fontWeight: 500 }}>{tv?.original_name}</span>
+                                        <span style={{ color: '#999', fontSize: '14px' }}>
+                                            {tv?.original_language && new Intl.DisplayNames(['en'], { type: 'language' }).of(tv.original_language)} (Original)
+                                        </span>
+                                    </div>
+                                    {alternativeTitles.map((t, idx) => (
+                                        <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
+                                            <span style={{ color: '#fff', fontWeight: 500 }}>{t.title}</span>
+                                            <span style={{ color: '#999', fontSize: '14px' }}>{new Intl.DisplayNames(['en'], { type: 'region' }).of(t.iso_3166_1)}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (<p style={{ color: '#ccc' }}>No alternative titles found.</p>)}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Trailers Modal */}
+            {showTrailers && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowTrailers(false)}>
+                    <div style={{ backgroundColor: '#1a1a1a', borderRadius: '24px', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+                        <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <h2 style={{ color: '#fff', margin: 0 }}>Trailers</h2>
+                            <button onClick={() => setShowTrailers(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
+                        </div>
+                        <div style={{ padding: '24px', overflowY: 'auto' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                                {videos.filter(v => v.site === 'YouTube' && v.type === 'Trailer' && v.official).map((video, idx) => (
+                                    <a key={idx} href={`https://www.youtube.com/watch?v=${video.key}`} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px', textDecoration: 'none', alignItems: 'center' }}>
+                                        <span style={{ color: '#fff', fontWeight: 500 }}>{video.name}</span>
+                                        <span style={{ color: '#999', fontSize: '14px' }}>Watch</span>
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Content Ratings Modal */}
+            {showContentRatings && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowContentRatings(false)}>
+                    <div style={{ backgroundColor: '#1a1a1a', borderRadius: '24px', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+                        <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <h2 style={{ color: '#fff', margin: 0 }}>Content Ratings</h2>
+                            <button onClick={() => setShowContentRatings(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
+                        </div>
+                        <div style={{ padding: '24px', overflowY: 'auto' }}>
+                            {contentRatings.length > 0 ? (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                    {contentRatings.map((r, idx) => (
+                                        <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
+                                            <span style={{ color: '#fff', fontWeight: 500 }}>{new Intl.DisplayNames(['en'], { type: 'region' }).of(r.iso_3166_1)}</span>
+                                            <span style={{ color: '#999', fontSize: '14px', border: '1px solid #666', padding: '0 4px', borderRadius: '2px' }}>{r.rating}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (<p style={{ color: '#ccc' }}>No content ratings found.</p>)}
+                        </div>
+                    </div>
+                </div>
+            )}
+            {/* Season Details Modal */}
+            {showSeasonDetails && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowSeasonDetails(false)}>
+                    <div style={{ backgroundColor: '#1a1a1a', borderRadius: '24px', width: '100%', maxWidth: '900px', height: '90vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+                        <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div>
+                                <h2 style={{ color: '#fff', margin: 0 }}>
+                                    {selectedSeasonDetails ? selectedSeasonDetails.name : 'Season Details'}
+                                </h2>
+                                {selectedSeasonDetails && (
+                                    <p style={{ color: '#999', margin: '4px 0 0 0', fontSize: '14px' }}>
+                                        {selectedSeasonDetails.air_date ? new Date(selectedSeasonDetails.air_date).getFullYear() : ''} • {selectedSeasonDetails.episodes.length} Episodes
+                                    </p>
+                                )}
+                            </div>
+                            <button onClick={() => setShowSeasonDetails(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
+                        </div>
+
+                        <div style={{ padding: '24px', overflowY: 'auto', flex: 1 }}>
+                            {loadingSeason ? (
+                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                                    <p style={{ color: '#fff' }}>Loading season details...</p>
+                                </div>
+                            ) : selectedSeasonDetails ? (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                                    {selectedSeasonDetails.episodes.map(episode => (
+                                        <div key={episode.id} style={{ display: 'flex', gap: '20px', borderRadius: '12px', backgroundColor: '#222', padding: '16px', border: '1px solid #333' }}>
+                                            <div style={{ minWidth: '227px', width: '227px', height: '127px', backgroundColor: '#000', borderRadius: '8px', overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
+                                                {episode.still_path ? (
+                                                    <img
+                                                        src={getImageUrl(episode.still_path, 'original')}
+                                                        alt={episode.name}
+                                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                    />
+                                                ) : (
+                                                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>
+                                                        <PlayCircle size={32} />
+                                                    </div>
+                                                )}
+                                                <div style={{ position: 'absolute', bottom: '8px', left: '8px', padding: '2px 6px', background: 'rgba(0,0,0,0.7)', borderRadius: '4px', color: '#fff', fontSize: '12px', fontWeight: 500 }}>
+                                                    {episode.episode_number}
+                                                </div>
+                                            </div>
+                                            <div style={{ flex: 1 }}>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                                                    <h3 style={{ color: '#fff', margin: 0, fontSize: '1.1rem' }}>{episode.name}</h3>
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                                        {episode.runtime > 0 && (
+                                                            <span style={{ fontSize: '14px', color: '#999' }}>{episode.runtime}m</span>
+                                                        )}
+                                                        <span style={{ color: '#999', fontSize: '14px', whiteSpace: 'nowrap' }}>
+                                                            {episode.air_date ? new Date(episode.air_date).toLocaleDateString() : 'TBA'}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <p style={{ color: '#ccc', fontSize: '14px', lineHeight: 1.5, margin: 0 }}>
+                                                    {episode.overview || 'No overview available.'}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p style={{ color: '#ccc', textAlign: 'center' }}>Failed to load season details.</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
