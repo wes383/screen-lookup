@@ -3,19 +3,28 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getPersonDetails, getImageUrl, type PersonDetails, type PersonCreditItem } from '../services/tmdb';
 import { User, Film } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useLoading } from '../contexts/LoadingContext';
 
 export default function PersonDetail() {
     const { t, i18n } = useTranslation();
+    const { setIsLoading } = useLoading();
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const [person, setPerson] = useState<PersonDetails | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
+    // Set global loading state on mount
+    useEffect(() => {
+        setIsLoading(true);
+        return () => setIsLoading(false);
+    }, [setIsLoading]);
+
     useEffect(() => {
         if (!id) return;
         const fetchData = async () => {
             setLoading(true);
+            setIsLoading(true);
             const currentLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja-JP' : i18n.language === 'ko' ? 'ko-KR' : i18n.language === 'es' ? 'es-ES' : i18n.language === 'fr' ? 'fr-FR' : i18n.language === 'de' ? 'de-DE' : i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'it' ? 'it-IT' : i18n.language === 'pt' ? 'pt-PT' : 'en-US';
             const data = await getPersonDetails(id, currentLanguage);
             if (data) {
@@ -24,13 +33,14 @@ export default function PersonDetail() {
                 setError('Person not found');
             }
             setLoading(false);
+            setIsLoading(false);
         };
         fetchData();
     }, [id, i18n.language]);
 
     if (loading) {
         return (
-            <div style={{ minHeight: '100vh', backgroundColor: '#121212', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#fff' }}>
+            <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: '#121212', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#fff', zIndex: 9999 }}>
                 {t('common.loading')}
             </div>
         );
@@ -80,6 +90,20 @@ export default function PersonDetail() {
         ...(person.combined_credits?.crew || [])
     ];
 
+    // Define job importance order
+    const jobImportance: { [key: string]: number } = {
+        'Director': 1,
+        'Writer': 2,
+        'Screenplay': 3,
+        'Producer': 4,
+        'Executive Producer': 5,
+        'Original Music Composer': 6,
+        'Director of Photography': 7,
+        'Editor': 8,
+        'Production Design': 9,
+        'Costume Design': 10
+    };
+
     const creditsMap = new Map<number, { credit: PersonCreditItem; characters: Set<string>; jobs: Set<string> }>();
     
     allCredits.forEach(c => {
@@ -101,13 +125,25 @@ export default function PersonDetail() {
     });
     
     const sortedCredits = Array.from(creditsMap.values())
-        .map(({ credit, characters, jobs }) => ({
-            ...credit,
-            character: Array.from(characters).join(', ') || undefined,
-            job: Array.from(jobs).join(', ') || undefined
-        }))
-        .filter((c) => (c.popularity || 0) > 10)
-        .sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+        .map(({ credit, characters, jobs }) => {
+            // Sort jobs by importance
+            const sortedJobs = Array.from(jobs).sort((a, b) => {
+                const importanceA = jobImportance[a] || 999;
+                const importanceB = jobImportance[b] || 999;
+                return importanceA - importanceB;
+            });
+            
+            // Sort characters (keep original order for now)
+            const sortedCharacters = Array.from(characters);
+            
+            return {
+                ...credit,
+                character: sortedCharacters.join(', ') || undefined,
+                job: sortedJobs.join(', ') || undefined
+            };
+        })
+        .filter((c) => (c.vote_count || 0) > 100)
+        .sort((a, b) => (b.vote_count || 0) - (a.vote_count || 0));
 
     return (
         <div style={{ minHeight: '100vh', backgroundColor: '#121212', color: '#fff', fontFamily: 'Inter, sans-serif' }}>
@@ -211,7 +247,24 @@ export default function PersonDetail() {
                         <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '24px' }}>{t('person.filmography')}</h3>
                         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
                             {sortedCredits.map(credit => {
-                                const roles = [credit.character, credit.job].filter(Boolean);
+                                // Translate job titles
+                                const translatedJobs = credit.job?.split(', ').map(job => {
+                                    const jobMap: { [key: string]: string } = {
+                                        'Director': t('person.knownForDirecting'),
+                                        'Writer': t('person.knownForWriting'),
+                                        'Screenplay': t('person.knownForWriting'),
+                                        'Producer': t('person.knownForProduction'),
+                                        'Executive Producer': t('person.knownForProduction'),
+                                        'Original Music Composer': t('person.knownForSound'),
+                                        'Director of Photography': t('person.knownForCamera'),
+                                        'Editor': t('person.knownForEditing'),
+                                        'Production Design': t('person.knownForArt'),
+                                        'Costume Design': t('person.knownForCostumeMakeUp')
+                                    };
+                                    return jobMap[job] || job;
+                                }).join(', ');
+                                
+                                const roles = [credit.character, translatedJobs].filter(Boolean);
                                 return (
                                     <div
                                         key={`${credit.media_type}-${credit.id}`}

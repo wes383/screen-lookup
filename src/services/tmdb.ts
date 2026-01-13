@@ -565,6 +565,7 @@ export interface PersonCreditItem {
     release_date?: string;
     first_air_date?: string;
     vote_average: number;
+    vote_count?: number;
     popularity?: number;
     episode_count?: number;
 }
@@ -589,5 +590,53 @@ export const getPersonDetails = async (id: string, language: string = 'en-US'): 
         return response.json();
     } catch {
         return null;
+    }
+};
+
+// Search Types
+export interface SearchResult {
+    id: number;
+    media_type: 'movie' | 'tv' | 'person';
+    title?: string;
+    name?: string;
+    original_title?: string;
+    original_name?: string;
+    poster_path: string | null;
+    profile_path?: string | null;
+    backdrop_path: string | null;
+    overview: string;
+    release_date?: string;
+    first_air_date?: string;
+    vote_average: number;
+    popularity: number;
+    known_for_department?: string;
+}
+
+export interface SearchResponse {
+    page: number;
+    results: SearchResult[];
+    total_pages: number;
+    total_results: number;
+}
+
+export const searchMulti = async (query: string, language: string = 'en-US', page: number = 1): Promise<SearchResponse> => {
+    const url = buildApiUrl('search/multi', { 
+        query,
+        language,
+        page: page.toString(),
+        include_adult: 'false'
+    });
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Search failed');
+        const data = await response.json();
+        // Filter to only movies, TV shows, and people
+        return {
+            ...data,
+            results: data.results.filter((r: SearchResult) => r.media_type === 'movie' || r.media_type === 'tv' || r.media_type === 'person')
+        };
+    } catch {
+        return { page: 1, results: [], total_pages: 0, total_results: 0 };
     }
 };

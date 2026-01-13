@@ -3,9 +3,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getTVDetails, getTVLogos, getTVContentRatings, getTVWatchProviders, getTVKeywords, getTVCredits, getTVAlternativeTitles, getTVVideos, getTVSeasonDetails, getImageUrl, type TVDetails, type MovieLogo, type WatchProviderData, type WatchProvider, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails } from '../services/tmdb';
 import { X, User, PlayCircle, Film } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useLoading } from '../contexts/LoadingContext';
 
 export default function TVDetail() {
     const { t, i18n } = useTranslation();
+    const { setIsLoading } = useLoading();
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
 
@@ -60,6 +62,12 @@ export default function TVDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
+    // Set global loading state on mount
+    useEffect(() => {
+        setIsLoading(true);
+        return () => setIsLoading(false);
+    }, [setIsLoading]);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -96,6 +104,7 @@ export default function TVDetail() {
         if (!id) return;
 
         setLoading(true);
+        setIsLoading(true);
         setError('');
 
         const currentLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja-JP' : i18n.language === 'ko' ? 'ko-KR' : i18n.language === 'es' ? 'es-ES' : i18n.language === 'fr' ? 'fr-FR' : i18n.language === 'de' ? 'de-DE' : i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'it' ? 'it-IT' : i18n.language === 'pt' ? 'pt-PT' : 'en-US';
@@ -134,12 +143,58 @@ export default function TVDetail() {
                 console.error(err);
                 setError('Failed to load TV details. Check ID or API Key.');
             })
-            .finally(() => setLoading(false));
+            .finally(() => {
+                setLoading(false);
+                setIsLoading(false);
+            });
     }, [id, i18n.language]);
+
+    // Translate job titles
+    const translateJob = (job: string): string => {
+        const jobMap: { [key: string]: string } = {
+            'Director': t('person.knownForDirecting'),
+            'Writer': t('person.knownForWriting'),
+            'Screenplay': t('person.knownForWriting'),
+            'Story': t('person.knownForWriting'),
+            'Producer': t('person.knownForProduction'),
+            'Executive Producer': t('person.knownForProduction'),
+            'Original Music Composer': t('person.knownForSound'),
+            'Music': t('person.knownForSound'),
+            'Director of Photography': t('person.knownForCamera'),
+            'Cinematography': t('person.knownForCamera'),
+            'Editor': t('person.knownForEditing'),
+            'Production Design': t('person.knownForArt'),
+            'Art Direction': t('person.knownForArt'),
+            'Costume Design': t('person.knownForCostumeMakeUp'),
+            'Makeup Artist': t('person.knownForCostumeMakeUp'),
+            'Casting': t('person.knownForProduction'),
+            'Sound Designer': t('person.knownForSound'),
+            'Visual Effects': t('person.knownForVisualEffects'),
+            'Novel': t('person.knownForWriting')
+        };
+        return jobMap[job] || job;
+    };
+
+    // Translate department names
+    const translateDepartment = (department: string): string => {
+        const deptMap: { [key: string]: string } = {
+            'Directing': t('person.knownForDirecting'),
+            'Writing': t('person.knownForWriting'),
+            'Production': t('person.knownForProduction'),
+            'Sound': t('person.knownForSound'),
+            'Camera': t('person.knownForCamera'),
+            'Editing': t('person.knownForEditing'),
+            'Art': t('person.knownForArt'),
+            'Costume & Make-Up': t('person.knownForCostumeMakeUp'),
+            'Visual Effects': t('person.knownForVisualEffects'),
+            'Crew': t('person.knownForCrew')
+        };
+        return deptMap[department] || department;
+    };
 
     if (loading) {
         return (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white', backgroundColor: '#121212' }}>
+            <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', backgroundColor: '#121212', zIndex: 9999 }}>
                 {t('common.loading')}
             </div>
         );
@@ -281,7 +336,7 @@ export default function TVDetail() {
                     {runtime > 0 && (
                         <>
                             <span>•</span>
-                            <span>{Math.floor(runtime / 60)}h {runtime % 60}m</span>
+                            <span>{runtime >= 60 ? `${Math.floor(runtime / 60)}h ${runtime % 60}m` : `${runtime}m`}</span>
                         </>
                     )}
                     <span>•</span>
@@ -705,7 +760,17 @@ export default function TVDetail() {
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                 {tv.production_companies.map(c => (
                                     <span key={c.id} style={{ fontSize: '14px', color: '#ccc' }}>
-                                        {c.name} {c.origin_country ? `(${c.origin_country})` : ''}
+                                        {c.name} {c.origin_country ? `(${(() => {
+                                            const translated = t(`common.countries.${c.origin_country}`);
+                                            if (!translated.startsWith('common.countries.')) {
+                                                return translated;
+                                            }
+                                            try {
+                                                return new Intl.DisplayNames(['en'], { type: 'region' }).of(c.origin_country) || c.origin_country;
+                                            } catch {
+                                                return c.origin_country;
+                                            }
+                                        })()})` : ''}
                                     </span>
                                 ))}
                             </div>
@@ -752,7 +817,7 @@ export default function TVDetail() {
                                     {credits.crew.map((c, idx) => (
                                         <div key={`${c.id}-${idx}`} onClick={() => navigate(`/person/${c.id}`)} style={{ cursor: 'pointer' }}>
                                             <div style={{ color: '#ccc', fontWeight: 500, textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</div>
-                                            <div style={{ color: '#666', fontSize: '14px' }}>{c.job} ({c.department})</div>
+                                            <div style={{ color: '#666', fontSize: '14px' }}>{translateJob(c.job)} ({translateDepartment(c.department)})</div>
                                         </div>
                                     ))}
                                 </div>
@@ -776,13 +841,25 @@ export default function TVDetail() {
                                     <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
                                         <span style={{ color: '#fff', fontWeight: 500 }}>{tv?.original_name}</span>
                                         <span style={{ color: '#999', fontSize: '14px' }}>
-                                            {tv?.original_language && new Intl.DisplayNames(['en'], { type: 'language' }).of(tv.original_language)} ({t('tv.original')})
+                                            {tv?.original_language && (t(`common.languages.${tv.original_language}`) || tv.original_language)} ({t('tv.original')})
                                         </span>
                                     </div>
                                     {alternativeTitles.map((title, idx) => (
                                         <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
                                             <span style={{ color: '#fff', fontWeight: 500 }}>{title.title}</span>
-                                            <span style={{ color: '#999', fontSize: '14px' }}>{new Intl.DisplayNames(['en'], { type: 'region' }).of(title.iso_3166_1)}</span>
+                                            <span style={{ color: '#999', fontSize: '14px' }}>
+                                                {(() => {
+                                                    const translated = t(`common.countries.${title.iso_3166_1}`);
+                                                    if (!translated.startsWith('common.countries.')) {
+                                                        return translated;
+                                                    }
+                                                    try {
+                                                        return new Intl.DisplayNames(['en'], { type: 'region' }).of(title.iso_3166_1) || title.iso_3166_1;
+                                                    } catch {
+                                                        return title.iso_3166_1;
+                                                    }
+                                                })()}
+                                            </span>
                                         </div>
                                     ))}
                                 </div>
@@ -827,7 +904,19 @@ export default function TVDetail() {
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                     {contentRatings.map((r, idx) => (
                                         <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
-                                            <span style={{ color: '#fff', fontWeight: 500 }}>{new Intl.DisplayNames(['en'], { type: 'region' }).of(r.iso_3166_1)}</span>
+                                            <span style={{ color: '#fff', fontWeight: 500 }}>
+                                                {(() => {
+                                                    const translated = t(`common.countries.${r.iso_3166_1}`);
+                                                    if (!translated.startsWith('common.countries.')) {
+                                                        return translated;
+                                                    }
+                                                    try {
+                                                        return new Intl.DisplayNames(['en'], { type: 'region' }).of(r.iso_3166_1) || r.iso_3166_1;
+                                                    } catch {
+                                                        return r.iso_3166_1;
+                                                    }
+                                                })()}
+                                            </span>
                                             <span style={{ color: '#999', fontSize: '14px', border: '1px solid #666', padding: '0 4px', borderRadius: '2px' }}>{r.rating}</span>
                                         </div>
                                     ))}

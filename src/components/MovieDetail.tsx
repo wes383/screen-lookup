@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getMovieDetails, getMovieLogos, getMovieCertification, getWatchProviders, getMovieKeywords, getMovieCredits, getMovieAlternativeTitles, getMovieReleaseDates, getMovieVideos, getImageUrl, type MovieDetails, type MovieLogo, type WatchProviderData, type Keyword, type MovieCredits, type AlternativeTitle, type CountryReleaseDates, type MovieVideo } from '../services/tmdb';
-import { X, User } from 'lucide-react';
+import { X, User} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useLoading } from '../contexts/LoadingContext';
 
 export default function MovieDetail() {
     const { t, i18n } = useTranslation();
+    const { setIsLoading } = useLoading();
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
 
@@ -46,6 +48,12 @@ export default function MovieDetail() {
     const [isDateHovered, setIsDateHovered] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+
+    // Set global loading state on mount
+    useEffect(() => {
+        setIsLoading(true);
+        return () => setIsLoading(false);
+    }, [setIsLoading]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -100,6 +108,7 @@ export default function MovieDetail() {
 
         const fetchData = async () => {
             setLoading(true);
+            setIsLoading(true);
             setError('');
 
             try {
@@ -134,15 +143,59 @@ export default function MovieDetail() {
                 setError('Failed to load movie details. Check ID or API Key.');
             } finally {
                 setLoading(false);
+                setIsLoading(false);
             }
         };
 
         fetchData();
     }, [id, i18n.language]);
 
+    // Translate job titles
+    const translateJob = (job: string): string => {
+        const jobMap: { [key: string]: string } = {
+            'Director': t('person.knownForDirecting'),
+            'Writer': t('person.knownForWriting'),
+            'Screenplay': t('person.knownForWriting'),
+            'Story': t('person.knownForWriting'),
+            'Producer': t('person.knownForProduction'),
+            'Executive Producer': t('person.knownForProduction'),
+            'Original Music Composer': t('person.knownForSound'),
+            'Music': t('person.knownForSound'),
+            'Director of Photography': t('person.knownForCamera'),
+            'Cinematography': t('person.knownForCamera'),
+            'Editor': t('person.knownForEditing'),
+            'Production Design': t('person.knownForArt'),
+            'Art Direction': t('person.knownForArt'),
+            'Costume Design': t('person.knownForCostumeMakeUp'),
+            'Makeup Artist': t('person.knownForCostumeMakeUp'),
+            'Casting': t('person.knownForProduction'),
+            'Sound Designer': t('person.knownForSound'),
+            'Visual Effects': t('person.knownForVisualEffects'),
+            'Novel': t('person.knownForWriting')
+        };
+        return jobMap[job] || job;
+    };
+
+    // Translate department names
+    const translateDepartment = (department: string): string => {
+        const deptMap: { [key: string]: string } = {
+            'Directing': t('person.knownForDirecting'),
+            'Writing': t('person.knownForWriting'),
+            'Production': t('person.knownForProduction'),
+            'Sound': t('person.knownForSound'),
+            'Camera': t('person.knownForCamera'),
+            'Editing': t('person.knownForEditing'),
+            'Art': t('person.knownForArt'),
+            'Costume & Make-Up': t('person.knownForCostumeMakeUp'),
+            'Visual Effects': t('person.knownForVisualEffects'),
+            'Crew': t('person.knownForCrew')
+        };
+        return deptMap[department] || department;
+    };
+
     if (loading) {
         return (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white', backgroundColor: '#121212' }}>
+            <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', backgroundColor: '#121212', zIndex: 9999 }}>
                 {t('common.loading')}
             </div>
         );
@@ -282,7 +335,7 @@ export default function MovieDetail() {
                         {movie.release_date}
                     </span>
                     <span>•</span>
-                    <span>{Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m</span>
+                    <span>{movie.runtime >= 60 ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m` : `${movie.runtime}m`}</span>
                     <span>•</span>
                     <span>{movie.genres.map(g => g.name).join(', ')}</span>
                 </div>
@@ -705,7 +758,17 @@ export default function MovieDetail() {
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                 {movie.production_companies.map(c => (
                                     <span key={c.id} style={{ fontSize: '14px', color: '#ccc' }}>
-                                        {c.name} {c.origin_country ? `(${c.origin_country})` : ''}
+                                        {c.name} {c.origin_country ? `(${(() => {
+                                            const translated = t(`common.countries.${c.origin_country}`);
+                                            if (!translated.startsWith('common.countries.')) {
+                                                return translated;
+                                            }
+                                            try {
+                                                return new Intl.DisplayNames(['en'], { type: 'region' }).of(c.origin_country) || c.origin_country;
+                                            } catch {
+                                                return c.origin_country;
+                                            }
+                                        })()})` : ''}
                                     </span>
                                 ))}
                             </div>
@@ -818,7 +881,7 @@ export default function MovieDetail() {
                                         {credits.crew.map((c, idx) => (
                                             <div key={`${c.id}-${idx}`} onClick={() => navigate(`/person/${c.id}`)} style={{ cursor: 'pointer' }}>
                                                 <div style={{ color: '#ccc', fontWeight: 500, textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</div>
-                                                <div style={{ color: '#666', fontSize: '14px' }}>{c.job} ({c.department})</div>
+                                                <div style={{ color: '#666', fontSize: '14px' }}>{translateJob(c.job)} ({translateDepartment(c.department)})</div>
                                             </div>
                                         ))}
                                     </div>
@@ -888,13 +951,25 @@ export default function MovieDetail() {
                                         <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
                                             <span style={{ color: '#fff', fontWeight: 500 }}>{movie?.original_title}</span>
                                             <span style={{ color: '#999', fontSize: '14px' }}>
-                                                {movie?.original_language && new Intl.DisplayNames(['en'], { type: 'language' }).of(movie.original_language)} ({t('movie.original')})
+                                                {movie?.original_language && (t(`common.languages.${movie.original_language}`) || movie.original_language)} ({t('movie.original')})
                                             </span>
                                         </div>
-                                        {alternativeTitles.map((t, idx) => (
+                                        {alternativeTitles.map((title, idx) => (
                                             <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
-                                                <span style={{ color: '#fff', fontWeight: 500 }}>{t.title}</span>
-                                                <span style={{ color: '#999', fontSize: '14px' }}>{new Intl.DisplayNames(['en'], { type: 'region' }).of(t.iso_3166_1)}</span>
+                                                <span style={{ color: '#fff', fontWeight: 500 }}>{title.title}</span>
+                                                <span style={{ color: '#999', fontSize: '14px' }}>
+                                                    {(() => {
+                                                        const translated = t(`common.countries.${title.iso_3166_1}`);
+                                                        if (!translated.startsWith('common.countries.')) {
+                                                            return translated;
+                                                        }
+                                                        try {
+                                                            return new Intl.DisplayNames(['en'], { type: 'region' }).of(title.iso_3166_1) || title.iso_3166_1;
+                                                        } catch {
+                                                            return title.iso_3166_1;
+                                                        }
+                                                    })()}
+                                                </span>
                                             </div>
                                         ))}
                                     </div>
@@ -965,7 +1040,17 @@ export default function MovieDetail() {
                                         {releaseDates.map((country, idx) => (
                                             <div key={idx} style={{ marginBottom: '16px' }}>
                                                 <h4 style={{ color: '#fff', fontSize: '16px', marginBottom: '8px', borderBottom: '1px solid #333', paddingBottom: '4px' }}>
-                                                    {new Intl.DisplayNames(['en'], { type: 'region' }).of(country.iso_3166_1)}
+                                                    {(() => {
+                                                        const translated = t(`common.countries.${country.iso_3166_1}`);
+                                                        if (!translated.startsWith('common.countries.')) {
+                                                            return translated;
+                                                        }
+                                                        try {
+                                                            return new Intl.DisplayNames(['en'], { type: 'region' }).of(country.iso_3166_1) || country.iso_3166_1;
+                                                        } catch {
+                                                            return country.iso_3166_1;
+                                                        }
+                                                    })()}
                                                 </h4>
                                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                                                     {country.release_dates.map((date, dIdx) => (
@@ -975,12 +1060,12 @@ export default function MovieDetail() {
                                                                 {date.certification ? <span style={{ border: '1px solid #666', padding: '0 4px', borderRadius: '2px', marginRight: '6px' }}>{date.certification}</span> : ''}
                                                                 {/* Map type to string if desired, or simpler display */}
                                                                 {/* Type 1: Premiere, 2: Theatrical (Ltd), 3: Theatrical, 4: Digital, 5: Physical, 6: TV */}
-                                                                {date.type === 1 ? 'Premiere' :
-                                                                    date.type === 2 ? 'Theatrical (Ltd)' :
-                                                                        date.type === 3 ? 'Theatrical' :
-                                                                            date.type === 4 ? 'Digital' :
-                                                                                date.type === 5 ? 'Physical' :
-                                                                                    date.type === 6 ? 'TV' : ''}
+                                                                {date.type === 1 ? t('movie.releaseTypePremiere') :
+                                                                    date.type === 2 ? t('movie.releaseTypeTheatricalLimited') :
+                                                                        date.type === 3 ? t('movie.releaseTypeTheatrical') :
+                                                                            date.type === 4 ? t('movie.releaseTypeDigital') :
+                                                                                date.type === 5 ? t('movie.releaseTypePhysical') :
+                                                                                    date.type === 6 ? t('movie.releaseTypeTV') : ''}
                                                             </span>
                                                         </div>
                                                     ))}
