@@ -6,13 +6,13 @@ import MovieDetail from './components/MovieDetail';
 import TVDetail from './components/TVDetail';
 import PersonDetail from './components/PersonDetail';
 import LanguageSwitcher from './components/LanguageSwitcher';
-import { LoadingProvider, useLoading } from './contexts/LoadingContext';
+import { LoadingProvider } from './contexts/LoadingContext';
 
 function AppContent() {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
   const prevPathRef = useRef(location.pathname);
-  const { isLoading } = useLoading();
+
 
   useEffect(() => {
     if (prevPathRef.current !== location.pathname) {
@@ -31,7 +31,7 @@ function AppContent() {
         <Route path="/tv/:id" element={<TVDetail />} />
         <Route path="/person/:id" element={<PersonDetail />} />
       </Routes>
-      <LanguageSwitcher variant={isHomePage ? 'fixed' : 'bottom'} isLoading={isLoading} />
+      <LanguageSwitcher variant={isHomePage ? 'fixed' : 'bottom'} />
     </>
   );
 }
