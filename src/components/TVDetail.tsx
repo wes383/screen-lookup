@@ -988,7 +988,7 @@ export default function TVDetail() {
                                             <div style={{ minWidth: '227px', width: '227px', height: '127px', backgroundColor: '#000', borderRadius: '8px', overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
                                                 {episode.still_path ? (
                                                     <img
-                                                        src={getImageUrl(episode.still_path, 'original')}
+                                                        src={getImageUrl(episode.still_path, 'w500')}
                                                         alt={episode.name}
                                                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                                     />
