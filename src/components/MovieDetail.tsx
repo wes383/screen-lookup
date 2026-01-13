@@ -30,6 +30,34 @@ export default function MovieDetail() {
         return translation !== `common.countries.${countryCode}` ? translation : countryCode;
     };
 
+    const formatDate = (dateString: string): string => {
+        if (!dateString) return '';
+        
+        const language = i18n.language;
+        
+        const localeMap: { [key: string]: string } = {
+            'en': 'en-US',
+            'zh': 'zh-CN',
+            'zh-TW': 'zh-TW',
+            'ja': 'ja-JP',
+            'ko': 'ko-KR',
+            'es': 'es-ES',
+            'fr': 'fr-FR',
+            'de': 'de-DE',
+            'ru': 'ru-RU',
+            'it': 'it-IT',
+            'pt': 'pt-PT'
+        };
+        
+        const locale = localeMap[language] || 'en-US';
+        
+        return new Intl.DateTimeFormat(locale, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        }).format(new Date(dateString));
+    };
+
     const [movie, setMovie] = useState<MovieDetails | null>(null);
     const [logo, setLogo] = useState<MovieLogo | null>(null);
     const [certification, setCertification] = useState<string | null>(null);
@@ -139,7 +167,7 @@ export default function MovieDetail() {
                 setVideos(vids);
             } catch (err) {
                 console.error(err);
-                setError('Failed to load movie details. Check ID or API Key.');
+                setError('Failed to load movie details.');
             } finally {
                 setLoading(false);
                 setIsLoading(false);
@@ -328,7 +356,7 @@ export default function MovieDetail() {
                             textDecoration: isDateHovered ? 'underline' : 'none',
                             textUnderlineOffset: '4px'
                         }}>
-                        {movie.release_date}
+                        {movie.release_date ? new Date(movie.release_date).getFullYear() : ''}
                     </span>
                     <span>•</span>
                     <span>{movie.runtime >= 60 ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m` : `${movie.runtime}m`}</span>
@@ -1031,6 +1059,18 @@ export default function MovieDetail() {
                                 padding: '24px',
                                 overflowY: 'auto'
                             }}>
+                                {/* Primary Release Date */}
+                                {movie.release_date && (
+                                    <div style={{ marginBottom: '24px' }}>
+                                        <h4 style={{ color: '#fff', fontSize: '16px', marginBottom: '8px', fontWeight: 600 }}>
+                                            {t('movie.releaseDate')}
+                                        </h4>
+                                        <div style={{ fontSize: '18px', color: '#e0e0e0', fontWeight: 500 }}>
+                                            {formatDate(movie.release_date)}
+                                        </div>
+                                    </div>
+                                )}
+                                
                                 {releaseDates.length > 0 ? (
                                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}>
                                         {releaseDates.map((country, idx) => (
@@ -1051,11 +1091,9 @@ export default function MovieDetail() {
                                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                                                     {country.release_dates.map((date, dIdx) => (
                                                         <div key={dIdx} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px' }}>
-                                                            <span style={{ color: '#ccc' }}>{new Date(date.release_date).toLocaleDateString()}</span>
+                                                            <span style={{ color: '#ccc' }}>{formatDate(date.release_date)}</span>
                                                             <span style={{ color: '#999' }}>
                                                                 {date.certification ? <span style={{ border: '1px solid #666', padding: '0 4px', borderRadius: '2px', marginRight: '6px' }}>{date.certification}</span> : ''}
-                                                                {/* Map type to string if desired, or simpler display */}
-                                                                {/* Type 1: Premiere, 2: Theatrical (Ltd), 3: Theatrical, 4: Digital, 5: Physical, 6: TV */}
                                                                 {date.type === 1 ? t('movie.releaseTypePremiere') :
                                                                     date.type === 2 ? t('movie.releaseTypeTheatricalLimited') :
                                                                         date.type === 3 ? t('movie.releaseTypeTheatrical') :

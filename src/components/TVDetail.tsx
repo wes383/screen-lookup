@@ -13,9 +13,17 @@ export default function TVDetail() {
 
     const translateStatus = (status: string | undefined): string => {
         if (!status) return t('common.unknown');
-        const statusKey = status.replace(/([A-Z])/g, '$1').toLowerCase();
-        const translation = t(`tv.${statusKey}`);
-        return translation !== `tv.${statusKey}` ? translation : status;
+        
+        const statusMap: { [key: string]: string } = {
+            'Returning Series': t('tv.returningSeries'),
+            'Planned': t('tv.planned'),
+            'In Production': t('tv.inProduction'),
+            'Pilot': t('tv.pilot'),
+            'Canceled': t('tv.canceled'),
+            'Ended': t('tv.ended')
+        };
+        
+        return statusMap[status] || status;
     };
 
     const translateType = (type: string | undefined): string => {
@@ -42,6 +50,34 @@ export default function TVDetail() {
         if (!countryCode) return t('common.unknown');
         const translation = t(`common.countries.${countryCode}`);
         return translation !== `common.countries.${countryCode}` ? translation : countryCode;
+    };
+
+    const formatDate = (dateString: string): string => {
+        if (!dateString) return '';
+        
+        const language = i18n.language;
+        
+        const localeMap: { [key: string]: string } = {
+            'en': 'en-US',
+            'zh': 'zh-CN',
+            'zh-TW': 'zh-TW',
+            'ja': 'ja-JP',
+            'ko': 'ko-KR',
+            'es': 'es-ES',
+            'fr': 'fr-FR',
+            'de': 'de-DE',
+            'ru': 'ru-RU',
+            'it': 'it-IT',
+            'pt': 'pt-PT'
+        };
+        
+        const locale = localeMap[language] || 'en-US';
+        
+        return new Intl.DateTimeFormat(locale, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        }).format(new Date(dateString));
     };
 
     const [tv, setTV] = useState<TVDetails | null>(null);
@@ -139,7 +175,7 @@ export default function TVDetail() {
             })
             .catch((err) => {
                 console.error(err);
-                setError('Failed to load TV details. Check ID or API Key.');
+                setError('Failed to load TV details.');
             })
             .finally(() => {
                 setLoading(false);
@@ -708,12 +744,12 @@ export default function TVDetail() {
                     {(() => {
                         const infoItems = [
                             { label: t('tv.status'), value: translateStatus(tv.status) },
-                            { label: t('tv.firstAirDate'), value: tv.first_air_date ? new Date(tv.first_air_date).toLocaleDateString() : t('common.unknown') },
-                            { label: t('tv.lastAirDate'), value: tv.last_air_date ? new Date(tv.last_air_date).toLocaleDateString() : t('common.unknown') },
+                            { label: t('tv.firstAirDate'), value: tv.first_air_date ? formatDate(tv.first_air_date) : t('common.unknown') },
+                            { label: t('tv.lastAirDate'), value: tv.last_air_date ? formatDate(tv.last_air_date) : t('common.unknown') },
                             { label: t('tv.type'), value: translateType(tv.type) },
                             tv.next_episode_to_air ? {
                                 label: t('tv.nextEpisode'),
-                                value: `${tv.next_episode_to_air.name} (S${tv.next_episode_to_air.season_number}E${tv.next_episode_to_air.episode_number}) - ${new Date(tv.next_episode_to_air.air_date).toLocaleDateString()}`
+                                value: `${tv.next_episode_to_air.name} (S${tv.next_episode_to_air.season_number}E${tv.next_episode_to_air.episode_number}) - ${formatDate(tv.next_episode_to_air.air_date)}`
                             } : null,
                             runtime > 0 ? { label: t('tv.episodeRuntime'), value: `${runtime}m` } : null,
                             { label: t('common.originalLanguage'), value: translateLanguageSafe(tv.original_language) },
@@ -973,7 +1009,7 @@ export default function TVDetail() {
                                                             <span style={{ fontSize: '14px', color: '#999' }}>{episode.runtime}m</span>
                                                         )}
                                                         <span style={{ color: '#999', fontSize: '14px', whiteSpace: 'nowrap' }}>
-                                                            {episode.air_date ? new Date(episode.air_date).toLocaleDateString() : t('common.tba')}
+                                                            {episode.air_date ? formatDate(episode.air_date) : t('common.tba')}
                                                         </span>
                                                     </div>
                                                 </div>

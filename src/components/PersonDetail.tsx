@@ -84,6 +84,34 @@ export default function PersonDetail() {
         return departmentMap[department] || department;
     };
 
+    const formatDate = (dateString: string): string => {
+        if (!dateString) return '';
+        
+        const language = i18n.language;
+        
+        const localeMap: { [key: string]: string } = {
+            'en': 'en-US',
+            'zh': 'zh-CN',
+            'zh-TW': 'zh-TW',
+            'ja': 'ja-JP',
+            'ko': 'ko-KR',
+            'es': 'es-ES',
+            'fr': 'fr-FR',
+            'de': 'de-DE',
+            'ru': 'ru-RU',
+            'it': 'it-IT',
+            'pt': 'pt-PT'
+        };
+        
+        const locale = localeMap[language] || 'en-US';
+        
+        return new Intl.DateTimeFormat(locale, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        }).format(new Date(dateString));
+    };
+
     const allCredits = [
         ...(person.combined_credits?.cast || []),
         ...(person.combined_credits?.crew || [])
@@ -181,13 +209,13 @@ export default function PersonDetail() {
                         {person.birthday && (
                             <div>
                                 <span style={{ color: '#888' }}>{t('common.born')}: </span>
-                                <span>{new Date(person.birthday).toLocaleDateString()} ({calculateAge(person.birthday, person.deathday)} {t('common.yearsOld')})</span>
+                                <span>{formatDate(person.birthday)} ({calculateAge(person.birthday, person.deathday)} {t('common.yearsOld')})</span>
                             </div>
                         )}
                         {person.deathday && (
                             <div>
                                 <span style={{ color: '#888' }}>{t('common.died')}: </span>
-                                <span>{new Date(person.deathday).toLocaleDateString()}</span>
+                                <span>{formatDate(person.deathday)}</span>
                             </div>
                         )}
                         {person.place_of_birth && (
