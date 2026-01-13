@@ -1,3 +1,3 @@
 # Screen Lookup
 
-A modern, multilingual movie, TV show, and people information lookup application.
+A modern, multilingual web application for looking up information about movies, TV shows, and people.

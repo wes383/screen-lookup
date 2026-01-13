@@ -14,11 +14,9 @@ export default function Home() {
     const resultsRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
 
-    // Close results when clicking outside
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (resultsRef.current && !resultsRef.current.contains(event.target as Node)) {
-                // Only close if search box is empty
                 if (query.trim().length === 0) {
                     setIsFocused(false);
                 }
@@ -34,7 +32,6 @@ export default function Home() {
         };
     }, [isFocused, query]);
 
-    // Search as user types
     useEffect(() => {
         if (searchTimeoutRef.current) {
             clearTimeout(searchTimeoutRef.current);
@@ -66,7 +63,6 @@ export default function Home() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (query.trim() && searchResults.length > 0) {
-            // Navigate to first result
             navigate(`/${searchResults[0].media_type}/${searchResults[0].id}`);
         }
     };
@@ -252,10 +248,10 @@ export default function Home() {
                                                 <img
                                                     src={getResultImage(result)!}
                                                     alt={getResultTitle(result)}
-                                                    style={{ 
-                                                        width: '100%', 
-                                                        height: '100%', 
-                                                        objectFit: 'cover' 
+                                                    style={{
+                                                        width: '100%',
+                                                        height: '100%',
+                                                        objectFit: 'cover'
                                                     }}
                                                 />
                                             ) : (

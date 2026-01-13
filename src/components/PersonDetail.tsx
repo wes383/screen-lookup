@@ -14,7 +14,6 @@ export default function PersonDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    // Set global loading state on mount
     useEffect(() => {
         setIsLoading(true);
         return () => setIsLoading(false);
@@ -105,7 +104,7 @@ export default function PersonDetail() {
     };
 
     const creditsMap = new Map<number, { credit: PersonCreditItem; characters: Set<string>; jobs: Set<string> }>();
-    
+
     allCredits.forEach(c => {
         const existing = creditsMap.get(c.id);
         if (existing) {
@@ -123,7 +122,7 @@ export default function PersonDetail() {
             creditsMap.set(c.id, { credit: { ...c }, characters, jobs });
         }
     });
-    
+
     const sortedCredits = Array.from(creditsMap.values())
         .map(({ credit, characters, jobs }) => {
             // Sort jobs by importance
@@ -132,10 +131,9 @@ export default function PersonDetail() {
                 const importanceB = jobImportance[b] || 999;
                 return importanceA - importanceB;
             });
-            
-            // Sort characters (keep original order for now)
+
             const sortedCharacters = Array.from(characters);
-            
+
             return {
                 ...credit,
                 character: sortedCharacters.join(', ') || undefined,
@@ -263,7 +261,7 @@ export default function PersonDetail() {
                                     };
                                     return jobMap[job] || job;
                                 }).join(', ');
-                                
+
                                 const roles = [credit.character, translatedJobs].filter(Boolean);
                                 return (
                                     <div

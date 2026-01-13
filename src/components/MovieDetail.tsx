@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getMovieDetails, getMovieLogos, getMovieCertification, getWatchProviders, getMovieKeywords, getMovieCredits, getMovieAlternativeTitles, getMovieReleaseDates, getMovieVideos, getImageUrl, type MovieDetails, type MovieLogo, type WatchProviderData, type Keyword, type MovieCredits, type AlternativeTitle, type CountryReleaseDates, type MovieVideo } from '../services/tmdb';
-import { X, User} from 'lucide-react';
+import { X, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLoading } from '../contexts/LoadingContext';
 
@@ -49,7 +49,6 @@ export default function MovieDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    // Set global loading state on mount
     useEffect(() => {
         setIsLoading(true);
         return () => setIsLoading(false);
@@ -150,7 +149,6 @@ export default function MovieDetail() {
         fetchData();
     }, [id, i18n.language]);
 
-    // Translate job titles
     const translateJob = (job: string): string => {
         const jobMap: { [key: string]: string } = {
             'Director': t('person.knownForDirecting'),
@@ -176,7 +174,6 @@ export default function MovieDetail() {
         return jobMap[job] || job;
     };
 
-    // Translate department names
     const translateDepartment = (department: string): string => {
         const deptMap: { [key: string]: string } = {
             'Directing': t('person.knownForDirecting'),
@@ -242,7 +239,6 @@ export default function MovieDetail() {
                     opacity: 0.85
                 }} />
 
-                {/* Gradient Fade to Background Color */}
                 <div style={{
                     position: 'absolute',
                     top: 0,

@@ -62,7 +62,6 @@ export default function TVDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    // Set global loading state on mount
     useEffect(() => {
         setIsLoading(true);
         return () => setIsLoading(false);
@@ -127,10 +126,9 @@ export default function TVDetail() {
                 setLogo(currentLogo);
 
                 setContentRatings(ratings);
-                // Try to find rating for current country first, then fallback to US, then first available
-                const countryRating = ratings.find(r => r.iso_3166_1 === countryCode)?.rating || 
-                                     ratings.find(r => r.iso_3166_1 === 'US')?.rating || 
-                                     ratings[0]?.rating || null;
+                const countryRating = ratings.find(r => r.iso_3166_1 === countryCode)?.rating ||
+                    ratings.find(r => r.iso_3166_1 === 'US')?.rating ||
+                    ratings[0]?.rating || null;
                 setContentRating(countryRating);
 
                 setWatchProviders(providers);
@@ -149,7 +147,6 @@ export default function TVDetail() {
             });
     }, [id, i18n.language]);
 
-    // Translate job titles
     const translateJob = (job: string): string => {
         const jobMap: { [key: string]: string } = {
             'Director': t('person.knownForDirecting'),
@@ -175,7 +172,6 @@ export default function TVDetail() {
         return jobMap[job] || job;
     };
 
-    // Translate department names
     const translateDepartment = (department: string): string => {
         const deptMap: { [key: string]: string } = {
             'Directing': t('person.knownForDirecting'),
