@@ -59,6 +59,7 @@ export default function MovieDetail() {
     };
 
     const [movie, setMovie] = useState<MovieDetails | null>(null);
+    const [englishTitle, setEnglishTitle] = useState<string>('');
     const [logo, setLogo] = useState<MovieLogo | null>(null);
     const [certification, setCertification] = useState<string | null>(null);
     const [watchProviders, setWatchProviders] = useState<WatchProviderData | null>(null);
@@ -143,7 +144,7 @@ export default function MovieDetail() {
                 const imageLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja' : i18n.language === 'ko' ? 'ko' : i18n.language === 'es' ? 'es' : i18n.language === 'fr' ? 'fr' : i18n.language === 'de' ? 'de' : i18n.language === 'ru' ? 'ru' : i18n.language === 'it' ? 'it' : i18n.language === 'pt' ? 'pt' : 'en';
                 const countryCode = i18n.language === 'zh' ? 'CN' : i18n.language === 'zh-TW' ? 'TW' : i18n.language === 'ja' ? 'JP' : i18n.language === 'ko' ? 'KR' : i18n.language === 'es' ? 'ES' : i18n.language === 'fr' ? 'FR' : i18n.language === 'de' ? 'DE' : i18n.language === 'ru' ? 'RU' : i18n.language === 'it' ? 'IT' : i18n.language === 'pt' ? 'PT' : 'US';
 
-                const [movieData, logos, cert, providers, kw, creds, altTitles, releases, vids] = await Promise.all([
+                const [movieData, logos, cert, providers, kw, creds, altTitles, releases, vids, englishData] = await Promise.all([
                     getMovieDetails(id, currentLanguage),
                     getMovieLogos(id, imageLanguage),
                     getMovieCertification(id, countryCode),
@@ -152,10 +153,12 @@ export default function MovieDetail() {
                     getMovieCredits(id, currentLanguage),
                     getMovieAlternativeTitles(id),
                     getMovieReleaseDates(id),
-                    getMovieVideos(id)
+                    getMovieVideos(id),
+                    getMovieDetails(id, 'en-US')
                 ]);
 
                 setMovie(movieData);
+                setEnglishTitle(englishData.title);
                 const currentLogo = logos.find(l => l.iso_639_1 === imageLanguage) || logos[0] || null;
                 setLogo(currentLogo);
                 setCertification(cert);
@@ -485,7 +488,7 @@ export default function MovieDetail() {
                         {t('common.letterboxd')}
                     </a>
                     <a
-                        href={`https://www.metacritic.com/search/${encodeURIComponent(movie.original_title)}/?page=1&category=2`}
+                        href={`https://www.metacritic.com/search/${encodeURIComponent(englishTitle || movie.original_title)}/?page=1&category=2`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
@@ -507,7 +510,7 @@ export default function MovieDetail() {
                         </a>
                     )}
                     <a
-                        href={`https://www.rottentomatoes.com/search?search=${encodeURIComponent(movie.original_title)}`}
+                        href={`https://www.rottentomatoes.com/search?search=${encodeURIComponent(englishTitle || movie.original_title)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
@@ -517,7 +520,7 @@ export default function MovieDetail() {
                         {t('common.rottentomatoes')}
                     </a>
                     <a
-                        href={`https://www.justwatch.com/us/search?q=${encodeURIComponent(movie.original_title)}`}
+                        href={`https://www.justwatch.com/us/search?q=${encodeURIComponent(englishTitle || movie.original_title)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}

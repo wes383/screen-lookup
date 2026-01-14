@@ -81,6 +81,7 @@ export default function TVDetail() {
     };
 
     const [tv, setTV] = useState<TVDetails | null>(null);
+    const [englishName, setEnglishName] = useState<string>('');
     const [logo, setLogo] = useState<MovieLogo | null>(null);
     const [contentRating, setContentRating] = useState<string | null>(null);
     const [contentRatings, setContentRatings] = useState<ContentRating[]>([]);
@@ -154,10 +155,12 @@ export default function TVDetail() {
             getTVKeywords(id),
             getTVCredits(id, currentLanguage),
             getTVAlternativeTitles(id),
-            getTVVideos(id)
+            getTVVideos(id),
+            getTVDetails(id, 'en-US')
         ])
-            .then(([tvData, logos, ratings, providers, kw, creds, altTitles, vids]) => {
+            .then(([tvData, logos, ratings, providers, kw, creds, altTitles, vids, englishData]) => {
                 setTV(tvData);
+                setEnglishName(englishData.name);
                 const currentLogo = logos.find(l => l.iso_639_1 === imageLanguage) || logos[0] || null;
                 setLogo(currentLogo);
 
@@ -486,7 +489,7 @@ export default function TVDetail() {
                         </a>
                     )}
                     <a
-                        href={`https://www.metacritic.com/search/${encodeURIComponent(tv.original_name)}/?page=1&category=1`}
+                        href={`https://www.metacritic.com/search/${encodeURIComponent(englishName || tv.original_name)}/?page=1&category=1`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
@@ -508,7 +511,7 @@ export default function TVDetail() {
                         </a>
                     )}
                     <a
-                        href={`https://www.rottentomatoes.com/search?search=${encodeURIComponent(tv.original_name)}`}
+                        href={`https://www.rottentomatoes.com/search?search=${encodeURIComponent(englishName || tv.original_name)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
@@ -518,7 +521,7 @@ export default function TVDetail() {
                         {t('common.rottentomatoes')}
                     </a>
                     <a
-                        href={`https://www.justwatch.com/us/search?q=${encodeURIComponent(tv.original_name)}`}
+                        href={`https://www.justwatch.com/us/search?q=${encodeURIComponent(englishName || tv.original_name)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
