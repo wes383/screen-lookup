@@ -32,7 +32,8 @@ export function getTSPDT21stRanking(title: string, year: number): number | null 
 
     const match = films.find(film => {
         const normalizedFilmTitle = normalizeTitle(film.title);
-        return normalizedFilmTitle === normalizedSearchTitle && film.year === year;
+        const yearDiff = Math.abs(film.year - year);
+        return normalizedFilmTitle === normalizedSearchTitle && yearDiff <= 1;
     });
 
     return match ? match.rank : null;
