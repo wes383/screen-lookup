@@ -10,8 +10,13 @@ export default function Home() {
     const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
     const [isSearching, setIsSearching] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
+    const [displayCount, setDisplayCount] = useState(10);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
     const searchTimeoutRef = useRef<number | undefined>(undefined);
     const resultsRef = useRef<HTMLDivElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -32,6 +37,40 @@ export default function Home() {
         };
     }, [isFocused, query]);
 
+    // Handle infinite scroll
+    useEffect(() => {
+        const scrollContainer = scrollContainerRef.current;
+        if (!scrollContainer) return;
+
+        const handleScroll = async () => {
+            const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
+            const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
+            
+            // When user scrolls to bottom (with 100px threshold)
+            if (distanceFromBottom < 100 && !isLoadingMore) {
+                // Check if we need to load more from current results
+                if (displayCount < searchResults.length) {
+                    setDisplayCount(prev => Math.min(prev + 10, searchResults.length));
+                }
+                // Check if we need to fetch next page
+                else if (currentPage < totalPages && !isLoadingMore) {
+                    setIsLoadingMore(true);
+                    const currentLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja-JP' : i18n.language === 'ko' ? 'ko-KR' : i18n.language === 'es' ? 'es-ES' : i18n.language === 'fr' ? 'fr-FR' : i18n.language === 'de' ? 'de-DE' : i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'it' ? 'it-IT' : i18n.language === 'pt' ? 'pt-PT' : 'en-US';
+                    const nextPage = currentPage + 1;
+                    const results = await searchMulti(query.trim(), currentLanguage, nextPage);
+                    const filtered = results.results.filter(r => r.media_type === 'movie' || r.media_type === 'tv' || r.media_type === 'person');
+                    setSearchResults(prev => [...prev, ...filtered]);
+                    setCurrentPage(nextPage);
+                    setDisplayCount(prev => prev + 10);
+                    setIsLoadingMore(false);
+                }
+            }
+        };
+
+        scrollContainer.addEventListener('scroll', handleScroll);
+        return () => scrollContainer.removeEventListener('scroll', handleScroll);
+    }, [displayCount, searchResults.length, currentPage, totalPages, isLoadingMore, query, i18n.language]);
+
     useEffect(() => {
         if (searchTimeoutRef.current) {
             clearTimeout(searchTimeoutRef.current);
@@ -40,16 +79,22 @@ export default function Home() {
         if (query.trim().length < 2) {
             setSearchResults([]);
             setIsSearching(false);
+            setDisplayCount(10);
+            setCurrentPage(1);
+            setTotalPages(1);
             return;
         }
 
         setIsSearching(true);
+        setDisplayCount(10);
+        setCurrentPage(1);
         searchTimeoutRef.current = setTimeout(async () => {
             const currentLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja-JP' : i18n.language === 'ko' ? 'ko-KR' : i18n.language === 'es' ? 'es-ES' : i18n.language === 'fr' ? 'fr-FR' : i18n.language === 'de' ? 'de-DE' : i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'it' ? 'it-IT' : i18n.language === 'pt' ? 'pt-PT' : 'en-US';
-            const results = await searchMulti(query.trim(), currentLanguage);
+            const results = await searchMulti(query.trim(), currentLanguage, 1);
             // Include movies, TV shows, and people
             const filtered = results.results.filter(r => r.media_type === 'movie' || r.media_type === 'tv' || r.media_type === 'person');
-            setSearchResults(filtered.slice(0, 10));
+            setSearchResults(filtered);
+            setTotalPages(results.total_pages);
             setIsSearching(false);
         }, 300) as unknown as number;
 
@@ -194,18 +239,20 @@ export default function Home() {
 
                     {/* Search Results Dropdown */}
                     {isFocused && (
-                        <div style={{
-                            position: 'absolute',
-                            top: '100%',
-                            left: 0,
-                            right: 0,
-                            backgroundColor: '#2A2A2A',
-                            borderRadius: '0 0 24px 24px',
-                            boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
-                            height: '500px',
-                            overflowY: 'auto',
-                            zIndex: 1000
-                        }}>
+                        <div 
+                            ref={scrollContainerRef}
+                            style={{
+                                position: 'absolute',
+                                top: '100%',
+                                left: 0,
+                                right: 0,
+                                backgroundColor: '#2A2A2A',
+                                borderRadius: '0 0 24px 24px',
+                                boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+                                height: '500px',
+                                overflowY: 'auto',
+                                zIndex: 1000
+                            }}>
                             {isSearching && query.trim().length >= 2 ? (
                                 <div style={{
                                     display: 'flex',
@@ -218,7 +265,8 @@ export default function Home() {
                                     {t('common.searching')}...
                                 </div>
                             ) : searchResults.length > 0 ? (
-                                searchResults.map((result) => (
+                                <>
+                                    {searchResults.slice(0, displayCount).map((result) => (
                                     <div
                                         key={`${result.media_type}-${result.id}`}
                                         onClick={() => handleResultClick(result)}
@@ -298,6 +346,18 @@ export default function Home() {
                                         </div>
                                     </div>
                                 ))
+                                }
+                                {(displayCount < searchResults.length || currentPage < totalPages) && (
+                                    <div style={{
+                                        padding: '16px',
+                                        textAlign: 'center',
+                                        color: '#888',
+                                        fontSize: '14px'
+                                    }}>
+                                        {t('common.loading')}...
+                                    </div>
+                                )}
+                                </>
                             ) : query.trim().length >= 2 ? (
                                 <div style={{
                                     display: 'flex',

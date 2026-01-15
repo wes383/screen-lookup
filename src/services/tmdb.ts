@@ -18,6 +18,8 @@ export interface MovieDetails {
     spoken_languages: { iso_639_1: string; name: string }[];
     production_countries: { iso_3166_1: string; name: string }[];
     production_companies: { id: number; logo_path: string | null; name: string; origin_country: string }[];
+    vote_average: number;
+    vote_count: number;
 }
 
 const USE_DIRECT_API = import.meta.env.VITE_USE_DIRECT_API === 'true';
@@ -638,5 +640,33 @@ export const searchMulti = async (query: string, language: string = 'en-US', pag
         };
     } catch {
         return { page: 1, results: [], total_pages: 0, total_results: 0 };
+    }
+};
+
+// IMDb Rating Types
+export interface IMDbRating {
+    aggregateRating: number;
+    voteCount: number;
+    metascore?: number;
+    topRank?: number;
+}
+
+export const getIMDbRating = async (imdbId: string): Promise<IMDbRating | null> => {
+    try {
+        const response = await fetch(`https://imdb.iamidiotareyoutoo.com/search?tt=${imdbId}`);
+        if (!response.ok) return null;
+        const data = await response.json();
+        
+        if (data.ok && data.top?.ratingsSummary) {
+            return {
+                aggregateRating: data.top.ratingsSummary.aggregateRating,
+                voteCount: data.top.ratingsSummary.voteCount,
+                metascore: data.top.metacritic?.metascore?.score,
+                topRank: data.main?.ratingsSummary?.topRanking?.rank
+            };
+        }
+        return null;
+    } catch {
+        return null;
     }
 };

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getTVDetails, getTVLogos, getTVContentRatings, getTVWatchProviders, getTVKeywords, getTVCredits, getTVAlternativeTitles, getTVVideos, getTVSeasonDetails, getImageUrl, type TVDetails, type MovieLogo, type WatchProviderData, type WatchProvider, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails } from '../services/tmdb';
+import { getTVDetails, getTVLogos, getTVContentRatings, getTVWatchProviders, getTVKeywords, getTVCredits, getTVAlternativeTitles, getTVVideos, getTVSeasonDetails, getImageUrl, getIMDbRating, type TVDetails, type MovieLogo, type WatchProviderData, type WatchProvider, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails } from '../services/tmdb';
 import { X, User, PlayCircle, Film } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLoading } from '../contexts/LoadingContext';
@@ -98,6 +98,7 @@ export default function TVDetail() {
     const [isCertHovered, setIsCertHovered] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [imdbRating, setImdbRating] = useState<{ aggregateRating: number; voteCount: number; metascore?: number; topRank?: number } | null>(null);
 
     useEffect(() => {
         setIsLoading(true);
@@ -175,6 +176,13 @@ export default function TVDetail() {
                 setCredits(creds);
                 setAlternativeTitles(altTitles);
                 setVideos(vids);
+
+                // Fetch IMDb rating if imdb_id exists
+                if (tvData.external_ids?.imdb_id) {
+                    getIMDbRating(tvData.external_ids.imdb_id).then(rating => {
+                        if (rating) setImdbRating(rating);
+                    });
+                }
             })
             .catch((err) => {
                 console.error(err);
@@ -391,7 +399,135 @@ export default function TVDetail() {
                             {tv.tagline}
                         </p>
                     )}
+                </div>
 
+                {(tv.vote_average > 0 || imdbRating) && (
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '24px',
+                        marginBottom: '24px',
+                        flexWrap: 'wrap'
+                    }}>
+                        {tv.vote_average > 0 && (
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px'
+                            }}>
+                                <span style={{
+                                    fontSize: '18px',
+                                    fontWeight: 600,
+                                    color: '#01b4e4'
+                                }}>
+                                    TMDB
+                                </span>
+                                <span style={{
+                                    fontSize: '18px',
+                                    fontWeight: 600,
+                                    color: '#fff'
+                                }}>
+                                    {tv.vote_average.toFixed(1)}
+                                </span>
+                            </div>
+                        )}
+                        {imdbRating?.metascore && (
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px'
+                            }}>
+                                <span style={{
+                                    fontSize: '18px',
+                                    fontWeight: 600,
+                                    color: imdbRating.metascore >= 61 ? '#00CE7A' : imdbRating.metascore >= 40 ? '#FFBD3F' : '#FF6874'
+                                }}>
+                                    Metacritic
+                                </span>
+                                <span style={{
+                                    fontSize: '18px',
+                                    fontWeight: 600,
+                                    color: '#fff'
+                                }}>
+                                    {imdbRating.metascore}
+                                </span>
+                            </div>
+                        )}
+                        {imdbRating && (
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px'
+                            }}>
+                                <span style={{
+                                    fontSize: '18px',
+                                    fontWeight: 600,
+                                    color: '#DBA506'
+                                }}>
+                                    IMDb
+                                </span>
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '4px'
+                                }}>
+                                    <span style={{
+                                        fontSize: '18px',
+                                        fontWeight: 600,
+                                        color: '#fff'
+                                    }}>
+                                        {imdbRating.aggregateRating.toFixed(1)}
+                                    </span>
+                                    <span style={{
+                                        fontSize: '14px',
+                                        color: '#999'
+                                    }}>
+                                        ({(() => {
+                                            const count = imdbRating.voteCount;
+                                            if (count < 1000) {
+                                                return count.toString();
+                                            } else if (count < 10000) {
+                                                const k = count / 1000;
+                                                return `${k.toFixed(1)}K`;
+                                            } else if (count < 1000000) {
+                                                const k = Math.round(count / 1000);
+                                                return `${k}K`;
+                                            } else {
+                                                const m = count / 1000000;
+                                                return `${m.toFixed(1)}M`;
+                                            }
+                                        })()})
+                                    </span>
+                                </div>
+                            </div>
+                        )}
+                        {imdbRating?.topRank && imdbRating.topRank <= 250 && (
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px'
+                            }}>
+                                <span style={{
+                                    fontSize: '18px',
+                                    fontWeight: 600,
+                                    color: '#fff'
+                                }}>
+                                    #{imdbRating.topRank}
+                                </span>
+                                <span style={{
+                                    fontSize: '14px',
+                                    color: '#fff',
+                                    lineHeight: 1.3,
+                                    display: 'inline-block'
+                                }}>
+                                    on IMDb Top 250
+                                </span>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                <div style={{ maxWidth: '800px' }}>
                     <h3 style={{
                         fontSize: '1.2rem',
                         marginBottom: '16px',

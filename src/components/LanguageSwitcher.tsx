@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Globe, Home } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import TMDbLogo from '../assets/TMDb_logo.svg';
+import TMDbLogo from '../assets/tmdb-logo.svg';
 
 interface LanguageSwitcherProps {
   variant?: 'fixed' | 'bottom';

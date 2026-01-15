@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getMovieDetails, getMovieLogos, getMovieCertification, getWatchProviders, getMovieKeywords, getMovieCredits, getMovieAlternativeTitles, getMovieReleaseDates, getMovieVideos, getImageUrl, type MovieDetails, type MovieLogo, type WatchProviderData, type Keyword, type MovieCredits, type AlternativeTitle, type CountryReleaseDates, type MovieVideo } from '../services/tmdb';
+import { getMovieDetails, getMovieLogos, getMovieCertification, getWatchProviders, getMovieKeywords, getMovieCredits, getMovieAlternativeTitles, getMovieReleaseDates, getMovieVideos, getImageUrl, getIMDbRating, type MovieDetails, type MovieLogo, type WatchProviderData, type Keyword, type MovieCredits, type AlternativeTitle, type CountryReleaseDates, type MovieVideo } from '../services/tmdb';
 import { X, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLoading } from '../contexts/LoadingContext';
+import { getTSPDTRanking } from '../utils/tspdtRanking';
+import { getTSPDT21stRanking } from '../utils/tspdt21stRanking';
+import { getSightAndSoundRanking } from '../utils/sightAndSoundRanking';
+import { getAFIRanking } from '../utils/afiRanking';
 
 export default function MovieDetail() {
     const { t, i18n } = useTranslation();
@@ -77,6 +81,11 @@ export default function MovieDetail() {
     const [isDateHovered, setIsDateHovered] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [imdbRating, setImdbRating] = useState<{ aggregateRating: number; voteCount: number; metascore?: number; topRank?: number } | null>(null);
+    const [tspdtRank, setTspdtRank] = useState<number | null>(null);
+    const [tspdt21stRank, setTspdt21stRank] = useState<number | null>(null);
+    const [sightAndSoundRank, setSightAndSoundRank] = useState<number | null>(null);
+    const [afiRank, setAfiRank] = useState<number | null>(null);
 
     useEffect(() => {
         setIsLoading(true);
@@ -168,6 +177,32 @@ export default function MovieDetail() {
                 setAlternativeTitles(altTitles);
                 setReleaseDates(releases);
                 setVideos(vids);
+
+                // Get TSPDT ranking
+                const releaseYear = movieData.release_date ? new Date(movieData.release_date).getFullYear() : 0;
+                const tspdtRanking = getTSPDTRanking(englishData.title, releaseYear);
+                setTspdtRank(tspdtRanking);
+
+                // Get TSPDT 21st Century ranking
+                const tspdt21stRanking = getTSPDT21stRanking(englishData.title, releaseYear);
+                setTspdt21stRank(tspdt21stRanking);
+
+                // Get Sight and Sound ranking
+                if (movieData.imdb_id) {
+                    const sightAndSoundRanking = getSightAndSoundRanking(movieData.imdb_id);
+                    setSightAndSoundRank(sightAndSoundRanking);
+                    
+                    // Get AFI ranking
+                    const afiRanking = getAFIRanking(movieData.imdb_id);
+                    setAfiRank(afiRanking);
+                }
+
+                // Fetch IMDb rating if imdb_id exists
+                if (movieData.imdb_id) {
+                    getIMDbRating(movieData.imdb_id).then(rating => {
+                        if (rating) setImdbRating(rating);
+                    });
+                }
             } catch (err) {
                 console.error(err);
                 setError('Failed to load movie details.');
@@ -380,8 +415,159 @@ export default function MovieDetail() {
                             {movie.tagline}
                         </p>
                     )}
+                </div>
 
+                {(movie.vote_average > 0 || imdbRating || tspdtRank || tspdt21stRank || sightAndSoundRank || afiRank) && (
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '24px',
+                        marginBottom: '24px',
+                        flexWrap: 'wrap'
+                    }}>
+                        {movie.vote_average > 0 && (
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px'
+                            }}>
+                                <span style={{
+                                    fontSize: '18px',
+                                    fontWeight: 600,
+                                    color: '#01b4e4'
+                                }}>
+                                    TMDB
+                                </span>
+                                <span style={{
+                                    fontSize: '18px',
+                                    fontWeight: 600,
+                                    color: '#fff'
+                                }}>
+                                    {movie.vote_average.toFixed(1)}
+                                </span>
+                            </div>
+                        )}
+                        {imdbRating?.metascore && (
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px'
+                            }}>
+                                <span style={{
+                                    fontSize: '18px',
+                                    fontWeight: 600,
+                                    color: imdbRating.metascore >= 61 ? '#00CE7A' : imdbRating.metascore >= 40 ? '#FFBD3F' : '#FF6874'
+                                }}>
+                                    Metacritic
+                                </span>
+                                <span style={{
+                                    fontSize: '18px',
+                                    fontWeight: 600,
+                                    color: '#fff'
+                                }}>
+                                    {imdbRating.metascore}
+                                </span>
+                            </div>
+                        )}
+                        {imdbRating && (
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px'
+                            }}>
+                                <span style={{
+                                    fontSize: '18px',
+                                    fontWeight: 600,
+                                    color: '#DBA506'
+                                }}>
+                                    IMDb
+                                </span>
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '4px'
+                                }}>
+                                    <span style={{
+                                        fontSize: '18px',
+                                        fontWeight: 600,
+                                        color: '#fff'
+                                    }}>
+                                        {imdbRating.aggregateRating.toFixed(1)}
+                                    </span>
+                                    <span style={{
+                                        fontSize: '14px',
+                                        color: '#999'
+                                    }}>
+                                        ({(() => {
+                                            const count = imdbRating.voteCount;
+                                            if (count < 1000) {
+                                                return count.toString();
+                                            } else if (count < 10000) {
+                                                const k = count / 1000;
+                                                return `${k.toFixed(1)}K`;
+                                            } else if (count < 1000000) {
+                                                const k = Math.round(count / 1000);
+                                                return `${k}K`;
+                                            } else {
+                                                const m = count / 1000000;
+                                                return `${m.toFixed(1)}M`;
+                                            }
+                                        })()})
+                                    </span>
+                                </div>
+                            </div>
+                        )}
+                        {(() => {
+                            // Create array of rankings and sort by rank number
+                            const rankings = [];
+                            if (imdbRating?.topRank && imdbRating.topRank <= 250) {
+                                rankings.push({ rank: imdbRating.topRank, name: 'imdb', label: 'on IMDb Top 250' });
+                            }
+                            if (afiRank) {
+                                rankings.push({ rank: afiRank, name: 'afi', label: "on AFI's 100 Years...\n100 Movies" });
+                            }
+                            if (sightAndSoundRank) {
+                                rankings.push({ rank: sightAndSoundRank, name: 'sightandsound', label: 'on The Sight and Sound\nGreatest Films of All Time' });
+                            }
+                            if (tspdtRank) {
+                                rankings.push({ rank: tspdtRank, name: 'tspdt', label: 'on TSPDT 1000\nGreatest Films' });
+                            }
+                            if (tspdt21stRank) {
+                                rankings.push({ rank: tspdt21stRank, name: 'tspdt21st', label: "on TSPDT 21st Century's\n1000 Most Acclaimed Films" });
+                            }
+                            
+                            // Sort by rank number (ascending)
+                            rankings.sort((a, b) => a.rank - b.rank);
+                            
+                            return rankings.map((ranking) => (
+                                <div key={ranking.name} style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px'
+                                }}>
+                                    <span style={{
+                                        fontSize: '18px',
+                                        fontWeight: 600,
+                                        color: '#fff'
+                                    }}>
+                                        #{ranking.rank}
+                                    </span>
+                                    <span style={{
+                                        fontSize: '14px',
+                                        color: '#fff',
+                                        lineHeight: 1.3,
+                                        display: 'inline-block',
+                                        whiteSpace: 'pre-line'
+                                    }}>
+                                        {ranking.label}
+                                    </span>
+                                </div>
+                            ));
+                        })()}
+                    </div>
+                )}
 
+                <div style={{ maxWidth: '800px' }}>
                     <h3 style={{
                         fontSize: '1.2rem',
                         marginBottom: '16px',
