@@ -5,6 +5,7 @@ import Home from './components/Home';
 import MovieDetail from './components/MovieDetail';
 import TVDetail from './components/TVDetail';
 import PersonDetail from './components/PersonDetail';
+import ImdbRedirect from './components/ImdbRedirect';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import { LoadingProvider } from './contexts/LoadingContext';
 
@@ -30,6 +31,7 @@ function AppContent() {
         <Route path="/movie/:id" element={<MovieDetail />} />
         <Route path="/tv/:id" element={<TVDetail />} />
         <Route path="/person/:id" element={<PersonDetail />} />
+        <Route path="/:imdbId" element={<ImdbRedirect />} />
       </Routes>
       <LanguageSwitcher variant={isHomePage ? 'fixed' : 'bottom'} />
     </>

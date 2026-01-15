@@ -670,3 +670,32 @@ export const getIMDbRating = async (imdbId: string): Promise<IMDbRating | null> 
         return null;
     }
 };
+
+// Find movie or TV show by IMDb ID
+export interface FindByImdbResult {
+    movie_results: Array<{ id: number }>;
+    tv_results: Array<{ id: number }>;
+}
+
+export const findByImdbId = async (imdbId: string): Promise<{ type: 'movie' | 'tv' | null; id: number | null }> => {
+    try {
+        const url = buildApiUrl(`find/${imdbId}`, { external_source: 'imdb_id' });
+        const response = await fetch(url);
+        
+        if (!response.ok) return { type: null, id: null };
+        
+        const data: FindByImdbResult = await response.json();
+        
+        if (data.movie_results && data.movie_results.length > 0) {
+            return { type: 'movie', id: data.movie_results[0].id };
+        }
+        
+        if (data.tv_results && data.tv_results.length > 0) {
+            return { type: 'tv', id: data.tv_results[0].id };
+        }
+        
+        return { type: null, id: null };
+    } catch {
+        return { type: null, id: null };
+    }
+};
