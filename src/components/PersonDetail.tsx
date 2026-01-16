@@ -4,6 +4,7 @@ import { getPersonDetails, getImageUrl, type PersonDetails, type PersonCreditIte
 import { User, Film } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLoading } from '../contexts/LoadingContext';
+import { getTMDBLanguage } from '../utils/languageMapper';
 
 export default function PersonDetail() {
     const { t, i18n } = useTranslation();
@@ -24,7 +25,7 @@ export default function PersonDetail() {
         const fetchData = async () => {
             setLoading(true);
             setIsLoading(true);
-            const currentLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja-JP' : i18n.language === 'ko' ? 'ko-KR' : i18n.language === 'es' ? 'es-ES' : i18n.language === 'fr' ? 'fr-FR' : i18n.language === 'de' ? 'de-DE' : i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'it' ? 'it-IT' : i18n.language === 'pt' ? 'pt-PT' : 'en-US';
+            const currentLanguage = getTMDBLanguage(i18n.language);
             const data = await getPersonDetails(id, currentLanguage);
             if (data) {
                 setPerson(data);

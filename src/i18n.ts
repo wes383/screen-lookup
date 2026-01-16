@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import enTranslation from './locales/en/translation.json';
 import zhTranslation from './locales/zh/translation.json';
 import zhTWTranslation from './locales/zh-TW/translation.json';
+import zhHKTranslation from './locales/zh-HK/translation.json';
 import jaTranslation from './locales/ja/translation.json';
 import esTranslation from './locales/es/translation.json';
 import frTranslation from './locales/fr/translation.json';
@@ -11,40 +12,68 @@ import deTranslation from './locales/de/translation.json';
 import ruTranslation from './locales/ru/translation.json';
 import itTranslation from './locales/it/translation.json';
 import ptTranslation from './locales/pt/translation.json';
+import trTranslation from './locales/tr/translation.json';
 
 const resources = {
-  en: {
+  'en': {
     translation: enTranslation
   },
-  zh: {
+  'en-US': {
+    translation: enTranslation
+  },
+  'en-GB': {
+    translation: enTranslation
+  },
+  'zh': {
+    translation: zhTranslation
+  },
+  'zh-CN': {
     translation: zhTranslation
   },
   'zh-TW': {
     translation: zhTWTranslation
   },
-  ja: {
+  'zh-HK': {
+    translation: zhHKTranslation
+  },
+  'ja': {
     translation: jaTranslation
   },
-  es: {
+  'es': {
     translation: esTranslation
   },
-  fr: {
+  'es-ES': {
+    translation: esTranslation
+  },
+  'es-MX': {
+    translation: esTranslation
+  },
+  'fr': {
     translation: frTranslation
   },
-  ko: {
+  'ko': {
     translation: koTranslation
   },
-  de: {
+  'de': {
     translation: deTranslation
   },
-  ru: {
+  'ru': {
     translation: ruTranslation
   },
-  it: {
+  'it': {
     translation: itTranslation
   },
-  pt: {
+  'pt': {
     translation: ptTranslation
+  },
+  'pt-PT': {
+    translation: ptTranslation
+  },
+  'pt-BR': {
+    translation: ptTranslation
+  },
+  'tr': {
+    translation: trTranslation
   }
 };
 

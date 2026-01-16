@@ -8,6 +8,7 @@ import { getTSPDTRanking } from '../utils/tspdtRanking';
 import { getTSPDT21stRanking } from '../utils/tspdt21stRanking';
 import { getSightAndSoundRanking } from '../utils/sightAndSoundRanking';
 import { getAFIRanking } from '../utils/afiRanking';
+import { getTMDBLanguage, getTMDBImageLanguage, getCountryCode, getDateLocale } from '../utils/languageMapper';
 
 export default function MovieDetail() {
     const { t, i18n } = useTranslation();
@@ -37,23 +38,7 @@ export default function MovieDetail() {
     const formatDate = (dateString: string): string => {
         if (!dateString) return '';
         
-        const language = i18n.language;
-        
-        const localeMap: { [key: string]: string } = {
-            'en': 'en-US',
-            'zh': 'zh-CN',
-            'zh-TW': 'zh-TW',
-            'ja': 'ja-JP',
-            'ko': 'ko-KR',
-            'es': 'es-ES',
-            'fr': 'fr-FR',
-            'de': 'de-DE',
-            'ru': 'ru-RU',
-            'it': 'it-IT',
-            'pt': 'pt-PT'
-        };
-        
-        const locale = localeMap[language] || 'en-US';
+        const locale = getDateLocale(i18n.language);
         
         return new Intl.DateTimeFormat(locale, {
             year: 'numeric',
@@ -149,9 +134,9 @@ export default function MovieDetail() {
             setError('');
 
             try {
-                const currentLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja-JP' : i18n.language === 'ko' ? 'ko-KR' : i18n.language === 'es' ? 'es-ES' : i18n.language === 'fr' ? 'fr-FR' : i18n.language === 'de' ? 'de-DE' : i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'it' ? 'it-IT' : i18n.language === 'pt' ? 'pt-PT' : 'en-US';
-                const imageLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja' : i18n.language === 'ko' ? 'ko' : i18n.language === 'es' ? 'es' : i18n.language === 'fr' ? 'fr' : i18n.language === 'de' ? 'de' : i18n.language === 'ru' ? 'ru' : i18n.language === 'it' ? 'it' : i18n.language === 'pt' ? 'pt' : 'en';
-                const countryCode = i18n.language === 'zh' ? 'CN' : i18n.language === 'zh-TW' ? 'TW' : i18n.language === 'ja' ? 'JP' : i18n.language === 'ko' ? 'KR' : i18n.language === 'es' ? 'ES' : i18n.language === 'fr' ? 'FR' : i18n.language === 'de' ? 'DE' : i18n.language === 'ru' ? 'RU' : i18n.language === 'it' ? 'IT' : i18n.language === 'pt' ? 'PT' : 'US';
+                const currentLanguage = getTMDBLanguage(i18n.language);
+                const imageLanguage = getTMDBImageLanguage(i18n.language);
+                const countryCode = getCountryCode(i18n.language);
 
                 const [movieData, logos, cert, providers, kw, creds, altTitles, releases, vids, englishData] = await Promise.all([
                     getMovieDetails(id, currentLanguage),
@@ -683,7 +668,7 @@ export default function MovieDetail() {
                     >
                         {t('common.metacritic')}
                     </a>
-                    {(i18n.language === 'zh' || i18n.language === 'zh-TW') && (
+                    {(i18n.language === 'zh-CN') && (
                         <a
                             href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(movie.original_title)}`}
                             target="_blank"

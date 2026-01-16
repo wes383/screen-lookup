@@ -75,7 +75,7 @@ export interface MovieLogo {
 }
 
 export const getMovieLogos = async (id: string, language: string = 'en'): Promise<MovieLogo[]> => {
-    const url = buildApiUrl(`movie/${id}/images`, { include_image_language: `${language},null` });
+    const url = buildApiUrl(`movie/${id}/images`, { include_image_language: language });
     
     try {
         const response = await fetch(url);
@@ -470,7 +470,7 @@ export const getTVWatchProviders = async (id: string, country: string = 'US'): P
 };
 
 export const getTVLogos = async (id: string, language: string = 'en'): Promise<MovieLogo[]> => {
-    const url = buildApiUrl(`tv/${id}/images`, { include_image_language: `${language},null` });
+    const url = buildApiUrl(`tv/${id}/images`, { include_image_language: language });
 
     try {
         const response = await fetch(url);

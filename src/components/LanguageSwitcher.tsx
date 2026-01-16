@@ -37,17 +37,22 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
   };
 
   const languages = [
-    { code: 'en', name: 'English', flag: 'EN' },
-    { code: 'zh', name: '简体中文', flag: '简' },
-    { code: 'zh-TW', name: '繁體中文', flag: '繁' },
+    { code: 'en-US', name: 'English (US)', flag: 'EN' },
+    { code: 'en-GB', name: 'English (UK)', flag: 'GB' },
+    { code: 'zh-CN', name: '简体中文', flag: '简' },
+    { code: 'zh-TW', name: '繁體中文 (台灣)', flag: '繁' },
+    { code: 'zh-HK', name: '繁體中文 (香港)', flag: '繁' },
     { code: 'ja', name: '日本語', flag: '日' },
     { code: 'ko', name: '한국어', flag: '한' },
-    { code: 'es', name: 'Español', flag: 'ES' },
     { code: 'fr', name: 'Français', flag: 'FR' },
     { code: 'de', name: 'Deutsch', flag: 'DE' },
-    { code: 'ru', name: 'Русский', flag: 'RU' },
+    { code: 'es-ES', name: 'Español (ES)', flag: 'ES' },
+    { code: 'es-MX', name: 'Español (MX)', flag: 'MX' },
     { code: 'it', name: 'Italiano', flag: 'IT' },
-    { code: 'pt', name: 'Português', flag: 'PT' }
+    { code: 'pt-PT', name: 'Português (PT)', flag: 'PT' },
+    { code: 'pt-BR', name: 'Português (BR)', flag: 'BR' },
+    { code: 'ru', name: 'Русский', flag: 'RU' },
+    { code: 'tr', name: 'Türkçe', flag: 'TR' }
   ];
 
   const currentLanguage = languages.find(l => l.code === i18n.language) || languages[0];
@@ -159,9 +164,11 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                 border: '1px solid #444',
                 borderRadius: '12px',
                 overflow: 'hidden',
-                minWidth: '140px',
                 boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
-                zIndex: 9999
+                zIndex: 9999,
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gap: '0'
               }}>
                 {languages.map(language => (
                   <button
@@ -171,7 +178,6 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                       display: 'flex',
                       alignItems: 'center',
                       gap: '12px',
-                      width: '100%',
                       padding: '12px 16px',
                       backgroundColor: i18n.language === language.code ? '#444' : 'transparent',
                       color: '#fff',
@@ -195,7 +201,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                     <span style={{ fontWeight: i18n.language === language.code ? 600 : 400 }}>
                       {language.flag}
                     </span>
-                    <span style={{ fontWeight: i18n.language === language.code ? 600 : 400, fontFamily: 'Inter, sans-serif' }}>
+                    <span style={{ fontWeight: i18n.language === language.code ? 600 : 400, fontFamily: 'Inter, sans-serif', whiteSpace: 'nowrap' }}>
                       {language.name}
                     </span>
                   </button>
@@ -246,9 +252,11 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
             border: '1px solid #444',
             borderRadius: '12px',
             overflow: 'hidden',
-            minWidth: '140px',
             boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
-            zIndex: 9999
+            zIndex: 9999,
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '0'
           }}>
             {languages.map(language => (
               <button
@@ -258,7 +266,6 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '12px',
-                  width: '100%',
                   padding: '12px 16px',
                   backgroundColor: i18n.language === language.code ? '#444' : 'transparent',
                   color: '#fff',
@@ -282,7 +289,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                 <span style={{ fontWeight: i18n.language === language.code ? 600 : 400 }}>
                   {language.flag}
                 </span>
-                <span style={{ fontWeight: i18n.language === language.code ? 600 : 400, fontFamily: 'Inter, sans-serif' }}>
+                <span style={{ fontWeight: i18n.language === language.code ? 600 : 400, fontFamily: 'Inter, sans-serif', whiteSpace: 'nowrap' }}>
                   {language.name}
                 </span>
               </button>

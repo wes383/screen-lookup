@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search, Film, Tv, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { searchMulti, getImageUrl, type SearchResult } from '../services/tmdb';
+import { getTMDBLanguage } from '../utils/languageMapper';
 
 export default function Home() {
     const { t, i18n } = useTranslation();
@@ -55,7 +56,7 @@ export default function Home() {
                 // Check if we need to fetch next page
                 else if (currentPage < totalPages && !isLoadingMore) {
                     setIsLoadingMore(true);
-                    const currentLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja-JP' : i18n.language === 'ko' ? 'ko-KR' : i18n.language === 'es' ? 'es-ES' : i18n.language === 'fr' ? 'fr-FR' : i18n.language === 'de' ? 'de-DE' : i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'it' ? 'it-IT' : i18n.language === 'pt' ? 'pt-PT' : 'en-US';
+                    const currentLanguage = getTMDBLanguage(i18n.language);
                     const nextPage = currentPage + 1;
                     const results = await searchMulti(query.trim(), currentLanguage, nextPage);
                     const filtered = results.results.filter(r => r.media_type === 'movie' || r.media_type === 'tv' || r.media_type === 'person');
@@ -89,7 +90,7 @@ export default function Home() {
         setDisplayCount(10);
         setCurrentPage(1);
         searchTimeoutRef.current = setTimeout(async () => {
-            const currentLanguage = i18n.language === 'zh' ? 'zh-CN' : i18n.language === 'zh-TW' ? 'zh-TW' : i18n.language === 'ja' ? 'ja-JP' : i18n.language === 'ko' ? 'ko-KR' : i18n.language === 'es' ? 'es-ES' : i18n.language === 'fr' ? 'fr-FR' : i18n.language === 'de' ? 'de-DE' : i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'it' ? 'it-IT' : i18n.language === 'pt' ? 'pt-PT' : 'en-US';
+            const currentLanguage = getTMDBLanguage(i18n.language);
             const results = await searchMulti(query.trim(), currentLanguage, 1);
             // Include movies, TV shows, and people
             const filtered = results.results.filter(r => r.media_type === 'movie' || r.media_type === 'tv' || r.media_type === 'person');
