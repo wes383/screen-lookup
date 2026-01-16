@@ -180,11 +180,11 @@ export default function MovieDetail() {
 
                 // Get TSPDT ranking
                 const releaseYear = movieData.release_date ? new Date(movieData.release_date).getFullYear() : 0;
-                const tspdtRanking = getTSPDTRanking(englishData.title, releaseYear);
+                const tspdtRanking = getTSPDTRanking(englishData.title, releaseYear, movieData.original_title);
                 setTspdtRank(tspdtRanking);
 
                 // Get TSPDT 21st Century ranking
-                const tspdt21stRanking = getTSPDT21stRanking(englishData.title, releaseYear);
+                const tspdt21stRanking = getTSPDT21stRanking(englishData.title, releaseYear, movieData.original_title);
                 setTspdt21stRank(tspdt21stRanking);
 
                 // Get Sight and Sound ranking

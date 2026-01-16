@@ -76,7 +76,7 @@ export default function Home() {
             clearTimeout(searchTimeoutRef.current);
         }
 
-        if (query.trim().length < 2) {
+        if (query.trim().length < 1) {
             setSearchResults([]);
             setIsSearching(false);
             setDisplayCount(10);
@@ -253,7 +253,7 @@ export default function Home() {
                                 overflowY: 'auto',
                                 zIndex: 1000
                             }}>
-                            {isSearching && query.trim().length >= 2 ? (
+                            {isSearching && query.trim().length >= 1 ? (
                                 <div style={{
                                     display: 'flex',
                                     alignItems: 'center',
@@ -358,7 +358,7 @@ export default function Home() {
                                     </div>
                                 )}
                                 </>
-                            ) : query.trim().length >= 2 ? (
+                            ) : query.trim().length >= 1 ? (
                                 <div style={{
                                     display: 'flex',
                                     alignItems: 'center',

@@ -145,6 +145,11 @@
         "year":  2001
     },
     {
+        "rank":  29,
+        "title":  "Mulholland Drive",
+        "year":  2001
+    },
+    {
         "rank":  30,
         "title":  "Godfather Part II, The",
         "year":  1974
@@ -466,7 +471,7 @@
     },
     {
         "rank":  94,
-        "title":  "Jet®¶e, La",
+        "title":  "Jet√©e, La",
         "year":  1962
     },
     {
@@ -481,7 +486,7 @@
     },
     {
         "rank":  97,
-        "title":  "Cl®¶o from 5 to 7",
+        "title":  "Cl√©o from 5 to 7",
         "year":  1962
     },
     {
@@ -506,7 +511,7 @@
     },
     {
         "rank":  102,
-        "title":  "S®¢t®¢ntang®Æ",
+        "title":  "S√°t√°ntang√≥",
         "year":  1994
     },
     {
@@ -731,7 +736,7 @@
     },
     {
         "rank":  148,
-        "title":  "C®¶line and Julie Go Boating",
+        "title":  "C√©line and Julie Go Boating",
         "year":  1974
     },
     {
@@ -931,7 +936,7 @@
     },
     {
         "rank":  188,
-        "title":  "Napol®¶on",
+        "title":  "Napol√©on",
         "year":  1927
     },
     {
@@ -1001,7 +1006,7 @@
     },
     {
         "rank":  202,
-        "title":  "Sal®∞, or the 120 Days of Sodom",
+        "title":  "Sal√≤, or the 120 Days of Sodom",
         "year":  1975
     },
     {
@@ -1251,7 +1256,7 @@
     },
     {
         "rank":  252,
-        "title":  "Cach®¶",
+        "title":  "Cach√©",
         "year":  2005
     },
     {
@@ -1361,7 +1366,7 @@
     },
     {
         "rank":  274,
-        "title":  "Ci®¶naga, La",
+        "title":  "Ci√©naga, La",
         "year":  2001
     },
     {
@@ -1636,7 +1641,7 @@
     },
     {
         "rank":  329,
-        "title":  "Lola Mont®®s",
+        "title":  "Lola Mont√®s",
         "year":  1955
     },
     {
@@ -1651,7 +1656,7 @@
     },
     {
         "rank":  332,
-        "title":  "Belle et la b®∫te, La",
+        "title":  "Belle et la b√™te, La",
         "year":  1946
     },
     {
@@ -1746,7 +1751,7 @@
     },
     {
         "rank":  351,
-        "title":  "Double Life of V®¶ronique, The",
+        "title":  "Double Life of V√©ronique, The",
         "year":  1991
     },
     {
@@ -2196,7 +2201,7 @@
     },
     {
         "rank":  441,
-        "title":  "If°≠.",
+        "title":  "If‚Ä¶.",
         "year":  1968
     },
     {
@@ -2326,7 +2331,7 @@
     },
     {
         "rank":  467,
-        "title":  "®§ nos amours",
+        "title":  "√† nos amours",
         "year":  1983
     },
     {
@@ -2431,7 +2436,7 @@
     },
     {
         "rank":  488,
-        "title":  "R®¶gion centrale, La",
+        "title":  "R√©gion centrale, La",
         "year":  1971
     },
     {
@@ -2596,7 +2601,7 @@
     },
     {
         "rank":  521,
-        "title":  "Masculin f®¶minin",
+        "title":  "Masculin f√©minin",
         "year":  1966
     },
     {
@@ -2616,7 +2621,7 @@
     },
     {
         "rank":  525,
-        "title":  "Marketa Lazarov®¢",
+        "title":  "Marketa Lazarov√°",
         "year":  1967
     },
     {
@@ -2836,7 +2841,7 @@
     },
     {
         "rank":  569,
-        "title":  "Am®¶lie",
+        "title":  "Am√©lie",
         "year":  2001
     },
     {
@@ -3011,7 +3016,7 @@
     },
     {
         "rank":  604,
-        "title":  "Pl®¢cido",
+        "title":  "Pl√°cido",
         "year":  1961
     },
     {
@@ -3051,7 +3056,7 @@
     },
     {
         "rank":  612,
-        "title":  "Bande ®§ part",
+        "title":  "Bande √† part",
         "year":  1964
     },
     {
@@ -3251,7 +3256,7 @@
     },
     {
         "rank":  652,
-        "title":  "Nazar®™n",
+        "title":  "Nazar√≠n",
         "year":  1958
     },
     {
@@ -3271,7 +3276,7 @@
     },
     {
         "rank":  656,
-        "title":  "Y tu mam®¢ tambi®¶n",
+        "title":  "Y tu mam√° tambi√©n",
         "year":  2001
     },
     {
@@ -3436,7 +3441,7 @@
     },
     {
         "rank":  689,
-        "title":  "Hy®®nes",
+        "title":  "Hy√®nes",
         "year":  1992
     },
     {
@@ -4261,7 +4266,7 @@
     },
     {
         "rank":  854,
-        "title":  "Irr®¶versible",
+        "title":  "Irr√©versible",
         "year":  2002
     },
     {
@@ -4321,7 +4326,7 @@
     },
     {
         "rank":  866,
-        "title":  "Mon oncle d\u0027Am®¶rique",
+        "title":  "Mon oncle d\u0027Am√©rique",
         "year":  1980
     },
     {
@@ -4426,7 +4431,7 @@
     },
     {
         "rank":  887,
-        "title":  "Cr®™a cuervos",
+        "title":  "Cr√≠a cuervos",
         "year":  1976
     },
     {
@@ -4491,7 +4496,7 @@
     },
     {
         "rank":  900,
-        "title":  "Spring, Summer, Autumn, Winter°≠ and Spring",
+        "title":  "Spring, Summer, Autumn, Winter‚Ä¶ and Spring",
         "year":  2003
     },
     {
@@ -4916,7 +4921,7 @@
     },
     {
         "rank":  985,
-        "title":  "B®∫te humaine, La",
+        "title":  "B√™te humaine, La",
         "year":  1938
     },
     {
@@ -4946,7 +4951,7 @@
     },
     {
         "rank":  991,
-        "title":  "L®¶on",
+        "title":  "L√©on",
         "year":  1994
     },
     {
