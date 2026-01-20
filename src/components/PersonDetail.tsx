@@ -4,7 +4,7 @@ import { getPersonDetails, getImageUrl, type PersonDetails, type PersonCreditIte
 import { User, Film } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLoading } from '../contexts/LoadingContext';
-import { getTMDBLanguage } from '../utils/languageMapper';
+import { getTMDBLanguage, getDateLocale } from '../utils/languageMapper';
 
 export default function PersonDetail() {
     const { t, i18n } = useTranslation();
@@ -88,23 +88,7 @@ export default function PersonDetail() {
     const formatDate = (dateString: string): string => {
         if (!dateString) return '';
         
-        const language = i18n.language;
-        
-        const localeMap: { [key: string]: string } = {
-            'en': 'en-US',
-            'zh': 'zh-CN',
-            'zh-TW': 'zh-TW',
-            'ja': 'ja-JP',
-            'ko': 'ko-KR',
-            'es': 'es-ES',
-            'fr': 'fr-FR',
-            'de': 'de-DE',
-            'ru': 'ru-RU',
-            'it': 'it-IT',
-            'pt': 'pt-PT'
-        };
-        
-        const locale = localeMap[language] || 'en-US';
+        const locale = getDateLocale(i18n.language);
         
         return new Intl.DateTimeFormat(locale, {
             year: 'numeric',
