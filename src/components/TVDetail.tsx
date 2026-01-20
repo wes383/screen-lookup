@@ -564,6 +564,16 @@ export default function TVDetail() {
                             {t('common.trakt')}
                         </a>
                     )}
+                    <a
+                        href={`https://www.metacritic.com/search/${encodeURIComponent(englishName || tv.original_name)}/?page=1&category=1`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                    >
+                        {t('common.metacritic')}
+                    </a>
                     {(i18n.language === 'zh-CN') && (
                         <a
                             href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(tv.original_name)}`}

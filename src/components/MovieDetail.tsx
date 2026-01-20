@@ -633,6 +633,16 @@ export default function MovieDetail() {
                     >
                         {t('common.letterboxd')}
                     </a>
+                    <a
+                        href={`https://www.metacritic.com/search/${encodeURIComponent(englishTitle || movie.original_title)}/?page=1&category=2`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                    >
+                        {t('common.metacritic')}
+                    </a>
                     {(i18n.language === 'zh-CN') && (
                         <a
                             href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(movie.original_title)}`}
