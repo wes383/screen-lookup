@@ -83,7 +83,7 @@ export default function TVDetail() {
     const [isCertHovered, setIsCertHovered] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [imdbRating, setImdbRating] = useState<{ aggregateRating: number; voteCount: number; metascore?: number; topRank?: number } | null>(null);
+    const [imdbRating, setImdbRating] = useState<{ aggregateRating: number; voteCount: number } | null>(null);
 
     useEffect(() => {
         setIsLoading(true);
@@ -416,28 +416,6 @@ export default function TVDetail() {
                                 </span>
                             </div>
                         )}
-                        {imdbRating?.metascore && (
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px'
-                            }}>
-                                <span style={{
-                                    fontSize: '18px',
-                                    fontWeight: 600,
-                                    color: imdbRating.metascore >= 61 ? '#00CE7A' : imdbRating.metascore >= 40 ? '#FFBD3F' : '#FF6874'
-                                }}>
-                                    Metacritic
-                                </span>
-                                <span style={{
-                                    fontSize: '18px',
-                                    fontWeight: 600,
-                                    color: '#fff'
-                                }}>
-                                    {imdbRating.metascore}
-                                </span>
-                            </div>
-                        )}
                         {imdbRating && (
                             <div style={{
                                 display: 'flex',
@@ -484,29 +462,6 @@ export default function TVDetail() {
                                         })()})
                                     </span>
                                 </div>
-                            </div>
-                        )}
-                        {imdbRating?.topRank && imdbRating.topRank <= 250 && (
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px'
-                            }}>
-                                <span style={{
-                                    fontSize: '18px',
-                                    fontWeight: 600,
-                                    color: '#fff'
-                                }}>
-                                    #{imdbRating.topRank}
-                                </span>
-                                <span style={{
-                                    fontSize: '14px',
-                                    color: '#fff',
-                                    lineHeight: 1.3,
-                                    display: 'inline-block'
-                                }}>
-                                    on IMDb Top 250
-                                </span>
                             </div>
                         )}
                     </div>
@@ -609,16 +564,6 @@ export default function TVDetail() {
                             {t('common.trakt')}
                         </a>
                     )}
-                    <a
-                        href={`https://www.metacritic.com/search/${encodeURIComponent(englishName || tv.original_name)}/?page=1&category=1`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                    >
-                        {t('common.metacritic')}
-                    </a>
                     {(i18n.language === 'zh-CN') && (
                         <a
                             href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(tv.original_name)}`}
@@ -1126,9 +1071,9 @@ export default function TVDetail() {
                                                 </div>
                                             </div>
                                             <div style={{ flex: 1 }}>
-                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                                                    <h3 style={{ color: '#fff', margin: 0, fontSize: '1.1rem' }}>{episode.name}</h3>
-                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px', gap: '24px' }}>
+                                                    <h3 style={{ color: '#fff', margin: 0, fontSize: '1.1rem', flex: 1 }}>{episode.name}</h3>
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
                                                         {episode.runtime > 0 && (
                                                             <span style={{ fontSize: '14px', color: '#999' }}>{episode.runtime}m</span>
                                                         )}

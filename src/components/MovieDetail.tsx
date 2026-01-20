@@ -66,7 +66,7 @@ export default function MovieDetail() {
     const [isDateHovered, setIsDateHovered] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [imdbRating, setImdbRating] = useState<{ aggregateRating: number; voteCount: number; metascore?: number; topRank?: number } | null>(null);
+    const [imdbRating, setImdbRating] = useState<{ aggregateRating: number; voteCount: number } | null>(null);
     const [tspdtRank, setTspdtRank] = useState<number | null>(null);
     const [tspdt21stRank, setTspdt21stRank] = useState<number | null>(null);
     const [sightAndSoundRank, setSightAndSoundRank] = useState<number | null>(null);
@@ -432,28 +432,6 @@ export default function MovieDetail() {
                                 </span>
                             </div>
                         )}
-                        {imdbRating?.metascore && (
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px'
-                            }}>
-                                <span style={{
-                                    fontSize: '18px',
-                                    fontWeight: 600,
-                                    color: imdbRating.metascore >= 61 ? '#00CE7A' : imdbRating.metascore >= 40 ? '#FFBD3F' : '#FF6874'
-                                }}>
-                                    Metacritic
-                                </span>
-                                <span style={{
-                                    fontSize: '18px',
-                                    fontWeight: 600,
-                                    color: '#fff'
-                                }}>
-                                    {imdbRating.metascore}
-                                </span>
-                            </div>
-                        )}
                         {imdbRating && (
                             <div style={{
                                 display: 'flex',
@@ -505,9 +483,6 @@ export default function MovieDetail() {
                         {(() => {
                             // Create array of rankings and sort by rank number
                             const rankings = [];
-                            if (imdbRating?.topRank && imdbRating.topRank <= 250) {
-                                rankings.push({ rank: imdbRating.topRank, name: 'imdb', label: 'on IMDb Top 250' });
-                            }
                             if (afiRank) {
                                 rankings.push({ rank: afiRank, name: 'afi', label: "on AFI's 100 Years...\n100 Movies" });
                             }
@@ -657,16 +632,6 @@ export default function MovieDetail() {
                         onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                     >
                         {t('common.letterboxd')}
-                    </a>
-                    <a
-                        href={`https://www.metacritic.com/search/${encodeURIComponent(englishTitle || movie.original_title)}/?page=1&category=2`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                    >
-                        {t('common.metacritic')}
                     </a>
                     {(i18n.language === 'zh-CN') && (
                         <a

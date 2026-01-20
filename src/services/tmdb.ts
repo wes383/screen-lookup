@@ -647,22 +647,18 @@ export const searchMulti = async (query: string, language: string = 'en-US', pag
 export interface IMDbRating {
     aggregateRating: number;
     voteCount: number;
-    metascore?: number;
-    topRank?: number;
 }
 
 export const getIMDbRating = async (imdbId: string): Promise<IMDbRating | null> => {
     try {
-        const response = await fetch(`https://imdb.iamidiotareyoutoo.com/search?tt=${imdbId}`);
+        const response = await fetch(`https://imdb-ratings-ten.vercel.app/api/rating?imdbId=${imdbId}`);
         if (!response.ok) return null;
         const data = await response.json();
         
-        if (data.ok && data.top?.ratingsSummary) {
+        if (data.rating && data.numVotes) {
             return {
-                aggregateRating: data.top.ratingsSummary.aggregateRating,
-                voteCount: data.top.ratingsSummary.voteCount,
-                metascore: data.top.metacritic?.metascore?.score,
-                topRank: data.main?.ratingsSummary?.topRanking?.rank
+                aggregateRating: data.rating,
+                voteCount: data.numVotes
             };
         }
         return null;
