@@ -497,6 +497,17 @@ export interface Episode {
     vote_count: number;
 }
 
+export interface EpisodeDetails extends Episode {
+    external_ids?: {
+        imdb_id?: string | null;
+        freebase_mid?: string | null;
+        freebase_id?: string | null;
+        tvdb_id?: number | null;
+        tvrage_id?: number | null;
+        wikidata_id?: string | null;
+    };
+}
+
 export interface SeasonDetails {
     _id: string;
     air_date: string;
@@ -511,6 +522,21 @@ export interface SeasonDetails {
 
 export const getTVSeasonDetails = async (tvId: string, seasonNumber: number, language: string = 'en-US'): Promise<SeasonDetails | null> => {
     const url = buildApiUrl(`tv/${tvId}/season/${seasonNumber}`, { language });
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) return null;
+        return response.json();
+    } catch {
+        return null;
+    }
+};
+
+export const getTVEpisodeDetails = async (tvId: string, seasonNumber: number, episodeNumber: number, language: string = 'en-US'): Promise<EpisodeDetails | null> => {
+    const url = buildApiUrl(`tv/${tvId}/season/${seasonNumber}/episode/${episodeNumber}`, { 
+        append_to_response: 'external_ids',
+        language 
+    });
 
     try {
         const response = await fetch(url);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getTVDetails, getTVLogos, getTVContentRatings, getTVWatchProviders, getTVKeywords, getTVCredits, getTVAlternativeTitles, getTVVideos, getTVSeasonDetails, getImageUrl, getIMDbRating, type TVDetails, type MovieLogo, type WatchProviderData, type WatchProvider, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails } from '../services/tmdb';
-import { X, User, PlayCircle, Film } from 'lucide-react';
+import { getTVDetails, getTVLogos, getTVContentRatings, getTVWatchProviders, getTVKeywords, getTVCredits, getTVAlternativeTitles, getTVVideos, getTVSeasonDetails, getTVEpisodeDetails, getImageUrl, getIMDbRating, type TVDetails, type MovieLogo, type WatchProviderData, type WatchProvider, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails } from '../services/tmdb';
+import { X, User, PlayCircle, Film, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLoading } from '../contexts/LoadingContext';
 import { getTMDBLanguage, getTMDBImageLanguage, getCountryCode, getDateLocale } from '../utils/languageMapper';
@@ -97,16 +97,39 @@ export default function TVDetail() {
     const [selectedSeasonDetails, setSelectedSeasonDetails] = useState<SeasonDetails | null>(null);
     const [showSeasonDetails, setShowSeasonDetails] = useState(false);
     const [loadingSeason, setLoadingSeason] = useState(false);
+    const [episodeImdbRatings, setEpisodeImdbRatings] = useState<{ [key: string]: { aggregateRating: number; voteCount: number } }>({});
 
     const handleSeasonClick = async (seasonNumber: number) => {
         if (!id) return;
         setLoadingSeason(true);
         setSelectedSeasonDetails(null);
+        setEpisodeImdbRatings({});
         setShowSeasonDetails(true);
         try {
             const currentLanguage = getTMDBLanguage(i18n.language);
             const data = await getTVSeasonDetails(id, seasonNumber, currentLanguage);
             setSelectedSeasonDetails(data);
+            
+            // Fetch IMDb ratings for all episodes
+            if (data?.episodes) {
+                const ratingsPromises = data.episodes.map(async (episode) => {
+                    const episodeDetails = await getTVEpisodeDetails(id, seasonNumber, episode.episode_number, currentLanguage);
+                    if (episodeDetails?.external_ids?.imdb_id) {
+                        const rating = await getIMDbRating(episodeDetails.external_ids.imdb_id);
+                        return { episodeId: episode.id, rating };
+                    }
+                    return { episodeId: episode.id, rating: null };
+                });
+                
+                const ratings = await Promise.all(ratingsPromises);
+                const ratingsMap: { [key: string]: { aggregateRating: number; voteCount: number } } = {};
+                ratings.forEach(({ episodeId, rating }) => {
+                    if (rating) {
+                        ratingsMap[episodeId] = rating;
+                    }
+                });
+                setEpisodeImdbRatings(ratingsMap);
+            }
         } catch (err) {
             console.error(err);
         } finally {
@@ -750,7 +773,7 @@ export default function TVDetail() {
                             {t('tv.seasons')}
                         </h3>
                         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-                            {tv.seasons.map(season => (
+                            {tv.seasons.filter(season => season.episode_count > 0).map(season => (
                                 <div
                                     key={season.id}
                                     onClick={() => handleSeasonClick(season.season_number)}
@@ -1041,18 +1064,24 @@ export default function TVDetail() {
             {showSeasonDetails && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowSeasonDetails(false)}>
                     <div style={{ backgroundColor: '#1a1a1a', borderRadius: '24px', width: '100%', maxWidth: '900px', height: '90vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <div>
-                                <h2 style={{ color: '#fff', margin: 0 }}>
-                                    {selectedSeasonDetails ? selectedSeasonDetails.name : t('tv.seasonDetails')}
-                                </h2>
-                                {selectedSeasonDetails && (
-                                    <p style={{ color: '#999', margin: '4px 0 0 0', fontSize: '14px' }}>
-                                        {selectedSeasonDetails.air_date ? new Date(selectedSeasonDetails.air_date).getFullYear() : ''} • {selectedSeasonDetails.episodes.length} {t('tv.episodes')}
-                                    </p>
+                        <div style={{ padding: '20px 24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '76px' }}>
+                            <div style={{ flex: 1 }}>
+                                {selectedSeasonDetails ? (
+                                    <>
+                                        <h2 style={{ color: '#fff', margin: 0, fontSize: '1.5rem' }}>
+                                            {selectedSeasonDetails.name}
+                                        </h2>
+                                        <p style={{ color: '#999', margin: '2px 0 0 0', fontSize: '13px' }}>
+                                            {selectedSeasonDetails.air_date ? new Date(selectedSeasonDetails.air_date).getFullYear() : ''} • {selectedSeasonDetails.episodes.length} {t('tv.episodes')}
+                                        </p>
+                                    </>
+                                ) : (
+                                    <h2 style={{ color: '#fff', margin: 0, fontSize: '1.5rem' }}>
+                                        {t('tv.seasonDetails')}
+                                    </h2>
                                 )}
                             </div>
-                            <button onClick={() => setShowSeasonDetails(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
+                            <button onClick={() => setShowSeasonDetails(false)} style={{ background: 'none', border: 'none', color: '#999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
 
                         <div style={{ padding: '24px', overflowY: 'auto', flex: 1 }}>
@@ -1076,25 +1105,60 @@ export default function TVDetail() {
                                                         <PlayCircle size={32} />
                                                     </div>
                                                 )}
-                                                <div style={{ position: 'absolute', bottom: '8px', left: '8px', padding: '2px 6px', background: 'rgba(0,0,0,0.7)', borderRadius: '4px', color: '#fff', fontSize: '12px', fontWeight: 500 }}>
+                                                <div style={{ position: 'absolute', bottom: '8px', left: '8px', padding: '2px 6px', background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', borderRadius: '4px', color: '#000', fontSize: '12px', fontWeight: 500 }}>
                                                     {episode.episode_number}
                                                 </div>
                                             </div>
-                                            <div style={{ flex: 1 }}>
+                                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px', gap: '24px' }}>
                                                     <h3 style={{ color: '#fff', margin: 0, fontSize: '1.1rem', flex: 1 }}>{episode.name}</h3>
-                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
-                                                        {episode.runtime > 0 && (
-                                                            <span style={{ fontSize: '14px', color: '#999' }}>{episode.runtime}m</span>
-                                                        )}
-                                                        <span style={{ color: '#999', fontSize: '14px', whiteSpace: 'nowrap' }}>
-                                                            {episode.air_date ? formatDate(episode.air_date) : t('common.tba')}
-                                                        </span>
-                                                    </div>
+                                                    {episodeImdbRatings[episode.id] && (
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+                                                            <Star size={14} fill="#fff" color="#fff" />
+                                                            <span style={{ fontSize: '14px', color: '#fff', fontWeight: 500 }}>{episodeImdbRatings[episode.id].aggregateRating.toFixed(1)}</span>
+                                                            {episodeImdbRatings[episode.id].voteCount > 0 && (
+                                                                <span style={{ fontSize: '13px', color: '#666' }}>
+                                                                    ({(() => {
+                                                                        const count = episodeImdbRatings[episode.id].voteCount;
+                                                                        if (count < 1000) {
+                                                                            return count.toString();
+                                                                        } else if (count < 10000) {
+                                                                            const k = count / 1000;
+                                                                            return `${k.toFixed(1)}K`;
+                                                                        } else if (count < 1000000) {
+                                                                            const k = Math.round(count / 1000);
+                                                                            return `${k}K`;
+                                                                        } else {
+                                                                            const m = count / 1000000;
+                                                                            return `${m.toFixed(1)}M`;
+                                                                        }
+                                                                    })()})
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    )}
                                                 </div>
-                                                <p style={{ color: '#ccc', fontSize: '14px', lineHeight: 1.5, margin: 0 }}>
+                                                <p style={{ color: '#ccc', fontSize: '14px', lineHeight: 1.5, margin: 0, flex: 1 }}>
                                                     {episode.overview || t('common.noOverview')}
                                                 </p>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '8px' }}>
+                                                    {episode.runtime > 0 && (
+                                                        <span style={{ fontSize: '13px', color: '#999' }}>{episode.runtime}m</span>
+                                                    )}
+                                                    {episode.runtime > 0 && episode.air_date && (
+                                                        <span style={{ fontSize: '13px', color: '#666' }}>•</span>
+                                                    )}
+                                                    {episode.air_date && (
+                                                        <span style={{ color: '#999', fontSize: '13px' }}>
+                                                            {formatDate(episode.air_date)}
+                                                        </span>
+                                                    )}
+                                                    {!episode.air_date && (
+                                                        <span style={{ color: '#999', fontSize: '13px' }}>
+                                                            {t('common.tba')}
+                                                        </span>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
                                     ))}
