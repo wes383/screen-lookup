@@ -693,13 +693,14 @@ export const getIMDbRating = async (imdbId: string): Promise<IMDbRating | null> 
     }
 };
 
-// Find movie or TV show by IMDb ID
+// Find movie, TV show, or person by IMDb ID
 export interface FindByImdbResult {
     movie_results: Array<{ id: number }>;
     tv_results: Array<{ id: number }>;
+    person_results: Array<{ id: number }>;
 }
 
-export const findByImdbId = async (imdbId: string): Promise<{ type: 'movie' | 'tv' | null; id: number | null }> => {
+export const findByImdbId = async (imdbId: string): Promise<{ type: 'movie' | 'tv' | 'person' | null; id: number | null }> => {
     try {
         const url = buildApiUrl(`find/${imdbId}`, { external_source: 'imdb_id' });
         const response = await fetch(url);
@@ -714,6 +715,10 @@ export const findByImdbId = async (imdbId: string): Promise<{ type: 'movie' | 't
         
         if (data.tv_results && data.tv_results.length > 0) {
             return { type: 'tv', id: data.tv_results[0].id };
+        }
+        
+        if (data.person_results && data.person_results.length > 0) {
+            return { type: 'person', id: data.person_results[0].id };
         }
         
         return { type: null, id: null };

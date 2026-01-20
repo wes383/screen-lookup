@@ -14,6 +14,7 @@
     "person": "人物",
     "enterId": "{{type}}のTMDB IDを入力",
     "searchPlaceholder": "映画、テレビ番組、人物を検索",
+    "imdbIdHint": "IMDb IDでも検索できます",
     "goBack": "戻る",
     "homepage": "ホームページ",
     "trailer": "予告編",
@@ -77,7 +78,8 @@
       "ur": "ウルドゥー語",
       "fa": "ペルシア語",
       "ta": "タミル語",
-      "te": "テルグ語"
+      "te": "テルグ語",
+      "la": "ラテン語"
     },
     "countries": {
       "US": "アメリカ",

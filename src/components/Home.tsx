@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Film, Tv, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { searchMulti, getImageUrl, type SearchResult } from '../services/tmdb';
+import { searchMulti, getImageUrl, findByImdbId, getMovieDetails, getTVDetails, getPersonDetails, type SearchResult } from '../services/tmdb';
 import { getTMDBLanguage } from '../utils/languageMapper';
 
 export default function Home() {
@@ -38,7 +38,6 @@ export default function Home() {
         };
     }, [isFocused, query]);
 
-    // Handle infinite scroll
     useEffect(() => {
         const scrollContainer = scrollContainerRef.current;
         if (!scrollContainer) return;
@@ -47,13 +46,10 @@ export default function Home() {
             const { scrollTop, scrollHeight, clientHeight } = scrollContainer;
             const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
             
-            // When user scrolls to bottom (with 100px threshold)
             if (distanceFromBottom < 100 && !isLoadingMore) {
-                // Check if we need to load more from current results
                 if (displayCount < searchResults.length) {
                     setDisplayCount(prev => Math.min(prev + 10, searchResults.length));
                 }
-                // Check if we need to fetch next page
                 else if (currentPage < totalPages && !isLoadingMore) {
                     setIsLoadingMore(true);
                     const currentLanguage = getTMDBLanguage(i18n.language);
@@ -90,9 +86,73 @@ export default function Home() {
         setDisplayCount(10);
         setCurrentPage(1);
         searchTimeoutRef.current = setTimeout(async () => {
+            const trimmedQuery = query.trim();
             const currentLanguage = getTMDBLanguage(i18n.language);
-            const results = await searchMulti(query.trim(), currentLanguage, 1);
-            // Include movies, TV shows, and people
+            
+            // Check if query is an IMDb ID
+            const imdbIdPattern = /^(tt|nm)\d{6,}$/i;
+            if (imdbIdPattern.test(trimmedQuery)) {
+                const result = await findByImdbId(trimmedQuery);
+                if (result.type && result.id) {
+                    try {
+                        if (result.type === 'movie') {
+                            const movieDetails = await getMovieDetails(result.id.toString(), currentLanguage);
+                            const searchResult: SearchResult = {
+                                id: movieDetails.id,
+                                media_type: 'movie',
+                                title: movieDetails.title,
+                                original_title: movieDetails.original_title,
+                                poster_path: movieDetails.poster_path,
+                                backdrop_path: movieDetails.backdrop_path,
+                                release_date: movieDetails.release_date,
+                                vote_average: movieDetails.vote_average,
+                                popularity: movieDetails.vote_average,
+                                overview: movieDetails.overview
+                            };
+                            setSearchResults([searchResult]);
+                        } else if (result.type === 'tv') {
+                            const tvDetails = await getTVDetails(result.id.toString(), currentLanguage);
+                            const searchResult: SearchResult = {
+                                id: tvDetails.id,
+                                media_type: 'tv',
+                                name: tvDetails.name,
+                                original_name: tvDetails.original_name,
+                                poster_path: tvDetails.poster_path,
+                                backdrop_path: tvDetails.backdrop_path,
+                                first_air_date: tvDetails.first_air_date,
+                                vote_average: tvDetails.vote_average,
+                                popularity: tvDetails.vote_average,
+                                overview: tvDetails.overview
+                            };
+                            setSearchResults([searchResult]);
+                        } else if (result.type === 'person') {
+                            const personDetails = await getPersonDetails(result.id.toString(), currentLanguage);
+                            if (personDetails) {
+                                const searchResult: SearchResult = {
+                                    id: personDetails.id,
+                                    media_type: 'person',
+                                    name: personDetails.name,
+                                    profile_path: personDetails.profile_path,
+                                    poster_path: null,
+                                    known_for_department: personDetails.known_for_department,
+                                    popularity: personDetails.popularity,
+                                    backdrop_path: null,
+                                    vote_average: 0,
+                                    overview: personDetails.biography || ''
+                                };
+                                setSearchResults([searchResult]);
+                            }
+                        }
+                        setTotalPages(1);
+                        setIsSearching(false);
+                        return;
+                    } catch (error) {
+                        console.error('Error fetching IMDb ID details:', error);
+                    }
+                }
+            }
+            
+            const results = await searchMulti(trimmedQuery, currentLanguage, 1);
             const filtered = results.results.filter(r => r.media_type === 'movie' || r.media_type === 'tv' || r.media_type === 'person');
             setSearchResults(filtered);
             setTotalPages(results.total_pages);
@@ -237,6 +297,19 @@ export default function Home() {
                             size={28}
                         />
                     </form>
+
+                    {/* IMDb ID hint */}
+                    {!isFocused && (
+                        <div style={{
+                            textAlign: 'center',
+                            marginTop: '12px',
+                            color: '#666',
+                            fontSize: '13px',
+                            fontFamily: 'Inter, sans-serif'
+                        }}>
+                            {t('common.imdbIdHint')}
+                        </div>
+                    )}
 
                     {/* Search Results Dropdown */}
                     {isFocused && (

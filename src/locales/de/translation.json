@@ -14,6 +14,7 @@
     "person": "Person",
     "enterId": "TMDB-ID für {{type}} eingeben",
     "searchPlaceholder": "Filme, Serien oder Personen suchen",
+    "imdbIdHint": "Sie können auch nach IMDb-ID suchen",
     "goBack": "Zurück",
     "homepage": "Homepage",
     "trailer": "Trailer",
@@ -77,7 +78,8 @@
       "ur": "Urdu",
       "fa": "Persisch",
       "ta": "Tamil",
-      "te": "Telugu"
+      "te": "Telugu",
+      "la": "Latein"
     },
     "countries": {
       "US": "Vereinigte Staaten",

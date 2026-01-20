@@ -185,7 +185,6 @@ export default function TVDetail() {
                 setAlternativeTitles(altTitles);
                 setVideos(vids);
 
-                // Fetch IMDb rating if imdb_id exists
                 if (tvData.external_ids?.imdb_id) {
                     getIMDbRating(tvData.external_ids.imdb_id).then(rating => {
                         if (rating) setImdbRating(rating);
@@ -552,7 +551,18 @@ export default function TVDetail() {
                         }
                         return null;
                     })()}
-
+                    {(i18n.language === 'zh-CN') && (
+                        <a
+                            href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(tv.original_name)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                            {t('common.douban')}
+                        </a>
+                    )}
                     {tv.external_ids?.imdb_id && (
                         <a
                             href={`https://www.imdb.com/title/${tv.external_ids.imdb_id}`}
@@ -563,6 +573,18 @@ export default function TVDetail() {
                             onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                         >
                             {t('common.imdb')}
+                        </a>
+                    )}
+                    {tv.external_ids?.imdb_id && (
+                        <a
+                            href={`https://www.imdb.com/title/${tv.external_ids.imdb_id}/parentalguide`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                            Parents Guide
                         </a>
                     )}
                     <a
@@ -597,18 +619,6 @@ export default function TVDetail() {
                     >
                         {t('common.metacritic')}
                     </a>
-                    {(i18n.language === 'zh-CN') && (
-                        <a
-                            href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(tv.original_name)}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                        >
-                            {t('common.douban')}
-                        </a>
-                    )}
                     <a
                         href={`https://www.rottentomatoes.com/search?search=${encodeURIComponent(englishName || tv.original_name)}`}
                         target="_blank"
@@ -761,7 +771,7 @@ export default function TVDetail() {
 
                 </div>
 
-                {/* Seasons (Full Width) */}
+                {/* Seasons */}
                 {tv.seasons.length > 0 && (
                     <div style={{ marginTop: '32px', marginBottom: '32px' }}>
                         <h3 style={{
@@ -813,7 +823,7 @@ export default function TVDetail() {
 
                 <div style={{ maxWidth: '800px' }}>
 
-                    {/* Watch Providers - reused simple logic */}
+                    {/* Watch Providers */}
                     {watchProviders && (watchProviders.flatrate || watchProviders.rent || watchProviders.buy) && (
                         <div style={{ marginTop: '32px' }}>
                             <h3 style={{ fontSize: '1.2rem', marginBottom: '24px', fontWeight: 600, color: '#fff' }}>

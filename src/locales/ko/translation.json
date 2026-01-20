@@ -14,6 +14,7 @@
     "person": "인물",
     "enterId": "{{type}}의 TMDB ID를 입력하세요",
     "searchPlaceholder": "영화, TV 프로그램 또는 인물 검색",
+    "imdbIdHint": "IMDb ID로도 검색할 수 있습니다",
     "goBack": "돌아가기",
     "homepage": "홈페이지",
     "trailer": "예고편",
@@ -77,7 +78,8 @@
       "ur": "우르두어",
       "fa": "페르시아어",
       "ta": "타밀어",
-      "te": "텔루구어"
+      "te": "텔루구어",
+      "la": "라틴어"
     },
     "countries": {
       "US": "미국",

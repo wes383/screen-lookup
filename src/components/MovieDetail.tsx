@@ -8,6 +8,7 @@ import { getTSPDTRanking } from '../utils/tspdtRanking';
 import { getTSPDT21stRanking } from '../utils/tspdt21stRanking';
 import { getSightAndSoundRanking } from '../utils/sightAndSoundRanking';
 import { getAFIRanking } from '../utils/afiRanking';
+import { getCahiersRanking } from '../utils/cahiersRanking';
 import { getTMDBLanguage, getTMDBImageLanguage, getCountryCode, getDateLocale } from '../utils/languageMapper';
 
 export default function MovieDetail() {
@@ -71,6 +72,7 @@ export default function MovieDetail() {
     const [tspdt21stRank, setTspdt21stRank] = useState<number | null>(null);
     const [sightAndSoundRank, setSightAndSoundRank] = useState<number | null>(null);
     const [afiRank, setAfiRank] = useState<number | null>(null);
+    const [cahiersRank, setCahiersRank] = useState<{ rank: number; year: string } | null>(null);
 
     useEffect(() => {
         setIsLoading(true);
@@ -138,7 +140,7 @@ export default function MovieDetail() {
                 const imageLanguage = getTMDBImageLanguage(i18n.language);
                 const countryCode = getCountryCode(i18n.language);
 
-                const [movieData, logos, cert, providers, kw, creds, altTitles, releases, vids, englishData] = await Promise.all([
+                const [movieData, logos, cert, providers, kw, creds, altTitles, releases, vids, englishData, englishCreds] = await Promise.all([
                     getMovieDetails(id, currentLanguage),
                     getMovieLogos(id, imageLanguage),
                     getMovieCertification(id, countryCode),
@@ -148,7 +150,8 @@ export default function MovieDetail() {
                     getMovieAlternativeTitles(id),
                     getMovieReleaseDates(id),
                     getMovieVideos(id),
-                    getMovieDetails(id, 'en-US')
+                    getMovieDetails(id, 'en-US'),
+                    getMovieCredits(id, 'en-US')
                 ]);
 
                 setMovie(movieData);
@@ -181,8 +184,14 @@ export default function MovieDetail() {
                     const afiRanking = getAFIRanking(movieData.imdb_id);
                     setAfiRank(afiRanking);
                 }
+                
+                // Get Cahiers du Cinéma ranking
+                const directors = englishCreds.crew
+                    .filter(c => c.job === 'Director')
+                    .map(c => c.name);
+                const cahiersRanking = getCahiersRanking(englishData.title, movieData.original_title, directors);
+                setCahiersRank(cahiersRanking);
 
-                // Fetch IMDb rating if imdb_id exists
                 if (movieData.imdb_id) {
                     getIMDbRating(movieData.imdb_id).then(rating => {
                         if (rating) setImdbRating(rating);
@@ -400,6 +409,23 @@ export default function MovieDetail() {
                             {movie.tagline}
                         </p>
                     )}
+                    
+                    <h3 style={{
+                        fontSize: '1.2rem',
+                        marginBottom: '16px',
+                        fontWeight: 600,
+                        color: '#fff'
+                    }}>
+                        {t('movie.overview')}
+                    </h3>
+                    <p style={{
+                        fontSize: '1.125rem',
+                        lineHeight: 1.6,
+                        color: '#ccc',
+                        marginBottom: '24px'
+                    }}>
+                        {movie.overview}
+                    </p>
                 </div>
 
                 {(movie.vote_average > 0 || imdbRating || tspdtRank || tspdt21stRank || sightAndSoundRank || afiRank) && (
@@ -495,6 +521,9 @@ export default function MovieDetail() {
                             if (tspdt21stRank) {
                                 rankings.push({ rank: tspdt21stRank, name: 'tspdt21st', label: "on TSPDT 21st Century's\n1000 Most Acclaimed Films" });
                             }
+                            if (cahiersRank) {
+                                rankings.push({ rank: cahiersRank.rank, name: 'cahiers', label: `on Cahiers du Cinéma\n${cahiersRank.year} Top 10` });
+                            }
                             
                             // Sort by rank number (ascending)
                             rankings.sort((a, b) => a.rank - b.rank);
@@ -527,24 +556,6 @@ export default function MovieDetail() {
                     </div>
                 )}
 
-                <div style={{ maxWidth: '800px' }}>
-                    <h3 style={{
-                        fontSize: '1.2rem',
-                        marginBottom: '16px',
-                        fontWeight: 600,
-                        color: '#fff'
-                    }}>
-                        {t('movie.overview')}
-                    </h3>
-                    <p style={{
-                        fontSize: '1.125rem',
-                        lineHeight: 1.6,
-                        color: '#ccc',
-                    }}>
-                        {movie.overview}
-                    </p>
-
-                </div>
                 {/* External Links */}
                 <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', flexWrap: 'wrap' }}>
                     {movie.homepage && (
@@ -589,6 +600,18 @@ export default function MovieDetail() {
                         }
                         return null;
                     })()}
+                    {(i18n.language === 'zh-CN') && (
+                        <a
+                            href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(movie.original_title)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                            {t('common.douban')}
+                        </a>
+                    )}
                     {movie.imdb_id && (
                         <a
                             href={`https://www.imdb.com/title/${movie.imdb_id}`}
@@ -599,6 +622,18 @@ export default function MovieDetail() {
                             onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
                         >
                             {t('common.imdb')}
+                        </a>
+                    )}
+                    {movie.imdb_id && (
+                        <a
+                            href={`https://www.imdb.com/title/${movie.imdb_id}/parentalguide`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                            Parents Guide
                         </a>
                     )}
                     <a
@@ -643,18 +678,6 @@ export default function MovieDetail() {
                     >
                         {t('common.metacritic')}
                     </a>
-                    {(i18n.language === 'zh-CN') && (
-                        <a
-                            href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(movie.original_title)}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                        >
-                            {t('common.douban')}
-                        </a>
-                    )}
                     <a
                         href={`https://www.rottentomatoes.com/search?search=${encodeURIComponent(englishTitle || movie.original_title)}`}
                         target="_blank"
