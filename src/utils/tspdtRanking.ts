@@ -59,17 +59,15 @@ export function getTSPDTRanking(title: string, year: number, originalTitle?: str
         
         if (!titleMatches) return false;
         
-        if (normalizedDirectors.length > 0) {
-            const filmDirectors = film.director.split('&').map(d => normalizeDirector(d));
-            const directorMatches = filmDirectors.some(filmDir => 
-                normalizedDirectors.some(dir => {
-                    return filmDir.includes(dir) || dir.includes(filmDir);
-                })
-            );
-            return directorMatches;
-        }
+        if (normalizedDirectors.length === 0) return false;
         
-        return true;
+        const filmDirectors = film.director.split('&').map(d => normalizeDirector(d));
+        const directorMatches = filmDirectors.some(filmDir => 
+            normalizedDirectors.some(dir => {
+                return filmDir.includes(dir) || dir.includes(filmDir);
+            })
+        );
+        return directorMatches;
     });
 
     if (!match && originalTitle && originalTitle !== title) {
@@ -81,17 +79,15 @@ export function getTSPDTRanking(title: string, year: number, originalTitle?: str
             
             if (!titleMatches) return false;
             
-            if (normalizedDirectors.length > 0) {
-                const filmDirectors = film.director.split('&').map(d => normalizeDirector(d));
-                const directorMatches = filmDirectors.some(filmDir => 
-                    normalizedDirectors.some(dir => {
-                        return filmDir.includes(dir) || dir.includes(filmDir);
-                    })
-                );
-                return directorMatches;
-            }
+            if (normalizedDirectors.length === 0) return false;
             
-            return true;
+            const filmDirectors = film.director.split('&').map(d => normalizeDirector(d));
+            const directorMatches = filmDirectors.some(filmDir => 
+                normalizedDirectors.some(dir => {
+                    return filmDir.includes(dir) || dir.includes(filmDir);
+                })
+            );
+            return directorMatches;
         });
     }
 
