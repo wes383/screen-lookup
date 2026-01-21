@@ -13,7 +13,7 @@ const normalizeTitle = (title: string): string => {
 };
 
 const normalizeDirector = (director: string): string => {
-    return director.toLowerCase().trim();
+    return director.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, '').trim();
 };
 
 export const getCahiersRanking = (title: string, originalTitle: string | undefined, directors: string[]): { rank: number; year: string } | null => {
