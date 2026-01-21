@@ -45,7 +45,7 @@ function normalizeDirector(director: string): string {
         director = `${match[2]} ${match[1]}`;
     }
     
-    return director.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
+    return director.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, '').trim();
 }
 
 export function getTSPDT21stRanking(title: string, year: number, originalTitle?: string, directors?: string[]): number | null {
