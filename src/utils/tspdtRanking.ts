@@ -1,12 +1,26 @@
 import tspdtData from '../assets/tspdt-1000-greatest-films-2026.json';
 
+interface TSPDTEntry {
+    Pos: string;
+    "2025": string;
+    Title: string;
+    Director: string;
+    Year: string;
+}
+
 interface TSPDTFilm {
     rank: number;
     title: string;
+    director: string;
     year: number;
 }
 
-const films: TSPDTFilm[] = tspdtData;
+const films: TSPDTFilm[] = (tspdtData as TSPDTEntry[]).map(entry => ({
+    rank: parseInt(entry.Pos),
+    title: entry.Title,
+    director: entry.Director,
+    year: parseInt(entry.Year)
+}));
 
 function normalizeTitle(title: string): string {
     const trailingArticlePattern = /^(.+?),\s+(The|A|An|Le|La|Les|L'|L|Un|Une|Des|El|Los|Las|Il|Lo|I|Gli|Der|Die|Das|Den)$/i;
@@ -24,13 +38,38 @@ function normalizeTitle(title: string): string {
     return normalized;
 }
 
-export function getTSPDTRanking(title: string, year: number, originalTitle?: string): number | null {
+function normalizeDirector(director: string): string {
+    const commaPattern = /^(.+?),\s*(.+)$/;
+    const match = director.match(commaPattern);
+    if (match) {
+        director = `${match[2]} ${match[1]}`;
+    }
+    
+    return director.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+export function getTSPDTRanking(title: string, year: number, originalTitle?: string, directors?: string[]): number | null {
     const normalizedSearchTitle = normalizeTitle(title);
+    const normalizedDirectors = directors ? directors.map(normalizeDirector) : [];
 
     let match = films.find(film => {
         const normalizedFilmTitle = normalizeTitle(film.title);
         const yearDiff = Math.abs(film.year - year);
-        return normalizedFilmTitle === normalizedSearchTitle && yearDiff <= 1;
+        const titleMatches = normalizedFilmTitle === normalizedSearchTitle && yearDiff <= 1;
+        
+        if (!titleMatches) return false;
+        
+        if (normalizedDirectors.length > 0) {
+            const filmDirectors = film.director.split('&').map(d => normalizeDirector(d));
+            const directorMatches = filmDirectors.some(filmDir => 
+                normalizedDirectors.some(dir => {
+                    return filmDir.includes(dir) || dir.includes(filmDir);
+                })
+            );
+            return directorMatches;
+        }
+        
+        return true;
     });
 
     if (!match && originalTitle && originalTitle !== title) {
@@ -38,7 +77,21 @@ export function getTSPDTRanking(title: string, year: number, originalTitle?: str
         match = films.find(film => {
             const normalizedFilmTitle = normalizeTitle(film.title);
             const yearDiff = Math.abs(film.year - year);
-            return normalizedFilmTitle === normalizedOriginalTitle && yearDiff <= 1;
+            const titleMatches = normalizedFilmTitle === normalizedOriginalTitle && yearDiff <= 1;
+            
+            if (!titleMatches) return false;
+            
+            if (normalizedDirectors.length > 0) {
+                const filmDirectors = film.director.split('&').map(d => normalizeDirector(d));
+                const directorMatches = filmDirectors.some(filmDir => 
+                    normalizedDirectors.some(dir => {
+                        return filmDir.includes(dir) || dir.includes(filmDir);
+                    })
+                );
+                return directorMatches;
+            }
+            
+            return true;
         });
     }
 

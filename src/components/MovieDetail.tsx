@@ -166,13 +166,17 @@ export default function MovieDetail() {
                 setReleaseDates(releases);
                 setVideos(vids);
 
+                const directors = englishCreds.crew
+                    .filter(c => c.job === 'Director')
+                    .map(c => c.name);
+
                 // Get TSPDT ranking
                 const releaseYear = movieData.release_date ? new Date(movieData.release_date).getFullYear() : 0;
-                const tspdtRanking = getTSPDTRanking(englishData.title, releaseYear, movieData.original_title);
+                const tspdtRanking = getTSPDTRanking(englishData.title, releaseYear, movieData.original_title, directors);
                 setTspdtRank(tspdtRanking);
 
                 // Get TSPDT 21st Century ranking
-                const tspdt21stRanking = getTSPDT21stRanking(englishData.title, releaseYear, movieData.original_title);
+                const tspdt21stRanking = getTSPDT21stRanking(englishData.title, releaseYear, movieData.original_title, directors);
                 setTspdt21stRank(tspdt21stRanking);
 
                 // Get Sight and Sound ranking
@@ -186,9 +190,6 @@ export default function MovieDetail() {
                 }
                 
                 // Get Cahiers du Cinéma ranking
-                const directors = englishCreds.crew
-                    .filter(c => c.job === 'Director')
-                    .map(c => c.name);
                 const cahiersRanking = getCahiersRanking(englishData.title, movieData.original_title, directors);
                 setCahiersRank(cahiersRanking);
 
