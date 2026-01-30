@@ -519,7 +519,8 @@ export default function MovieDetail() {
                             if (tspdtRank) {
                                 rankings.push({ rank: tspdtRank, name: 'tspdt', label: 'on TSPDT 1000\nGreatest Films' });
                             }
-                            if (tspdt21stRank) {
+                            // Only show TSPDT 21st Century if not in TSPDT 1000
+                            if (tspdt21stRank && !tspdtRank) {
                                 rankings.push({ rank: tspdt21stRank, name: 'tspdt21st', label: "on TSPDT 21st Century's\n1000 Most Acclaimed Films" });
                             }
                             if (cahiersRank) {
