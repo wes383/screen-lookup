@@ -2,7 +2,7 @@ import tspdt21stData from '../assets/tspdt-21st-centurys-top-1000.json';
 
 interface TSPDT21stEntry {
     Pos: string;
-    "2024": string;
+    "2025": string;
     Title: string;
     Director: string;
     Year: string;
