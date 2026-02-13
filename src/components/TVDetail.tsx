@@ -11,6 +11,13 @@ export default function TVDetail() {
     const { setIsLoading } = useLoading();
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const translateStatus = (status: string | undefined): string => {
         if (!status) return t('common.unknown');
@@ -277,7 +284,7 @@ export default function TVDetail() {
             <div style={{
                 position: 'relative',
                 width: '100%',
-                height: '80vh',
+                height: isMobile ? '50vh' : '80vh',
             }}>
                 {/* Background Image */}
                 <div style={{
@@ -305,8 +312,8 @@ export default function TVDetail() {
 
             {/* Content Section */}
             <div style={{
-                padding: '0 60px 80px 80px',
-                marginTop: '-120px',
+                padding: isMobile ? '0 20px 40px 20px' : '0 60px 80px 80px',
+                marginTop: isMobile ? '-80px' : '-120px',
                 position: 'relative',
                 zIndex: 10
             }}>
@@ -316,8 +323,8 @@ export default function TVDetail() {
                         src={getImageUrl(logo.file_path, 'original')}
                         alt={tv.name}
                         style={{
-                            maxHeight: '120px',
-                            maxWidth: '400px',
+                            maxHeight: isMobile ? '80px' : '120px',
+                            maxWidth: isMobile ? '280px' : '400px',
                             marginBottom: '16px',
                             objectFit: 'contain',
                             filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))',
@@ -328,7 +335,7 @@ export default function TVDetail() {
                     <h1
                         onClick={() => setShowAlternativeTitles(true)}
                         style={{
-                            fontSize: '4rem',
+                            fontSize: isMobile ? '2rem' : '4rem',
                             margin: '0 0 16px 0',
                             fontWeight: 700,
                             lineHeight: 1.1,
@@ -342,10 +349,10 @@ export default function TVDetail() {
                 <div style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '12px',
+                    gap: isMobile ? '8px' : '12px',
                     color: '#e0e0e0',
-                    marginBottom: '32px',
-                    fontSize: '18px',
+                    marginBottom: isMobile ? '24px' : '32px',
+                    fontSize: isMobile ? '14px' : '18px',
                     fontWeight: 500,
                     textShadow: '0 1px 2px rgba(0,0,0,0.5)',
                     flexWrap: 'wrap'
@@ -412,8 +419,8 @@ export default function TVDetail() {
                     <div style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '24px',
-                        marginBottom: '24px',
+                        gap: isMobile ? '16px' : '24px',
+                        marginBottom: isMobile ? '20px' : '24px',
                         flexWrap: 'wrap'
                     }}>
                         {tv.vote_average > 0 && (
@@ -423,14 +430,14 @@ export default function TVDetail() {
                                 gap: '8px'
                             }}>
                                 <span style={{
-                                    fontSize: '18px',
+                                    fontSize: isMobile ? '16px' : '18px',
                                     fontWeight: 600,
                                     color: '#01b4e4'
                                 }}>
                                     TMDB
                                 </span>
                                 <span style={{
-                                    fontSize: '18px',
+                                    fontSize: isMobile ? '16px' : '18px',
                                     fontWeight: 600,
                                     color: '#fff'
                                 }}>
@@ -445,7 +452,7 @@ export default function TVDetail() {
                                 gap: '8px'
                             }}>
                                 <span style={{
-                                    fontSize: '18px',
+                                    fontSize: isMobile ? '16px' : '18px',
                                     fontWeight: 600,
                                     color: '#DBA506'
                                 }}>
@@ -457,14 +464,14 @@ export default function TVDetail() {
                                     gap: '4px'
                                 }}>
                                     <span style={{
-                                        fontSize: '18px',
+                                        fontSize: isMobile ? '16px' : '18px',
                                         fontWeight: 600,
                                         color: '#fff'
                                     }}>
                                         {imdbRating.aggregateRating.toFixed(1)}
                                     </span>
                                     <span style={{
-                                        fontSize: '14px',
+                                        fontSize: isMobile ? '13px' : '14px',
                                         color: '#999'
                                     }}>
                                         ({(() => {
@@ -937,13 +944,13 @@ export default function TVDetail() {
 
             {/* Full Cast & Crew Modal */}
             {showFullCast && (
-                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowFullCast(false)}>
-                    <div style={{ backgroundColor: '#1a1a1a', borderRadius: '24px', width: '100%', maxWidth: '800px', height: '90vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <h2 style={{ color: '#fff', margin: 0 }}>{t('tv.fullCastAndCrew')}</h2>
-                            <button onClick={() => setShowFullCast(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: isMobile ? '20px' : '40px' }} onClick={() => setShowFullCast(false)}>
+                    <div style={{ backgroundColor: '#1a1a1a', borderRadius: isMobile ? '16px' : '24px', width: '100%', maxWidth: '800px', height: isMobile ? '85vh' : '90vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+                        <div style={{ padding: isMobile ? '16px' : '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.fullCastAndCrew')}</h2>
+                            <button onClick={() => setShowFullCast(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: isMobile ? '20px' : '24px', cursor: 'pointer' }}><X size={isMobile ? 20 : 24} /></button>
                         </div>
-                        <div style={{ padding: '24px', overflowY: 'auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
+                        <div style={{ padding: isMobile ? '16px' : '24px', overflowY: 'auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '24px' : '40px' }}>
                             <div>
                                 <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>{t('tv.cast')}</h3>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -973,13 +980,13 @@ export default function TVDetail() {
 
             {/* Alternative Titles Modal */}
             {showAlternativeTitles && (
-                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowAlternativeTitles(false)}>
-                    <div style={{ backgroundColor: '#1a1a1a', borderRadius: '24px', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <h2 style={{ color: '#fff', margin: 0 }}>{t('tv.alternativeTitles')}</h2>
-                            <button onClick={() => setShowAlternativeTitles(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: isMobile ? '20px' : '40px' }} onClick={() => setShowAlternativeTitles(false)}>
+                    <div style={{ backgroundColor: '#1a1a1a', borderRadius: isMobile ? '16px' : '24px', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+                        <div style={{ padding: isMobile ? '16px' : '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.alternativeTitles')}</h2>
+                            <button onClick={() => setShowAlternativeTitles(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: isMobile ? '20px' : '24px', cursor: 'pointer' }}><X size={isMobile ? 20 : 24} /></button>
                         </div>
-                        <div style={{ padding: '24px', overflowY: 'auto' }}>
+                        <div style={{ padding: isMobile ? '16px' : '24px', overflowY: 'auto' }}>
                             {alternativeTitles.length > 0 ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>

@@ -1,0 +1,91 @@
+/* Mobile responsive styles for detail pages */
+
+@media (max-width: 768px) {
+  .detail-hero {
+    height: 50vh !important;
+  }
+
+  .detail-content {
+    padding: 0 20px 40px 20px !important;
+    margin-top: -80px !important;
+  }
+
+  .detail-logo {
+    max-height: 80px !important;
+    max-width: 280px !important;
+  }
+
+  .detail-title {
+    font-size: 2rem !important;
+  }
+
+  .detail-meta {
+    font-size: 14px !important;
+    gap: 8px !important;
+  }
+
+  .detail-overview {
+    font-size: 1rem !important;
+  }
+
+  .cast-grid {
+    gap: 8px !important;
+  }
+
+  .modal-container {
+    padding: 20px !important;
+  }
+
+  .modal-content {
+    border-radius: 16px !important;
+    max-height: 85vh !important;
+  }
+
+  .modal-header {
+    padding: 16px !important;
+  }
+
+  .modal-body {
+    padding: 16px !important;
+  }
+
+  .person-header {
+    flex-direction: column !important;
+    padding: 40px 20px !important;
+  }
+
+  .person-profile {
+    width: 200px !important;
+  }
+
+  .person-info {
+    width: 100% !important;
+  }
+
+  .person-filmography {
+    padding: 0 20px 40px !important;
+  }
+
+  .filmography-grid {
+    gap: 12px !important;
+  }
+
+  .filmography-item {
+    min-width: 120px !important;
+    width: 120px !important;
+  }
+
+  .filmography-poster {
+    height: 180px !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .detail-content {
+    padding: 0 40px 60px 40px !important;
+  }
+
+  .detail-title {
+    font-size: 3rem !important;
+  }
+}

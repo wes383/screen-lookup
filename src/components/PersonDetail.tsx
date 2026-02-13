@@ -14,6 +14,13 @@ export default function PersonDetail() {
     const [person, setPerson] = useState<PersonDetails | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         setIsLoading(true);
@@ -159,9 +166,9 @@ export default function PersonDetail() {
     return (
         <div style={{ minHeight: '100vh', backgroundColor: '#121212', color: '#fff', fontFamily: 'Inter, sans-serif' }}>
             {/* Header Section */}
-            <div style={{ display: 'flex', gap: '40px', padding: '60px 80px', alignItems: 'flex-start' }}>
+            <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '24px' : '40px', padding: isMobile ? '40px 20px' : '60px 80px', alignItems: 'flex-start' }}>
                 {/* Profile Image */}
-                <div style={{ flexShrink: 0, width: '300px' }}>
+                <div style={{ flexShrink: 0, width: isMobile ? '200px' : '300px', margin: isMobile ? '0 auto' : '0' }}>
                     {person.profile_path ? (
                         <img
                             src={getImageUrl(person.profile_path, 'h632')}
@@ -176,8 +183,8 @@ export default function PersonDetail() {
                 </div>
 
                 {/* Info */}
-                <div style={{ flex: 1 }}>
-                    <h1 style={{ fontSize: '3rem', fontWeight: 700, margin: 0, marginBottom: '16px' }}>{person.name}</h1>
+                <div style={{ flex: 1, width: isMobile ? '100%' : 'auto' }}>
+                    <h1 style={{ fontSize: isMobile ? '2rem' : '3rem', fontWeight: 700, margin: 0, marginBottom: '16px' }}>{person.name}</h1>
 
                     {/* Meta Info */}
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', marginBottom: '24px', color: '#ccc', fontSize: '16px' }}>
@@ -252,11 +259,11 @@ export default function PersonDetail() {
             </div>
 
             {/* Filmography */}
-            <div style={{ padding: '0 80px 80px' }}>
+            <div style={{ padding: isMobile ? '0 20px 40px' : '0 80px 80px' }}>
                 {sortedCredits.length > 0 && (
-                    <div style={{ marginBottom: '48px' }}>
-                        <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '24px' }}>{t('person.filmography')}</h3>
-                        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                    <div style={{ marginBottom: isMobile ? '32px' : '48px' }}>
+                        <h3 style={{ fontSize: isMobile ? '1.2rem' : '1.5rem', fontWeight: 600, marginBottom: isMobile ? '16px' : '24px' }}>{t('person.filmography')}</h3>
+                        <div style={{ display: 'flex', gap: isMobile ? '12px' : '16px', flexWrap: 'wrap' }}>
                             {sortedCredits.map(credit => {
                                 // Translate job titles
                                 const translatedJobs = credit.job?.split(', ').map(job => {
@@ -280,9 +287,9 @@ export default function PersonDetail() {
                                     <div
                                         key={`${credit.media_type}-${credit.id}`}
                                         onClick={() => navigate(`/${credit.media_type}/${credit.id}`)}
-                                        style={{ minWidth: '140px', width: '140px', cursor: 'pointer' }}
+                                        style={{ minWidth: isMobile ? '120px' : '140px', width: isMobile ? '120px' : '140px', cursor: 'pointer' }}
                                     >
-                                        <div style={{ height: '210px', backgroundColor: '#333', borderRadius: '8px', overflow: 'hidden', marginBottom: '8px' }}>
+                                        <div style={{ height: isMobile ? '180px' : '210px', backgroundColor: '#333', borderRadius: '8px', overflow: 'hidden', marginBottom: '8px' }}>
                                             {credit.poster_path ? (
                                                 <img src={getImageUrl(credit.poster_path, 'w342')} alt={credit.title || credit.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                             ) : (

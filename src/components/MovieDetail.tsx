@@ -16,6 +16,13 @@ export default function MovieDetail() {
     const { setIsLoading } = useLoading();
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const translateStatus = (status: string | undefined): string => {
         if (!status) return t('common.unknown');
@@ -285,7 +292,7 @@ export default function MovieDetail() {
             <div style={{
                 position: 'relative',
                 width: '100%',
-                height: '80vh',
+                height: isMobile ? '50vh' : '80vh',
             }}>
                 {/* Background Image */}
                 <div style={{
@@ -312,8 +319,8 @@ export default function MovieDetail() {
 
             {/* Content Section */}
             <div style={{
-                padding: '0 60px 80px 80px',
-                marginTop: '-120px',
+                padding: isMobile ? '0 20px 40px 20px' : '0 60px 80px 80px',
+                marginTop: isMobile ? '-80px' : '-120px',
                 position: 'relative',
                 zIndex: 10
             }}>
@@ -323,8 +330,8 @@ export default function MovieDetail() {
                         src={getImageUrl(logo.file_path, 'original')}
                         alt={movie.title}
                         style={{
-                            maxHeight: '120px',
-                            maxWidth: '400px',
+                            maxHeight: isMobile ? '80px' : '120px',
+                            maxWidth: isMobile ? '280px' : '400px',
                             marginBottom: '16px',
                             objectFit: 'contain',
                             filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))',
@@ -335,7 +342,7 @@ export default function MovieDetail() {
                     <h1
                         onClick={() => setShowAlternativeTitles(true)}
                         style={{
-                            fontSize: '4rem',
+                            fontSize: isMobile ? '2rem' : '4rem',
                             margin: '0 0 16px 0',
                             fontWeight: 700,
                             lineHeight: 1.1,
@@ -349,10 +356,10 @@ export default function MovieDetail() {
                 <div style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '12px',
+                    gap: isMobile ? '8px' : '12px',
                     color: '#e0e0e0',
-                    marginBottom: '32px',
-                    fontSize: '18px',
+                    marginBottom: isMobile ? '24px' : '32px',
+                    fontSize: isMobile ? '14px' : '18px',
                     fontWeight: 500,
                     textShadow: '0 1px 2px rgba(0,0,0,0.5)',
                     flexWrap: 'wrap'
@@ -432,81 +439,93 @@ export default function MovieDetail() {
                 {(movie.vote_average > 0 || imdbRating || tspdtRank || tspdt21stRank || sightAndSoundRank || afiRank) && (
                     <div style={{
                         display: 'flex',
-                        alignItems: 'center',
-                        gap: '24px',
-                        marginBottom: '24px',
-                        flexWrap: 'wrap'
+                        alignItems: 'flex-start',
+                        gap: isMobile ? '12px' : '24px',
+                        marginBottom: isMobile ? '20px' : '24px',
+                        flexWrap: 'wrap',
+                        flexDirection: 'column'
                     }}>
-                        {movie.vote_average > 0 && (
+                        {/* Ratings row */}
+                        {(movie.vote_average > 0 || imdbRating) && (
                             <div style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '8px'
+                                gap: isMobile ? '16px' : '24px',
+                                flexWrap: 'wrap'
                             }}>
-                                <span style={{
-                                    fontSize: '18px',
-                                    fontWeight: 600,
-                                    color: '#01b4e4'
-                                }}>
-                                    TMDB
-                                </span>
-                                <span style={{
-                                    fontSize: '18px',
-                                    fontWeight: 600,
-                                    color: '#fff'
-                                }}>
-                                    {movie.vote_average.toFixed(1)}
-                                </span>
+                                {movie.vote_average > 0 && (
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '8px'
+                                    }}>
+                                        <span style={{
+                                            fontSize: isMobile ? '16px' : '18px',
+                                            fontWeight: 600,
+                                            color: '#01b4e4'
+                                        }}>
+                                            TMDB
+                                        </span>
+                                        <span style={{
+                                            fontSize: isMobile ? '16px' : '18px',
+                                            fontWeight: 600,
+                                            color: '#fff'
+                                        }}>
+                                            {movie.vote_average.toFixed(1)}
+                                        </span>
+                                    </div>
+                                )}
+                                {imdbRating && (
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '8px'
+                                    }}>
+                                        <span style={{
+                                            fontSize: isMobile ? '16px' : '18px',
+                                            fontWeight: 600,
+                                            color: '#DBA506'
+                                        }}>
+                                            IMDb
+                                        </span>
+                                        <div style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '4px'
+                                        }}>
+                                            <span style={{
+                                                fontSize: isMobile ? '16px' : '18px',
+                                                fontWeight: 600,
+                                                color: '#fff'
+                                            }}>
+                                                {imdbRating.aggregateRating.toFixed(1)}
+                                            </span>
+                                            <span style={{
+                                                fontSize: isMobile ? '13px' : '14px',
+                                                color: '#999'
+                                            }}>
+                                                ({(() => {
+                                                    const count = imdbRating.voteCount;
+                                                    if (count < 1000) {
+                                                        return count.toString();
+                                                    } else if (count < 10000) {
+                                                        const k = count / 1000;
+                                                        return `${k.toFixed(1)}K`;
+                                                    } else if (count < 1000000) {
+                                                        const k = Math.round(count / 1000);
+                                                        return `${k}K`;
+                                                    } else {
+                                                        const m = count / 1000000;
+                                                        return `${m.toFixed(1)}M`;
+                                                    }
+                                                })()})
+                                            </span>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         )}
-                        {imdbRating && (
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px'
-                            }}>
-                                <span style={{
-                                    fontSize: '18px',
-                                    fontWeight: 600,
-                                    color: '#DBA506'
-                                }}>
-                                    IMDb
-                                </span>
-                                <div style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '4px'
-                                }}>
-                                    <span style={{
-                                        fontSize: '18px',
-                                        fontWeight: 600,
-                                        color: '#fff'
-                                    }}>
-                                        {imdbRating.aggregateRating.toFixed(1)}
-                                    </span>
-                                    <span style={{
-                                        fontSize: '14px',
-                                        color: '#999'
-                                    }}>
-                                        ({(() => {
-                                            const count = imdbRating.voteCount;
-                                            if (count < 1000) {
-                                                return count.toString();
-                                            } else if (count < 10000) {
-                                                const k = count / 1000;
-                                                return `${k.toFixed(1)}K`;
-                                            } else if (count < 1000000) {
-                                                const k = Math.round(count / 1000);
-                                                return `${k}K`;
-                                            } else {
-                                                const m = count / 1000000;
-                                                return `${m.toFixed(1)}M`;
-                                            }
-                                        })()})
-                                    </span>
-                                </div>
-                            </div>
-                        )}
+                        {/* Rankings - each on separate line on mobile */}
                         {(() => {
                             // Create array of rankings and sort by rank number
                             const rankings = [];
@@ -530,30 +549,67 @@ export default function MovieDetail() {
                             // Sort by rank number (ascending)
                             rankings.sort((a, b) => a.rank - b.rank);
                             
-                            return rankings.map((ranking) => (
-                                <div key={ranking.name} style={{
+                            if (rankings.length === 0) return null;
+                            
+                            return isMobile ? (
+                                // Mobile: each ranking on separate line
+                                rankings.map((ranking) => (
+                                    <div key={ranking.name} style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '8px'
+                                    }}>
+                                        <span style={{
+                                            fontSize: '16px',
+                                            fontWeight: 600,
+                                            color: '#fff',
+                                            flexShrink: 0
+                                        }}>
+                                            #{ranking.rank}
+                                        </span>
+                                        <span style={{
+                                            fontSize: '13px',
+                                            color: '#fff',
+                                            lineHeight: 1.3
+                                        }}>
+                                            {ranking.label.replace(/\n/g, ' ')}
+                                        </span>
+                                    </div>
+                                ))
+                            ) : (
+                                // Desktop: all rankings in one row
+                                <div style={{
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: '8px'
+                                    gap: '24px',
+                                    flexWrap: 'wrap'
                                 }}>
-                                    <span style={{
-                                        fontSize: '18px',
-                                        fontWeight: 600,
-                                        color: '#fff'
-                                    }}>
-                                        #{ranking.rank}
-                                    </span>
-                                    <span style={{
-                                        fontSize: '14px',
-                                        color: '#fff',
-                                        lineHeight: 1.3,
-                                        display: 'inline-block',
-                                        whiteSpace: 'pre-line'
-                                    }}>
-                                        {ranking.label}
-                                    </span>
+                                    {rankings.map((ranking) => (
+                                        <div key={ranking.name} style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px'
+                                        }}>
+                                            <span style={{
+                                                fontSize: '18px',
+                                                fontWeight: 600,
+                                                color: '#fff'
+                                            }}>
+                                                #{ranking.rank}
+                                            </span>
+                                            <span style={{
+                                                fontSize: '14px',
+                                                color: '#fff',
+                                                lineHeight: 1.3,
+                                                display: 'inline-block',
+                                                whiteSpace: 'pre-line'
+                                            }}>
+                                                {ranking.label}
+                                            </span>
+                                        </div>
+                                    ))}
                                 </div>
-                            ));
+                            );
                         })()}
                     </div>
                 )}
@@ -1016,32 +1072,32 @@ export default function MovieDetail() {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        padding: '40px'
+                        padding: isMobile ? '20px' : '40px'
                     }} onClick={() => setShowFullCast(false)}>
                         <div style={{
                             backgroundColor: '#1a1a1a',
-                            borderRadius: '24px',
+                            borderRadius: isMobile ? '16px' : '24px',
                             width: '100%',
                             maxWidth: '800px',
-                            height: '90vh',
+                            height: isMobile ? '85vh' : '90vh',
                             display: 'flex',
                             flexDirection: 'column'
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
-                                padding: '24px',
+                                padding: isMobile ? '16px' : '24px',
                                 borderBottom: '1px solid #333',
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 alignItems: 'center'
                             }}>
-                                <h2 style={{ color: '#fff', margin: 0 }}>{t('movie.fullCastAndCrew')}</h2>
+                                <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('movie.fullCastAndCrew')}</h2>
                                 <button
                                     onClick={() => setShowFullCast(false)}
                                     style={{
                                         background: 'none',
                                         border: 'none',
                                         color: '#999',
-                                        fontSize: '24px',
+                                        fontSize: isMobile ? '20px' : '24px',
                                         cursor: 'pointer',
                                         outline: 'none',
                                         display: 'flex',
@@ -1049,15 +1105,15 @@ export default function MovieDetail() {
                                         justifyContent: 'center'
                                     }}
                                 >
-                                    <X size={24} />
+                                    <X size={isMobile ? 20 : 24} />
                                 </button>
                             </div>
                             <div style={{
-                                padding: '24px',
+                                padding: isMobile ? '16px' : '24px',
                                 overflowY: 'auto',
                                 display: 'grid',
-                                gridTemplateColumns: '1fr 1fr',
-                                gap: '40px'
+                                gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+                                gap: isMobile ? '24px' : '40px'
                             }}>
                                 {/* Full Cast Column */}
                                 <div>

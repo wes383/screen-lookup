@@ -32,6 +32,12 @@ h1 {
   line-height: 1.1;
 }
 
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2em;
+  }
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
@@ -45,4 +51,30 @@ h1 {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #666;
+}
+
+/* Mobile touch optimization */
+@media (max-width: 768px) {
+  button, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  a {
+    min-height: 44px;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
 }

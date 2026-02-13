@@ -245,6 +245,8 @@ export default function Home() {
         return date ? new Date(date).getFullYear() : '';
     };
 
+    const isMobile = window.innerWidth <= 768;
+
     return (
         <div style={{
             position: 'fixed',
@@ -257,10 +259,10 @@ export default function Home() {
             display: 'flex',
             alignItems: 'flex-start',
             justifyContent: 'center',
-            paddingTop: 'calc(50vh - 285px)'
+            paddingTop: isMobile ? '20vh' : 'calc(50vh - 285px)'
         }}>
             <div style={{
-                padding: '0 20px',
+                padding: isMobile ? '0 16px' : '0 20px',
                 width: '100%',
                 maxWidth: '600px'
             }}>
@@ -274,13 +276,13 @@ export default function Home() {
                             onFocus={() => setIsFocused(true)}
                             style={{
                                 width: '100%',
-                                padding: '20px 30px 20px 60px',
-                                borderRadius: isFocused ? '24px 24px 0 0' : '9999px',
+                                padding: isMobile ? '16px 20px 16px 50px' : '20px 30px 20px 60px',
+                                borderRadius: isFocused ? (isMobile ? '20px 20px 0 0' : '24px 24px 0 0') : '9999px',
                                 border: 'none',
                                 outline: 'none',
                                 backgroundColor: '#2A2A2A',
                                 color: '#FFFFFF',
-                                fontSize: '24px',
+                                fontSize: isMobile ? '18px' : '24px',
                                 fontFamily: 'Inter, sans-serif',
                                 boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
                                 boxSizing: 'border-box'
@@ -289,12 +291,12 @@ export default function Home() {
                         <Search
                             style={{
                                 position: 'absolute',
-                                left: '24px',
+                                left: isMobile ? '16px' : '24px',
                                 top: '50%',
                                 transform: 'translateY(-50%)',
                                 color: '#888'
                             }}
-                            size={28}
+                            size={isMobile ? 22 : 28}
                         />
                     </form>
 
@@ -304,8 +306,9 @@ export default function Home() {
                             textAlign: 'center',
                             marginTop: '12px',
                             color: '#666',
-                            fontSize: '13px',
-                            fontFamily: 'Inter, sans-serif'
+                            fontSize: isMobile ? '12px' : '13px',
+                            fontFamily: 'Inter, sans-serif',
+                            padding: isMobile ? '0 8px' : '0'
                         }}>
                             {t('common.imdbIdHint')}
                         </div>
@@ -321,9 +324,9 @@ export default function Home() {
                                 left: 0,
                                 right: 0,
                                 backgroundColor: '#2A2A2A',
-                                borderRadius: '0 0 24px 24px',
+                                borderRadius: isMobile ? '0 0 20px 20px' : '0 0 24px 24px',
                                 boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
-                                height: '500px',
+                                height: isMobile ? '60vh' : '500px',
                                 overflowY: 'auto',
                                 zIndex: 1000
                             }}>
@@ -346,8 +349,8 @@ export default function Home() {
                                         onClick={() => handleResultClick(result)}
                                         style={{
                                             display: 'flex',
-                                            gap: '16px',
-                                            padding: '12px 20px',
+                                            gap: isMobile ? '12px' : '16px',
+                                            padding: isMobile ? '10px 16px' : '12px 20px',
                                             cursor: 'pointer',
                                             borderBottom: '1px solid #333',
                                             transition: 'background-color 0.2s'
@@ -356,8 +359,8 @@ export default function Home() {
                                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                                     >
                                         <div style={{
-                                            width: '50px',
-                                            height: '50px',
+                                            width: isMobile ? '45px' : '50px',
+                                            height: isMobile ? '45px' : '50px',
                                             backgroundColor: '#1a1a1a',
                                             borderRadius: result.media_type === 'person' ? '50%' : '4px',
                                             overflow: 'hidden',
@@ -383,14 +386,14 @@ export default function Home() {
                                         <div style={{ flex: 1, minWidth: 0 }}>
                                             <div style={{
                                                 color: '#fff',
-                                                fontSize: '16px',
+                                                fontSize: isMobile ? '15px' : '16px',
                                                 fontWeight: 500,
                                                 overflow: 'hidden',
                                                 textOverflow: 'ellipsis',
                                                 whiteSpace: 'nowrap',
                                                 display: 'flex',
                                                 alignItems: 'center',
-                                                gap: '8px'
+                                                gap: isMobile ? '6px' : '8px'
                                             }}>
                                                 <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                                     {getResultTitle(result)}
@@ -399,10 +402,10 @@ export default function Home() {
                                                     display: 'flex',
                                                     alignItems: 'center',
                                                     gap: '4px',
-                                                    fontSize: '12px',
+                                                    fontSize: isMobile ? '11px' : '12px',
                                                     color: '#999',
                                                     backgroundColor: '#1a1a1a',
-                                                    padding: '2px 8px',
+                                                    padding: isMobile ? '2px 6px' : '2px 8px',
                                                     borderRadius: '12px',
                                                     flexShrink: 0
                                                 }}>
@@ -412,7 +415,7 @@ export default function Home() {
                                             </div>
                                             <div style={{
                                                 color: '#999',
-                                                fontSize: '14px',
+                                                fontSize: isMobile ? '13px' : '14px',
                                                 marginTop: '4px'
                                             }}>
                                                 {getResultYear(result)}
