@@ -747,9 +747,9 @@ export default function TVDetail() {
                                             )}
                                         </div>
                                         <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flex: 1, minWidth: 0 }}>
-                                            <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: '18px', color: '#ccc', whiteSpace: 'nowrap', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
-                                            <span style={{ fontSize: '16px', color: '#666', whiteSpace: 'nowrap' }}>{t('common.as')}</span>
-                                            <span style={{ fontSize: '18px', color: '#999', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flex: 1 }} title={c.character}>{c.character}</span>
+                                            <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: isMobile ? '16px' : '18px', color: '#ccc', whiteSpace: 'nowrap', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
+                                            <span style={{ fontSize: isMobile ? '14px' : '16px', color: '#666', whiteSpace: 'nowrap' }}>{t('common.as')}</span>
+                                            <span style={{ fontSize: isMobile ? '16px' : '18px', color: '#999', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flex: 1 }} title={c.character}>{c.character}</span>
                                         </div>
                                     </div>
                                 ))}

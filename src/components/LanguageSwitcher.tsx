@@ -136,7 +136,9 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                 <div style={{
                   position: 'absolute',
                   bottom: '100%',
-                  right: '0',
+                  right: isMobile ? '0' : '0',
+                  left: isMobile ? 'auto' : 'auto',
+                  transform: 'none',
                   marginBottom: '8px',
                   backgroundColor: '#222',
                   border: '1px solid #444',
@@ -146,7 +148,11 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                   zIndex: 9999,
                   display: 'grid',
                   gridTemplateColumns: 'repeat(2, 1fr)',
-                  gap: '0'
+                  gap: '0',
+                  maxHeight: isMobile ? '60vh' : 'none',
+                  overflowY: isMobile ? 'auto' : 'visible',
+                  width: isMobile ? 'calc(100vw - 40px)' : 'auto',
+                  maxWidth: isMobile ? '400px' : 'none'
                 }}>
                   {languages.map(language => (
                     <button
@@ -380,7 +386,9 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
           <div style={{
             position: 'absolute',
             bottom: '100%',
-            right: '0',
+            right: isMobile ? '0' : '0',
+            left: isMobile ? 'auto' : 'auto',
+            transform: 'none',
             marginBottom: '8px',
             backgroundColor: '#222',
             border: '1px solid #444',
@@ -390,7 +398,11 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
             zIndex: 9999,
             display: 'grid',
             gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '0'
+            gap: '0',
+            maxHeight: isMobile ? '60vh' : 'none',
+            overflowY: isMobile ? 'auto' : 'visible',
+            width: isMobile ? 'calc(100vw - 40px)' : 'auto',
+            maxWidth: isMobile ? '400px' : 'none'
           }}>
             {languages.map(language => (
               <button

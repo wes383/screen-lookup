@@ -266,11 +266,23 @@ export default function Home() {
                 width: '100%',
                 maxWidth: '600px'
             }}>
+                {isMobile && !isFocused && (
+                    <div style={{
+                        textAlign: 'center',
+                        marginBottom: '12px',
+                        color: '#999',
+                        fontSize: '14px',
+                        fontFamily: 'Inter, sans-serif'
+                    }}>
+                        {t('common.searchPlaceholder')}
+                    </div>
+                )}
+                
                 <div ref={resultsRef} style={{ position: 'relative' }}>
                     <form onSubmit={handleSubmit} style={{ position: 'relative' }}>
                         <input
                             type="text"
-                            placeholder={t('common.searchPlaceholder')}
+                            placeholder={isMobile ? '' : t('common.searchPlaceholder')}
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             onFocus={() => setIsFocused(true)}

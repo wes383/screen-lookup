@@ -805,7 +805,7 @@ export default function MovieDetail() {
                                                 </div>
                                             )}
                                         </div>
-                                        <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
+                                        <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: isMobile ? '16px' : '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
                                     </div>
                                 ))}
                             </div>
@@ -857,9 +857,9 @@ export default function MovieDetail() {
                                             )}
                                         </div>
                                         <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline' }}>
-                                            <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
-                                            <span style={{ fontSize: '16px', color: '#666' }}>{t('common.as')}</span>
-                                            <span style={{ fontSize: '18px', color: '#999' }}>{c.character}</span>
+                                            <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: isMobile ? '16px' : '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
+                                            <span style={{ fontSize: isMobile ? '14px' : '16px', color: '#666' }}>{t('common.as')}</span>
+                                            <span style={{ fontSize: isMobile ? '16px' : '18px', color: '#999' }}>{c.character}</span>
                                         </div>
                                     </div>
                                 ))}
@@ -969,27 +969,27 @@ export default function MovieDetail() {
                             { label: t('common.productionCountries'), value: movie.production_countries.map(c => translateCountrySafe(c.iso_3166_1)).join(', ') || t('common.unknown') }
                         ].filter((item): item is { label: string; value: string } => item !== null && item.value !== undefined);
 
-                        const gridCols = infoItems.length <= 4 ? 'auto auto' : 'auto auto auto';
+                        const gridCols = isMobile ? 'auto auto' : (infoItems.length <= 4 ? 'auto auto' : 'auto auto auto');
 
                         return (
                             <div style={{
-                                marginTop: '24px',
+                                marginTop: isMobile ? '20px' : '24px',
                                 display: 'grid',
                                 gridTemplateColumns: gridCols,
-                                gap: '10px 80px',
+                                gap: isMobile ? '10px 40px' : '10px 80px',
                                 justifyContent: 'start'
                             }}>
                                 {infoItems.map((item, index) => (
                                     <div key={index}>
                                         <h3 style={{
-                                            fontSize: '1.2rem',
+                                            fontSize: isMobile ? '1rem' : '1.2rem',
                                             marginBottom: '8px',
                                             fontWeight: 600,
                                             color: '#fff'
                                         }}>
                                             {item.label}
                                         </h3>
-                                        <p style={{ fontSize: '14px', color: '#ccc' }}>
+                                        <p style={{ fontSize: isMobile ? '13px' : '14px', color: '#ccc' }}>
                                             {item.value}
                                         </p>
                                     </div>
