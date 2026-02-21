@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowDown01, ArrowDown10 } from 'lucide-react';
 
 import tspdtData from '../assets/tspdt-1000-greatest-films-2026.json';
@@ -516,13 +516,12 @@ export default function ListDetail() {
                                     </div>
                                 )}
 
-                                <div
-                                id={`rank-${item.rank}`}
-                                onClick={() => {
-                                    const isTV = item.title.includes('[TV]');
-                                    navigate(isTV ? `/tv/${item.tmdb_id}` : `/movie/${item.tmdb_id}`);
-                                }}
-                                style={{
+                                <Link
+                                    id={`rank-${item.rank}`}
+                                    to={item.title.includes('[TV]') ? `/tv/${item.tmdb_id}` : `/movie/${item.tmdb_id}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{
                                         display: 'flex',
                                         alignItems: 'center',
                                         gap: '32px',
@@ -531,7 +530,9 @@ export default function ListDetail() {
                                         borderRadius: '8px',
                                         cursor: 'pointer',
                                         transition: 'background-color 0.2s',
-                                        border: '1px solid #333'
+                                        border: '1px solid #333',
+                                        textDecoration: 'none',
+                                        color: 'inherit'
                                     }}
                                     onMouseEnter={e => e.currentTarget.style.backgroundColor = '#252525'}
                                     onMouseLeave={e => e.currentTarget.style.backgroundColor = '#1a1a1a'}
@@ -567,7 +568,7 @@ export default function ListDetail() {
                                             )}
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             </div>
                         );
                     })}
