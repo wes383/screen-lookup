@@ -4,12 +4,13 @@ interface SightAndSoundFilm {
     rank: number;
     title: string;
     year: string;
-    imdb_id: string;
+    tmdb_id: number;
+    genres: string[];
 }
 
-const films: SightAndSoundFilm[] = sightAndSoundData;
+const films: SightAndSoundFilm[] = sightAndSoundData as unknown as SightAndSoundFilm[];
 
-export function getSightAndSoundRanking(imdbId: string): number | null {
-    const match = films.find(film => film.imdb_id === imdbId);
+export function getSightAndSoundRanking(tmdbId: number): number | null {
+    const match = films.find(film => film.tmdb_id === tmdbId);
     return match ? match.rank : null;
 }

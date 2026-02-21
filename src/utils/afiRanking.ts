@@ -4,12 +4,13 @@ interface AFIFilm {
     rank: number;
     title: string;
     year: string;
-    imdb_id: string;
+    tmdb_id: number;
+    genres: string[];
 }
 
-const films: AFIFilm[] = afiData;
+const films: AFIFilm[] = afiData as unknown as AFIFilm[];
 
-export function getAFIRanking(imdbId: string): number | null {
-    const match = films.find(film => film.imdb_id === imdbId);
+export function getAFIRanking(tmdbId: number): number | null {
+    const match = films.find(film => film.tmdb_id === tmdbId);
     return match ? match.rank : null;
 }

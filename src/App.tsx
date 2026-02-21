@@ -7,11 +7,15 @@ import TVDetail from './components/TVDetail';
 import PersonDetail from './components/PersonDetail';
 import ImdbRedirect from './components/ImdbRedirect';
 import LanguageSwitcher from './components/LanguageSwitcher';
+import Lists from './components/Lists';
+import ListDetail from './components/ListDetail';
+import Recommendations from './components/Recommendations';
 import { LoadingProvider } from './contexts/LoadingContext';
 
 function AppContent() {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const isListPage = location.pathname.startsWith('/lists');
   const prevPathRef = useRef(location.pathname);
 
 
@@ -31,9 +35,12 @@ function AppContent() {
         <Route path="/movie/:id" element={<MovieDetail />} />
         <Route path="/tv/:id" element={<TVDetail />} />
         <Route path="/person/:id" element={<PersonDetail />} />
+        <Route path="/lists" element={<Lists />} />
+        <Route path="/lists/recommendations" element={<Recommendations />} />
+        <Route path="/lists/:type" element={<ListDetail />} />
         <Route path="/:imdbId" element={<ImdbRedirect />} />
       </Routes>
-      <LanguageSwitcher variant={isHomePage ? 'fixed' : 'bottom'} />
+      {!isListPage && <LanguageSwitcher variant={isHomePage ? 'fixed' : 'bottom'} />}
     </>
   );
 }

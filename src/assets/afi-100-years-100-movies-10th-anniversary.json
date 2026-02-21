@@ -3,600 +3,1044 @@
         "rank": 1,
         "title": "Citizen Kane",
         "year": "1941",
-        "imdb_id": "tt0033467"
+        "tmdb_id": 15,
+        "genres": [
+            "Mystery",
+            "Drama"
+        ]
     },
     {
         "rank": 2,
         "title": "The Godfather",
         "year": "1972",
-        "imdb_id": "tt0068646"
+        "tmdb_id": 238,
+        "genres": [
+            "Drama",
+            "Crime"
+        ]
     },
     {
         "rank": 3,
         "title": "Casablanca",
         "year": "1942",
-        "imdb_id": "tt0034583"
+        "tmdb_id": 289,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
     },
     {
         "rank": 4,
         "title": "Raging Bull",
         "year": "1980",
-        "imdb_id": "tt0081398"
+        "tmdb_id": 1578,
+        "genres": [
+            "Drama"
+        ]
     },
     {
         "rank": 5,
         "title": "Singin' in the Rain",
         "year": "1952",
-        "imdb_id": "tt0045152"
+        "tmdb_id": 872,
+        "genres": [
+            "Comedy",
+            "Romance"
+        ]
     },
     {
         "rank": 6,
         "title": "Gone with the Wind",
         "year": "1939",
-        "imdb_id": "tt0031381"
+        "tmdb_id": 770,
+        "genres": [
+            "Drama",
+            "War",
+            "Romance"
+        ]
     },
     {
         "rank": 7,
         "title": "Lawrence of Arabia",
         "year": "1962",
-        "imdb_id": "tt0056172"
+        "tmdb_id": 947,
+        "genres": [
+            "Adventure",
+            "History",
+            "War"
+        ]
     },
     {
         "rank": 8,
         "title": "Schindler's List",
         "year": "1993",
-        "imdb_id": "tt0108052"
+        "tmdb_id": 424,
+        "genres": [
+            "Drama",
+            "History",
+            "War"
+        ]
     },
     {
         "rank": 9,
         "title": "Vertigo",
         "year": "1958",
-        "imdb_id": "tt0052357"
+        "tmdb_id": 426,
+        "genres": [
+            "Mystery",
+            "Romance",
+            "Thriller"
+        ]
     },
     {
         "rank": 10,
         "title": "The Wizard of Oz",
         "year": "1939",
-        "imdb_id": "tt0032138"
+        "tmdb_id": 630,
+        "genres": [
+            "Adventure",
+            "Fantasy",
+            "Family"
+        ]
     },
     {
         "rank": 11,
         "title": "City Lights",
         "year": "1931",
-        "imdb_id": "tt0021749"
+        "tmdb_id": 901,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
     },
     {
         "rank": 12,
         "title": "The Searchers",
         "year": "1956",
-        "imdb_id": "tt0049730"
+        "tmdb_id": 3114,
+        "genres": [
+            "Western"
+        ]
     },
     {
         "rank": 13,
         "title": "Star Wars: Episode IV - A New Hope",
         "year": "1977",
-        "imdb_id": "tt0076759"
+        "tmdb_id": 11,
+        "genres": [
+            "Adventure",
+            "Action",
+            "Science Fiction"
+        ]
     },
     {
         "rank": 14,
         "title": "Psycho",
         "year": "1960",
-        "imdb_id": "tt0054215"
+        "tmdb_id": 539,
+        "genres": [
+            "Horror",
+            "Thriller",
+            "Mystery"
+        ]
     },
     {
         "rank": 15,
         "title": "2001: A Space Odyssey",
         "year": "1968",
-        "imdb_id": "tt0062622"
+        "tmdb_id": 62,
+        "genres": [
+            "Science Fiction",
+            "Mystery",
+            "Adventure"
+        ]
     },
     {
         "rank": 16,
         "title": "Sunset Boulevard",
         "year": "1950",
-        "imdb_id": "tt0043014"
+        "tmdb_id": 599,
+        "genres": [
+            "Drama"
+        ]
     },
     {
         "rank": 17,
         "title": "The Graduate",
         "year": "1967",
-        "imdb_id": "tt0061722"
+        "tmdb_id": 37247,
+        "genres": [
+            "Drama",
+            "Romance",
+            "Comedy"
+        ]
     },
     {
         "rank": 18,
         "title": "The General",
         "year": "1926",
-        "imdb_id": "tt0017925"
+        "tmdb_id": 961,
+        "genres": [
+            "Action",
+            "Adventure",
+            "Comedy",
+            "War",
+            "Romance"
+        ]
     },
     {
         "rank": 19,
         "title": "On the Waterfront",
         "year": "1954",
-        "imdb_id": "tt0047296"
+        "tmdb_id": 654,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Romance"
+        ]
     },
     {
         "rank": 20,
         "title": "It's a Wonderful Life",
         "year": "1946",
-        "imdb_id": "tt0038650"
+        "tmdb_id": 1585,
+        "genres": [
+            "Drama",
+            "Family",
+            "Fantasy"
+        ]
     },
     {
         "rank": 21,
         "title": "Chinatown",
         "year": "1974",
-        "imdb_id": "tt0071315"
+        "tmdb_id": 829,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
     },
     {
         "rank": 22,
         "title": "Some Like It Hot",
         "year": "1959",
-        "imdb_id": "tt0053291"
+        "tmdb_id": 239,
+        "genres": [
+            "Comedy",
+            "Romance",
+            "Crime"
+        ]
     },
     {
         "rank": 23,
         "title": "The Grapes of Wrath",
         "year": "1940",
-        "imdb_id": "tt0032551"
+        "tmdb_id": 596,
+        "genres": [
+            "Drama"
+        ]
     },
     {
         "rank": 24,
         "title": "E.T. the Extra-Terrestrial",
         "year": "1982",
-        "imdb_id": "tt0083866"
+        "tmdb_id": 601,
+        "genres": [
+            "Science Fiction",
+            "Adventure",
+            "Family",
+            "Fantasy"
+        ]
     },
     {
         "rank": 25,
         "title": "To Kill a Mockingbird",
         "year": "1962",
-        "imdb_id": "tt0056592"
+        "tmdb_id": 595,
+        "genres": [
+            "Drama"
+        ]
     },
     {
         "rank": 26,
         "title": "Mr. Smith Goes to Washington",
         "year": "1939",
-        "imdb_id": "tt0031679"
+        "tmdb_id": 3083,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
     },
     {
         "rank": 27,
         "title": "High Noon",
         "year": "1952",
-        "imdb_id": "tt0044706"
+        "tmdb_id": 288,
+        "genres": [
+            "Western",
+            "Drama"
+        ]
     },
     {
         "rank": 28,
         "title": "All About Eve",
         "year": "1950",
-        "imdb_id": "tt0042192"
+        "tmdb_id": 705,
+        "genres": [
+            "Drama"
+        ]
     },
     {
         "rank": 29,
         "title": "Double Indemnity",
         "year": "1944",
-        "imdb_id": "tt0036775"
+        "tmdb_id": 996,
+        "genres": [
+            "Crime",
+            "Thriller"
+        ]
     },
     {
         "rank": 30,
         "title": "Apocalypse Now",
         "year": "1979",
-        "imdb_id": "tt0078788"
+        "tmdb_id": 28,
+        "genres": [
+            "Drama",
+            "War"
+        ]
     },
     {
         "rank": 31,
         "title": "The Maltese Falcon",
         "year": "1941",
-        "imdb_id": "tt0033870"
+        "tmdb_id": 963,
+        "genres": [
+            "Mystery",
+            "Crime",
+            "Thriller"
+        ]
     },
     {
         "rank": 32,
         "title": "The Godfather Part II",
         "year": "1974",
-        "imdb_id": "tt0071562"
+        "tmdb_id": 240,
+        "genres": [
+            "Drama",
+            "Crime"
+        ]
     },
     {
         "rank": 33,
         "title": "One Flew Over the Cuckoo's Nest",
         "year": "1975",
-        "imdb_id": "tt0073486"
+        "tmdb_id": 510,
+        "genres": [
+            "Drama"
+        ]
     },
     {
         "rank": 34,
         "title": "Snow White and the Seven Dwarfs",
         "year": "1937",
-        "imdb_id": "tt0029583"
+        "tmdb_id": 408,
+        "genres": [
+            "Fantasy",
+            "Animation",
+            "Family"
+        ]
     },
     {
         "rank": 35,
         "title": "Annie Hall",
         "year": "1977",
-        "imdb_id": "tt0075686"
+        "tmdb_id": 703,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
     },
     {
         "rank": 36,
         "title": "The Bridge on the River Kwai",
         "year": "1957",
-        "imdb_id": "tt0050212"
+        "tmdb_id": 826,
+        "genres": [
+            "Drama",
+            "History",
+            "War"
+        ]
     },
     {
         "rank": 37,
         "title": "The Best Years of Our Lives",
         "year": "1946",
-        "imdb_id": "tt0036868"
+        "tmdb_id": 887,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
     },
     {
         "rank": 38,
         "title": "The Treasure of the Sierra Madre",
         "year": "1948",
-        "imdb_id": "tt0040897"
+        "tmdb_id": 3090,
+        "genres": [
+            "Adventure",
+            "Drama",
+            "Western"
+        ]
     },
     {
         "rank": 39,
         "title": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
         "year": "1964",
-        "imdb_id": "tt0057012"
+        "tmdb_id": 935,
+        "genres": [
+            "Comedy",
+            "War"
+        ]
     },
     {
         "rank": 40,
         "title": "The Sound of Music",
         "year": "1965",
-        "imdb_id": "tt0059742"
+        "tmdb_id": 15121,
+        "genres": [
+            "Drama",
+            "Family",
+            "Music",
+            "Romance"
+        ]
     },
     {
         "rank": 41,
         "title": "King Kong",
         "year": "1933",
-        "imdb_id": "tt0024216"
+        "tmdb_id": 244,
+        "genres": [
+            "Adventure",
+            "Fantasy",
+            "Horror"
+        ]
     },
     {
         "rank": 42,
         "title": "Bonnie and Clyde",
         "year": "1967",
-        "imdb_id": "tt0061418"
+        "tmdb_id": 475,
+        "genres": [
+            "Crime",
+            "Drama"
+        ]
     },
     {
         "rank": 43,
         "title": "Midnight Cowboy",
         "year": "1969",
-        "imdb_id": "tt0064665"
+        "tmdb_id": 3116,
+        "genres": [
+            "Drama"
+        ]
     },
     {
         "rank": 44,
         "title": "The Philadelphia Story",
         "year": "1940",
-        "imdb_id": "tt0032904"
+        "tmdb_id": 981,
+        "genres": [
+            "Comedy",
+            "Romance"
+        ]
     },
     {
         "rank": 45,
         "title": "Shane",
         "year": "1953",
-        "imdb_id": "tt0046303"
+        "tmdb_id": 3110,
+        "genres": [
+            "Drama",
+            "Western"
+        ]
     },
     {
         "rank": 46,
         "title": "It Happened One Night",
         "year": "1934",
-        "imdb_id": "tt0025316"
+        "tmdb_id": 3078,
+        "genres": [
+            "Comedy",
+            "Romance"
+        ]
     },
     {
         "rank": 47,
         "title": "A Streetcar Named Desire",
         "year": "1951",
-        "imdb_id": "tt0044081"
+        "tmdb_id": 702,
+        "genres": [
+            "Drama",
+            "Thriller"
+        ]
     },
     {
         "rank": 48,
         "title": "Rear Window",
         "year": "1954",
-        "imdb_id": "tt0047396"
+        "tmdb_id": 567,
+        "genres": [
+            "Thriller",
+            "Mystery"
+        ]
     },
     {
         "rank": 49,
         "title": "Intolerance",
         "year": "1916",
-        "imdb_id": "tt0006864"
+        "tmdb_id": 3059,
+        "genres": [
+            "Drama",
+            "History"
+        ]
     },
     {
         "rank": 50,
         "title": "The Lord of the Rings: The Fellowship of the Ring",
         "year": "2001",
-        "imdb_id": "tt0120737"
+        "tmdb_id": 120,
+        "genres": [
+            "Adventure",
+            "Fantasy",
+            "Action"
+        ]
     },
     {
         "rank": 51,
         "title": "West Side Story",
         "year": "1961",
-        "imdb_id": "tt0055614"
+        "tmdb_id": 1725,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Romance"
+        ]
     },
     {
         "rank": 52,
         "title": "Taxi Driver",
         "year": "1976",
-        "imdb_id": "tt0075314"
+        "tmdb_id": 103,
+        "genres": [
+            "Crime",
+            "Drama"
+        ]
     },
     {
         "rank": 53,
         "title": "The Deer Hunter",
         "year": "1978",
-        "imdb_id": "tt0077416"
+        "tmdb_id": 11778,
+        "genres": [
+            "Drama",
+            "War"
+        ]
     },
     {
         "rank": 54,
         "title": "M*A*S*H",
         "year": "1970",
-        "imdb_id": "tt0066026"
+        "tmdb_id": 651,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "War"
+        ]
     },
     {
         "rank": 55,
         "title": "North by Northwest",
         "year": "1959",
-        "imdb_id": "tt0053125"
+        "tmdb_id": 213,
+        "genres": [
+            "Thriller",
+            "Adventure"
+        ]
     },
     {
         "rank": 56,
         "title": "Jaws",
         "year": "1975",
-        "imdb_id": "tt0073195"
+        "tmdb_id": 578,
+        "genres": [
+            "Horror",
+            "Thriller",
+            "Adventure"
+        ]
     },
     {
         "rank": 57,
         "title": "Rocky",
         "year": "1976",
-        "imdb_id": "tt0075148"
+        "tmdb_id": 1366,
+        "genres": [
+            "Drama"
+        ]
     },
     {
         "rank": 58,
         "title": "The Gold Rush",
         "year": "1925",
-        "imdb_id": "tt0015864"
+        "tmdb_id": 962,
+        "genres": [
+            "Adventure",
+            "Comedy",
+            "Drama"
+        ]
     },
     {
         "rank": 59,
         "title": "Nashville",
         "year": "1975",
-        "imdb_id": "tt0073440"
+        "tmdb_id": 3121,
+        "genres": [
+            "Drama",
+            "Comedy",
+            "Music"
+        ]
     },
     {
         "rank": 60,
         "title": "Duck Soup",
         "year": "1933",
-        "imdb_id": "tt0023969"
+        "tmdb_id": 3063,
+        "genres": [
+            "Comedy",
+            "War"
+        ]
     },
     {
         "rank": 61,
         "title": "Sullivan's Travels",
         "year": "1941",
-        "imdb_id": "tt0034240"
+        "tmdb_id": 16305,
+        "genres": [
+            "Comedy",
+            "Romance",
+            "Adventure"
+        ]
     },
     {
         "rank": 62,
         "title": "American Graffiti",
         "year": "1973",
-        "imdb_id": "tt0069704"
+        "tmdb_id": 838,
+        "genres": [
+            "Comedy",
+            "Drama"
+        ]
     },
     {
         "rank": 63,
         "title": "Cabaret",
         "year": "1972",
-        "imdb_id": "tt0068327"
+        "tmdb_id": 10784,
+        "genres": [
+            "Music",
+            "Drama",
+            "Romance"
+        ]
     },
     {
         "rank": 64,
         "title": "Network",
         "year": "1976",
-        "imdb_id": "tt0074958"
+        "tmdb_id": 10774,
+        "genres": [
+            "Drama"
+        ]
     },
     {
         "rank": 65,
         "title": "The African Queen",
         "year": "1951",
-        "imdb_id": "tt0043265"
+        "tmdb_id": 488,
+        "genres": [
+            "Romance",
+            "Adventure",
+            "Drama"
+        ]
     },
     {
         "rank": 66,
         "title": "Raiders of the Lost Ark",
         "year": "1981",
-        "imdb_id": "tt0082971"
+        "tmdb_id": 85,
+        "genres": [
+            "Adventure",
+            "Action"
+        ]
     },
     {
         "rank": 67,
         "title": "Who's Afraid of Virginia Woolf?",
         "year": "1966",
-        "imdb_id": "tt0061184"
+        "tmdb_id": 396,
+        "genres": [
+            "Drama"
+        ]
     },
     {
         "rank": 68,
         "title": "Unforgiven",
         "year": "1992",
-        "imdb_id": "tt0105695"
+        "tmdb_id": 33,
+        "genres": [
+            "Western"
+        ]
     },
     {
         "rank": 69,
         "title": "Tootsie",
         "year": "1982",
-        "imdb_id": "tt0084805"
+        "tmdb_id": 9576,
+        "genres": [
+            "Comedy",
+            "Romance"
+        ]
     },
     {
         "rank": 70,
         "title": "A Clockwork Orange",
         "year": "1971",
-        "imdb_id": "tt0066921"
+        "tmdb_id": 185,
+        "genres": [
+            "Science Fiction",
+            "Crime"
+        ]
     },
     {
         "rank": 71,
         "title": "Saving Private Ryan",
         "year": "1998",
-        "imdb_id": "tt0120815"
+        "tmdb_id": 857,
+        "genres": [
+            "War",
+            "Drama",
+            "History"
+        ]
     },
     {
         "rank": 72,
         "title": "The Shawshank Redemption",
         "year": "1994",
-        "imdb_id": "tt0111161"
+        "tmdb_id": 278,
+        "genres": [
+            "Drama",
+            "Crime"
+        ]
     },
     {
         "rank": 73,
         "title": "Butch Cassidy and the Sundance Kid",
         "year": "1969",
-        "imdb_id": "tt0064115"
+        "tmdb_id": 642,
+        "genres": [
+            "Adventure",
+            "Western",
+            "Crime",
+            "Drama",
+            "History"
+        ]
     },
     {
         "rank": 74,
         "title": "The Silence of the Lambs",
         "year": "1991",
-        "imdb_id": "tt0102926"
+        "tmdb_id": 274,
+        "genres": [
+            "Crime",
+            "Thriller",
+            "Drama"
+        ]
     },
     {
         "rank": 75,
         "title": "In the Heat of the Night",
         "year": "1967",
-        "imdb_id": "tt0061811"
+        "tmdb_id": 10633,
+        "genres": [
+            "Crime",
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
     },
     {
         "rank": 76,
         "title": "Forrest Gump",
         "year": "1994",
-        "imdb_id": "tt0109830"
+        "tmdb_id": 13,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
     },
     {
         "rank": 77,
         "title": "All the President's Men",
         "year": "1976",
-        "imdb_id": "tt0074119"
+        "tmdb_id": 891,
+        "genres": [
+            "Drama",
+            "Mystery",
+            "Thriller"
+        ]
     },
     {
         "rank": 78,
         "title": "Modern Times",
         "year": "1936",
-        "imdb_id": "tt0027977"
+        "tmdb_id": 3082,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
     },
     {
         "rank": 79,
         "title": "The Wild Bunch",
         "year": "1969",
-        "imdb_id": "tt0065214"
+        "tmdb_id": 576,
+        "genres": [
+            "Western"
+        ]
     },
     {
         "rank": 80,
         "title": "The Apartment",
         "year": "1960",
-        "imdb_id": "tt0053604"
+        "tmdb_id": 284,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Romance"
+        ]
     },
     {
         "rank": 81,
         "title": "Spartacus",
         "year": "1960",
-        "imdb_id": "tt0054331"
+        "tmdb_id": 967,
+        "genres": [
+            "History",
+            "War",
+            "Drama",
+            "Adventure"
+        ]
     },
     {
         "rank": 82,
         "title": "Sunrise",
         "year": "1927",
-        "imdb_id": "tt0018455"
+        "tmdb_id": 631,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
     },
     {
         "rank": 83,
         "title": "Titanic",
         "year": "1997",
-        "imdb_id": "tt0120338"
+        "tmdb_id": 597,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
     },
     {
         "rank": 84,
         "title": "Easy Rider",
         "year": "1969",
-        "imdb_id": "tt0064276"
+        "tmdb_id": 624,
+        "genres": [
+            "Adventure",
+            "Drama"
+        ]
     },
     {
         "rank": 85,
         "title": "A Night at the Opera",
         "year": "1935",
-        "imdb_id": "tt0026778"
+        "tmdb_id": 37719,
+        "genres": [
+            "Comedy",
+            "Music"
+        ]
     },
     {
         "rank": 86,
         "title": "Platoon",
         "year": "1986",
-        "imdb_id": "tt0091763"
+        "tmdb_id": 792,
+        "genres": [
+            "Drama",
+            "War",
+            "Action"
+        ]
     },
     {
         "rank": 87,
         "title": "12 Angry Men",
         "year": "1957",
-        "imdb_id": "tt0050083"
+        "tmdb_id": 389,
+        "genres": [
+            "Drama"
+        ]
     },
     {
         "rank": 88,
         "title": "Bringing Up Baby",
         "year": "1938",
-        "imdb_id": "tt0029947"
+        "tmdb_id": 900,
+        "genres": [
+            "Comedy",
+            "Romance"
+        ]
     },
     {
         "rank": 89,
         "title": "The Sixth Sense",
         "year": "1999",
-        "imdb_id": "tt0167404"
+        "tmdb_id": 745,
+        "genres": [
+            "Mystery",
+            "Thriller",
+            "Drama"
+        ]
     },
     {
         "rank": 90,
         "title": "Swing Time",
         "year": "1936",
-        "imdb_id": "tt0028333"
+        "tmdb_id": 20325,
+        "genres": [
+            "Romance",
+            "Comedy"
+        ]
     },
     {
         "rank": 91,
         "title": "Sophie's Choice",
         "year": "1982",
-        "imdb_id": "tt0084707"
+        "tmdb_id": 15764,
+        "genres": [
+            "Drama",
+            "Romance",
+            "War"
+        ]
     },
     {
         "rank": 92,
         "title": "Goodfellas",
         "year": "1990",
-        "imdb_id": "tt0099685"
+        "tmdb_id": 769,
+        "genres": [
+            "Drama",
+            "Crime"
+        ]
     },
     {
         "rank": 93,
         "title": "The French Connection",
         "year": "1971",
-        "imdb_id": "tt0067116"
+        "tmdb_id": 1051,
+        "genres": [
+            "Action",
+            "Crime",
+            "Thriller"
+        ]
     },
     {
         "rank": 94,
         "title": "Pulp Fiction",
         "year": "1994",
-        "imdb_id": "tt0110912"
+        "tmdb_id": 680,
+        "genres": [
+            "Thriller",
+            "Crime",
+            "Comedy"
+        ]
     },
     {
         "rank": 95,
         "title": "The Last Picture Show",
         "year": "1971",
-        "imdb_id": "tt0067328"
+        "tmdb_id": 25188,
+        "genres": [
+            "Drama",
+            "Romance"
+        ]
     },
     {
         "rank": 96,
         "title": "Do the Right Thing",
         "year": "1989",
-        "imdb_id": "tt0097216"
+        "tmdb_id": 925,
+        "genres": [
+            "Drama"
+        ]
     },
     {
         "rank": 97,
         "title": "Blade Runner",
         "year": "1982",
-        "imdb_id": "tt0083658"
+        "tmdb_id": 78,
+        "genres": [
+            "Science Fiction",
+            "Drama",
+            "Thriller"
+        ]
     },
     {
         "rank": 98,
         "title": "Yankee Doodle Dandy",
         "year": "1942",
-        "imdb_id": "tt0035575"
+        "tmdb_id": 3087,
+        "genres": [
+            "Drama",
+            "Music"
+        ]
     },
     {
         "rank": 99,
         "title": "Toy Story",
         "year": "1995",
-        "imdb_id": "tt0114709"
+        "tmdb_id": 862,
+        "genres": [
+            "Family",
+            "Comedy",
+            "Animation",
+            "Adventure"
+        ]
     },
     {
         "rank": 100,
         "title": "Ben-Hur",
         "year": "1959",
-        "imdb_id": "tt0052618"
+        "tmdb_id": 665,
+        "genres": [
+            "History",
+            "Drama",
+            "Adventure"
+        ]
     }
 ]

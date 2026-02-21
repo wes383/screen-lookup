@@ -314,16 +314,18 @@ export default function Home() {
 
                     {/* IMDb ID hint */}
                     {!isFocused && (
-                        <div style={{
-                            textAlign: 'center',
-                            marginTop: '12px',
-                            color: '#666',
-                            fontSize: isMobile ? '12px' : '13px',
-                            fontFamily: 'Inter, sans-serif',
-                            padding: isMobile ? '0 8px' : '0'
-                        }}>
-                            {t('common.imdbIdHint')}
-                        </div>
+                        <>
+                            <div style={{
+                                textAlign: 'center',
+                                marginTop: '12px',
+                                color: '#666',
+                                fontSize: isMobile ? '12px' : '13px',
+                                fontFamily: 'Inter, sans-serif',
+                                padding: isMobile ? '0 8px' : '0'
+                            }}>
+                                {t('common.imdbIdHint')}
+                            </div>
+                        </>
                     )}
 
                     {/* Search Results Dropdown */}
@@ -474,6 +476,43 @@ export default function Home() {
                     )}
                 </div>
             </div>
+
+            {!isFocused && (
+                <div style={{
+                    position: 'absolute',
+                    bottom: '40px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    zIndex: 10
+                }}>
+                    <button
+                        onClick={() => navigate('/lists')}
+                        style={{
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            border: 'none',
+                            borderRadius: '30px',
+                            padding: '12px 32px',
+                            color: '#fff',
+                            fontSize: '18px',
+                            fontWeight: '500',
+                            fontFamily: 'Inter, sans-serif',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                            backdropFilter: 'blur(10px)'
+                        }}
+                        onMouseEnter={e => {
+                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                            e.currentTarget.style.transform = 'scale(1.05)';
+                        }}
+                        onMouseLeave={e => {
+                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                            e.currentTarget.style.transform = 'scale(1)';
+                        }}
+                    >
+                        {t('common.lists', 'Lists')}
+                    </button>
+                </div>
+            )}
         </div>
     );
 }

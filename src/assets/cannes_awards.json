@@ -1,0 +1,6343 @@
+[
+  {
+    "Year": 1946,
+    "Award": "Best Actor",
+    "Film": "The Lost Weekend",
+    "Director": "Billy Wilder",
+    "tmdb_id": 28580,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1949,
+    "Award": "Best Actor",
+    "Film": "House of Strangers",
+    "Director": "Joseph L. Mankiewicz",
+    "tmdb_id": 20003,
+    "genres": [
+      "Drama",
+      "Crime",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1951,
+    "Award": "Best Actor",
+    "Film": "The Browning Version",
+    "Director": "",
+    "tmdb_id": 39946,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1952,
+    "Award": "Best Actor",
+    "Film": "Viva Zapata!",
+    "Director": "Elia Kazan",
+    "tmdb_id": 1810,
+    "genres": [
+      "History",
+      "Drama",
+      "Western"
+    ]
+  },
+  {
+    "Year": 1955,
+    "Award": "Best Actor",
+    "Film": "A Big Family",
+    "Director": "Iosif Kheifits",
+    "tmdb_id": 199248,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1955,
+    "Award": "Best Actor",
+    "Film": "Bad Day at Black Rock",
+    "Director": "",
+    "tmdb_id": 14554,
+    "genres": [
+      "Thriller",
+      "Mystery",
+      "Western"
+    ]
+  },
+  {
+    "Year": 1957,
+    "Award": "Best Actor",
+    "Film": "Valley of Peace",
+    "Director": "",
+    "tmdb_id": 106765,
+    "genres": [
+      "War",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1958,
+    "Award": "Best Actor",
+    "Film": "The Long, Hot Summer",
+    "Director": "Martin Ritt",
+    "tmdb_id": 40085,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1959,
+    "Award": "Best Actor",
+    "Film": "Compulsion",
+    "Director": "",
+    "tmdb_id": 35921,
+    "genres": [
+      "Crime",
+      "Drama",
+      "History",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1961,
+    "Award": "Best Actor",
+    "Film": "Goodbye Again",
+    "Director": "",
+    "tmdb_id": 84119,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1962,
+    "Award": "Best Actor",
+    "Film": "A Taste of Honey",
+    "Director": "",
+    "tmdb_id": 25062,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1962,
+    "Award": "Best Actor",
+    "Film": "Long Day's Journey into Night",
+    "Director": "",
+    "tmdb_id": 43004,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1963,
+    "Award": "Best Actor",
+    "Film": "This Sporting Life",
+    "Director": "Lindsay Anderson",
+    "tmdb_id": 18774,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1964,
+    "Award": "Best Actor",
+    "Film": "Drama of the Lark",
+    "Director": "László Ranódy",
+    "tmdb_id": 198833,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1964,
+    "Award": "Best Actor",
+    "Film": "Seduced and Abandoned",
+    "Director": "",
+    "tmdb_id": 42790,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1965,
+    "Award": "Best Actor",
+    "Film": "The Collector",
+    "Director": "",
+    "tmdb_id": 42740,
+    "genres": [
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1966,
+    "Award": "Best Actor",
+    "Film": "Hunger",
+    "Director": "",
+    "tmdb_id": 76235,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1967,
+    "Award": "Best Actor",
+    "Film": "Three Days and a Child",
+    "Director": "Uri Zohar",
+    "tmdb_id": 115639,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1969,
+    "Award": "Best Actor",
+    "Film": "Z",
+    "Director": "",
+    "tmdb_id": 2721,
+    "genres": [
+      "Thriller",
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1970,
+    "Award": "Best Actor",
+    "Film": "The Pizza Triangle",
+    "Director": "Ettore Scola",
+    "tmdb_id": 56366,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1971,
+    "Award": "Best Actor",
+    "Film": "Sacco & Vanzetti",
+    "Director": "",
+    "tmdb_id": 48211,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 1972,
+    "Award": "Best Actor",
+    "Film": "We Won't Grow Old Together",
+    "Director": "Maurice Pialat",
+    "tmdb_id": 63230,
+    "genres": [
+      "Romance",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1973,
+    "Award": "Best Actor",
+    "Film": "Love and Anarchy",
+    "Director": "Lina Wertmüller",
+    "tmdb_id": 65332,
+    "genres": [
+      "Romance",
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1974,
+    "Award": "Best Actor",
+    "Film": "The Last Detail",
+    "Director": "Hal Ashby",
+    "tmdb_id": 14886,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1975,
+    "Award": "Best Actor",
+    "Film": "Scent of a Woman",
+    "Director": "",
+    "tmdb_id": 47848,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1976,
+    "Award": "Best Actor",
+    "Film": "Pascual Duarte",
+    "Director": "Ricardo Franco",
+    "tmdb_id": 98964,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1977,
+    "Award": "Best Actor",
+    "Film": "Elisa, My Life",
+    "Director": "Carlos Saura",
+    "tmdb_id": 114337,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1978,
+    "Award": "Best Actor",
+    "Film": "Coming Home",
+    "Director": "",
+    "tmdb_id": 31657,
+    "genres": [
+      "Drama",
+      "Romance",
+      "War"
+    ]
+  },
+  {
+    "Year": 1979,
+    "Award": "Best Actor",
+    "Film": "Dear Father",
+    "Director": "",
+    "tmdb_id": 65480,
+    "genres": [
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1979,
+    "Award": "Best Actor",
+    "Film": "The China Syndrome",
+    "Director": "James Bridges",
+    "tmdb_id": 988,
+    "genres": [
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1980,
+    "Award": "Best Actor",
+    "Film": "A Leap in the Dark",
+    "Director": "Marco Bellocchio",
+    "tmdb_id": 51882,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1980,
+    "Award": "Best Actor",
+    "Film": "Breaker Morant",
+    "Director": "",
+    "tmdb_id": 13783,
+    "genres": [
+      "Drama",
+      "History",
+      "War"
+    ]
+  },
+  {
+    "Year": 1981,
+    "Award": "Best Actor",
+    "Film": "Chariots of Fire",
+    "Director": "Hugh Hudson",
+    "tmdb_id": 9443,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 1981,
+    "Award": "Best Actor",
+    "Film": "Tragedy of a Ridiculous Man",
+    "Director": "Bernardo Bertolucci",
+    "tmdb_id": 42144,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1982,
+    "Award": "Best Actor",
+    "Film": "Missing",
+    "Director": "",
+    "tmdb_id": 15600,
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1983,
+    "Award": "Best Actor",
+    "Film": "The Death of Mario Ricci",
+    "Director": "Claude Goretta",
+    "tmdb_id": 133752,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1984,
+    "Award": "Best Actor",
+    "Film": "The Holy Innocents",
+    "Director": "",
+    "tmdb_id": 75877,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1985,
+    "Award": "Best Actor",
+    "Film": "Kiss of the Spider Woman",
+    "Director": "",
+    "tmdb_id": 11703,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1986,
+    "Award": "Best Actor",
+    "Film": "Evening Dress",
+    "Director": "",
+    "tmdb_id": 3934,
+    "genres": [
+      "Comedy",
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1986,
+    "Award": "Best Actor",
+    "Film": "Mona Lisa",
+    "Director": "",
+    "tmdb_id": 10002,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Romance",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1987,
+    "Award": "Best Actor",
+    "Film": "Dark Eyes",
+    "Director": "",
+    "tmdb_id": 44658,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1988,
+    "Award": "Best Actor",
+    "Film": "Bird",
+    "Director": "",
+    "tmdb_id": 24679,
+    "genres": [
+      "Drama",
+      "Music"
+    ]
+  },
+  {
+    "Year": 1989,
+    "Award": "Best Actor",
+    "Film": "Sex, Lies, and Videotape",
+    "Director": "Steven Soderbergh",
+    "tmdb_id": 1412,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1990,
+    "Award": "Best Actor",
+    "Film": "Cyrano de Bergerac",
+    "Director": "",
+    "tmdb_id": 897083,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1991,
+    "Award": "Best Actor",
+    "Film": "Barton Fink",
+    "Director": "Joel Coen / Ethan Coen",
+    "tmdb_id": 290,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1991,
+    "Award": "Best Actor",
+    "Film": "Jungle Fever",
+    "Director": "Spike Lee",
+    "tmdb_id": 1713,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1992,
+    "Award": "Best Actor",
+    "Film": "The Player",
+    "Director": "",
+    "tmdb_id": 10403,
+    "genres": [
+      "Mystery",
+      "Drama",
+      "Thriller",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1993,
+    "Award": "Best Actor",
+    "Film": "Naked",
+    "Director": "",
+    "tmdb_id": 21450,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1994,
+    "Award": "Best Actor",
+    "Film": "To Live",
+    "Director": "",
+    "tmdb_id": 31439,
+    "genres": [
+      "Drama",
+      "Romance",
+      "War"
+    ]
+  },
+  {
+    "Year": 1995,
+    "Award": "Best Actor",
+    "Film": "Carrington",
+    "Director": "",
+    "tmdb_id": 47018,
+    "genres": [
+      "History",
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1996,
+    "Award": "Best Actor",
+    "Film": "The Eighth Day",
+    "Director": "",
+    "tmdb_id": 36998,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1997,
+    "Award": "Best Actor",
+    "Film": "She's So Lovely",
+    "Director": "Nick Cassavetes",
+    "tmdb_id": 38295,
+    "genres": [
+      "Drama",
+      "Romance",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1998,
+    "Award": "Best Actor",
+    "Film": "My Name Is Joe",
+    "Director": "Ken Loach",
+    "tmdb_id": 8129,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1999,
+    "Award": "Best Actor",
+    "Film": "Humanité",
+    "Director": "Bruno Dumont",
+    "tmdb_id": 65296,
+    "genres": [
+      "Drama",
+      "Mystery"
+    ]
+  },
+  {
+    "Year": 2000,
+    "Award": "Best Actor",
+    "Film": "In the Mood for Love",
+    "Director": "Wong Kar-wai",
+    "tmdb_id": 843,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2001,
+    "Award": "Best Actor",
+    "Film": "The Piano Teacher",
+    "Director": "",
+    "tmdb_id": 1791,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2002,
+    "Award": "Best Actor",
+    "Film": "The Son",
+    "Director": "",
+    "tmdb_id": 38128,
+    "genres": [
+      "Music"
+    ]
+  },
+  {
+    "Year": 2003,
+    "Award": "Best Actor",
+    "Film": "Uzak",
+    "Director": "Nuri Bilge Ceylan",
+    "tmdb_id": 31026,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2004,
+    "Award": "Best Actor",
+    "Film": "Nobody Knows",
+    "Director": "",
+    "tmdb_id": 2517,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2005,
+    "Award": "Best Actor",
+    "Film": "The Three Burials of Melquiades Estrada",
+    "Director": "Tommy Lee Jones",
+    "tmdb_id": 8053,
+    "genres": [
+      "Adventure",
+      "Crime",
+      "Drama",
+      "Mystery",
+      "Western"
+    ]
+  },
+  {
+    "Year": 2006,
+    "Award": "Best Actor",
+    "Film": "Days of Glory",
+    "Director": "",
+    "tmdb_id": 2016,
+    "genres": [
+      "Drama",
+      "History",
+      "War"
+    ]
+  },
+  {
+    "Year": 2007,
+    "Award": "Best Actor",
+    "Film": "The Banishment",
+    "Director": "Andrey Zvyagintsev",
+    "tmdb_id": 25142,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2008,
+    "Award": "Best Actor",
+    "Film": "Che",
+    "Director": "",
+    "tmdb_id": 8881,
+    "genres": [
+      "Drama",
+      "History",
+      "War"
+    ]
+  },
+  {
+    "Year": 2009,
+    "Award": "Best Actor",
+    "Film": "Inglourious Basterds",
+    "Director": "Quentin Tarantino",
+    "tmdb_id": 16869,
+    "genres": [
+      "Drama",
+      "Thriller",
+      "War"
+    ]
+  },
+  {
+    "Year": 2010,
+    "Award": "Best Actor",
+    "Film": "Biutiful",
+    "Director": "Alejandro González Iñárritu",
+    "tmdb_id": 45958,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2010,
+    "Award": "Best Actor",
+    "Film": "La nostra vita",
+    "Director": "Daniele Luchetti",
+    "tmdb_id": 46920,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2011,
+    "Award": "Best Actor",
+    "Film": "The Artist",
+    "Director": "",
+    "tmdb_id": 74643,
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2012,
+    "Award": "Best Actor",
+    "Film": "The Hunt",
+    "Director": "",
+    "tmdb_id": 753468,
+    "genres": [
+      "Horror",
+      "Science Fiction",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2013,
+    "Award": "Best Actor",
+    "Film": "Nebraska",
+    "Director": "",
+    "tmdb_id": 129670,
+    "genres": [
+      "Drama",
+      "Adventure"
+    ]
+  },
+  {
+    "Year": 2014,
+    "Award": "Best Actor",
+    "Film": "Mr. Turner",
+    "Director": "Mike Leigh",
+    "tmdb_id": 245700,
+    "genres": [
+      "History",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2015,
+    "Award": "Best Actor",
+    "Film": "The Measure of a Man",
+    "Director": "",
+    "tmdb_id": 329712,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2016,
+    "Award": "Best Actor",
+    "Film": "The Salesman",
+    "Director": "",
+    "tmdb_id": 903004,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": 2017,
+    "Award": "Best Actor",
+    "Film": "You Were Never Really Here",
+    "Director": "Lynne Ramsay",
+    "tmdb_id": 398181,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2018,
+    "Award": "Best Actor",
+    "Film": "Dogman",
+    "Director": "",
+    "tmdb_id": 483184,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2019,
+    "Award": "Best Actor",
+    "Film": "Pain and Glory",
+    "Director": "Pedro Almodóvar",
+    "tmdb_id": 519010,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2021,
+    "Award": "Best Actor",
+    "Film": "Nitram",
+    "Director": "Justin Kurzel",
+    "tmdb_id": 797457,
+    "genres": [
+      "Thriller",
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2022,
+    "Award": "Best Actor",
+    "Film": "Broker",
+    "Director": "",
+    "tmdb_id": 736732,
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 2023,
+    "Award": "Best Actor",
+    "Film": "Perfect Days",
+    "Director": "Wim Wenders",
+    "tmdb_id": 976893,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2024,
+    "Award": "Best Actor",
+    "Film": "Kinds of Kindness",
+    "Director": "Yorgos Lanthimos",
+    "tmdb_id": 1029955,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 2025,
+    "Award": "Best Actor",
+    "Film": "The Secret Agent",
+    "Director": "",
+    "tmdb_id": 1220564,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1946,
+    "Award": "Best Actress",
+    "Film": "Pastoral Symphony",
+    "Director": "",
+    "tmdb_id": 117500,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1949,
+    "Award": "Best Actress",
+    "Film": "The Walls of Malapaga",
+    "Director": "René Clément",
+    "tmdb_id": 65718,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1951,
+    "Award": "Best Actress",
+    "Film": "All About Eve",
+    "Director": "Joseph L. Mankiewicz",
+    "tmdb_id": 705,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1952,
+    "Award": "Best Actress",
+    "Film": "Detective Story",
+    "Director": "",
+    "tmdb_id": 20853,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1955,
+    "Award": "Best Actress",
+    "Film": "A Big Family",
+    "Director": "Iosif Kheifits",
+    "tmdb_id": 199248,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1956,
+    "Award": "Best Actress",
+    "Film": "I'll Cry Tomorrow",
+    "Director": "Daniel Mann",
+    "tmdb_id": 28575,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1957,
+    "Award": "Best Actress",
+    "Film": "Nights of Cabiria",
+    "Director": "Federico Fellini",
+    "tmdb_id": 19426,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1958,
+    "Award": "Best Actress",
+    "Film": "Brink of Life",
+    "Director": "Ingmar Bergman",
+    "tmdb_id": 60899,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1959,
+    "Award": "Best Actress",
+    "Film": "Room at the Top",
+    "Director": "",
+    "tmdb_id": 43103,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1960,
+    "Award": "Best Actress",
+    "Film": "Never on Sunday",
+    "Director": "Jules Dassin",
+    "tmdb_id": 43039,
+    "genres": [
+      "Comedy",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1960,
+    "Award": "Best Actress",
+    "Film": "Seven Days... Seven Nights",
+    "Director": "Peter Brook",
+    "tmdb_id": 83662,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1961,
+    "Award": "Best Actress",
+    "Film": "Two Women",
+    "Director": "Vittorio De Sica",
+    "tmdb_id": 24167,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 1962,
+    "Award": "Best Actress",
+    "Film": "A Taste of Honey",
+    "Director": "",
+    "tmdb_id": 25062,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1962,
+    "Award": "Best Actress",
+    "Film": "Long Day's Journey into Night",
+    "Director": "",
+    "tmdb_id": 43004,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1963,
+    "Award": "Best Actress",
+    "Film": "The Conjugal Bed",
+    "Director": "",
+    "tmdb_id": 67378,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1964,
+    "Award": "Best Actress",
+    "Film": "One Potato, Two Potato",
+    "Director": "Larry Peerce",
+    "tmdb_id": 143841,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1964,
+    "Award": "Best Actress",
+    "Film": "The Pumpkin Eater",
+    "Director": "Jack Clayton",
+    "tmdb_id": 69557,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1965,
+    "Award": "Best Actress",
+    "Film": "The Collector",
+    "Director": "",
+    "tmdb_id": 42740,
+    "genres": [
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1966,
+    "Award": "Best Actress",
+    "Film": "Morgan – A Suitable Case for Treatment",
+    "Director": "Karel Reisz",
+    "tmdb_id": 42724,
+    "genres": [
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1967,
+    "Award": "Best Actress",
+    "Film": "Elvira Madigan",
+    "Director": "",
+    "tmdb_id": 42692,
+    "genres": [
+      "Drama",
+      "Romance",
+      "History"
+    ]
+  },
+  {
+    "Year": 1969,
+    "Award": "Best Actress",
+    "Film": "Isadora",
+    "Director": "",
+    "tmdb_id": 42626,
+    "genres": [
+      "Drama",
+      "History",
+      "Music"
+    ]
+  },
+  {
+    "Year": 1970,
+    "Award": "Best Actress",
+    "Film": "Metello",
+    "Director": "Mauro Bolognini",
+    "tmdb_id": 198661,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1971,
+    "Award": "Best Actress",
+    "Film": "The Panic in Needle Park",
+    "Director": "Jerry Schatzberg",
+    "tmdb_id": 27554,
+    "genres": [
+      "Drama",
+      "Romance",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 1972,
+    "Award": "Best Actress",
+    "Film": "Images",
+    "Director": "",
+    "tmdb_id": 29449,
+    "genres": [
+      "Thriller",
+      "Mystery",
+      "Horror"
+    ]
+  },
+  {
+    "Year": 1973,
+    "Award": "Best Actress",
+    "Film": "The Effect of Gamma Rays on Man-in-the-Moon Marigolds",
+    "Director": "",
+    "tmdb_id": 88875,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1974,
+    "Award": "Best Actress",
+    "Film": "Violins at the Ball",
+    "Director": "Michel Drach",
+    "tmdb_id": 198537,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 1975,
+    "Award": "Best Actress",
+    "Film": "Lenny",
+    "Director": "",
+    "tmdb_id": 27094,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1976,
+    "Award": "Best Actress",
+    "Film": "Mrs. Dery Where Are You?",
+    "Director": "Gyula Maár",
+    "tmdb_id": 198522,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1976,
+    "Award": "Best Actress",
+    "Film": "The Inheritance",
+    "Director": "",
+    "tmdb_id": 106224,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1977,
+    "Award": "Best Actress",
+    "Film": "3 Women",
+    "Director": "Robert Altman",
+    "tmdb_id": 41662,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1977,
+    "Award": "Best Actress",
+    "Film": "J.A. Martin Photographer",
+    "Director": "Jean Beaudin",
+    "tmdb_id": 92799,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1978,
+    "Award": "Best Actress",
+    "Film": "An Unmarried Woman",
+    "Director": "Paul Mazursky",
+    "tmdb_id": 38731,
+    "genres": [
+      "Drama",
+      "Romance",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1978,
+    "Award": "Best Actress",
+    "Film": "Violette Nozière",
+    "Director": "Claude Chabrol",
+    "tmdb_id": 2813,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1979,
+    "Award": "Best Actress",
+    "Film": "Norma Rae",
+    "Director": "Martin Ritt",
+    "tmdb_id": 40842,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1979,
+    "Award": "Best Actress",
+    "Film": "Woyzeck",
+    "Director": "",
+    "tmdb_id": 10319,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1980,
+    "Award": "Best Actress",
+    "Film": "A Leap in the Dark",
+    "Director": "Marco Bellocchio",
+    "tmdb_id": 51882,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1980,
+    "Award": "Best Actress",
+    "Film": "La terrazza",
+    "Director": "Ettore Scola",
+    "tmdb_id": 77334,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1980,
+    "Award": "Best Actress",
+    "Film": "Special Treatment",
+    "Director": "",
+    "tmdb_id": 76711,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1981,
+    "Award": "Best Actress",
+    "Film": "Faktas",
+    "Director": "Almantas Grikevičius",
+    "tmdb_id": 198494,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 1981,
+    "Award": "Best Actress",
+    "Film": "Possession",
+    "Director": "",
+    "tmdb_id": 21484,
+    "genres": [
+      "Horror"
+    ]
+  },
+  {
+    "Year": 1981,
+    "Award": "Best Actress",
+    "Film": "Quartet",
+    "Director": "",
+    "tmdb_id": 67022,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1982,
+    "Award": "Best Actress",
+    "Film": "Another Way",
+    "Director": "",
+    "tmdb_id": 100215,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 1983,
+    "Award": "Best Actress",
+    "Film": "The Story of Piera",
+    "Director": "Marco Ferreri",
+    "tmdb_id": 53914,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1984,
+    "Award": "Best Actress",
+    "Film": "Cal",
+    "Director": "",
+    "tmdb_id": 42084,
+    "genres": [
+      "Drama",
+      "Thriller",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1985,
+    "Award": "Best Actress",
+    "Film": "Mask",
+    "Director": "",
+    "tmdb_id": 11177,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1985,
+    "Award": "Best Actress",
+    "Film": "The Official Story",
+    "Director": "Luis Puenzo",
+    "tmdb_id": 29263,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 1986,
+    "Award": "Best Actress",
+    "Film": "Love Me Forever or Never",
+    "Director": "Arnaldo Jabor",
+    "tmdb_id": 74649,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1986,
+    "Award": "Best Actress",
+    "Film": "Rosa Luxemburg",
+    "Director": "",
+    "tmdb_id": 55562,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 1987,
+    "Award": "Best Actress",
+    "Film": "Shy People",
+    "Director": "Andrei Konchalovsky",
+    "tmdb_id": 69040,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1988,
+    "Award": "Best Actress",
+    "Film": "A World Apart",
+    "Director": "",
+    "tmdb_id": 41949,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1989,
+    "Award": "Best Actress",
+    "Film": "A Cry in the Dark",
+    "Director": "Fred Schepisi",
+    "tmdb_id": 35119,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1990,
+    "Award": "Best Actress",
+    "Film": "Interrogation",
+    "Director": "",
+    "tmdb_id": 18614,
+    "genres": [
+      "Drama",
+      "Thriller",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 1991,
+    "Award": "Best Actress",
+    "Film": "The Double Life of Veronique",
+    "Director": "Krzysztof Kieślowski",
+    "tmdb_id": 1600,
+    "genres": [
+      "Drama",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": 1992,
+    "Award": "Best Actress",
+    "Film": "The Best Intentions",
+    "Director": "Bille August",
+    "tmdb_id": 41764,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1993,
+    "Award": "Best Actress",
+    "Film": "The Piano",
+    "Director": "Jane Campion",
+    "tmdb_id": 713,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1994,
+    "Award": "Best Actress",
+    "Film": "La Reine Margot",
+    "Director": "",
+    "tmdb_id": 10452,
+    "genres": [
+      "Drama",
+      "History",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1995,
+    "Award": "Best Actress",
+    "Film": "The Madness of King George",
+    "Director": "Nicholas Hytner",
+    "tmdb_id": 11318,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 1996,
+    "Award": "Best Actress",
+    "Film": "Secrets & Lies",
+    "Director": "",
+    "tmdb_id": 11159,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1997,
+    "Award": "Best Actress",
+    "Film": "Nil by Mouth",
+    "Director": "",
+    "tmdb_id": 21252,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1998,
+    "Award": "Best Actress",
+    "Film": "The Dreamlife of Angels",
+    "Director": "Erick Zonca",
+    "tmdb_id": 9840,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1999,
+    "Award": "Best Actress",
+    "Film": "Humanité",
+    "Director": "Bruno Dumont",
+    "tmdb_id": 65296,
+    "genres": [
+      "Drama",
+      "Mystery"
+    ]
+  },
+  {
+    "Year": 1999,
+    "Award": "Best Actress",
+    "Film": "Rosetta",
+    "Director": "",
+    "tmdb_id": 11489,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2000,
+    "Award": "Best Actress",
+    "Film": "Dancer in the Dark",
+    "Director": "Lars von Trier",
+    "tmdb_id": 16,
+    "genres": [
+      "Drama",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 2001,
+    "Award": "Best Actress",
+    "Film": "The Piano Teacher",
+    "Director": "",
+    "tmdb_id": 1791,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2002,
+    "Award": "Best Actress",
+    "Film": "The Man Without a Past",
+    "Director": "Aki Kaurismäki",
+    "tmdb_id": 7294,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2003,
+    "Award": "Best Actress",
+    "Film": "The Barbarian Invasions",
+    "Director": "Denys Arcand",
+    "tmdb_id": 11042,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2004,
+    "Award": "Best Actress",
+    "Film": "Clean",
+    "Director": "",
+    "tmdb_id": 39851,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2005,
+    "Award": "Best Actress",
+    "Film": "Free Zone",
+    "Director": "",
+    "tmdb_id": 7483,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2006,
+    "Award": "Best Actress",
+    "Film": "Volver",
+    "Director": "Pedro Almodóvar",
+    "tmdb_id": 219,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2007,
+    "Award": "Best Actress",
+    "Film": "Secret Sunshine",
+    "Director": "Lee Chang-dong",
+    "tmdb_id": 2015,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2008,
+    "Award": "Best Actress",
+    "Film": "Linha de Passe",
+    "Director": "Walter Salles / Daniela Thomas",
+    "tmdb_id": 8902,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2009,
+    "Award": "Best Actress",
+    "Film": "Antichrist",
+    "Director": "",
+    "tmdb_id": 17609,
+    "genres": [
+      "Drama",
+      "Horror",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2010,
+    "Award": "Best Actress",
+    "Film": "Certified Copy",
+    "Director": "",
+    "tmdb_id": 48303,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2011,
+    "Award": "Best Actress",
+    "Film": "Melancholia",
+    "Director": "",
+    "tmdb_id": 62215,
+    "genres": [
+      "Drama",
+      "Science Fiction"
+    ]
+  },
+  {
+    "Year": 2012,
+    "Award": "Best Actress",
+    "Film": "Beyond the Hills",
+    "Director": "Cristian Mungiu",
+    "tmdb_id": 103740,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2013,
+    "Award": "Best Actress",
+    "Film": "The Past",
+    "Director": "",
+    "tmdb_id": 152780,
+    "genres": [
+      "Drama",
+      "Mystery"
+    ]
+  },
+  {
+    "Year": 2014,
+    "Award": "Best Actress",
+    "Film": "Maps to the Stars",
+    "Director": "David Cronenberg",
+    "tmdb_id": 157851,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2015,
+    "Award": "Best Actress",
+    "Film": "Carol",
+    "Director": "",
+    "tmdb_id": 258480,
+    "genres": [
+      "Romance",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2015,
+    "Award": "Best Actress",
+    "Film": "My King",
+    "Director": "Patrick Lussier",
+    "tmdb_id": 329805,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2016,
+    "Award": "Best Actress",
+    "Film": "Ma' Rosa",
+    "Director": "Brillante Mendoza",
+    "tmdb_id": 392790,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2017,
+    "Award": "Best Actress",
+    "Film": "In the Fade",
+    "Director": "Fatih Akin",
+    "tmdb_id": 423646,
+    "genres": [
+      "Drama",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 2018,
+    "Award": "Best Actress",
+    "Film": "Ayka",
+    "Director": "Sergey Dvortsevoy",
+    "tmdb_id": 519185,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2019,
+    "Award": "Best Actress",
+    "Film": "Little Joe",
+    "Director": "",
+    "tmdb_id": 504585,
+    "genres": [
+      "Drama",
+      "Science Fiction"
+    ]
+  },
+  {
+    "Year": 2021,
+    "Award": "Best Actress",
+    "Film": "The Worst Person in the World",
+    "Director": "",
+    "tmdb_id": 660120,
+    "genres": [
+      "Drama",
+      "Romance",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 2022,
+    "Award": "Best Actress",
+    "Film": "Holy Spider",
+    "Director": "Ali Abbasi",
+    "tmdb_id": 889699,
+    "genres": [
+      "Thriller",
+      "Drama",
+      "Crime",
+      "Horror"
+    ]
+  },
+  {
+    "Year": 2023,
+    "Award": "Best Actress",
+    "Film": "About Dry Grasses",
+    "Director": "Nuri Bilge Ceylan",
+    "tmdb_id": 665733,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2024,
+    "Award": "Best Actress",
+    "Film": "Emilia Pérez",
+    "Director": "Jacques Audiard",
+    "tmdb_id": 974950,
+    "genres": [
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2025,
+    "Award": "Best Actress",
+    "Film": "The Little Sister",
+    "Director": "",
+    "tmdb_id": 961077,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1946,
+    "Award": "Best Director",
+    "Film": "The Battle of the Rails",
+    "Director": "René Clément",
+    "tmdb_id": 39142,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 1949,
+    "Award": "Best Director",
+    "Film": "The Walls of Malapaga",
+    "Director": "René Clément",
+    "tmdb_id": 65718,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1951,
+    "Award": "Best Director",
+    "Film": "Los Olvidados",
+    "Director": "Luis Buñuel",
+    "tmdb_id": 800,
+    "genres": [
+      "Drama",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 1952,
+    "Award": "Best Director",
+    "Film": "Fanfan la Tulipe",
+    "Director": "Christian Jaque",
+    "tmdb_id": 62547,
+    "genres": [
+      "Romance",
+      "Adventure",
+      "Comedy",
+      "War"
+    ]
+  },
+  {
+    "Year": 1955,
+    "Award": "Best Director",
+    "Film": "Heroes of Shipka",
+    "Director": "Sergei Vasilyev",
+    "tmdb_id": 199253,
+    "genres": [
+      "War",
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 1955,
+    "Award": "Best Director",
+    "Film": "Rififi",
+    "Director": "Jules Dassin",
+    "tmdb_id": 934,
+    "genres": [
+      "Crime",
+      "Thriller",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1956,
+    "Award": "Best Director",
+    "Film": "Othello",
+    "Director": "Sergei Yutkevich",
+    "tmdb_id": 46708,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1957,
+    "Award": "Best Director",
+    "Film": "A Man Escaped",
+    "Director": "Robert Bresson",
+    "tmdb_id": 15244,
+    "genres": [
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1958,
+    "Award": "Best Director",
+    "Film": "Brink of Life",
+    "Director": "Ingmar Bergman",
+    "tmdb_id": 60899,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1959,
+    "Award": "Best Director",
+    "Film": "The 400 Blows",
+    "Director": "François Truffaut",
+    "tmdb_id": 147,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1961,
+    "Award": "Best Director",
+    "Film": "Chronicle of Flaming Years",
+    "Director": "Yuliya Solntseva",
+    "tmdb_id": 198902,
+    "genres": [
+      "War",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1965,
+    "Award": "Best Director",
+    "Film": "Forest of the Hanged",
+    "Director": "Liviu Ciulei",
+    "tmdb_id": 118487,
+    "genres": [
+      "Drama",
+      "History",
+      "War",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1966,
+    "Award": "Best Director",
+    "Film": "Lenin in Poland",
+    "Director": "Sergei Yutkevich",
+    "tmdb_id": 198802,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1967,
+    "Award": "Best Director",
+    "Film": "Ten Thousand Days",
+    "Director": "Ferenc Kósa",
+    "tmdb_id": 198796,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1969,
+    "Award": "Best Director",
+    "Film": "All My Compatriots",
+    "Director": "Vojtěch Jasný",
+    "tmdb_id": 46659,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1969,
+    "Award": "Best Director",
+    "Film": "Antonio das Mortes",
+    "Director": "Glauber Rocha",
+    "tmdb_id": 74349,
+    "genres": [
+      "Action",
+      "Drama",
+      "Western"
+    ]
+  },
+  {
+    "Year": 1970,
+    "Award": "Best Director",
+    "Film": "Leo the Last",
+    "Director": "John Boorman",
+    "tmdb_id": 77333,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1972,
+    "Award": "Best Director",
+    "Film": "Red Psalm",
+    "Director": "Miklós Jancsó",
+    "tmdb_id": 86732,
+    "genres": [
+      "Drama",
+      "War",
+      "Music"
+    ]
+  },
+  {
+    "Year": 1975,
+    "Award": "Best Director",
+    "Film": "Orders",
+    "Director": "Michel Brault",
+    "tmdb_id": 69765,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 1975,
+    "Award": "Best Director",
+    "Film": "Special Section",
+    "Director": "Costa-Gavras",
+    "tmdb_id": 79921,
+    "genres": [
+      "Drama",
+      "History",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1976,
+    "Award": "Best Director",
+    "Film": "Down and Dirty",
+    "Director": "Ettore Scola",
+    "tmdb_id": 19413,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1978,
+    "Award": "Best Director",
+    "Film": "Empire of Passion",
+    "Director": "Nagisa Ōshima",
+    "tmdb_id": 49096,
+    "genres": [
+      "Drama",
+      "Romance",
+      "Horror"
+    ]
+  },
+  {
+    "Year": 1979,
+    "Award": "Best Director",
+    "Film": "Days of Heaven",
+    "Director": "Terrence Malick",
+    "tmdb_id": 16642,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1982,
+    "Award": "Best Director",
+    "Film": "Fitzcarraldo",
+    "Director": "Werner Herzog",
+    "tmdb_id": 9343,
+    "genres": [
+      "Drama",
+      "Adventure"
+    ]
+  },
+  {
+    "Year": 1983,
+    "Award": "Best Director",
+    "Film": "L'Argent",
+    "Director": "Robert Bresson",
+    "tmdb_id": 42112,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1983,
+    "Award": "Best Director",
+    "Film": "Nostalghia",
+    "Director": "Andrei Tarkovsky",
+    "tmdb_id": 1394,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1984,
+    "Award": "Best Director",
+    "Film": "A Sunday in the Country",
+    "Director": "Bertrand Tavernier",
+    "tmdb_id": 42102,
+    "genres": [
+      "Drama",
+      "Family"
+    ]
+  },
+  {
+    "Year": 1985,
+    "Award": "Best Director",
+    "Film": "Rendez-vous",
+    "Director": "André Téchiné",
+    "tmdb_id": 34093,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1986,
+    "Award": "Best Director",
+    "Film": "After Hours",
+    "Director": "Martin Scorsese",
+    "tmdb_id": 10843,
+    "genres": [
+      "Comedy",
+      "Thriller",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1987,
+    "Award": "Best Director",
+    "Film": "Wings of Desire",
+    "Director": "Wim Wenders",
+    "tmdb_id": 144,
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1988,
+    "Award": "Best Director",
+    "Film": "Sur",
+    "Director": "Fernando Solanas",
+    "tmdb_id": 46770,
+    "genres": [
+      "Drama",
+      "Music"
+    ]
+  },
+  {
+    "Year": 1989,
+    "Award": "Best Director",
+    "Film": "Time of the Gypsies",
+    "Director": "Emir Kusturica",
+    "tmdb_id": 20123,
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Crime",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": 1990,
+    "Award": "Best Director",
+    "Film": "Taxi Blues",
+    "Director": "Pavel Lungin",
+    "tmdb_id": 41842,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1991,
+    "Award": "Best Director",
+    "Film": "Barton Fink",
+    "Director": "Joel Coen",
+    "tmdb_id": 290,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1992,
+    "Award": "Best Director",
+    "Film": "The Player",
+    "Director": "Robert Altman",
+    "tmdb_id": 10403,
+    "genres": [
+      "Mystery",
+      "Drama",
+      "Thriller",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1993,
+    "Award": "Best Director",
+    "Film": "Naked",
+    "Director": "Mike Leigh",
+    "tmdb_id": 21450,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1994,
+    "Award": "Best Director",
+    "Film": "Caro diario",
+    "Director": "Nanni Moretti",
+    "tmdb_id": 25403,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1995,
+    "Award": "Best Director",
+    "Film": "La Haine",
+    "Director": "Mathieu Kassovitz",
+    "tmdb_id": 406,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1996,
+    "Award": "Best Director",
+    "Film": "Fargo",
+    "Director": "Joel Coen",
+    "tmdb_id": 275,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1997,
+    "Award": "Best Director",
+    "Film": "Happy Together",
+    "Director": "Wong Kar-wai",
+    "tmdb_id": 18329,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1998,
+    "Award": "Best Director",
+    "Film": "The General",
+    "Director": "John Boorman",
+    "tmdb_id": 16885,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1999,
+    "Award": "Best Director",
+    "Film": "All About My Mother",
+    "Director": "Pedro Almodóvar",
+    "tmdb_id": 99,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2000,
+    "Award": "Best Director",
+    "Film": "Yi Yi",
+    "Director": "Edward Yang",
+    "tmdb_id": 25538,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2001,
+    "Award": "Best Director",
+    "Film": "Mulholland Drive",
+    "Director": "David Lynch",
+    "tmdb_id": 1018,
+    "genres": [
+      "Thriller",
+      "Drama",
+      "Mystery"
+    ]
+  },
+  {
+    "Year": 2001,
+    "Award": "Best Director",
+    "Film": "The Man Who Wasn't There",
+    "Director": "Joel Coen",
+    "tmdb_id": 10778,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2002,
+    "Award": "Best Director",
+    "Film": "Chi-hwa-seon",
+    "Director": "Im Kwon-taek",
+    "tmdb_id": 18302,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 2002,
+    "Award": "Best Director",
+    "Film": "Punch-Drunk Love",
+    "Director": "Paul Thomas Anderson",
+    "tmdb_id": 8051,
+    "genres": [
+      "Romance",
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 2003,
+    "Award": "Best Director",
+    "Film": "Elephant",
+    "Director": "Gus Van Sant",
+    "tmdb_id": 1807,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2004,
+    "Award": "Best Director",
+    "Film": "Exils",
+    "Director": "Tony Gatlif",
+    "tmdb_id": 18497,
+    "genres": [
+      "Adventure",
+      "Drama",
+      "Music"
+    ]
+  },
+  {
+    "Year": 2005,
+    "Award": "Best Director",
+    "Film": "Caché",
+    "Director": "Michael Haneke",
+    "tmdb_id": 445,
+    "genres": [
+      "Mystery",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2006,
+    "Award": "Best Director",
+    "Film": "Babel",
+    "Director": "Alejandro González Iñárritu",
+    "tmdb_id": 1164,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2007,
+    "Award": "Best Director",
+    "Film": "The Diving Bell and the Butterfly",
+    "Director": "Julian Schnabel",
+    "tmdb_id": 2013,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 2008,
+    "Award": "Best Director",
+    "Film": "Three Monkeys",
+    "Director": "Nuri Bilge Ceylan",
+    "tmdb_id": 8905,
+    "genres": [
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2009,
+    "Award": "Best Director",
+    "Film": "Butchered",
+    "Director": "Brillante Mendoza",
+    "tmdb_id": 64450,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Horror",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2010,
+    "Award": "Best Director",
+    "Film": "On Tour",
+    "Director": "Mathieu Amalric",
+    "tmdb_id": 41273,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2011,
+    "Award": "Best Director",
+    "Film": "Drive",
+    "Director": "Nicolas Winding Refn",
+    "tmdb_id": 64690,
+    "genres": [
+      "Drama",
+      "Thriller",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 2012,
+    "Award": "Best Director",
+    "Film": "Post Tenebras Lux",
+    "Director": "Carlos Reygadas",
+    "tmdb_id": 103689,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2013,
+    "Award": "Best Director",
+    "Film": "Heli",
+    "Director": "Amat Escalante",
+    "tmdb_id": 186935,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2014,
+    "Award": "Best Director",
+    "Film": "Foxcatcher",
+    "Director": "Bennett Miller",
+    "tmdb_id": 87492,
+    "genres": [
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2015,
+    "Award": "Best Director",
+    "Film": "The Assassin",
+    "Director": "Hou Hsiao-hsien",
+    "tmdb_id": 253450,
+    "genres": [
+      "Drama",
+      "Action",
+      "History"
+    ]
+  },
+  {
+    "Year": 2016,
+    "Award": "Best Director",
+    "Film": "Graduation",
+    "Director": "Cristian Mungiu",
+    "tmdb_id": 374458,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2016,
+    "Award": "Best Director",
+    "Film": "Personal Shopper",
+    "Director": "Olivier Assayas",
+    "tmdb_id": 340676,
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2017,
+    "Award": "Best Director",
+    "Film": "The Beguiled",
+    "Director": "Sofia Coppola",
+    "tmdb_id": 399019,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2018,
+    "Award": "Best Director",
+    "Film": "Cold War",
+    "Director": "Paweł Pawlikowski",
+    "tmdb_id": 440298,
+    "genres": [
+      "Romance",
+      "Music",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2019,
+    "Award": "Best Director",
+    "Film": "Young Ahmed",
+    "Director": "Jean-Pierre and Luc Dardenne",
+    "tmdb_id": 522373,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2021,
+    "Award": "Best Director",
+    "Film": "Annette",
+    "Director": "Leos Carax",
+    "tmdb_id": 424277,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2022,
+    "Award": "Best Director",
+    "Film": "Decision to Leave",
+    "Director": "Park Chan-wook",
+    "tmdb_id": 705996,
+    "genres": [
+      "Thriller",
+      "Mystery",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2023,
+    "Award": "Best Director",
+    "Film": "The Taste of Things",
+    "Director": "Tran Anh Hung",
+    "tmdb_id": 964960,
+    "genres": [
+      "Romance",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2024,
+    "Award": "Best Director",
+    "Film": "Grand Tour",
+    "Director": "Miguel Gomes",
+    "tmdb_id": 1098709,
+    "genres": [
+      "Drama",
+      "Adventure"
+    ]
+  },
+  {
+    "Year": 2025,
+    "Award": "Best Director",
+    "Film": "The Secret Agent",
+    "Director": "Kleber Mendonça Filho",
+    "tmdb_id": 1220564,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1949,
+    "Award": "Best Screenplay",
+    "Film": "Lost Boundaries",
+    "Director": "Alfred L. Werker",
+    "tmdb_id": 113237,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1951,
+    "Award": "Best Screenplay",
+    "Film": "The Browning Version",
+    "Director": "",
+    "tmdb_id": 39946,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1952,
+    "Award": "Best Screenplay",
+    "Film": "Cops and Robbers",
+    "Director": "",
+    "tmdb_id": 45099,
+    "genres": [
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1958,
+    "Award": "Best Screenplay",
+    "Film": "Young Husbands[A]",
+    "Director": "",
+    "tmdb_id": 199184,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1963,
+    "Award": "Best Screenplay",
+    "Film": "Codine",
+    "Director": "Henri Colpi",
+    "tmdb_id": 198835,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1965,
+    "Award": "Best Screenplay",
+    "Film": "The 317th Platoon",
+    "Director": "Pierre Schoendoerffer",
+    "tmdb_id": 31344,
+    "genres": [
+      "War",
+      "History",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1965,
+    "Award": "Best Screenplay",
+    "Film": "The Hill",
+    "Director": "",
+    "tmdb_id": 24395,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 1967,
+    "Award": "Best Screenplay",
+    "Film": "The Killing Game",
+    "Director": "",
+    "tmdb_id": 78815,
+    "genres": [
+      "Comedy",
+      "Adventure",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1967,
+    "Award": "Best Screenplay",
+    "Film": "We Still Kill the Old Way",
+    "Director": "",
+    "tmdb_id": 80441,
+    "genres": [
+      "Mystery",
+      "Drama",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 1974,
+    "Award": "Best Screenplay",
+    "Film": "The Sugarland Express",
+    "Director": "Steven Spielberg",
+    "tmdb_id": 5121,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1980,
+    "Award": "Best Screenplay",
+    "Film": "La Terrazza",
+    "Director": "Ettore Scola",
+    "tmdb_id": 77334,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1981,
+    "Award": "Best Screenplay",
+    "Film": "Mephisto",
+    "Director": "",
+    "tmdb_id": 11911,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1982,
+    "Award": "Best Screenplay",
+    "Film": "Moonlighting",
+    "Director": "",
+    "tmdb_id": 42134,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1984,
+    "Award": "Best Screenplay",
+    "Film": "Voyage to Cythera",
+    "Director": "Thodoros Angelopoulos",
+    "tmdb_id": 47792,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1994,
+    "Award": "Best Screenplay",
+    "Film": "Grosse fatigue",
+    "Director": "Michel Blanc",
+    "tmdb_id": 64567,
+    "genres": [
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1996,
+    "Award": "Best Screenplay",
+    "Film": "A Self Made Hero",
+    "Director": "Jacques Audiard",
+    "tmdb_id": 48580,
+    "genres": [
+      "Drama",
+      "War",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1997,
+    "Award": "Best Screenplay",
+    "Film": "The Ice Storm",
+    "Director": "",
+    "tmdb_id": 68924,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1998,
+    "Award": "Best Screenplay",
+    "Film": "Henry Fool",
+    "Director": "Hal Hartley",
+    "tmdb_id": 37410,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1999,
+    "Award": "Best Screenplay",
+    "Film": "Moloch",
+    "Director": "",
+    "tmdb_id": 436530,
+    "genres": []
+  },
+  {
+    "Year": 2000,
+    "Award": "Best Screenplay",
+    "Film": "Nurse Betty",
+    "Director": "Neil LaBute",
+    "tmdb_id": 10480,
+    "genres": [
+      "Comedy",
+      "Crime",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2001,
+    "Award": "Best Screenplay",
+    "Film": "No Man's Land",
+    "Director": "",
+    "tmdb_id": 8342,
+    "genres": [
+      "Action",
+      "History",
+      "War"
+    ]
+  },
+  {
+    "Year": 2002,
+    "Award": "Best Screenplay",
+    "Film": "Sweet Sixteen",
+    "Director": "",
+    "tmdb_id": 1376,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2003,
+    "Award": "Best Screenplay",
+    "Film": "The Barbarian Invasions",
+    "Director": "Denys Arcand",
+    "tmdb_id": 11042,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2004,
+    "Award": "Best Screenplay",
+    "Film": "Look at Me",
+    "Director": "",
+    "tmdb_id": 11399,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2005,
+    "Award": "Best Screenplay",
+    "Film": "The Three Burials of Melquiades Estrada",
+    "Director": "Tommy Lee Jones",
+    "tmdb_id": 8053,
+    "genres": [
+      "Adventure",
+      "Crime",
+      "Drama",
+      "Mystery",
+      "Western"
+    ]
+  },
+  {
+    "Year": 2006,
+    "Award": "Best Screenplay",
+    "Film": "Volver",
+    "Director": "Pedro Almodóvar",
+    "tmdb_id": 219,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2007,
+    "Award": "Best Screenplay",
+    "Film": "The Edge of Heaven",
+    "Director": "",
+    "tmdb_id": 2014,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2008,
+    "Award": "Best Screenplay",
+    "Film": "Lorna's Silence",
+    "Director": "Jean-Pierre Dardenne / Luc Dardenne",
+    "tmdb_id": 8899,
+    "genres": [
+      "Drama",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 2009,
+    "Award": "Best Screenplay",
+    "Film": "Spring Fever",
+    "Director": "",
+    "tmdb_id": 117646,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2010,
+    "Award": "Best Screenplay",
+    "Film": "Poetry",
+    "Director": "",
+    "tmdb_id": 47909,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2011,
+    "Award": "Best Screenplay",
+    "Film": "Footnote",
+    "Director": "",
+    "tmdb_id": 72551,
+    "genres": [
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 2012,
+    "Award": "Best Screenplay",
+    "Film": "Beyond the Hills",
+    "Director": "Cristian Mungiu",
+    "tmdb_id": 103740,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2013,
+    "Award": "Best Screenplay",
+    "Film": "A Touch of Sin",
+    "Director": "Jia Zhangke",
+    "tmdb_id": 187022,
+    "genres": [
+      "Drama",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 2014,
+    "Award": "Best Screenplay",
+    "Film": "Leviathan",
+    "Director": "",
+    "tmdb_id": 127962,
+    "genres": [
+      "Documentary"
+    ]
+  },
+  {
+    "Year": 2015,
+    "Award": "Best Screenplay",
+    "Film": "Chronic",
+    "Director": "",
+    "tmdb_id": 337104,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2016,
+    "Award": "Best Screenplay",
+    "Film": "The Salesman",
+    "Director": "",
+    "tmdb_id": 903004,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": 2017,
+    "Award": "Best Screenplay",
+    "Film": "The Killing of a Sacred Deer",
+    "Director": "Yorgos Lanthimos",
+    "tmdb_id": 399057,
+    "genres": [
+      "Drama",
+      "Thriller",
+      "Mystery"
+    ]
+  },
+  {
+    "Year": 2017,
+    "Award": "Best Screenplay",
+    "Film": "You Were Never Really Here",
+    "Director": "Lynne Ramsay",
+    "tmdb_id": 398181,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2018,
+    "Award": "Best Screenplay",
+    "Film": "3 Faces",
+    "Director": "Jafar Panahi",
+    "tmdb_id": 517731,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2018,
+    "Award": "Best Screenplay",
+    "Film": "Happy as Lazzaro",
+    "Director": "Alice Rohrwacher",
+    "tmdb_id": 481432,
+    "genres": [
+      "Drama",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": 2019,
+    "Award": "Best Screenplay",
+    "Film": "Portrait of a Lady on Fire",
+    "Director": "Céline Sciamma",
+    "tmdb_id": 531428,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2021,
+    "Award": "Best Screenplay",
+    "Film": "Drive My Car",
+    "Director": "",
+    "tmdb_id": 758866,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2022,
+    "Award": "Best Screenplay",
+    "Film": "Boy from Heaven",
+    "Director": "Tarik Saleh",
+    "tmdb_id": 788977,
+    "genres": [
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2023,
+    "Award": "Best Screenplay",
+    "Film": "Monster",
+    "Director": "",
+    "tmdb_id": 489932,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2024,
+    "Award": "Best Screenplay",
+    "Film": "The Substance",
+    "Director": "Coralie Fargeat",
+    "tmdb_id": 933260,
+    "genres": [
+      "Horror",
+      "Science Fiction",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2025,
+    "Award": "Best Screenplay",
+    "Film": "Young Mothers",
+    "Director": "Jean-Pierre Dardenne / Luc Dardenne",
+    "tmdb_id": 1242015,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1978,
+    "Award": "Caméra d'Or",
+    "Film": "Alambrista!",
+    "Director": "Robert M. Young",
+    "tmdb_id": 86975,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1979,
+    "Award": "Caméra d'Or",
+    "Film": "Northern Lights",
+    "Director": "John Hanson and Rob Nilsson",
+    "tmdb_id": 226749,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 1980,
+    "Award": "Caméra d'Or",
+    "Film": "Adrien's Story",
+    "Director": "Jean-Pierre Denis",
+    "tmdb_id": 66810,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1981,
+    "Award": "Caméra d'Or",
+    "Film": "Desperado City",
+    "Director": "Vadim Glowna",
+    "tmdb_id": 264162,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1982,
+    "Award": "Caméra d'Or",
+    "Film": "Half a Life",
+    "Director": "Romain Goupil",
+    "tmdb_id": 118136,
+    "genres": [
+      "Documentary",
+      "History"
+    ]
+  },
+  {
+    "Year": 1983,
+    "Award": "Caméra d'Or",
+    "Film": "The Princess",
+    "Director": "Pál Erdőss",
+    "tmdb_id": 273602,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1984,
+    "Award": "Caméra d'Or",
+    "Film": "Stranger Than Paradise",
+    "Director": "Jim Jarmusch",
+    "tmdb_id": 410051,
+    "genres": []
+  },
+  {
+    "Year": 1985,
+    "Award": "Caméra d'Or",
+    "Film": "Oriana",
+    "Director": "Fina Torres",
+    "tmdb_id": 96419,
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1986,
+    "Award": "Caméra d'Or",
+    "Film": "Noir et Blanc",
+    "Director": "Claire Devers",
+    "tmdb_id": 49791,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1987,
+    "Award": "Caméra d'Or",
+    "Film": "Robinson Crusoe in Georgia",
+    "Director": "Nana Dzhordzhadze",
+    "tmdb_id": 149835,
+    "genres": [
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1988,
+    "Award": "Caméra d'Or",
+    "Film": "Salaam Bombay!",
+    "Director": "Mira Nair",
+    "tmdb_id": 45129,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1989,
+    "Award": "Caméra d'Or",
+    "Film": "My 20th Century",
+    "Director": "Ildikó Enyedi",
+    "tmdb_id": 49978,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Science Fiction"
+    ]
+  },
+  {
+    "Year": 1989,
+    "Award": "Caméra d'Or",
+    "Film": "The Birth",
+    "Director": "Shaji N. Karun",
+    "tmdb_id": 176513,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1989,
+    "Award": "Caméra d'Or",
+    "Film": "Waller's Last Trip",
+    "Director": "Christian Wagner",
+    "tmdb_id": 272877,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1990,
+    "Award": "Caméra d'Or",
+    "Film": "Farendj",
+    "Director": "Sabine Prenczina",
+    "tmdb_id": 519003,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1990,
+    "Award": "Caméra d'Or",
+    "Film": "Freeze Die Come to Life",
+    "Director": "Vitali Kanevsky",
+    "tmdb_id": 41948,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1990,
+    "Award": "Caméra d'Or",
+    "Film": "Time of the Servants",
+    "Director": "Irena Pavlásková",
+    "tmdb_id": 49171,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1991,
+    "Award": "Caméra d'Or",
+    "Film": "Proof",
+    "Director": "Jocelyn Moorhouse",
+    "tmdb_id": 14904,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1991,
+    "Award": "Caméra d'Or",
+    "Film": "Sam & Me",
+    "Director": "Deepa Mehta",
+    "tmdb_id": 361198,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1991,
+    "Award": "Caméra d'Or",
+    "Film": "Toto the Hero",
+    "Director": "Jaco Van Dormael",
+    "tmdb_id": 56321,
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": 1992,
+    "Award": "Caméra d'Or",
+    "Film": "Mac",
+    "Director": "John Turturro",
+    "tmdb_id": 111883,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1993,
+    "Award": "Caméra d'Or",
+    "Film": "Friends",
+    "Director": "Elaine Proctor",
+    "tmdb_id": 196924,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1993,
+    "Award": "Caméra d'Or",
+    "Film": "The Scent of Green Papaya",
+    "Director": "Tran Anh Hung",
+    "tmdb_id": 19552,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1994,
+    "Award": "Caméra d'Or",
+    "Film": "Coming to Terms with the Dead",
+    "Director": "Pascale Ferran",
+    "tmdb_id": 64573,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1994,
+    "Award": "Caméra d'Or",
+    "Film": "The Silences of the Palace",
+    "Director": "Moufida Tlatli",
+    "tmdb_id": 44284,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1995,
+    "Award": "Caméra d'Or",
+    "Film": "Denise Calls Up",
+    "Director": "Hal Salwen",
+    "tmdb_id": 47449,
+    "genres": [
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1995,
+    "Award": "Caméra d'Or",
+    "Film": "The White Balloon",
+    "Director": "Jafar Panahi",
+    "tmdb_id": 46785,
+    "genres": [
+      "Drama",
+      "Family"
+    ]
+  },
+  {
+    "Year": 1996,
+    "Award": "Caméra d'Or",
+    "Film": "Love Serenade",
+    "Director": "Shirley Barrett",
+    "tmdb_id": 65046,
+    "genres": [
+      "Comedy",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1997,
+    "Award": "Caméra d'Or",
+    "Film": "Suzaku",
+    "Director": "Naomi Kawase",
+    "tmdb_id": 36895,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1997,
+    "Award": "Caméra d'Or",
+    "Film": "The Life of Jesus",
+    "Director": "Bruno Dumont",
+    "tmdb_id": 27067,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1998,
+    "Award": "Caméra d'Or",
+    "Film": "Slam",
+    "Director": "Marc Levin",
+    "tmdb_id": 37532,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1999,
+    "Award": "Caméra d'Or",
+    "Film": "Marana Simhasanam",
+    "Director": "Murali Nair",
+    "tmdb_id": 176081,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2000,
+    "Award": "Caméra d'Or",
+    "Film": "A Time for Drunken Horses",
+    "Director": "Bahman Ghobadi",
+    "tmdb_id": 29270,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 2000,
+    "Award": "Caméra d'Or",
+    "Film": "Djomeh",
+    "Director": "Hassan Yektapanah",
+    "tmdb_id": 47161,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2001,
+    "Award": "Caméra d'Or",
+    "Film": "Atanarjuat: The Fast Runner",
+    "Director": "Zacharias Kunuk",
+    "tmdb_id": 13245,
+    "genres": [
+      "Fantasy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2002,
+    "Award": "Caméra d'Or",
+    "Film": "Japón",
+    "Director": "Carlos Reygadas",
+    "tmdb_id": 36211,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2002,
+    "Award": "Caméra d'Or",
+    "Film": "Seaside",
+    "Director": "Julie Lopes-Curval",
+    "tmdb_id": 125952,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2003,
+    "Award": "Caméra d'Or",
+    "Film": "Osama",
+    "Director": "Siddiq Barmak",
+    "tmdb_id": 14757,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2003,
+    "Award": "Caméra d'Or",
+    "Film": "Reconstruction",
+    "Director": "Christoffer Boe",
+    "tmdb_id": 29456,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2004,
+    "Award": "Caméra d'Or",
+    "Film": "Bitter Dream",
+    "Director": "Mohsen Amiryoussefi",
+    "tmdb_id": 315893,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 2004,
+    "Award": "Caméra d'Or",
+    "Film": "Or (My Treasure)",
+    "Director": "Keren Yedaya",
+    "tmdb_id": 1918,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2004,
+    "Award": "Caméra d'Or",
+    "Film": "Passages",
+    "Director": "Yang Chao",
+    "tmdb_id": 299285,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2005,
+    "Award": "Caméra d'Or",
+    "Film": "Me and You and Everyone We Know",
+    "Director": "Miranda July",
+    "tmdb_id": 1382,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2005,
+    "Award": "Caméra d'Or",
+    "Film": "The Forsaken Land",
+    "Director": "Vimukthi Jayasundara",
+    "tmdb_id": 83221,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2006,
+    "Award": "Caméra d'Or",
+    "Film": "12:08 East of Bucharest",
+    "Director": "Corneliu Porumboiu",
+    "tmdb_id": 24159,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2007,
+    "Award": "Caméra d'Or",
+    "Film": "Control",
+    "Director": "Anton Corbijn",
+    "tmdb_id": 5708,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2007,
+    "Award": "Caméra d'Or",
+    "Film": "Jellyfish",
+    "Director": "Etgar Keret, Shira Geffen",
+    "tmdb_id": 6391,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2008,
+    "Award": "Caméra d'Or",
+    "Film": "Everybody Dies but Me",
+    "Director": "Valeriya Gai Germanika",
+    "tmdb_id": 31418,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2008,
+    "Award": "Caméra d'Or",
+    "Film": "Hunger",
+    "Director": "Steve McQueen",
+    "tmdb_id": 10360,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 2009,
+    "Award": "Caméra d'Or",
+    "Film": "Ajami",
+    "Director": "Scandar Copti and Yaron Shani",
+    "tmdb_id": 24424,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2009,
+    "Award": "Caméra d'Or",
+    "Film": "Samson and Delilah",
+    "Director": "Warwick Thornton",
+    "tmdb_id": 47075,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2010,
+    "Award": "Caméra d'Or",
+    "Film": "Año Bisiesto",
+    "Director": "Michael Rowe",
+    "tmdb_id": 63555,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2011,
+    "Award": "Caméra d'Or",
+    "Film": "Las Acacias",
+    "Director": "Pablo Giorgelli",
+    "tmdb_id": 85549,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2012,
+    "Award": "Caméra d'Or",
+    "Film": "Beasts of the Southern Wild",
+    "Director": "Benh Zeitlin",
+    "tmdb_id": 84175,
+    "genres": [
+      "Drama",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": 2013,
+    "Award": "Caméra d'Or",
+    "Film": "Ilo Ilo",
+    "Director": "Anthony Chen",
+    "tmdb_id": 188598,
+    "genres": [
+      "Drama",
+      "Family"
+    ]
+  },
+  {
+    "Year": 2014,
+    "Award": "Caméra d'Or",
+    "Film": "Party Girl",
+    "Director": "Marie Amachoukeli, Claire Burger and Samuel Theis",
+    "tmdb_id": 266030,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2015,
+    "Award": "Caméra d'Or",
+    "Film": "Land and Shade",
+    "Director": "César Augusto Acevedo",
+    "tmdb_id": 336669,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2016,
+    "Award": "Caméra d'Or",
+    "Film": "Divines",
+    "Director": "Houda Benyamina",
+    "tmdb_id": 393729,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2017,
+    "Award": "Caméra d'Or",
+    "Film": "Montparnasse Bienvenue",
+    "Director": "Léonor Serraille",
+    "tmdb_id": 452016,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2018,
+    "Award": "Caméra d'Or",
+    "Film": "Girl",
+    "Director": "Lukas Dhont",
+    "tmdb_id": 515916,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2019,
+    "Award": "Caméra d'Or",
+    "Film": "Our Mothers",
+    "Director": "César Diaz",
+    "tmdb_id": 596873,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2021,
+    "Award": "Caméra d'Or",
+    "Film": "Murina",
+    "Director": "Antoneta Alamat Kusijanović",
+    "tmdb_id": 838148,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2022,
+    "Award": "Caméra d'Or",
+    "Film": "Plan 75",
+    "Director": "Chie Hayakawa",
+    "tmdb_id": 958487,
+    "genres": [
+      "Drama",
+      "Science Fiction"
+    ]
+  },
+  {
+    "Year": 2022,
+    "Award": "Caméra d'Or",
+    "Film": "War Pony",
+    "Director": "Riley Keough and Gina Gammell",
+    "tmdb_id": 962566,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2023,
+    "Award": "Caméra d'Or",
+    "Film": "Inside the Yellow Cocoon Shell",
+    "Director": "Pham Thien An",
+    "tmdb_id": 1114816,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2024,
+    "Award": "Caméra d'Or",
+    "Film": "Armand",
+    "Director": "Halfdan Ullmann Tøndel",
+    "tmdb_id": 1144681,
+    "genres": [
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2024,
+    "Award": "Caméra d'Or",
+    "Film": "Mongrel",
+    "Director": "Wei Liang Chiang and You Qiao Yin",
+    "tmdb_id": 1206671,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2025,
+    "Award": "Caméra d'Or",
+    "Film": "My Father's Shadow",
+    "Director": "Akinola Davies Jr.",
+    "tmdb_id": 1432605,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2025,
+    "Award": "Caméra d'Or",
+    "Film": "The President's Cake",
+    "Director": "Hasan Hadi",
+    "tmdb_id": 1464883,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1967,
+    "Award": "Grand Prix",
+    "Film": "Accident",
+    "Director": "Joseph Losey",
+    "tmdb_id": 74544,
+    "genres": [
+      "Romance",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1967,
+    "Award": "Grand Prix",
+    "Film": "I Even Met Happy Gypsies",
+    "Director": "Aleksandar Petrović",
+    "tmdb_id": 59088,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1969,
+    "Award": "Grand Prix",
+    "Film": "Ådalen 31",
+    "Director": "Bo Widerberg",
+    "tmdb_id": 87208,
+    "genres": [
+      "Drama",
+      "History",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1970,
+    "Award": "Grand Prix",
+    "Film": "Investigation of a Citizen Above Suspicion",
+    "Director": "Elio Petri",
+    "tmdb_id": 26451,
+    "genres": [
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1971,
+    "Award": "Grand Prix",
+    "Film": "Johnny Got His Gun",
+    "Director": "Dalton Trumbo",
+    "tmdb_id": 16328,
+    "genres": [
+      "War",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1971,
+    "Award": "Grand Prix",
+    "Film": "Taking Off",
+    "Director": "Miloš Forman",
+    "tmdb_id": 59881,
+    "genres": [
+      "Music",
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1972,
+    "Award": "Grand Prix",
+    "Film": "Solaris",
+    "Director": "Andrei Tarkovsky",
+    "tmdb_id": 593,
+    "genres": [
+      "Drama",
+      "Science Fiction",
+      "Mystery"
+    ]
+  },
+  {
+    "Year": 1973,
+    "Award": "Grand Prix",
+    "Film": "The Mother and the Whore",
+    "Director": "Jean Eustache",
+    "tmdb_id": 48693,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1974,
+    "Award": "Grand Prix",
+    "Film": "Arabian Nights",
+    "Director": "Pier Paolo Pasolini",
+    "tmdb_id": 47406,
+    "genres": [
+      "Adventure",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": 1975,
+    "Award": "Grand Prix",
+    "Film": "The Enigma of Kaspar Hauser",
+    "Director": "Werner Herzog",
+    "tmdb_id": 11710,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 1976,
+    "Award": "Grand Prix",
+    "Film": "Cría Cuervos",
+    "Director": "Carlos Saura",
+    "tmdb_id": 51857,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1976,
+    "Award": "Grand Prix",
+    "Film": "The Marquise of O",
+    "Director": "Éric Rohmer",
+    "tmdb_id": 48205,
+    "genres": [
+      "History",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1978,
+    "Award": "Grand Prix",
+    "Film": "Bye Bye Monkey",
+    "Director": "Marco Ferreri",
+    "tmdb_id": 42200,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1978,
+    "Award": "Grand Prix",
+    "Film": "The Shout",
+    "Director": "Jerzy Skolimowski",
+    "tmdb_id": 48131,
+    "genres": [
+      "Thriller",
+      "Mystery",
+      "Horror"
+    ]
+  },
+  {
+    "Year": 1979,
+    "Award": "Grand Prix",
+    "Film": "Siberiade",
+    "Director": "Andrei Konchalovsky",
+    "tmdb_id": 68553,
+    "genres": [
+      "War",
+      "Drama",
+      "History",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1980,
+    "Award": "Grand Prix",
+    "Film": "My American Uncle",
+    "Director": "Alain Resnais",
+    "tmdb_id": 39543,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1981,
+    "Award": "Grand Prix",
+    "Film": "Light Years Away",
+    "Director": "Alain Tanner",
+    "tmdb_id": 101330,
+    "genres": [
+      "Drama",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": 1982,
+    "Award": "Grand Prix",
+    "Film": "The Night of the Shooting Stars",
+    "Director": "Paolo and Vittorio Taviani",
+    "tmdb_id": 42130,
+    "genres": [
+      "War",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1983,
+    "Award": "Grand Prix",
+    "Film": "Monty Python's The Meaning of Life",
+    "Director": "Terry Jones",
+    "tmdb_id": 4543,
+    "genres": [
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1984,
+    "Award": "Grand Prix",
+    "Film": "Diary for My Children",
+    "Director": "Márta Mészáros",
+    "tmdb_id": 84946,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1985,
+    "Award": "Grand Prix",
+    "Film": "Birdy",
+    "Director": "Alan Parker",
+    "tmdb_id": 11296,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 1986,
+    "Award": "Grand Prix",
+    "Film": "The Sacrifice",
+    "Director": "Andrei Tarkovsky",
+    "tmdb_id": 24657,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1987,
+    "Award": "Grand Prix",
+    "Film": "Repentance",
+    "Director": "Tengiz Abuladze",
+    "tmdb_id": 96920,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1988,
+    "Award": "Grand Prix",
+    "Film": "A World Apart",
+    "Director": "Chris Menges",
+    "tmdb_id": 41949,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1989,
+    "Award": "Grand Prix",
+    "Film": "Cinema Paradiso",
+    "Director": "Giuseppe Tornatore",
+    "tmdb_id": 11216,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1989,
+    "Award": "Grand Prix",
+    "Film": "Too Beautiful for You",
+    "Director": "Bertrand Blier",
+    "tmdb_id": 48524,
+    "genres": [
+      "Drama",
+      "Romance",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1990,
+    "Award": "Grand Prix",
+    "Film": "The Sting of Death",
+    "Director": "Kōhei Oguri",
+    "tmdb_id": 128775,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1990,
+    "Award": "Grand Prix",
+    "Film": "Tilaï",
+    "Director": "Idrissa Ouedraogo",
+    "tmdb_id": 65482,
+    "genres": [
+      "Romance",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1991,
+    "Award": "Grand Prix",
+    "Film": "La Belle Noiseuse",
+    "Director": "Jacques Rivette",
+    "tmdb_id": 12627,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1992,
+    "Award": "Grand Prix",
+    "Film": "The Stolen Children",
+    "Director": "Gianni Amelio",
+    "tmdb_id": 47714,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1993,
+    "Award": "Grand Prix",
+    "Film": "Faraway, So Close!",
+    "Director": "Wim Wenders",
+    "tmdb_id": 10434,
+    "genres": [
+      "Drama",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": 1994,
+    "Award": "Grand Prix",
+    "Film": "Burnt by the Sun",
+    "Director": "Nikita Mikhalkov",
+    "tmdb_id": 50797,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1994,
+    "Award": "Grand Prix",
+    "Film": "To Live",
+    "Director": "Zhang Yimou",
+    "tmdb_id": 31439,
+    "genres": [
+      "Drama",
+      "Romance",
+      "War"
+    ]
+  },
+  {
+    "Year": 1995,
+    "Award": "Grand Prix",
+    "Film": "Ulysses' Gaze",
+    "Director": "Theo Angelopoulos",
+    "tmdb_id": 22549,
+    "genres": [
+      "Drama",
+      "History",
+      "War"
+    ]
+  },
+  {
+    "Year": 1996,
+    "Award": "Grand Prix",
+    "Film": "Breaking the Waves",
+    "Director": "Lars von Trier",
+    "tmdb_id": 145,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1997,
+    "Award": "Grand Prix",
+    "Film": "The Sweet Hereafter",
+    "Director": "Atom Egoyan",
+    "tmdb_id": 10217,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1998,
+    "Award": "Grand Prix",
+    "Film": "Life Is Beautiful",
+    "Director": "Roberto Benigni",
+    "tmdb_id": 637,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1999,
+    "Award": "Grand Prix",
+    "Film": "Humanité",
+    "Director": "Bruno Dumont",
+    "tmdb_id": 65296,
+    "genres": [
+      "Drama",
+      "Mystery"
+    ]
+  },
+  {
+    "Year": 2000,
+    "Award": "Grand Prix",
+    "Film": "Devils on the Doorstep",
+    "Director": "Jiang Wen",
+    "tmdb_id": 25838,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 2001,
+    "Award": "Grand Prix",
+    "Film": "The Piano Teacher",
+    "Director": "Michael Haneke",
+    "tmdb_id": 1791,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2002,
+    "Award": "Grand Prix",
+    "Film": "The Man Without a Past",
+    "Director": "Aki Kaurismäki",
+    "tmdb_id": 7294,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2003,
+    "Award": "Grand Prix",
+    "Film": "Uzak",
+    "Director": "Nuri Bilge Ceylan",
+    "tmdb_id": 31026,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2004,
+    "Award": "Grand Prix",
+    "Film": "Oldboy",
+    "Director": "Park Chan-wook",
+    "tmdb_id": 670,
+    "genres": [
+      "Drama",
+      "Thriller",
+      "Mystery",
+      "Action"
+    ]
+  },
+  {
+    "Year": 2005,
+    "Award": "Grand Prix",
+    "Film": "Broken Flowers",
+    "Director": "Jim Jarmusch",
+    "tmdb_id": 308,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Mystery",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2006,
+    "Award": "Grand Prix",
+    "Film": "Flanders",
+    "Director": "Bruno Dumont",
+    "tmdb_id": 36143,
+    "genres": [
+      "War",
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2007,
+    "Award": "Grand Prix",
+    "Film": "The Mourning Forest",
+    "Director": "Naomi Kawase",
+    "tmdb_id": 2010,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2008,
+    "Award": "Grand Prix",
+    "Film": "Gomorrah",
+    "Director": "Matteo Garrone",
+    "tmdb_id": 8882,
+    "genres": [
+      "Drama",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 2009,
+    "Award": "Grand Prix",
+    "Film": "A Prophet",
+    "Director": "Jacques Audiard",
+    "tmdb_id": 21575,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2010,
+    "Award": "Grand Prix",
+    "Film": "Of Gods and Men",
+    "Director": "Xavier Beauvois",
+    "tmdb_id": 46332,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 2011,
+    "Award": "Grand Prix",
+    "Film": "Once Upon a Time in Anatolia",
+    "Director": "Nuri Bilge Ceylan",
+    "tmdb_id": 74879,
+    "genres": [
+      "Drama",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 2011,
+    "Award": "Grand Prix",
+    "Film": "The Kid with a Bike",
+    "Director": "Dardenne brothers",
+    "tmdb_id": 63831,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2012,
+    "Award": "Grand Prix",
+    "Film": "Reality",
+    "Director": "Matteo Garrone",
+    "tmdb_id": 103758,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 2013,
+    "Award": "Grand Prix",
+    "Film": "Inside Llewyn Davis",
+    "Director": "Joel & Ethan Coen",
+    "tmdb_id": 86829,
+    "genres": [
+      "Drama",
+      "Music"
+    ]
+  },
+  {
+    "Year": 2014,
+    "Award": "Grand Prix",
+    "Film": "The Wonders",
+    "Director": "Alice Rohrwacher",
+    "tmdb_id": 265226,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2015,
+    "Award": "Grand Prix",
+    "Film": "Son of Saul",
+    "Director": "László Nemes",
+    "tmdb_id": 336050,
+    "genres": [
+      "War",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2016,
+    "Award": "Grand Prix",
+    "Film": "It's Only the End of the World",
+    "Director": "Xavier Dolan",
+    "tmdb_id": 338189,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2017,
+    "Award": "Grand Prix",
+    "Film": "BPM (Beats per Minute)",
+    "Director": "Robin Campillo",
+    "tmdb_id": 451945,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2018,
+    "Award": "Grand Prix",
+    "Film": "BlacKkKlansman",
+    "Director": "Spike Lee",
+    "tmdb_id": 487558,
+    "genres": [
+      "Crime",
+      "Comedy",
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 2019,
+    "Award": "Grand Prix",
+    "Film": "Atlantics",
+    "Director": "Mati Diop",
+    "tmdb_id": 496967,
+    "genres": [
+      "Drama",
+      "Romance",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": 2021,
+    "Award": "Grand Prix",
+    "Film": "A Hero",
+    "Director": "Asghar Farhadi",
+    "tmdb_id": 672208,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2021,
+    "Award": "Grand Prix",
+    "Film": "Compartment No. 6",
+    "Director": "Juho Kuosmanen",
+    "tmdb_id": 588182,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2022,
+    "Award": "Grand Prix",
+    "Film": "Close",
+    "Director": "Lukas Dhont",
+    "tmdb_id": 901563,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2022,
+    "Award": "Grand Prix",
+    "Film": "Stars at Noon",
+    "Director": "Claire Denis",
+    "tmdb_id": 603204,
+    "genres": [
+      "Drama",
+      "Romance",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 2023,
+    "Award": "Grand Prix",
+    "Film": "The Zone of Interest",
+    "Director": "Jonathan Glazer",
+    "tmdb_id": 467244,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 2024,
+    "Award": "Grand Prix",
+    "Film": "All We Imagine as Light",
+    "Director": "Payal Kapadia",
+    "tmdb_id": 927547,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2025,
+    "Award": "Grand Prix",
+    "Film": "Sentimental Value",
+    "Director": "Joachim Trier",
+    "tmdb_id": 1124566,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1946,
+    "Award": "Jury Prize",
+    "Film": "The Battle of the Rails",
+    "Director": "René Clément",
+    "tmdb_id": 39142,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 1951,
+    "Award": "Jury Prize",
+    "Film": "All About Eve",
+    "Director": "Joseph L. Mankiewicz",
+    "tmdb_id": 705,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1952,
+    "Award": "Jury Prize",
+    "Film": "We Are All Murderers",
+    "Director": "André Cayatte",
+    "tmdb_id": 199503,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1954,
+    "Award": "Jury Prize",
+    "Film": "Knave of Hearts",
+    "Director": "",
+    "tmdb_id": 163333,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1955,
+    "Award": "Jury Prize",
+    "Film": "Lost Continent",
+    "Director": "",
+    "tmdb_id": 199249,
+    "genres": [
+      "Documentary"
+    ]
+  },
+  {
+    "Year": 1956,
+    "Award": "Jury Prize",
+    "Film": "The Mystery of Picasso",
+    "Director": "Henri-Georges Clouzot",
+    "tmdb_id": 71822,
+    "genres": [
+      "Documentary"
+    ]
+  },
+  {
+    "Year": 1957,
+    "Award": "Jury Prize",
+    "Film": "Kanał",
+    "Director": "Andrzej Wajda",
+    "tmdb_id": 29933,
+    "genres": [
+      "War",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1957,
+    "Award": "Jury Prize",
+    "Film": "The Seventh Seal",
+    "Director": "Ingmar Bergman",
+    "tmdb_id": 490,
+    "genres": [
+      "Fantasy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1958,
+    "Award": "Jury Prize",
+    "Film": "Mon Oncle",
+    "Director": "Jacques Tati",
+    "tmdb_id": 427,
+    "genres": [
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1959,
+    "Award": "Jury Prize",
+    "Film": "Stars",
+    "Director": "",
+    "tmdb_id": 199177,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 1960,
+    "Award": "Jury Prize",
+    "Film": "L'Avventura",
+    "Director": "Michelangelo Antonioni",
+    "tmdb_id": 5165,
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1960,
+    "Award": "Jury Prize",
+    "Film": "Odd Obsession",
+    "Director": "Kon Ichikawa",
+    "tmdb_id": 43095,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1961,
+    "Award": "Jury Prize",
+    "Film": "Mother Joan of the Angels",
+    "Director": "Jerzy Kawalerowicz",
+    "tmdb_id": 113458,
+    "genres": [
+      "Drama",
+      "Horror"
+    ]
+  },
+  {
+    "Year": 1962,
+    "Award": "Jury Prize",
+    "Film": "L'Eclisse",
+    "Director": "Michelangelo Antonioni",
+    "tmdb_id": 21135,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1962,
+    "Award": "Jury Prize",
+    "Film": "The Trial of Joan of Arc",
+    "Director": "Robert Bresson",
+    "tmdb_id": 48764,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 1963,
+    "Award": "Jury Prize",
+    "Film": "Harakiri",
+    "Director": "",
+    "tmdb_id": 14537,
+    "genres": [
+      "Action",
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 1963,
+    "Award": "Jury Prize",
+    "Film": "The Cassandra Cat",
+    "Director": "Vojtěch Jasný",
+    "tmdb_id": 47852,
+    "genres": [
+      "Comedy",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": 1964,
+    "Award": "Jury Prize",
+    "Film": "Woman in the Dunes",
+    "Director": "Hiroshi Teshigahara",
+    "tmdb_id": 16672,
+    "genres": [
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1965,
+    "Award": "Jury Prize",
+    "Film": "Kwaidan",
+    "Director": "",
+    "tmdb_id": 30959,
+    "genres": [
+      "Horror",
+      "Fantasy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1966,
+    "Award": "Jury Prize",
+    "Film": "Alfie",
+    "Director": "",
+    "tmdb_id": 15598,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1969,
+    "Award": "Jury Prize",
+    "Film": "Z",
+    "Director": "",
+    "tmdb_id": 2721,
+    "genres": [
+      "Thriller",
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1970,
+    "Award": "Jury Prize",
+    "Film": "The Falcons",
+    "Director": "",
+    "tmdb_id": 198659,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1970,
+    "Award": "Jury Prize",
+    "Film": "The Strawberry Statement",
+    "Director": "",
+    "tmdb_id": 51956,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1971,
+    "Award": "Jury Prize",
+    "Film": "Joe Hill",
+    "Director": "",
+    "tmdb_id": 74746,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1971,
+    "Award": "Jury Prize",
+    "Film": "Love",
+    "Director": "",
+    "tmdb_id": 42516,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1972,
+    "Award": "Jury Prize",
+    "Film": "Slaughterhouse-Five",
+    "Director": "",
+    "tmdb_id": 24559,
+    "genres": [
+      "Drama",
+      "Science Fiction",
+      "War"
+    ]
+  },
+  {
+    "Year": 1973,
+    "Award": "Jury Prize",
+    "Film": "The Hourglass Sanatorium",
+    "Director": "Wojciech Jerzy Has",
+    "tmdb_id": 45698,
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Horror"
+    ]
+  },
+  {
+    "Year": 1973,
+    "Award": "Jury Prize",
+    "Film": "The Invitation",
+    "Director": "",
+    "tmdb_id": 109815,
+    "genres": [
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1974,
+    "Award": "Jury Prize",
+    "Film": "La prima Angélica",
+    "Director": "Carlos Saura",
+    "tmdb_id": 54236,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1980,
+    "Award": "Jury Prize",
+    "Film": "The Constant Factor",
+    "Director": "Krzysztof Zanussi",
+    "tmdb_id": 198500,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1983,
+    "Award": "Jury Prize",
+    "Film": "Kharij",
+    "Director": "Mrinal Sen",
+    "tmdb_id": 133751,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1985,
+    "Award": "Jury Prize",
+    "Film": "Colonel Redl",
+    "Director": "István Szabó",
+    "tmdb_id": 29471,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 1986,
+    "Award": "Jury Prize",
+    "Film": "Thérèse",
+    "Director": "",
+    "tmdb_id": 42029,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1987,
+    "Award": "Jury Prize",
+    "Film": "Shinran: Path to Purity",
+    "Director": "Rentarō Mikuni",
+    "tmdb_id": 198454,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1987,
+    "Award": "Jury Prize",
+    "Film": "Yeelen",
+    "Director": "Souleymane Cissé",
+    "tmdb_id": 71329,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1988,
+    "Award": "Jury Prize",
+    "Film": "A Short Film About Killing",
+    "Director": "Krzysztof Kieślowski",
+    "tmdb_id": 10754,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1989,
+    "Award": "Jury Prize",
+    "Film": "Jesus of Montreal",
+    "Director": "Denys Arcand",
+    "tmdb_id": 4486,
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1990,
+    "Award": "Jury Prize",
+    "Film": "Hidden Agenda",
+    "Director": "",
+    "tmdb_id": 47869,
+    "genres": [
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1991,
+    "Award": "Jury Prize",
+    "Film": "Europa",
+    "Director": "",
+    "tmdb_id": 9065,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1991,
+    "Award": "Jury Prize",
+    "Film": "Out of Life",
+    "Director": "Maroun Bagdadi",
+    "tmdb_id": 66753,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 1992,
+    "Award": "Jury Prize",
+    "Film": "An Independent Life",
+    "Director": "Vitali Kanevsky",
+    "tmdb_id": 196929,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1992,
+    "Award": "Jury Prize",
+    "Film": "Dream of Light",
+    "Director": "Víctor Erice",
+    "tmdb_id": 94706,
+    "genres": [
+      "Documentary"
+    ]
+  },
+  {
+    "Year": 1993,
+    "Award": "Jury Prize",
+    "Film": "Raining Stones",
+    "Director": "Ken Loach",
+    "tmdb_id": 62463,
+    "genres": [
+      "Drama",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 1993,
+    "Award": "Jury Prize",
+    "Film": "The Puppetmaster",
+    "Director": "",
+    "tmdb_id": 96712,
+    "genres": [
+      "Drama",
+      "War",
+      "History"
+    ]
+  },
+  {
+    "Year": 1994,
+    "Award": "Jury Prize",
+    "Film": "La Reine Margot",
+    "Director": "",
+    "tmdb_id": 10452,
+    "genres": [
+      "Drama",
+      "History",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1995,
+    "Award": "Jury Prize",
+    "Film": "Carrington",
+    "Director": "",
+    "tmdb_id": 47018,
+    "genres": [
+      "History",
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1995,
+    "Award": "Jury Prize",
+    "Film": "Don't Forget You're Going to Die",
+    "Director": "Xavier Beauvois",
+    "tmdb_id": 72368,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1996,
+    "Award": "Jury Prize",
+    "Film": "Crash",
+    "Director": "",
+    "tmdb_id": 884,
+    "genres": [
+      "Thriller",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1997,
+    "Award": "Jury Prize",
+    "Film": "Western",
+    "Director": "",
+    "tmdb_id": 39968,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1998,
+    "Award": "Jury Prize",
+    "Film": "Class Trip",
+    "Director": "Claude Miller",
+    "tmdb_id": 46817,
+    "genres": [
+      "Mystery",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1998,
+    "Award": "Jury Prize",
+    "Film": "The Celebration",
+    "Director": "Thomas Vinterberg",
+    "tmdb_id": 309,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1999,
+    "Award": "Jury Prize",
+    "Film": "The Letter",
+    "Director": "",
+    "tmdb_id": 105448,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2000,
+    "Award": "Jury Prize",
+    "Film": "Blackboards",
+    "Director": "Samira Makhmalbaf",
+    "tmdb_id": 28988,
+    "genres": [
+      "Drama",
+      "History",
+      "War"
+    ]
+  },
+  {
+    "Year": 2000,
+    "Award": "Jury Prize",
+    "Film": "Songs from the Second Floor",
+    "Director": "Roy Andersson",
+    "tmdb_id": 34070,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 2002,
+    "Award": "Jury Prize",
+    "Film": "Divine Intervention",
+    "Director": "",
+    "tmdb_id": 27744,
+    "genres": [
+      "Drama",
+      "Romance",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 2003,
+    "Award": "Jury Prize",
+    "Film": "At Five in the Afternoon",
+    "Director": "Samira Makhmalbaf",
+    "tmdb_id": 43969,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2004,
+    "Award": "Jury Prize",
+    "Film": "The Ladykillers *",
+    "Director": "",
+    "tmdb_id": 5516,
+    "genres": [
+      "Comedy",
+      "Crime",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2004,
+    "Award": "Jury Prize",
+    "Film": "Tropical Malady",
+    "Director": "Apichatpong Weerasethakul",
+    "tmdb_id": 11534,
+    "genres": [
+      "Drama",
+      "Romance",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": 2005,
+    "Award": "Jury Prize",
+    "Film": "Shanghai Dreams",
+    "Director": "Wang Xiaoshuai",
+    "tmdb_id": 101908,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2006,
+    "Award": "Jury Prize",
+    "Film": "Red Road",
+    "Director": "",
+    "tmdb_id": 11705,
+    "genres": [
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2007,
+    "Award": "Jury Prize",
+    "Film": "Persepolis",
+    "Director": "",
+    "tmdb_id": 2011,
+    "genres": [
+      "Animation",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2007,
+    "Award": "Jury Prize",
+    "Film": "Silent Light",
+    "Director": "Carlos Reygadas",
+    "tmdb_id": 2012,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2008,
+    "Award": "Jury Prize",
+    "Film": "Il divo",
+    "Director": "",
+    "tmdb_id": 8832,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2009,
+    "Award": "Jury Prize",
+    "Film": "Fish Tank",
+    "Director": "",
+    "tmdb_id": 24469,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2009,
+    "Award": "Jury Prize",
+    "Film": "Thirst",
+    "Director": "",
+    "tmdb_id": 64861,
+    "genres": [
+      "Drama",
+      "Horror",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2010,
+    "Award": "Jury Prize",
+    "Film": "A Screaming Man",
+    "Director": "Mahamat Saleh Haroun",
+    "tmdb_id": 57602,
+    "genres": [
+      "War",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2011,
+    "Award": "Jury Prize",
+    "Film": "Polisse",
+    "Director": "Maïwenn",
+    "tmdb_id": 71157,
+    "genres": [
+      "Drama",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 2012,
+    "Award": "Jury Prize",
+    "Film": "The Angels' Share",
+    "Director": "Ken Loach",
+    "tmdb_id": 103747,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 2013,
+    "Award": "Jury Prize",
+    "Film": "Like Father, Like Son",
+    "Director": "",
+    "tmdb_id": 177945,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2014,
+    "Award": "Jury Prize",
+    "Film": "Goodbye to Language",
+    "Director": "Jean-Luc Godard",
+    "tmdb_id": 114982,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2014,
+    "Award": "Jury Prize",
+    "Film": "Mommy",
+    "Director": "",
+    "tmdb_id": 265177,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2015,
+    "Award": "Jury Prize",
+    "Film": "The Lobster",
+    "Director": "Yorgos Lanthimos",
+    "tmdb_id": 254320,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2016,
+    "Award": "Jury Prize",
+    "Film": "American Honey",
+    "Director": "",
+    "tmdb_id": 340485,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2017,
+    "Award": "Jury Prize",
+    "Film": "Loveless",
+    "Director": "",
+    "tmdb_id": 1224272,
+    "genres": []
+  },
+  {
+    "Year": 2018,
+    "Award": "Jury Prize",
+    "Film": "Capernaum",
+    "Director": "",
+    "tmdb_id": 517814,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2019,
+    "Award": "Jury Prize",
+    "Film": "Bacurau",
+    "Director": "Kleber Mendonça Filho",
+    "tmdb_id": 446159,
+    "genres": [
+      "Mystery",
+      "Western",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2019,
+    "Award": "Jury Prize",
+    "Film": "Les Misérables",
+    "Director": "",
+    "tmdb_id": 586863,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2021,
+    "Award": "Jury Prize",
+    "Film": "Ahed's Knee",
+    "Director": "Nadav Lapid",
+    "tmdb_id": 662029,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2021,
+    "Award": "Jury Prize",
+    "Film": "Memoria",
+    "Director": "",
+    "tmdb_id": 511819,
+    "genres": [
+      "Drama",
+      "Science Fiction",
+      "Mystery"
+    ]
+  },
+  {
+    "Year": 2022,
+    "Award": "Jury Prize",
+    "Film": "EO",
+    "Director": "",
+    "tmdb_id": 785398,
+    "genres": [
+      "Drama",
+      "Adventure"
+    ]
+  },
+  {
+    "Year": 2022,
+    "Award": "Jury Prize",
+    "Film": "The Eight Mountains",
+    "Director": "Felix van Groeningen / Charlotte Vandermeersch",
+    "tmdb_id": 803700,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2023,
+    "Award": "Jury Prize",
+    "Film": "Fallen Leaves",
+    "Director": "",
+    "tmdb_id": 986280,
+    "genres": [
+      "Romance",
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2024,
+    "Award": "Jury Prize",
+    "Film": "Emilia Pérez",
+    "Director": "Jacques Audiard",
+    "tmdb_id": 974950,
+    "genres": [
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2025,
+    "Award": "Jury Prize",
+    "Film": "Sirāt",
+    "Director": "Óliver Laxe",
+    "tmdb_id": 1151272,
+    "genres": [
+      "Drama",
+      "Thriller",
+      "Music"
+    ]
+  },
+  {
+    "Year": 2025,
+    "Award": "Jury Prize",
+    "Film": "Sound of Falling",
+    "Director": "Mascha Schilinski",
+    "tmdb_id": 1221061,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1955,
+    "Award": "Palme d'Or",
+    "Film": "Marty",
+    "Director": "Delbert Mann",
+    "tmdb_id": 15919,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1956,
+    "Award": "Palme d'Or",
+    "Film": "The Silent World",
+    "Director": "Jacques Cousteau Louis Malle",
+    "tmdb_id": 60234,
+    "genres": [
+      "Documentary",
+      "Adventure"
+    ]
+  },
+  {
+    "Year": 1957,
+    "Award": "Palme d'Or",
+    "Film": "Friendly Persuasion",
+    "Director": "William Wyler",
+    "tmdb_id": 43258,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 1958,
+    "Award": "Palme d'Or",
+    "Film": "The Cranes Are Flying",
+    "Director": "Mikhail Kalatozov",
+    "tmdb_id": 38360,
+    "genres": [
+      "Drama",
+      "Romance",
+      "War"
+    ]
+  },
+  {
+    "Year": 1959,
+    "Award": "Palme d'Or",
+    "Film": "Black Orpheus",
+    "Director": "Marcel Camus",
+    "tmdb_id": 40423,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1960,
+    "Award": "Palme d'Or",
+    "Film": "La dolce vita",
+    "Director": "Federico Fellini",
+    "tmdb_id": 439,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1961,
+    "Award": "Palme d'Or",
+    "Film": "The Long Absence",
+    "Director": "Henri Colpi",
+    "tmdb_id": 131836,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1961,
+    "Award": "Palme d'Or",
+    "Film": "Viridiana",
+    "Director": "Luis Buñuel",
+    "tmdb_id": 4497,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1962,
+    "Award": "Palme d'Or",
+    "Film": "O Pagador de Promessas",
+    "Director": "Anselmo Duarte",
+    "tmdb_id": 59990,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1963,
+    "Award": "Palme d'Or",
+    "Film": "The Leopard",
+    "Director": "Luchino Visconti",
+    "tmdb_id": 1040,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1964,
+    "Award": "Palme d'Or",
+    "Film": "The Umbrellas of Cherbourg",
+    "Director": "Jacques Demy",
+    "tmdb_id": 5967,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1965,
+    "Award": "Palme d'Or",
+    "Film": "The Knack ...and How to Get It",
+    "Director": "Richard Lester",
+    "tmdb_id": 42744,
+    "genres": [
+      "Comedy",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1966,
+    "Award": "Palme d'Or",
+    "Film": "A Man and a Woman",
+    "Director": "Claude Lelouch",
+    "tmdb_id": 42726,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1966,
+    "Award": "Palme d'Or",
+    "Film": "The Birds, the Bees and the Italians",
+    "Director": "Pietro Germi",
+    "tmdb_id": 17974,
+    "genres": [
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1967,
+    "Award": "Palme d'Or",
+    "Film": "Blowup",
+    "Director": "Michelangelo Antonioni",
+    "tmdb_id": 1052,
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1969,
+    "Award": "Palme d'Or",
+    "Film": "If....",
+    "Director": "Lindsay Anderson",
+    "tmdb_id": 14794,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1970,
+    "Award": "Palme d'Or",
+    "Film": "M*A*S*H",
+    "Director": "Robert Altman",
+    "tmdb_id": 651,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 1971,
+    "Award": "Palme d'Or",
+    "Film": "The Go-Between",
+    "Director": "Joseph Losey",
+    "tmdb_id": 36194,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1972,
+    "Award": "Palme d'Or",
+    "Film": "The Mattei Affair",
+    "Director": "Francesco Rosi",
+    "tmdb_id": 62382,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 1972,
+    "Award": "Palme d'Or",
+    "Film": "The Working Class Goes to Heaven",
+    "Director": "Elio Petri",
+    "tmdb_id": 56231,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1973,
+    "Award": "Palme d'Or",
+    "Film": "Scarecrow",
+    "Director": "Jerry Schatzberg",
+    "tmdb_id": 31587,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1973,
+    "Award": "Palme d'Or",
+    "Film": "The Hireling",
+    "Director": "Alan Bridges",
+    "tmdb_id": 80382,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1974,
+    "Award": "Palme d'Or",
+    "Film": "The Conversation",
+    "Director": "Francis Ford Coppola",
+    "tmdb_id": 592,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Mystery"
+    ]
+  },
+  {
+    "Year": 1975,
+    "Award": "Palme d'Or",
+    "Film": "Chronicle of the Years of Fire",
+    "Director": "Mohammed Lakhdar-Hamina",
+    "tmdb_id": 52555,
+    "genres": [
+      "Drama",
+      "War",
+      "History"
+    ]
+  },
+  {
+    "Year": 1976,
+    "Award": "Palme d'Or",
+    "Film": "Taxi Driver",
+    "Director": "Martin Scorsese",
+    "tmdb_id": 103,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1977,
+    "Award": "Palme d'Or",
+    "Film": "Padre Padrone",
+    "Director": "Paolo and Vittorio Taviani",
+    "tmdb_id": 42225,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1978,
+    "Award": "Palme d'Or",
+    "Film": "The Tree of Wooden Clogs",
+    "Director": "Ermanno Olmi",
+    "tmdb_id": 31542,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1979,
+    "Award": "Palme d'Or",
+    "Film": "Apocalypse Now",
+    "Director": "Francis Ford Coppola",
+    "tmdb_id": 28,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 1979,
+    "Award": "Palme d'Or",
+    "Film": "The Tin Drum",
+    "Director": "Volker Schlöndorff",
+    "tmdb_id": 659,
+    "genres": [
+      "Drama",
+      "History",
+      "War"
+    ]
+  },
+  {
+    "Year": 1980,
+    "Award": "Palme d'Or",
+    "Film": "All That Jazz",
+    "Director": "Bob Fosse",
+    "tmdb_id": 16858,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1980,
+    "Award": "Palme d'Or",
+    "Film": "Kagemusha",
+    "Director": "Akira Kurosawa",
+    "tmdb_id": 11953,
+    "genres": [
+      "Action",
+      "Drama",
+      "History",
+      "War"
+    ]
+  },
+  {
+    "Year": 1981,
+    "Award": "Palme d'Or",
+    "Film": "Man of Iron",
+    "Director": "Andrzej Wajda",
+    "tmdb_id": 225,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 1982,
+    "Award": "Palme d'Or",
+    "Film": "Missing",
+    "Director": "Costa-Gavras",
+    "tmdb_id": 15600,
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1982,
+    "Award": "Palme d'Or",
+    "Film": "Yol",
+    "Director": "Yılmaz Güney & Şerif Gören",
+    "tmdb_id": 52556,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1983,
+    "Award": "Palme d'Or",
+    "Film": "The Ballad of Narayama",
+    "Director": "Shōhei Imamura",
+    "tmdb_id": 42113,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1984,
+    "Award": "Palme d'Or",
+    "Film": "Paris, Texas",
+    "Director": "Wim Wenders",
+    "tmdb_id": 655,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1985,
+    "Award": "Palme d'Or",
+    "Film": "When Father Was Away on Business",
+    "Director": "Emir Kusturica",
+    "tmdb_id": 21042,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1986,
+    "Award": "Palme d'Or",
+    "Film": "The Mission",
+    "Director": "Roland Joffé",
+    "tmdb_id": 11416,
+    "genres": [
+      "Adventure",
+      "Drama",
+      "Action",
+      "History"
+    ]
+  },
+  {
+    "Year": 1987,
+    "Award": "Palme d'Or",
+    "Film": "Under the Sun of Satan",
+    "Director": "Maurice Pialat",
+    "tmdb_id": 31300,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1988,
+    "Award": "Palme d'Or",
+    "Film": "Pelle the Conqueror",
+    "Director": "Bille August",
+    "tmdb_id": 11174,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1989,
+    "Award": "Palme d'Or",
+    "Film": "Sex, Lies, and Videotape",
+    "Director": "Steven Soderbergh",
+    "tmdb_id": 1412,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1990,
+    "Award": "Palme d'Or",
+    "Film": "Wild at Heart",
+    "Director": "David Lynch",
+    "tmdb_id": 483,
+    "genres": [
+      "Crime",
+      "Thriller",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1991,
+    "Award": "Palme d'Or",
+    "Film": "Barton Fink",
+    "Director": "Joel Coen",
+    "tmdb_id": 290,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 1992,
+    "Award": "Palme d'Or",
+    "Film": "The Best Intentions",
+    "Director": "Bille August",
+    "tmdb_id": 41764,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1993,
+    "Award": "Palme d'Or",
+    "Film": "Farewell My Concubine",
+    "Director": "Chen Kaige",
+    "tmdb_id": 10997,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1993,
+    "Award": "Palme d'Or",
+    "Film": "The Piano",
+    "Director": "Jane Campion",
+    "tmdb_id": 713,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 1994,
+    "Award": "Palme d'Or",
+    "Film": "Pulp Fiction",
+    "Director": "Quentin Tarantino",
+    "tmdb_id": 680,
+    "genres": [
+      "Thriller",
+      "Crime",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": 1995,
+    "Award": "Palme d'Or",
+    "Film": "Underground",
+    "Director": "Emir Kusturica",
+    "tmdb_id": 11902,
+    "genres": [
+      "Drama",
+      "Comedy",
+      "War"
+    ]
+  },
+  {
+    "Year": 1996,
+    "Award": "Palme d'Or",
+    "Film": "Secrets & Lies",
+    "Director": "Mike Leigh",
+    "tmdb_id": 11159,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1997,
+    "Award": "Palme d'Or",
+    "Film": "Taste of Cherry",
+    "Director": "Abbas Kiarostami",
+    "tmdb_id": 30020,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1997,
+    "Award": "Palme d'Or",
+    "Film": "The Eel",
+    "Director": "Shōhei Imamura",
+    "tmdb_id": 20506,
+    "genres": [
+      "Drama",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 1998,
+    "Award": "Palme d'Or",
+    "Film": "Eternity and a Day",
+    "Director": "Theo Angelopoulos",
+    "tmdb_id": 24858,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 1999,
+    "Award": "Palme d'Or",
+    "Film": "Rosetta",
+    "Director": "Jean-Pierre & Luc Dardenne",
+    "tmdb_id": 11489,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2000,
+    "Award": "Palme d'Or",
+    "Film": "Dancer in the Dark",
+    "Director": "Lars von Trier",
+    "tmdb_id": 16,
+    "genres": [
+      "Drama",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 2001,
+    "Award": "Palme d'Or",
+    "Film": "The Son's Room",
+    "Director": "Nanni Moretti",
+    "tmdb_id": 11447,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2002,
+    "Award": "Palme d'Or",
+    "Film": "The Pianist",
+    "Director": "Roman Polanski",
+    "tmdb_id": 423,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 2003,
+    "Award": "Palme d'Or",
+    "Film": "Elephant",
+    "Director": "Gus Van Sant",
+    "tmdb_id": 1807,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2004,
+    "Award": "Palme d'Or",
+    "Film": "Fahrenheit 9/11",
+    "Director": "Michael Moore",
+    "tmdb_id": 1777,
+    "genres": [
+      "Documentary"
+    ]
+  },
+  {
+    "Year": 2005,
+    "Award": "Palme d'Or",
+    "Film": "L'Enfant",
+    "Director": "Jean-Pierre & Luc Dardenne",
+    "tmdb_id": 11490,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2006,
+    "Award": "Palme d'Or",
+    "Film": "The Wind That Shakes the Barley",
+    "Director": "Ken Loach",
+    "tmdb_id": 1116,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": 2007,
+    "Award": "Palme d'Or",
+    "Film": "4 Months, 3 Weeks and 2 Days",
+    "Director": "Cristian Mungiu",
+    "tmdb_id": 2009,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2008,
+    "Award": "Palme d'Or",
+    "Film": "The Class",
+    "Director": "Laurent Cantet",
+    "tmdb_id": 8841,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2009,
+    "Award": "Palme d'Or",
+    "Film": "The White Ribbon",
+    "Director": "Michael Haneke",
+    "tmdb_id": 37903,
+    "genres": [
+      "Drama",
+      "Mystery"
+    ]
+  },
+  {
+    "Year": 2010,
+    "Award": "Palme d'Or",
+    "Film": "Uncle Boonmee Who Can Recall His Past Lives",
+    "Director": "Apichatpong Weerasethakul",
+    "tmdb_id": 38368,
+    "genres": [
+      "Drama",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": 2011,
+    "Award": "Palme d'Or",
+    "Film": "The Tree of Life",
+    "Director": "Terrence Malick",
+    "tmdb_id": 8967,
+    "genres": [
+      "Drama",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": 2012,
+    "Award": "Palme d'Or",
+    "Film": "Amour",
+    "Director": "Michael Haneke",
+    "tmdb_id": 86837,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2013,
+    "Award": "Palme d'Or",
+    "Film": "Blue Is the Warmest Colour",
+    "Director": "Abdellatif Kechiche",
+    "tmdb_id": 152584,
+    "genres": [
+      "Romance",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2014,
+    "Award": "Palme d'Or",
+    "Film": "Winter Sleep",
+    "Director": "Nuri Bilge Ceylan",
+    "tmdb_id": 265169,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2015,
+    "Award": "Palme d'Or",
+    "Film": "Dheepan",
+    "Director": "Jacques Audiard",
+    "tmdb_id": 314402,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2016,
+    "Award": "Palme d'Or",
+    "Film": "I, Daniel Blake",
+    "Director": "Ken Loach",
+    "tmdb_id": 374473,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2017,
+    "Award": "Palme d'Or",
+    "Film": "The Square",
+    "Director": "Ruben Östlund",
+    "tmdb_id": 401246,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2018,
+    "Award": "Palme d'Or",
+    "Film": "Shoplifters",
+    "Director": "Hirokazu Kore-eda",
+    "tmdb_id": 505192,
+    "genres": [
+      "Drama",
+      "Crime",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": 2018,
+    "Award": "Palme d'Or",
+    "Film": "The Image Book",
+    "Director": "Jean-Luc Godard",
+    "tmdb_id": 414030,
+    "genres": [
+      "Documentary",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2019,
+    "Award": "Palme d'Or",
+    "Film": "Parasite",
+    "Director": "Bong Joon Ho",
+    "tmdb_id": 496243,
+    "genres": [
+      "Comedy",
+      "Thriller",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2021,
+    "Award": "Palme d'Or",
+    "Film": "Titane",
+    "Director": "Julia Ducournau",
+    "tmdb_id": 630240,
+    "genres": [
+      "Drama",
+      "Thriller",
+      "Horror"
+    ]
+  },
+  {
+    "Year": 2022,
+    "Award": "Palme d'Or",
+    "Film": "Triangle of Sadness",
+    "Director": "Ruben Östlund",
+    "tmdb_id": 497828,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2023,
+    "Award": "Palme d'Or",
+    "Film": "Anatomy of a Fall",
+    "Director": "Justine Triet",
+    "tmdb_id": 915935,
+    "genres": [
+      "Thriller",
+      "Mystery",
+      "Crime"
+    ]
+  },
+  {
+    "Year": 2024,
+    "Award": "Palme d'Or",
+    "Film": "Anora",
+    "Director": "Sean Baker",
+    "tmdb_id": 1064213,
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2025,
+    "Award": "Palme d'Or",
+    "Film": "It Was Just an Accident",
+    "Director": "Jafar Panahi",
+    "tmdb_id": 1456349,
+    "genres": [
+      "Drama",
+      "Thriller",
+      "Crime",
+      "Mystery"
+    ]
+  }
+]

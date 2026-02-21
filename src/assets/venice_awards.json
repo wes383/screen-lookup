@@ -1,0 +1,1380 @@
+[
+  {
+    "Year": "1949",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Manon",
+    "Director": "Henri-Georges Clouzot",
+    "tmdb_id": 132332,
+    "genres": [
+      "Drama",
+      "Adventure",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": "1950",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Justice Is Done",
+    "Director": "André Cayatte",
+    "tmdb_id": 67731,
+    "genres": [
+      "Drama",
+      "Mystery"
+    ]
+  },
+  {
+    "Year": "1951",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Rashomon",
+    "Director": "Akira Kurosawa",
+    "tmdb_id": 548,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Mystery"
+    ]
+  },
+  {
+    "Year": "1952",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Forbidden Games",
+    "Director": "René Clément",
+    "tmdb_id": 5000,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": "1954",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Romeo and Juliet",
+    "Director": "Renato Castellani",
+    "tmdb_id": 92784,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": "1955",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Ordet",
+    "Director": "Carl Theodor Dreyer",
+    "tmdb_id": 48035,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1957",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Aparajito",
+    "Director": "Satyajit Ray",
+    "tmdb_id": 897,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1958",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Rickshaw Man",
+    "Director": "Hiroshi Inagaki",
+    "tmdb_id": 43121,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": "1959",
+    "Award": "Golden Lion - Best Film",
+    "Film": "General Della Rovere",
+    "Director": "Roberto Rossellini",
+    "tmdb_id": 43100,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": "1962",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Family Diary",
+    "Director": "Valerio Zurlini",
+    "tmdb_id": 80557,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1964",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Red Desert",
+    "Director": "Michelangelo Antonioni",
+    "tmdb_id": 26638,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1965",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Sandra",
+    "Director": "Luchino Visconti",
+    "tmdb_id": 92432,
+    "genres": [
+      "Drama",
+      "Mystery"
+    ]
+  },
+  {
+    "Year": "1966",
+    "Award": "Golden Lion - Best Film",
+    "Film": "The Battle of Algiers",
+    "Director": "Gillo Pontecorvo",
+    "tmdb_id": 17295,
+    "genres": [
+      "Drama",
+      "War",
+      "History"
+    ]
+  },
+  {
+    "Year": "1967",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Belle de Jour",
+    "Director": "Luis Buñuel",
+    "tmdb_id": 649,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": "1968",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Artists Under the Big Top: Perplexed",
+    "Director": "Alexander Kluge",
+    "tmdb_id": 154582,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1980",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Atlantic City",
+    "Director": "Louis Malle",
+    "tmdb_id": 23954,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": "1980",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Gloria",
+    "Director": "John Cassavetes",
+    "tmdb_id": 10889,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": "1983",
+    "Award": "Golden Lion - Best Film",
+    "Film": "First Name: Carmen",
+    "Director": "Jean-Luc Godard",
+    "tmdb_id": 32689,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Comedy",
+      "Romance"
+    ]
+  },
+  {
+    "Year": "1985",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Vagabond",
+    "Director": "Agnès Varda",
+    "tmdb_id": 44018,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1987",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Au revoir les enfants",
+    "Director": "Louis Malle",
+    "tmdb_id": 1786,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": "1988",
+    "Award": "Golden Lion - Best Film",
+    "Film": "The Legend of the Holy Drinker",
+    "Director": "Ermanno Olmi",
+    "tmdb_id": 54990,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1989",
+    "Award": "Golden Lion - Best Film",
+    "Film": "A City of Sadness",
+    "Director": "Hou Hsiao-hsien",
+    "tmdb_id": 49982,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": "1990",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Rosencrantz & Guildenstern Are Dead",
+    "Director": "Tom Stoppard",
+    "tmdb_id": 18971,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1992",
+    "Award": "Golden Lion - Best Film",
+    "Film": "The Story of Qiu Ju",
+    "Director": "Zhang Yimou",
+    "tmdb_id": 38143,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1994",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Before the Rain",
+    "Director": "Milčo Mančevski",
+    "tmdb_id": 19155,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": "1995",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Cyclo",
+    "Director": "Anh Hung Tran",
+    "tmdb_id": 36266,
+    "genres": [
+      "Drama",
+      "Crime"
+    ]
+  },
+  {
+    "Year": "1996",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Michael Collins",
+    "Director": "Neil Jordan",
+    "tmdb_id": 1770,
+    "genres": [
+      "War",
+      "Drama",
+      "Thriller",
+      "History"
+    ]
+  },
+  {
+    "Year": "1997",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Hana-bi",
+    "Director": "Takeshi Kitano",
+    "tmdb_id": 5910,
+    "genres": [
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1998",
+    "Award": "Golden Lion - Best Film",
+    "Film": "The Way We Laughed",
+    "Director": "Gianni Amelio",
+    "tmdb_id": 58098,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1999",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Not One Less",
+    "Director": "Zhang Yimou",
+    "tmdb_id": 36210,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2000",
+    "Award": "Golden Lion - Best Film",
+    "Film": "The Circle",
+    "Director": "Jafar Panahi",
+    "tmdb_id": 13898,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2001",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Monsoon Wedding",
+    "Director": "Mira Nair",
+    "tmdb_id": 480,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": "2002",
+    "Award": "Golden Lion - Best Film",
+    "Film": "The Magdalene Sisters",
+    "Director": "Peter Mullan",
+    "tmdb_id": 8094,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": "2003",
+    "Award": "Golden Lion - Best Film",
+    "Film": "The Return",
+    "Director": "Andrey Zvyagintsev",
+    "tmdb_id": 11190,
+    "genres": [
+      "Drama",
+      "Mystery"
+    ]
+  },
+  {
+    "Year": "2004",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Vera Drake",
+    "Director": "Mike Leigh",
+    "tmdb_id": 11109,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2005",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Brokeback Mountain",
+    "Director": "Ang Lee",
+    "tmdb_id": 142,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": "2006",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Still Life",
+    "Director": "Jia Zhangke",
+    "tmdb_id": 2346,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": "2007",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Lust, Caution",
+    "Director": "Ang Lee",
+    "tmdb_id": 4588,
+    "genres": [
+      "Action",
+      "Drama",
+      "Romance",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": "2008",
+    "Award": "Golden Lion - Best Film",
+    "Film": "The Wrestler",
+    "Director": "Darren Aronofsky",
+    "tmdb_id": 12163,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": "2009",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Lebanon",
+    "Director": "Samuel Maoz",
+    "tmdb_id": 32084,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": "2010",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Somewhere",
+    "Director": "Sofia Coppola",
+    "tmdb_id": 39210,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2011",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Faust",
+    "Director": "Alexander Sokurov",
+    "tmdb_id": 77560,
+    "genres": [
+      "Fantasy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2012",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Pietà",
+    "Director": "Kim Ki-duk",
+    "tmdb_id": 123377,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2013",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Sacro GRA",
+    "Director": "Gianfranco Rosi",
+    "tmdb_id": 216790,
+    "genres": [
+      "Documentary"
+    ]
+  },
+  {
+    "Year": "2014",
+    "Award": "Golden Lion - Best Film",
+    "Film": "A Pigeon Sat on a Branch Reflecting on Existence",
+    "Director": "Roy Andersson",
+    "tmdb_id": 110390,
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": "2015",
+    "Award": "Golden Lion - Best Film",
+    "Film": "From Afar",
+    "Director": "Lorenzo Vigas",
+    "tmdb_id": 352162,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2016",
+    "Award": "Golden Lion - Best Film",
+    "Film": "The Woman Who Left",
+    "Director": "Lav Diaz",
+    "tmdb_id": 408542,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2017",
+    "Award": "Golden Lion - Best Film",
+    "Film": "The Shape of Water",
+    "Director": "Guillermo del Toro",
+    "tmdb_id": 399055,
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Romance"
+    ]
+  },
+  {
+    "Year": "2018",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Roma",
+    "Director": "Alfonso Cuarón",
+    "tmdb_id": 426426,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2019",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Joker",
+    "Director": "Todd Phillips",
+    "tmdb_id": 475557,
+    "genres": [
+      "Crime",
+      "Thriller",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2020",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Nomadland",
+    "Director": "Chloé Zhao",
+    "tmdb_id": 581734,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2021",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Happening",
+    "Director": "Audrey Diwan",
+    "tmdb_id": 793998,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2022",
+    "Award": "Golden Lion - Best Film",
+    "Film": "All the Beauty and the Bloodshed",
+    "Director": "Laura Poitras",
+    "tmdb_id": 1004663,
+    "genres": [
+      "Documentary"
+    ]
+  },
+  {
+    "Year": "2023",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Poor Things",
+    "Director": "Yorgos Lanthimos",
+    "tmdb_id": 792307,
+    "genres": [
+      "Science Fiction",
+      "Romance",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": "2024",
+    "Award": "Golden Lion - Best Film",
+    "Film": "The Room Next Door",
+    "Director": "Pedro Almodóvar",
+    "tmdb_id": 1088514,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2025",
+    "Award": "Golden Lion - Best Film",
+    "Film": "Father Mother Sister Brother",
+    "Director": "Jim Jarmusch",
+    "tmdb_id": 1159206,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1951",
+    "Award": "Grand Jury Prize",
+    "Film": "A Streetcar Named Desire",
+    "Director": "Elia Kazan",
+    "tmdb_id": 702,
+    "genres": [
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": "1952",
+    "Award": "Grand Jury Prize",
+    "Film": "The Curious Adventures of Mr. Wonderbird",
+    "Director": "Paul Grimault",
+    "tmdb_id": 122946,
+    "genres": [
+      "Fantasy",
+      "Animation"
+    ]
+  },
+  {
+    "Year": "1952",
+    "Award": "Grand Jury Prize",
+    "Film": "Mandy",
+    "Director": "Alexander Mackendrick",
+    "tmdb_id": 47026,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1954",
+    "Award": "Grand Jury Prize",
+    "Film": "Executive Suite",
+    "Director": "Robert Wise",
+    "tmdb_id": 43336,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1958",
+    "Award": "Grand Jury Prize",
+    "Film": "The Lovers",
+    "Director": "Louis Malle",
+    "tmdb_id": 2574,
+    "genres": [
+      "Romance",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1958",
+    "Award": "Grand Jury Prize",
+    "Film": "La sfida",
+    "Director": "Francesco Rosi",
+    "tmdb_id": 156135,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1959",
+    "Award": "Grand Jury Prize",
+    "Film": "The Magician",
+    "Director": "Ingmar Bergman",
+    "tmdb_id": 29453,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1960",
+    "Award": "Grand Jury Prize",
+    "Film": "Rocco and His Brothers",
+    "Director": "Luchino Visconti",
+    "tmdb_id": 8422,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": "1961",
+    "Award": "Grand Jury Prize",
+    "Film": "Peace to Him Who Enters",
+    "Director": "Aleksandr Alov & Vladimir Naumov",
+    "tmdb_id": 204194,
+    "genres": [
+      "Drama",
+      "War"
+    ]
+  },
+  {
+    "Year": "1962",
+    "Award": "Grand Jury Prize",
+    "Film": "My Life to Live",
+    "Director": "Jean-Luc Godard",
+    "tmdb_id": 1626,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1963",
+    "Award": "Grand Jury Prize",
+    "Film": "The Fire Within",
+    "Director": "Louis Malle",
+    "tmdb_id": 2593,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1963",
+    "Award": "Grand Jury Prize",
+    "Film": "Introduction to Life",
+    "Director": "Igor Talankin",
+    "tmdb_id": 204188,
+    "genres": [
+      "Drama",
+      "War",
+      "Family"
+    ]
+  },
+  {
+    "Year": "1964",
+    "Award": "Grand Jury Prize",
+    "Film": "The Gospel According to St. Matthew",
+    "Director": "Pier Paolo Pasolini",
+    "tmdb_id": 24192,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1964",
+    "Award": "Grand Jury Prize",
+    "Film": "Hamlet",
+    "Director": "Grigori Kozintsev",
+    "tmdb_id": 71317,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1965",
+    "Award": "Grand Jury Prize",
+    "Film": "I Am Twenty",
+    "Director": "Marlen Khutsiev",
+    "tmdb_id": 148782,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1965",
+    "Award": "Grand Jury Prize",
+    "Film": "Modiga mindre män",
+    "Director": "Leif Krantz",
+    "tmdb_id": 204182,
+    "genres": [
+      "Family"
+    ]
+  },
+  {
+    "Year": "1965",
+    "Award": "Grand Jury Prize",
+    "Film": "Simon of the Desert",
+    "Director": "Luis Buñuel",
+    "tmdb_id": 36265,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Fantasy"
+    ]
+  },
+  {
+    "Year": "1966",
+    "Award": "Grand Jury Prize",
+    "Film": "Chappaqua",
+    "Director": "Conrad Rooks",
+    "tmdb_id": 33382,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1966",
+    "Award": "Grand Jury Prize",
+    "Film": "Yesterday Girl",
+    "Director": "Alexander Kluge",
+    "tmdb_id": 89785,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1967",
+    "Award": "Grand Jury Prize",
+    "Film": "China is Near",
+    "Director": "Marco Bellocchio",
+    "tmdb_id": 49783,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1967",
+    "Award": "Grand Jury Prize",
+    "Film": "La Chinoise",
+    "Director": "Jean-Luc Godard",
+    "tmdb_id": 1629,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": "1968",
+    "Award": "Grand Jury Prize",
+    "Film": "Our Lady of the Turks",
+    "Director": "Carmelo Bene",
+    "tmdb_id": 59048,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1968",
+    "Award": "Grand Jury Prize",
+    "Film": "Le Socrate",
+    "Director": "Robert Lapoujade",
+    "tmdb_id": 204172,
+    "genres": []
+  },
+  {
+    "Year": "1981",
+    "Award": "Grand Jury Prize",
+    "Film": "Sweet Dreams",
+    "Director": "Nanni Moretti",
+    "tmdb_id": 57967,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1981",
+    "Award": "Grand Jury Prize",
+    "Film": "They Don't Wear Black-tie",
+    "Director": "Leon Hirszman",
+    "tmdb_id": 203158,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1982",
+    "Award": "Grand Jury Prize",
+    "Film": "Imperative",
+    "Director": "Krzysztof Zanussi",
+    "tmdb_id": 204164,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1983",
+    "Award": "Grand Jury Prize",
+    "Film": "Biquefarre",
+    "Director": "Georges Rouquier",
+    "tmdb_id": 146398,
+    "genres": [
+      "Documentary",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1984",
+    "Award": "Grand Jury Prize",
+    "Film": "Favorites of the Moon",
+    "Director": "Otar Iosseliani",
+    "tmdb_id": 47450,
+    "genres": [
+      "Comedy",
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1985",
+    "Award": "Grand Jury Prize",
+    "Film": "Tangos, the Exile of Gardel",
+    "Director": "Fernando E. Solanas",
+    "tmdb_id": 182469,
+    "genres": [
+      "Music",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1986",
+    "Award": "Grand Jury Prize",
+    "Film": "A Tale of Love",
+    "Director": "Francesco Maselli",
+    "tmdb_id": 204130,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": "1986",
+    "Award": "Grand Jury Prize",
+    "Film": "Wild Pigeon",
+    "Director": "Sergei Solovyov",
+    "tmdb_id": 143119,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1987",
+    "Award": "Grand Jury Prize",
+    "Film": "Hip Hip Hurrah!",
+    "Director": "Kjell Grede",
+    "tmdb_id": 128900,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1988",
+    "Award": "Grand Jury Prize",
+    "Film": "Camp de Thiaroye",
+    "Director": "Sembène Ousmane and Thierno Faty Sow",
+    "tmdb_id": 103203,
+    "genres": [
+      "War",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1989",
+    "Award": "Grand Jury Prize",
+    "Film": "And Then There Was Light",
+    "Director": "Otar Iosseliani",
+    "tmdb_id": 203986,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1990",
+    "Award": "Grand Jury Prize",
+    "Film": "An Angel at My Table",
+    "Director": "Jane Campion",
+    "tmdb_id": 2891,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1991",
+    "Award": "Grand Jury Prize",
+    "Film": "The Divine Comedy",
+    "Director": "Manoel de Oliveira",
+    "tmdb_id": 104482,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1992",
+    "Award": "Grand Jury Prize",
+    "Film": "Death of a Neapolitan Mathematician",
+    "Director": "Mario Martone",
+    "tmdb_id": 59577,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": "1993",
+    "Award": "Grand Jury Prize",
+    "Film": "Bad Boy Bubby",
+    "Director": "Rolf De Heer",
+    "tmdb_id": 14135,
+    "genres": [
+      "Crime",
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": "1994",
+    "Award": "Grand Jury Prize",
+    "Film": "Natural Born Killers",
+    "Director": "Oliver Stone",
+    "tmdb_id": 241,
+    "genres": [
+      "Crime",
+      "Thriller",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1995",
+    "Award": "Grand Jury Prize",
+    "Film": "God's Comedy",
+    "Director": "João César Monteiro",
+    "tmdb_id": 49974,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1995",
+    "Award": "Grand Jury Prize",
+    "Film": "The Star Maker",
+    "Director": "Giuseppe Tornatore",
+    "tmdb_id": 37975,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": "1996",
+    "Award": "Grand Jury Prize",
+    "Film": "Brigands",
+    "Director": "Otar Iosseliani",
+    "tmdb_id": 48012,
+    "genres": [
+      "Comedy"
+    ]
+  },
+  {
+    "Year": "1997",
+    "Award": "Grand Jury Prize",
+    "Film": "Ovosodo",
+    "Director": "Paolo Virzì",
+    "tmdb_id": 48254,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1998",
+    "Award": "Grand Jury Prize",
+    "Film": "Next Stop Paradise",
+    "Director": "Lucian Pintilie",
+    "tmdb_id": 123707,
+    "genres": [
+      "Romance",
+      "Crime",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "1999",
+    "Award": "Grand Jury Prize",
+    "Film": "The Wind Will Carry Us",
+    "Director": "Abbas Kiarostami",
+    "tmdb_id": 43423,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2000",
+    "Award": "Grand Jury Prize",
+    "Film": "Before Night Falls",
+    "Director": "Julian Schnabel",
+    "tmdb_id": 5001,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2001",
+    "Award": "Grand Jury Prize",
+    "Film": "Dog Days",
+    "Director": "Ulrich Seidl",
+    "tmdb_id": 9025,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": "2002",
+    "Award": "Grand Jury Prize",
+    "Film": "House of Fools",
+    "Director": "Andrei Konchalovsky",
+    "tmdb_id": 72996,
+    "genres": [
+      "Drama",
+      "Romance",
+      "War"
+    ]
+  },
+  {
+    "Year": "2003",
+    "Award": "Grand Jury Prize",
+    "Film": "The Kite",
+    "Director": "Randa Chahal",
+    "tmdb_id": 44086,
+    "genres": [
+      "Drama",
+      "Romance"
+    ]
+  },
+  {
+    "Year": "2004",
+    "Award": "Grand Jury Prize",
+    "Film": "The Sea Inside",
+    "Director": "Alejandro Amenábar",
+    "tmdb_id": 1913,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2005",
+    "Award": "Grand Jury Prize",
+    "Film": "Mary",
+    "Director": "Abel Ferrara",
+    "tmdb_id": 64942,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2006",
+    "Award": "Grand Jury Prize",
+    "Film": "Dry Season",
+    "Director": "Mahamat-Saleh Haroun",
+    "tmdb_id": 24171,
+    "genres": [
+      "Action",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": "2007",
+    "Award": "Grand Jury Prize",
+    "Film": "I'm Not There",
+    "Director": "Todd Haynes",
+    "tmdb_id": 3902,
+    "genres": [
+      "Drama",
+      "Music"
+    ]
+  },
+  {
+    "Year": "2007",
+    "Award": "Grand Jury Prize",
+    "Film": "The Secret of the Grain",
+    "Director": "Abdellatif Kechiche",
+    "tmdb_id": 8280,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2008",
+    "Award": "Grand Jury Prize",
+    "Film": "Teza",
+    "Director": "Haile Gerima",
+    "tmdb_id": 12427,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2009",
+    "Award": "Grand Jury Prize",
+    "Film": "Soul Kitchen",
+    "Director": "Fatih Akın",
+    "tmdb_id": 31175,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": "2010",
+    "Award": "Grand Jury Prize",
+    "Film": "Essential Killing",
+    "Director": "Jerzy Skolimowski",
+    "tmdb_id": 48243,
+    "genres": [
+      "Thriller",
+      "War"
+    ]
+  },
+  {
+    "Year": "2011",
+    "Award": "Grand Jury Prize",
+    "Film": "Terraferma",
+    "Director": "Emanuele Crialese",
+    "tmdb_id": 73872,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2012",
+    "Award": "Grand Jury Prize",
+    "Film": "Paradise: Faith",
+    "Director": "Ulrich Seidl",
+    "tmdb_id": 129734,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2013",
+    "Award": "Grand Jury Prize",
+    "Film": "Stray Dogs",
+    "Director": "Tsai Ming-liang",
+    "tmdb_id": 209840,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2014",
+    "Award": "Grand Jury Prize",
+    "Film": "The Look of Silence",
+    "Director": "Joshua Oppenheimer",
+    "tmdb_id": 267480,
+    "genres": [
+      "History",
+      "Documentary"
+    ]
+  },
+  {
+    "Year": "2015",
+    "Award": "Grand Jury Prize",
+    "Film": "Anomalisa",
+    "Director": "Charlie Kaufman",
+    "tmdb_id": 291270,
+    "genres": [
+      "Animation",
+      "Drama",
+      "Romance",
+      "Comedy"
+    ]
+  },
+  {
+    "Year": "2016",
+    "Award": "Grand Jury Prize",
+    "Film": "Nocturnal Animals",
+    "Director": "Tom Ford",
+    "tmdb_id": 340666,
+    "genres": [
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": "2017",
+    "Award": "Grand Jury Prize",
+    "Film": "Foxtrot",
+    "Director": "Samuel Maoz",
+    "tmdb_id": 444431,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2018",
+    "Award": "Grand Jury Prize",
+    "Film": "The Favourite",
+    "Director": "Yorgos Lanthimos",
+    "tmdb_id": 375262,
+    "genres": [
+      "History",
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2019",
+    "Award": "Grand Jury Prize",
+    "Film": "An Officer and a Spy",
+    "Director": "Roman Polanski",
+    "tmdb_id": 399121,
+    "genres": [
+      "History",
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": "2020",
+    "Award": "Grand Jury Prize",
+    "Film": "New Order",
+    "Director": "Michel Franco",
+    "tmdb_id": 575446,
+    "genres": [
+      "Drama",
+      "Thriller"
+    ]
+  },
+  {
+    "Year": "2021",
+    "Award": "Grand Jury Prize",
+    "Film": "The Hand of God",
+    "Director": "Paolo Sorrentino",
+    "tmdb_id": 722778,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2022",
+    "Award": "Grand Jury Prize",
+    "Film": "Saint Omer",
+    "Director": "Alice Diop",
+    "tmdb_id": 925943,
+    "genres": [
+      "Drama",
+      "Crime"
+    ]
+  },
+  {
+    "Year": "2023",
+    "Award": "Grand Jury Prize",
+    "Film": "Evil Does Not Exist",
+    "Director": "Ryusuke Hamaguchi",
+    "tmdb_id": 1156125,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2024",
+    "Award": "Grand Jury Prize",
+    "Film": "Vermiglio",
+    "Director": "Maura Delpero",
+    "tmdb_id": 1151244,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2025",
+    "Award": "Grand Jury Prize",
+    "Film": "The Voice of Hind Rajab",
+    "Director": "Kaouther Ben Hania",
+    "tmdb_id": 1480382,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  }
+]

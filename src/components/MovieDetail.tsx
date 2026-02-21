@@ -147,7 +147,7 @@ export default function MovieDetail() {
                 const imageLanguage = getTMDBImageLanguage(i18n.language);
                 const countryCode = getCountryCode(i18n.language);
 
-                const [movieData, logos, cert, providers, kw, creds, altTitles, releases, vids, englishData, englishCreds] = await Promise.all([
+                const [movieData, logos, cert, providers, kw, creds, altTitles, releases, vids, englishData] = await Promise.all([
                     getMovieDetails(id, currentLanguage),
                     getMovieLogos(id, imageLanguage),
                     getMovieCertification(id, countryCode),
@@ -157,8 +157,7 @@ export default function MovieDetail() {
                     getMovieAlternativeTitles(id),
                     getMovieReleaseDates(id),
                     getMovieVideos(id),
-                    getMovieDetails(id, 'en-US'),
-                    getMovieCredits(id, 'en-US')
+                    getMovieDetails(id, 'en-US')
                 ]);
 
                 setMovie(movieData);
@@ -173,31 +172,24 @@ export default function MovieDetail() {
                 setReleaseDates(releases);
                 setVideos(vids);
 
-                const directors = englishCreds.crew
-                    .filter(c => c.job === 'Director')
-                    .map(c => c.name);
-
                 // Get TSPDT ranking
-                const releaseYear = movieData.release_date ? new Date(movieData.release_date).getFullYear() : 0;
-                const tspdtRanking = getTSPDTRanking(englishData.title, releaseYear, movieData.original_title, directors);
+                const tspdtRanking = getTSPDTRanking(movieData.id);
                 setTspdtRank(tspdtRanking);
 
                 // Get TSPDT 21st Century ranking
-                const tspdt21stRanking = getTSPDT21stRanking(englishData.title, releaseYear, movieData.original_title, directors);
+                const tspdt21stRanking = getTSPDT21stRanking(movieData.id);
                 setTspdt21stRank(tspdt21stRanking);
 
                 // Get Sight and Sound ranking
-                if (movieData.imdb_id) {
-                    const sightAndSoundRanking = getSightAndSoundRanking(movieData.imdb_id);
-                    setSightAndSoundRank(sightAndSoundRanking);
-                    
-                    // Get AFI ranking
-                    const afiRanking = getAFIRanking(movieData.imdb_id);
-                    setAfiRank(afiRanking);
-                }
+                const sightAndSoundRanking = getSightAndSoundRanking(movieData.id);
+                setSightAndSoundRank(sightAndSoundRanking);
+                
+                // Get AFI ranking
+                const afiRanking = getAFIRanking(movieData.id);
+                setAfiRank(afiRanking);
                 
                 // Get Cahiers du Cinéma ranking
-                const cahiersRanking = getCahiersRanking(englishData.title, movieData.original_title, directors);
+                const cahiersRanking = getCahiersRanking(movieData.id);
                 setCahiersRank(cahiersRanking);
 
                 if (movieData.imdb_id) {
