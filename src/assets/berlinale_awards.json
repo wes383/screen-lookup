@@ -2071,5 +2071,36 @@
     "genres": [
       "Comedy"
     ]
+  },
+  {
+    "Year": "2026",
+    "Award": "Golden Bear - Best Film",
+    "Film": "Yellow Letters",
+    "Director": "İlker Çatak",
+    "tmdb_id": 1315657,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": "2026",
+    "Award": "Silver Bear Grand Jury Prize",
+    "Film": "Salvation",
+    "Director": "Emin Alper",
+    "tmdb_id": 1401106,
+    "genres": [
+      "Drama",
+      "Mystery"
+    ]
+  },
+  {
+    "Year": "2026",
+    "Award": "Silver Bear Jury Prize",
+    "Film": "Queen at Sea",
+    "Director": "Lance Hammer",
+    "tmdb_id": 1021848,
+    "genres": [
+      "Drama"
+    ]
   }
 ]
