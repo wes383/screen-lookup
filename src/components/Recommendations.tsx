@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowUp } from 'lucide-react';
 
 import tspdtData from '../assets/tspdt-1000-greatest-films-2026.json';
 import tspdt21stData from '../assets/tspdt-21st-centurys-top-1000.json';
@@ -92,6 +93,27 @@ export default function Recommendations() {
     const sortDropdownRef = useRef<HTMLDivElement>(null);
     const [filteredMovies, setFilteredMovies] = useState<MovieItem[]>([]);
     const [displayCount, setDisplayCount] = useState(50);
+    const [showBackToTop, setShowBackToTop] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 300) {
+                setShowBackToTop(true);
+            } else {
+                setShowBackToTop(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -752,6 +774,36 @@ export default function Recommendations() {
                     )}
                 </div>
             </div>
+
+            {/* Back to Top Button */}
+            {showBackToTop && (
+                <button
+                    onClick={scrollToTop}
+                    style={{
+                        position: 'fixed',
+                        bottom: '30px',
+                        right: '30px',
+                        backgroundColor: '#fff',
+                        color: '#000',
+                        border: 'none',
+                        borderRadius: '50%',
+                        width: '50px',
+                        height: '50px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                        zIndex: 100,
+                        transition: 'all 0.3s ease',
+                        opacity: showBackToTop ? 1 : 0,
+                        transform: showBackToTop ? 'translateY(0)' : 'translateY(20px)'
+                    }}
+                    aria-label="Back to top"
+                >
+                    <ArrowUp size={24} />
+                </button>
+            )}
         </div>
     );
 }

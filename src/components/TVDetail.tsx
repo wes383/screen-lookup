@@ -397,7 +397,7 @@ export default function TVDetail() {
                         </>
                     )}
                     <span>•</span>
-                    <span>{tv.genres.map(g => g.name).join(', ')}</span>
+                    <span>{tv.genres.map(g => t(`common.genreNames.${g.id}`, g.name)).join(', ')}</span>
                 </div>
 
                 <div style={{ maxWidth: '800px' }}>

@@ -669,6 +669,52 @@ export const searchMulti = async (query: string, language: string = 'en-US', pag
     }
 };
 
+export interface Genre {
+    id: number;
+    name: string;
+}
+
+export const getGenres = async (type: 'movie' | 'tv', language: string = 'en-US'): Promise<Genre[]> => {
+    const url = buildApiUrl(`genre/${type}/list`, { language });
+    try {
+        const response = await fetch(url);
+        if (!response.ok) return [];
+        const data = await response.json();
+        return data.genres || [];
+    } catch {
+        return [];
+    }
+};
+
+export const discoverMedia = async (
+    type: 'movie' | 'tv',
+    params: Record<string, string>,
+    language: string = 'en-US',
+    page: number = 1
+): Promise<SearchResponse> => {
+    const queryParams = {
+        ...params,
+        language,
+        page: page.toString(),
+        include_adult: 'false',
+        include_video: 'false'
+    };
+
+    const url = buildApiUrl(`discover/${type}`, queryParams);
+    
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Discover failed');
+        const data = await response.json();
+        return {
+            ...data,
+            results: data.results.map((m: any) => ({ ...m, media_type: type }))
+        };
+    } catch {
+        return { page: 1, results: [], total_pages: 0, total_results: 0 };
+    }
+};
+
 // IMDb Rating Types
 export interface IMDbRating {
     aggregateRating: number;
@@ -724,5 +770,185 @@ export const findByImdbId = async (imdbId: string): Promise<{ type: 'movie' | 't
         return { type: null, id: null };
     } catch {
         return { type: null, id: null };
+    }
+};
+
+// Movie Lists
+export const getNowPlayingMovies = async (language: string = 'en-US', page: number = 1, region?: string): Promise<SearchResponse> => {
+    const params: Record<string, string> = { language, page: page.toString() };
+    if (region) params.region = region;
+    
+    const url = buildApiUrl('movie/now_playing', params);
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch now playing movies');
+        const data = await response.json();
+        return {
+            ...data,
+            results: data.results.map((m: any) => ({ ...m, media_type: 'movie' }))
+        };
+    } catch {
+        return { page: 1, results: [], total_pages: 0, total_results: 0 };
+    }
+};
+
+export const getPopularMovies = async (language: string = 'en-US', page: number = 1, region?: string): Promise<SearchResponse> => {
+    const params: Record<string, string> = { language, page: page.toString() };
+    if (region) params.region = region;
+
+    const url = buildApiUrl('movie/popular', params);
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch popular movies');
+        const data = await response.json();
+        return {
+            ...data,
+            results: data.results.map((m: any) => ({ ...m, media_type: 'movie' }))
+        };
+    } catch {
+        return { page: 1, results: [], total_pages: 0, total_results: 0 };
+    }
+};
+
+export const getTopRatedMovies = async (language: string = 'en-US', page: number = 1, region?: string): Promise<SearchResponse> => {
+    const params: Record<string, string> = { language, page: page.toString() };
+    if (region) params.region = region;
+
+    const url = buildApiUrl('movie/top_rated', params);
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch top rated movies');
+        const data = await response.json();
+        return {
+            ...data,
+            results: data.results.map((m: any) => ({ ...m, media_type: 'movie' }))
+        };
+    } catch {
+        return { page: 1, results: [], total_pages: 0, total_results: 0 };
+    }
+};
+
+export const getUpcomingMovies = async (language: string = 'en-US', page: number = 1, region?: string): Promise<SearchResponse> => {
+    const params: Record<string, string> = { language, page: page.toString() };
+    if (region) params.region = region;
+
+    const url = buildApiUrl('movie/upcoming', params);
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch upcoming movies');
+        const data = await response.json();
+        return {
+            ...data,
+            results: data.results.map((m: any) => ({ ...m, media_type: 'movie' }))
+        };
+    } catch {
+        return { page: 1, results: [], total_pages: 0, total_results: 0 };
+    }
+};
+
+// TV Lists
+export const getAiringTodayTV = async (language: string = 'en-US', page: number = 1, timezone?: string): Promise<SearchResponse> => {
+    const params: Record<string, string> = { language, page: page.toString() };
+    if (timezone) params.timezone = timezone;
+
+    const url = buildApiUrl('tv/airing_today', params);
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch airing today TV shows');
+        const data = await response.json();
+        return {
+            ...data,
+            results: data.results.map((m: any) => ({ ...m, media_type: 'tv' }))
+        };
+    } catch {
+        return { page: 1, results: [], total_pages: 0, total_results: 0 };
+    }
+};
+
+export const getOnTheAirTV = async (language: string = 'en-US', page: number = 1, timezone?: string): Promise<SearchResponse> => {
+    const params: Record<string, string> = { language, page: page.toString() };
+    if (timezone) params.timezone = timezone;
+
+    const url = buildApiUrl('tv/on_the_air', params);
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch on the air TV shows');
+        const data = await response.json();
+        return {
+            ...data,
+            results: data.results.map((m: any) => ({ ...m, media_type: 'tv' }))
+        };
+    } catch {
+        return { page: 1, results: [], total_pages: 0, total_results: 0 };
+    }
+};
+
+export const getPopularTV = async (language: string = 'en-US', page: number = 1): Promise<SearchResponse> => {
+    const params: Record<string, string> = { language, page: page.toString() };
+
+    const url = buildApiUrl('tv/popular', params);
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch popular TV shows');
+        const data = await response.json();
+        return {
+            ...data,
+            results: data.results.map((m: any) => ({ ...m, media_type: 'tv' }))
+        };
+    } catch {
+        return { page: 1, results: [], total_pages: 0, total_results: 0 };
+    }
+};
+
+export const getTopRatedTV = async (language: string = 'en-US', page: number = 1): Promise<SearchResponse> => {
+    const params: Record<string, string> = { language, page: page.toString() };
+
+    const url = buildApiUrl('tv/top_rated', params);
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch top rated TV shows');
+        const data = await response.json();
+        return {
+            ...data,
+            results: data.results.map((m: any) => ({ ...m, media_type: 'tv' }))
+        };
+    } catch {
+        return { page: 1, results: [], total_pages: 0, total_results: 0 };
+    }
+};
+
+export const getPopularPeople = async (language: string = 'en-US', page: number = 1): Promise<SearchResponse> => {
+    const params: Record<string, string> = { language, page: page.toString() };
+    const url = buildApiUrl('person/popular', params);
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch popular people');
+        const data = await response.json();
+        return {
+            ...data,
+            results: data.results.map((m: any) => ({ ...m, media_type: 'person' }))
+        };
+    } catch {
+        return { page: 1, results: [], total_pages: 0, total_results: 0 };
+    }
+};
+
+export const getTrending = async (
+    mediaType: 'all' | 'movie' | 'tv' | 'person', 
+    timeWindow: 'day' | 'week' = 'week', 
+    language: string = 'en-US', 
+    page: number = 1
+): Promise<SearchResponse> => {
+    const url = buildApiUrl(`trending/${mediaType}/${timeWindow}`, { 
+        language,
+        page: page.toString()
+    });
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch trending');
+        return response.json();
+    } catch {
+        return { page: 1, results: [], total_pages: 0, total_results: 0 };
     }
 };

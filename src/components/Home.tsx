@@ -483,8 +483,37 @@ export default function Home() {
                     bottom: '40px',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    zIndex: 10
+                    zIndex: 10,
+                    display: 'flex',
+                    gap: '16px'
                 }}>
+                    <button
+                        onClick={() => navigate('/discover')}
+                        style={{
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            border: 'none',
+                            borderRadius: '30px',
+                            padding: '12px 32px',
+                            color: '#fff',
+                            fontSize: '18px',
+                            fontWeight: '500',
+                            fontFamily: 'Inter, sans-serif',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                            backdropFilter: 'blur(10px)'
+                        }}
+                        onMouseEnter={e => {
+                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                            e.currentTarget.style.transform = 'scale(1.05)';
+                        }}
+                        onMouseLeave={e => {
+                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                            e.currentTarget.style.transform = 'scale(1)';
+                        }}
+                    >
+                        {t('common.discover', 'Discover')}
+                    </button>
+
                     <button
                         onClick={() => navigate('/lists')}
                         style={{

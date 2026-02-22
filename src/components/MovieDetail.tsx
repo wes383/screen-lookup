@@ -393,7 +393,7 @@ export default function MovieDetail() {
                     <span>•</span>
                     <span>{movie.runtime >= 60 ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m` : `${movie.runtime}m`}</span>
                     <span>•</span>
-                    <span>{movie.genres.map(g => g.name).join(', ')}</span>
+                    <span>{movie.genres.map(g => t(`common.genreNames.${g.id}`, g.name)).join(', ')}</span>
                 </div>
 
                 <div style={{ maxWidth: '800px' }}>
