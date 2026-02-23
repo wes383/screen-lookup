@@ -24,6 +24,7 @@ interface ListItem {
     Award?: string;
     Director?: string;
     Film?: string;
+    name?: string;
 }
 
 const getAwardImportance = (award: string | undefined, type: string | undefined): number => {
@@ -31,7 +32,7 @@ const getAwardImportance = (award: string | undefined, type: string | undefined)
     const awardLower = award.toLowerCase();
 
     if (type === 'oscar') {
-        if (awardLower.includes('outstanding picture') || awardLower.includes('unique and artistic picture') || awardLower.includes('best picture') || awardLower.includes('best motion picture')) return 1;
+        if (awardLower.includes('outstanding picture') || awardLower.includes('outstanding production') || awardLower.includes('unique and artistic picture') || awardLower.includes('best picture') || awardLower.includes('best motion picture')) return 1;
         if (awardLower.includes('directing') || awardLower.includes('director')) return 2;
         if (awardLower.includes('actor') && !awardLower.includes('supporting')) return 3;
         if (awardLower.includes('actress') && !awardLower.includes('supporting')) return 4;
@@ -143,14 +144,34 @@ export default function ListDetail() {
                 setIsAscending(false);
                 break;
             case 'oscar':
-                data = oscarData.map(item => ({
-                    ...item,
-                    title: item.Film,
-                    year: item.Year,
-                    rankingYear: item.Year
-                })).sort((a, b) => {
-                    const yearA = parseInt(String(a.Year).split('/')[0]);
-                    const yearB = parseInt(String(b.Year).split('/')[0]);
+                data = oscarData.map(item => {
+                    const yearParts = String(item.Year).split('/');
+                    let baseYear;
+                    
+                    if (yearParts.length > 1) {
+                        const firstPart = yearParts[0];
+                        const secondPart = yearParts[1];
+                        if (secondPart.length === 2) {
+                            baseYear = parseInt(firstPart.substring(0, 2) + secondPart);
+                        } else {
+                            baseYear = parseInt(secondPart);
+                        }
+                    } else {
+                        baseYear = parseInt(yearParts[0]);
+                    }
+
+                    const displayYear = String(baseYear + 1);
+                    
+                    return {
+                        ...item,
+                        title: item.Film,
+                        year: item.Year,
+                        rankingYear: displayYear,
+                        name: item.name
+                    };
+                }).sort((a, b) => {
+                    const yearA = parseInt(String(a.rankingYear));
+                    const yearB = parseInt(String(b.rankingYear));
                     if (yearA !== yearB) return yearB - yearA;
                     return getAwardImportance(a.Award, 'oscar') - getAwardImportance(b.Award, 'oscar');
                 });
@@ -245,7 +266,7 @@ export default function ListDetail() {
     };
 
     const handleJumpToRank = (targetRank: number) => {
-        if (type !== 'tspdt' && type !== 'tspdt21st') return;
+        if (type !== 'tspdt' && type !== 'tspdt21st' && type !== 'sightandsound') return;
         
         let targetIndex = -1;
         
@@ -261,7 +282,7 @@ export default function ListDetail() {
             }
 
             setTimeout(() => {
-                const element = document.getElementById(`rank-${targetRank}`);
+                const element = document.getElementById(`rank-${listData[targetIndex].rank}`);
                 if (element) {
                     const rect = element.getBoundingClientRect();
                     window.scrollTo({
@@ -270,6 +291,25 @@ export default function ListDetail() {
                     });
                 }
             }, 100);
+        } else if (type === 'sightandsound') {
+            // Find the closest rank
+            const closestIndex = listData.findIndex(item => Number(item.rank) >= targetRank);
+            if (closestIndex !== -1) {
+                if (displayCount <= closestIndex) {
+                    setDisplayCount(closestIndex + 50);
+                }
+
+                setTimeout(() => {
+                    const element = document.getElementById(`rank-${listData[closestIndex].rank}`);
+                    if (element) {
+                        const rect = element.getBoundingClientRect();
+                        window.scrollTo({
+                            top: window.scrollY + rect.top - 20,
+                            behavior: 'smooth'
+                        });
+                    }
+                }, 100);
+            }
         }
     };
 
@@ -304,6 +344,8 @@ export default function ListDetail() {
 
     useEffect(() => {
         const handleScroll = () => {
+            if (listData.length === 0) return;
+            
             if (
                 window.innerHeight + document.documentElement.scrollTop
                 >= document.documentElement.offsetHeight - 200
@@ -383,6 +425,35 @@ export default function ListDetail() {
                         gap: '8px'
                     }}>
                         {(type === 'tspdt' || type === 'tspdt21st') && [100, 200, 300, 400, 500, 600, 700, 800, 900].map(rank => (
+                            <button
+                                key={rank}
+                                onClick={() => handleJumpToRank(rank)}
+                                style={{
+                                    backgroundColor: '#2a2a2a',
+                                    border: '1px solid #333',
+                                    borderRadius: '16px',
+                                    padding: '8px 16px',
+                                    color: '#ccc',
+                                    fontSize: '14px',
+                                    fontFamily: 'Inter, sans-serif',
+                                    fontWeight: 500,
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s'
+                                }}
+                                onMouseEnter={e => {
+                                    e.currentTarget.style.backgroundColor = '#3a3a3a';
+                                    e.currentTarget.style.color = '#fff';
+                                }}
+                                onMouseLeave={e => {
+                                    e.currentTarget.style.backgroundColor = '#2a2a2a';
+                                    e.currentTarget.style.color = '#ccc';
+                                }}
+                            >
+                                #{rank}
+                            </button>
+                        ))}
+
+                        {type === 'sightandsound' && [50, 100, 150, 200].map(rank => (
                             <button
                                 key={rank}
                                 onClick={() => handleJumpToRank(rank)}
@@ -551,6 +622,7 @@ export default function ListDetail() {
                                     
                                     <div style={{ flex: 1 }}>
                                         <div style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '4px' }}>
+                                            {item.name && <span>{item.name} - </span>}
                                             {formatTitle(item.title)}
                                         </div>
                                         
