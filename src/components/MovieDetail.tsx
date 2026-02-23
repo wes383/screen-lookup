@@ -593,17 +593,17 @@ export default function MovieDetail() {
                                     },
                                     'cahiers': {
                                         'en': `on Cahiers du Cinéma\n${year} Top 10`,
-                                        'zh-CN': `电影手册\n${year}年十佳`,
-                                        'zh-TW': `電影筆記\n${year}年十佳`,
-                                        'zh-HK': `電影筆記\n${year}年十佳`,
-                                        'ja': `カイエ・デュ・シネマ\n${year}年トップ10`,
-                                        'ko': `카이에 뒤 시네마\n${year}년 톱 10`,
+                                        'zh-CN': year?.endsWith('s') ? `电影手册\n${year.slice(0, -1)}年代十佳` : `电影手册\n${year}年十佳`,
+                                        'zh-TW': year?.endsWith('s') ? `電影筆記\n${year.slice(0, -1)}年代十佳` : `電影筆記\n${year}年十佳`,
+                                        'zh-HK': year?.endsWith('s') ? `電影筆記\n${year.slice(0, -1)}年代十佳` : `電影筆記\n${year}年十佳`,
+                                        'ja': year?.endsWith('s') ? `カイエ・デュ・シネマ\n${year.slice(0, -1)}年代トップ10` : `カイエ・デュ・シネマ\n${year}年トップ10`,
+                                        'ko': year?.endsWith('s') ? `카이에 뒤 시네마\n${year.slice(0, -1)}년대 톱 10` : `카이에 뒤 시네마\n${year}년 톱 10`,
                                         'es': `en Cahiers du Cinéma\nTop 10 de ${year}`,
                                         'fr': `sur Cahiers du Cinéma\nTop 10 ${year}`,
                                         'de': `auf Cahiers du Cinéma\nTop 10 ${year}`,
                                         'it': `su Cahiers du Cinéma\nTop 10 ${year}`,
                                         'pt': `em Cahiers du Cinéma\nTop 10 de ${year}`,
-                                        'ru': `в Cahiers du Cinéma\nТоп-10 ${year}`,
+                                        'ru': year?.endsWith('s') ? `в Cahiers du Cinéma\nТоп-10 ${year.slice(0, -1)}-х` : `в Cahiers du Cinéma\nТоп-10 ${year}`,
                                         'tr': `Cahiers du Cinéma\n${year} En İyi 10`
                                     }
                                 };
