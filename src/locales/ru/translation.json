@@ -275,7 +275,12 @@
     "inProduction": "В производстве",
     "postProduction": "Постпродакшн",
     "released": "Вышел",
-    "canceled": "Отменён"
+    "canceled": "Отменён",
+    "awards": "Награды",
+    "festivalOscar": "Премия «Оскар»",
+    "festivalCannes": "Каннский кинофестиваль",
+    "festivalVenice": "Венецианский кинофестиваль",
+    "festivalBerlinale": "Берлинский международный кинофестиваль"
   },
   "tv": {
     "notFound": "Сериал не найден",

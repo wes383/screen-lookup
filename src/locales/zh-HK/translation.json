@@ -407,7 +407,12 @@
     "inProduction": "製作中",
     "postProduction": "後期製作",
     "released": "已上映",
-    "canceled": "已取消"
+    "canceled": "已取消",
+    "awards": "獲獎資訊",
+    "festivalOscar": "奧斯卡金像獎",
+    "festivalCannes": "康城影展",
+    "festivalVenice": "威尼斯影展",
+    "festivalBerlinale": "柏林國際影展"
   },
   "tv": {
     "notFound": "未找到劇集",

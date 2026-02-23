@@ -394,7 +394,12 @@
     "inProduction": "Yapım Aşamasında",
     "postProduction": "Post Prodüksiyon",
     "released": "Yayınlandı",
-    "canceled": "İptal Edildi"
+    "canceled": "İptal Edildi",
+    "awards": "Ödüller",
+    "festivalOscar": "Oscar Ödülleri",
+    "festivalCannes": "Cannes Film Festivali",
+    "festivalVenice": "Venedik Film Festivali",
+    "festivalBerlinale": "Berlin Uluslararası Film Festivali"
   },
   "tv": {
     "notFound": "Dizi bulunamadı",

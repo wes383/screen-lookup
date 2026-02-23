@@ -275,7 +275,12 @@
     "inProduction": "제작 중",
     "postProduction": "후반 작업",
     "released": "개봉됨",
-    "canceled": "취소됨"
+    "canceled": "취소됨",
+    "awards": "수상 내역",
+    "festivalOscar": "아카데미 시상식",
+    "festivalCannes": "칸 영화제",
+    "festivalVenice": "베니스 영화제",
+    "festivalBerlinale": "베를린 국제 영화제"
   },
   "tv": {
     "notFound": "TV 프로그램을 찾을 수 없습니다",

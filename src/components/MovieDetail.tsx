@@ -10,6 +10,8 @@ import { getSightAndSoundRanking } from '../utils/sightAndSoundRanking';
 import { getAFIRanking } from '../utils/afiRanking';
 import { getCahiersRanking } from '../utils/cahiersRanking';
 import { getTMDBLanguage, getTMDBImageLanguage, getCountryCode, getDateLocale } from '../utils/languageMapper';
+import { getMovieAwards, type Award } from '../utils/awardsInfo';
+import { translateAward } from '../utils/awardTranslations';
 
 export default function MovieDetail() {
     const { t, i18n } = useTranslation();
@@ -80,6 +82,7 @@ export default function MovieDetail() {
     const [sightAndSoundRank, setSightAndSoundRank] = useState<number | null>(null);
     const [afiRank, setAfiRank] = useState<number | null>(null);
     const [cahiersRank, setCahiersRank] = useState<{ rank: number; year: string } | null>(null);
+    const [awards, setAwards] = useState<Award[]>([]);
 
     useEffect(() => {
         setIsLoading(true);
@@ -191,6 +194,10 @@ export default function MovieDetail() {
                 // Get Cahiers du Cinéma ranking
                 const cahiersRanking = getCahiersRanking(movieData.id);
                 setCahiersRank(cahiersRanking);
+
+                // Get awards information
+                const movieAwards = getMovieAwards(movieData.id);
+                setAwards(movieAwards);
 
                 if (movieData.imdb_id) {
                     getIMDbRating(movieData.imdb_id).then(rating => {
@@ -430,14 +437,15 @@ export default function MovieDetail() {
 
                 {(movie.vote_average > 0 || imdbRating || tspdtRank || tspdt21stRank || sightAndSoundRank || afiRank) && (
                     <div style={{
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: isMobile ? '12px' : '24px',
+                        display: isMobile ? 'flex' : 'grid',
+                        gridTemplateColumns: isMobile ? 'auto' : 'auto 1fr',
+                        alignItems: isMobile ? 'flex-start' : 'center',
+                        gap: isMobile ? '12px' : '32px',
                         marginBottom: isMobile ? '20px' : '24px',
                         flexWrap: 'wrap',
-                        flexDirection: 'column'
+                        flexDirection: isMobile ? 'column' : 'row'
                     }}>
-                        {/* Ratings row */}
+                        {/* Ratings column */}
                         {(movie.vote_average > 0 || imdbRating) && (
                             <div style={{
                                 display: 'flex',
@@ -517,25 +525,138 @@ export default function MovieDetail() {
                                 )}
                             </div>
                         )}
-                        {/* Rankings - each on separate line on mobile */}
+                        
+                        {/* Rankings column */}
                         {(() => {
+                            // Translate ranking labels
+                            const getRankingLabel = (name: string, year?: string) => {
+                                const labels: { [key: string]: { [lang: string]: string } } = {
+                                    'afi': {
+                                        'en': "on AFI's 100 Years...\n100 Movies",
+                                        'zh-CN': 'AFI百年百大电影',
+                                        'zh-TW': 'AFI百年百大電影',
+                                        'zh-HK': 'AFI百年百大電影',
+                                        'ja': 'AFI アメリカ映画100年\nベスト100',
+                                        'ko': 'AFI 100년 100대 영화',
+                                        'es': 'en AFI 100 Años...\n100 Películas',
+                                        'fr': 'sur AFI 100 Ans...\n100 Films',
+                                        'de': 'auf AFI 100 Jahre...\n100 Filme',
+                                        'it': 'su AFI 100 Anni...\n100 Film',
+                                        'pt': 'em AFI 100 Anos...\n100 Filmes',
+                                        'ru': 'в AFI 100 лет...\n100 фильмов',
+                                        'tr': 'AFI 100 Yıl...\n100 Film'
+                                    },
+                                    'sightandsound': {
+                                        'en': 'on The Sight and Sound\nGreatest Films of All Time',
+                                        'zh-CN': 'Sight and Sound\n史上最伟大电影',
+                                        'zh-TW': 'Sight and Sound\n史上最偉大電影',
+                                        'zh-HK': 'Sight and Sound\n史上最偉大電影',
+                                        'ja': 'サイト&サウンド\n史上最高の映画',
+                                        'ko': 'Sight and Sound\n역대 최고의 영화',
+                                        'es': 'en Sight and Sound\nMejores Películas',
+                                        'fr': 'sur Sight and Sound\nMeilleurs Films',
+                                        'de': 'auf Sight and Sound\nBeste Filme',
+                                        'it': 'su Sight and Sound\nMigliori Film',
+                                        'pt': 'em Sight and Sound\nMelhores Filmes',
+                                        'ru': 'в Sight and Sound\nЛучшие фильмы',
+                                        'tr': 'Sight and Sound\nEn İyi Filmler'
+                                    },
+                                    'tspdt': {
+                                        'en': 'on TSPDT 1000\nGreatest Films',
+                                        'zh-CN': 'TSPDT 1000\n最伟大电影',
+                                        'zh-TW': 'TSPDT 1000\n最偉大電影',
+                                        'zh-HK': 'TSPDT 1000\n最偉大電影',
+                                        'ja': 'TSPDT 1000\n最高の映画',
+                                        'ko': 'TSPDT 1000\n최고의 영화',
+                                        'es': 'en TSPDT 1000\nMejores Películas',
+                                        'fr': 'sur TSPDT 1000\nMeilleurs Films',
+                                        'de': 'auf TSPDT 1000\nBeste Filme',
+                                        'it': 'su TSPDT 1000\nMigliori Film',
+                                        'pt': 'em TSPDT 1000\nMelhores Filmes',
+                                        'ru': 'в TSPDT 1000\nЛучших фильмов',
+                                        'tr': 'TSPDT 1000\nEn İyi Film'
+                                    },
+                                    'tspdt21st': {
+                                        'en': "on TSPDT 21st Century's\n1000 Most Acclaimed Films",
+                                        'zh-CN': 'TSPDT 21世纪\n1000部最受好评电影',
+                                        'zh-TW': 'TSPDT 21世紀\n1000部最受好評電影',
+                                        'zh-HK': 'TSPDT 21世紀\n1000部最受好評電影',
+                                        'ja': 'TSPDT 21世紀\n最も評価された1000本',
+                                        'ko': 'TSPDT 21세기\n가장 호평받은 1000편',
+                                        'es': 'en TSPDT Siglo XXI\n1000 Películas Aclamadas',
+                                        'fr': 'sur TSPDT 21e Siècle\n1000 Films Acclamés',
+                                        'de': 'auf TSPDT 21. Jahrhundert\n1000 Gefeierte Filme',
+                                        'it': 'su TSPDT XXI Secolo\n1000 Film Acclamati',
+                                        'pt': 'em TSPDT Século XXI\n1000 Filmes Aclamados',
+                                        'ru': 'в TSPDT XXI век\n1000 признанных фильмов',
+                                        'tr': 'TSPDT 21. Yüzyıl\n1000 Beğenilen Film'
+                                    },
+                                    'cahiers': {
+                                        'en': `on Cahiers du Cinéma\n${year} Top 10`,
+                                        'zh-CN': `电影手册\n${year}年十佳`,
+                                        'zh-TW': `電影筆記\n${year}年十佳`,
+                                        'zh-HK': `電影筆記\n${year}年十佳`,
+                                        'ja': `カイエ・デュ・シネマ\n${year}年トップ10`,
+                                        'ko': `카이에 뒤 시네마\n${year}년 톱 10`,
+                                        'es': `en Cahiers du Cinéma\nTop 10 de ${year}`,
+                                        'fr': `sur Cahiers du Cinéma\nTop 10 ${year}`,
+                                        'de': `auf Cahiers du Cinéma\nTop 10 ${year}`,
+                                        'it': `su Cahiers du Cinéma\nTop 10 ${year}`,
+                                        'pt': `em Cahiers du Cinéma\nTop 10 de ${year}`,
+                                        'ru': `в Cahiers du Cinéma\nТоп-10 ${year}`,
+                                        'tr': `Cahiers du Cinéma\n${year} En İyi 10`
+                                    }
+                                };
+                                
+                                const langMap: { [key: string]: string } = {
+                                    'zh-CN': 'zh-CN',
+                                    'zh-TW': 'zh-TW',
+                                    'zh-HK': 'zh-HK',
+                                    'en-US': 'en',
+                                    'en': 'en',
+                                    'ja': 'ja',
+                                    'ja-JP': 'ja',
+                                    'ko': 'ko',
+                                    'ko-KR': 'ko',
+                                    'es': 'es',
+                                    'es-ES': 'es',
+                                    'es-MX': 'es',
+                                    'fr': 'fr',
+                                    'fr-FR': 'fr',
+                                    'de': 'de',
+                                    'de-DE': 'de',
+                                    'it': 'it',
+                                    'it-IT': 'it',
+                                    'pt': 'pt',
+                                    'pt-PT': 'pt',
+                                    'pt-BR': 'pt',
+                                    'ru': 'ru',
+                                    'ru-RU': 'ru',
+                                    'tr': 'tr',
+                                    'tr-TR': 'tr'
+                                };
+                                
+                                const lang = langMap[i18n.language] || 'en';
+                                return labels[name]?.[lang] || labels[name]?.['en'] || '';
+                            };
+                            
                             // Create array of rankings and sort by rank number
                             const rankings = [];
                             if (afiRank) {
-                                rankings.push({ rank: afiRank, name: 'afi', label: "on AFI's 100 Years...\n100 Movies" });
+                                rankings.push({ rank: afiRank, name: 'afi', label: getRankingLabel('afi') });
                             }
                             if (sightAndSoundRank) {
-                                rankings.push({ rank: sightAndSoundRank, name: 'sightandsound', label: 'on The Sight and Sound\nGreatest Films of All Time' });
+                                rankings.push({ rank: sightAndSoundRank, name: 'sightandsound', label: getRankingLabel('sightandsound') });
                             }
                             if (tspdtRank) {
-                                rankings.push({ rank: tspdtRank, name: 'tspdt', label: 'on TSPDT 1000\nGreatest Films' });
+                                rankings.push({ rank: tspdtRank, name: 'tspdt', label: getRankingLabel('tspdt') });
                             }
                             // Only show TSPDT 21st Century if not in TSPDT 1000
                             if (tspdt21stRank && !tspdtRank) {
-                                rankings.push({ rank: tspdt21stRank, name: 'tspdt21st', label: "on TSPDT 21st Century's\n1000 Most Acclaimed Films" });
+                                rankings.push({ rank: tspdt21stRank, name: 'tspdt21st', label: getRankingLabel('tspdt21st') });
                             }
                             if (cahiersRank) {
-                                rankings.push({ rank: cahiersRank.rank, name: 'cahiers', label: `on Cahiers du Cinéma\n${cahiersRank.year} Top 10` });
+                                rankings.push({ rank: cahiersRank.rank, name: 'cahiers', label: getRankingLabel('cahiers', cahiersRank.year) });
                             }
                             
                             // Sort by rank number (ascending)
@@ -606,8 +727,59 @@ export default function MovieDetail() {
                     </div>
                 )}
 
+                {/* Awards */}
+                {awards.length > 0 && (
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: isMobile ? '16px' : '20px',
+                        alignItems: 'flex-start',
+                        marginBottom: isMobile ? '20px' : '24px'
+                    }}>
+                        {(() => {
+                            const groupedAwards: { [key: string]: string[] } = {};
+                            awards.forEach(award => {
+                                if (!groupedAwards[award.festival]) {
+                                    groupedAwards[award.festival] = [];
+                                }
+                                groupedAwards[award.festival].push(award.award);
+                            });
+
+                            return Object.entries(groupedAwards).map(([festival, awardsList], index) => (
+                                <div key={index} style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '8px'
+                                }}>
+                                    <span style={{
+                                        fontSize: isMobile ? '14px' : '16px',
+                                        color: '#999',
+                                        fontWeight: 600,
+                                        textAlign: 'left'
+                                    }}>
+                                        {festival === 'Oscar' && t('movie.festivalOscar')}
+                                        {festival === 'Cannes' && t('movie.festivalCannes')}
+                                        {festival === 'Venice' && t('movie.festivalVenice')}
+                                        {festival === 'Berlinale' && t('movie.festivalBerlinale')}
+                                    </span>
+                                    <span style={{
+                                        fontSize: isMobile ? '14px' : '16px',
+                                        color: '#fff',
+                                        fontWeight: 600,
+                                        textAlign: 'left',
+                                        lineHeight: 1.4,
+                                        whiteSpace: 'pre-wrap'
+                                    }}>
+                                        {awardsList.map(award => translateAward(award, i18n.language)).join('   •   ')}
+                                    </span>
+                                </div>
+                            ));
+                        })()}
+                    </div>
+                )}
+
                 {/* External Links */}
-                <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', gap: '16px', marginTop: '32px', marginBottom: '24px', flexWrap: 'wrap' }}>
                     {movie.homepage && (
                         <a
                             href={movie.homepage}

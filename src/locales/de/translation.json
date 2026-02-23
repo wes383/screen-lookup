@@ -275,7 +275,12 @@
     "inProduction": "In Produktion",
     "postProduction": "Postproduktion",
     "released": "Veröffentlicht",
-    "canceled": "Abgesagt"
+    "canceled": "Abgesagt",
+    "awards": "Auszeichnungen",
+    "festivalOscar": "Academy Awards",
+    "festivalCannes": "Filmfestspiele von Cannes",
+    "festivalVenice": "Filmfestspiele von Venedig",
+    "festivalBerlinale": "Internationale Filmfestspiele Berlin"
   },
   "tv": {
     "notFound": "TV-Serie nicht gefunden",
