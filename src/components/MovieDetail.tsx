@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getMovieDetails, getMovieLogos, getMovieCertification, getWatchProviders, getMovieKeywords, getMovieCredits, getMovieAlternativeTitles, getMovieReleaseDates, getMovieVideos, getImageUrl, getIMDbRating, type MovieDetails, type MovieLogo, type WatchProviderData, type Keyword, type MovieCredits, type AlternativeTitle, type CountryReleaseDates, type MovieVideo } from '../services/tmdb';
-import { X, User } from 'lucide-react';
+import { getMovieDetails, getMovieLogos, getMovieCertification, getWatchProviders, getMovieKeywords, getMovieCredits, getMovieAlternativeTitles, getMovieReleaseDates, getMovieVideos, getCollectionDetails, getImageUrl, getIMDbRating, type MovieDetails, type MovieLogo, type WatchProviderData, type Keyword, type MovieCredits, type AlternativeTitle, type CountryReleaseDates, type MovieVideo, type CollectionDetails } from '../services/tmdb';
+import { X, User, Film } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLoading } from '../contexts/LoadingContext';
 import { getTSPDTRanking } from '../utils/tspdtRanking';
@@ -83,6 +83,7 @@ export default function MovieDetail() {
     const [afiRank, setAfiRank] = useState<number | null>(null);
     const [cahiersRank, setCahiersRank] = useState<{ rank: number; year: string } | null>(null);
     const [awards, setAwards] = useState<Award[]>([]);
+    const [collection, setCollection] = useState<CollectionDetails | null>(null);
 
     useEffect(() => {
         setIsLoading(true);
@@ -198,6 +199,16 @@ export default function MovieDetail() {
                 // Get awards information
                 const movieAwards = getMovieAwards(movieData.id);
                 setAwards(movieAwards);
+
+                // Get collection details if movie belongs to a collection
+                if (movieData.belongs_to_collection) {
+                    try {
+                        const collectionData = await getCollectionDetails(movieData.belongs_to_collection.id, currentLanguage);
+                        setCollection(collectionData);
+                    } catch (err) {
+                        console.error('Failed to fetch collection details:', err);
+                    }
+                }
 
                 if (movieData.imdb_id) {
                     getIMDbRating(movieData.imdb_id).then(rating => {
@@ -1198,7 +1209,7 @@ export default function MovieDetail() {
                         <div style={{ marginTop: '24px' }}>
                             <h3 style={{
                                 fontSize: '1.2rem',
-                                marginBottom: '24px',
+                                marginBottom: '16px',
                                 fontWeight: 600,
                                 color: '#fff'
                             }}>
@@ -1220,6 +1231,164 @@ export default function MovieDetail() {
                         </div>
                     )}
                 </div>
+
+                {/* Collection */}
+                {collection && collection.parts.length > 1 && (
+                    <div style={{ 
+                        marginTop: '32px',
+                        marginLeft: isMobile ? '-20px' : '-80px',
+                        marginRight: isMobile ? '-20px' : '-80px',
+                        paddingLeft: isMobile ? '20px' : '80px',
+                        paddingRight: isMobile ? '20px' : '80px'
+                    }}>
+                        <h3 style={{
+                            fontSize: '1.2rem',
+                            marginBottom: '16px',
+                            fontWeight: 600,
+                            color: '#fff'
+                        }}>
+                            {collection.name}
+                        </h3>
+                        {collection.overview && (
+                            <p style={{
+                                fontSize: '1rem',
+                                lineHeight: 1.6,
+                                color: '#ccc',
+                                marginBottom: '24px',
+                                maxWidth: '800px'
+                            }}>
+                                {collection.overview}
+                            </p>
+                        )}
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fill, minmax(160px, 1fr))',
+                            gap: isMobile ? '16px' : '24px'
+                        }}>
+                            {collection.parts
+                                .sort((a, b) => {
+                                    const dateA = a.release_date ? new Date(a.release_date).getTime() : 0;
+                                    const dateB = b.release_date ? new Date(b.release_date).getTime() : 0;
+                                    return dateA - dateB;
+                                })
+                                .map(part => (
+                                    <div
+                                        key={part.id}
+                                        onClick={() => {
+                                            window.scrollTo(0, 0);
+                                            navigate(`/movie/${part.id}`);
+                                        }}
+                                        style={{
+                                            cursor: 'pointer',
+                                            width: '100%'
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                position: 'relative',
+                                                backgroundColor: '#1E1E1E',
+                                                borderRadius: '12px',
+                                                overflow: 'hidden',
+                                                transition: 'transform 0.2s',
+                                                aspectRatio: '2/3',
+                                                marginBottom: '8px',
+                                                opacity: part.id === movie?.id ? 0.5 : 1
+                                            }}
+                                            onMouseEnter={e => {
+                                                if (!isMobile) {
+                                                    e.currentTarget.style.transform = 'scale(1.05)';
+                                                    const overlay = e.currentTarget.querySelector('.glow-overlay') as HTMLElement;
+                                                    if (overlay) overlay.style.opacity = '1';
+                                                }
+                                            }}
+                                            onMouseLeave={e => {
+                                                if (!isMobile) {
+                                                    e.currentTarget.style.transform = 'scale(1)';
+                                                    const overlay = e.currentTarget.querySelector('.glow-overlay') as HTMLElement;
+                                                    if (overlay) overlay.style.opacity = '0';
+                                                }
+                                            }}
+                                            onMouseMove={e => {
+                                                if (!isMobile) {
+                                                    const rect = e.currentTarget.getBoundingClientRect();
+                                                    const x = e.clientX - rect.left;
+                                                    const y = e.clientY - rect.top;
+                                                    const overlay = e.currentTarget.querySelector('.glow-overlay') as HTMLElement;
+                                                    if (overlay) {
+                                                        overlay.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.15), transparent 50%)`;
+                                                    }
+                                                }
+                                            }}
+                                        >
+                                            <div 
+                                                className="glow-overlay" 
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    left: 0,
+                                                    right: 0,
+                                                    bottom: 0,
+                                                    opacity: 0,
+                                                    transition: 'opacity 0.2s',
+                                                    pointerEvents: 'none',
+                                                    zIndex: 10
+                                                }} 
+                                            />
+                                            {part.poster_path ? (
+                                                <img
+                                                    src={getImageUrl(part.poster_path, 'w342')}
+                                                    alt={part.title}
+                                                    style={{
+                                                        width: '100%',
+                                                        height: '100%',
+                                                        objectFit: 'cover'
+                                                    }}
+                                                    loading="lazy"
+                                                />
+                                            ) : (
+                                                <div style={{
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    backgroundColor: '#2A2A2A',
+                                                    color: '#666'
+                                                }}>
+                                                    <Film size={40} />
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div style={{
+                                            marginTop: '8px',
+                                            fontSize: isMobile ? '13px' : '14px',
+                                            fontWeight: part.id === movie?.id ? 700 : 500,
+                                            color: part.id === movie?.id ? '#fff' : '#ccc',
+                                            lineHeight: 1.3,
+                                            textAlign: 'center',
+                                            display: '-webkit-box',
+                                            WebkitLineClamp: 2,
+                                            WebkitBoxOrient: 'vertical',
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis'
+                                        }}>
+                                            {part.title}
+                                        </div>
+                                        {part.release_date && (
+                                            <div style={{
+                                                fontSize: isMobile ? '11px' : '12px',
+                                                color: '#999',
+                                                marginTop: '4px',
+                                                textAlign: 'center'
+                                            }}>
+                                                {new Date(part.release_date).getFullYear()}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Full Cast & Crew Modal */}

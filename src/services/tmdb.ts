@@ -20,6 +20,12 @@ export interface MovieDetails {
     production_companies: { id: number; logo_path: string | null; name: string; origin_country: string }[];
     vote_average: number;
     vote_count: number;
+    belongs_to_collection?: {
+        id: number;
+        name: string;
+        poster_path: string | null;
+        backdrop_path: string | null;
+    } | null;
 }
 
 const USE_DIRECT_API = import.meta.env.VITE_USE_DIRECT_API === 'true';
@@ -265,6 +271,36 @@ export const getMovieVideos = async (id: string): Promise<MovieVideo[]> => {
         return [];
     }
 }
+
+export interface CollectionMovie {
+    id: number;
+    title: string;
+    poster_path: string | null;
+    backdrop_path: string | null;
+    release_date: string;
+    overview: string;
+    vote_average: number;
+}
+
+export interface CollectionDetails {
+    id: number;
+    name: string;
+    overview: string;
+    poster_path: string | null;
+    backdrop_path: string | null;
+    parts: CollectionMovie[];
+}
+
+export const getCollectionDetails = async (collectionId: number, language: string = 'en-US'): Promise<CollectionDetails> => {
+    const url = buildApiUrl(`collection/${collectionId}`, { language });
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch collection details');
+    }
+
+    return response.json();
+};
 
 export interface Season {
     air_date: string;
