@@ -12,6 +12,26 @@ export default function Lists() {
             color: '#fff'
         },
         {
+            id: 'oscar',
+            name: 'Academy Awards',
+            color: '#fff'
+        },
+        {
+            id: 'cannes',
+            name: 'Cannes Film Festival',
+            color: '#fff'
+        },
+        {
+            id: 'venice',
+            name: 'Venice Film Festival',
+            color: '#fff'
+        },
+        {
+            id: 'berlinale',
+            name: 'Berlin International Film Festival',
+            color: '#fff'
+        },
+        {
             id: 'sightandsound',
             name: 'Sight & Sound Greatest Films of All Time',
             color: '#fff'
@@ -34,26 +54,6 @@ export default function Lists() {
         {
             id: 'tspdt21st',
             name: "TSPDT 21st Century's 1000 Most Acclaimed Films",
-            color: '#fff'
-        },
-        {
-            id: 'oscar',
-            name: 'Academy Awards',
-            color: '#fff'
-        },
-        {
-            id: 'cannes',
-            name: 'Cannes Film Festival',
-            color: '#fff'
-        },
-        {
-            id: 'venice',
-            name: 'Venice Film Festival',
-            color: '#fff'
-        },
-        {
-            id: 'berlinale',
-            name: 'Berlin International Film Festival',
             color: '#fff'
         }
     ];
