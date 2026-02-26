@@ -121,24 +121,24 @@ export default function MediaDiscovery() {
     const minVoteCounts = [0, 50, 100, 500, 1000, 5000, 10000, 20000];
 
     const productionCompanies = [
-        { id: '420', name: 'Marvel Studios' },
         { id: '33', name: 'Universal Pictures' },
         { id: '174', name: 'Warner Bros. Pictures' },
         { id: '4', name: 'Paramount Pictures' },
         { id: '127928', name: '20th Century Studios' },
-        { id: '7', name: 'DreamWorks Pictures' },
-        { id: '3', name: 'Pixar' },
         { id: '2', name: 'Walt Disney Pictures' },
-        { id: '128064', name: 'DC Films' },
         { id: '5', name: 'Columbia Pictures' },
         { id: '34', name: 'Sony Pictures' },
+        { id: '41077', name: 'A24' },
+        { id: '7', name: 'DreamWorks Pictures' },
+        { id: '3', name: 'Pixar' },
+        { id: '128064', name: 'DC Films' },
         { id: '923', name: 'Legendary Pictures' },
         { id: '12', name: 'New Line Cinema' },
         { id: '10163', name: 'Working Title Films' },
-        { id: '41077', name: 'A24' },
         { id: '3172', name: 'Blumhouse Productions' },
         { id: '508', name: 'Regency Enterprises' },
         { id: '521', name: 'DreamWorks Animation' },
+        { id: '420', name: 'Marvel Studios' },
         { id: '194232', name: 'Apple Studios' }
     ];
 
@@ -165,6 +165,8 @@ export default function MediaDiscovery() {
             setSelectedGenres([]);
         };
         fetchGenres();
+        // Reset production company when switching media type
+        setSelectedCompany('');
     }, [mediaType, i18n.language]);
 
     // Load Data
