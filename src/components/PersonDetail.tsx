@@ -160,7 +160,7 @@ export default function PersonDetail() {
                 job: sortedJobs.join(', ') || undefined
             };
         })
-        .filter((c) => (c.vote_count || 0) > 100)
+        .filter((c) => (c.vote_count || 0) > 10)
         .sort((a, b) => (b.vote_count || 0) - (a.vote_count || 0));
 
     return (
