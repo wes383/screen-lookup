@@ -18,8 +18,12 @@ export default function MediaDiscovery() {
     const [genres, setGenres] = useState<Genre[]>([]);
     const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
     const [selectedDecade, setSelectedDecade] = useState<string>('');
+    const [selectedYear, setSelectedYear] = useState<string>('');
     const [selectedRegion, setSelectedRegion] = useState<string>('');
     const [selectedLanguage, setSelectedLanguage] = useState<string>('');
+    const [selectedCompany, setSelectedCompany] = useState<string>('');
+    const [minRuntime, setMinRuntime] = useState<number | ''>('');
+    const [maxRuntime, setMaxRuntime] = useState<number | ''>('');
     const [voteAverageRange, setVoteAverageRange] = useState<[number, number]>([0, 10]);
     const [localVoteAverageRange, setLocalVoteAverageRange] = useState<[number, number]>([0, 10]);
     
@@ -86,7 +90,14 @@ export default function MediaDiscovery() {
         { code: 'CA', name: t('common.countries.CA', 'Canada') },
         { code: 'AU', name: t('common.countries.AU', 'Australia') },
         { code: 'HK', name: t('common.countries.HK', 'Hong Kong') },
-        { code: 'TW', name: t('common.countries.TW', 'Taiwan') }
+        { code: 'TW', name: t('common.countries.TW', 'Taiwan') },
+        { code: 'RU', name: t('common.countries.RU', 'Russia') },
+        { code: 'BR', name: t('common.countries.BR', 'Brazil') },
+        { code: 'MX', name: t('common.countries.MX', 'Mexico') },
+        { code: 'TH', name: t('common.countries.TH', 'Thailand') },
+        { code: 'SE', name: t('common.countries.SE', 'Sweden') },
+        { code: 'NO', name: t('common.countries.NO', 'Norway') },
+        { code: 'DK', name: t('common.countries.DK', 'Denmark') }
     ];
 
     const languages = [
@@ -99,10 +110,37 @@ export default function MediaDiscovery() {
         { code: 'es', name: t('common.languages.es', 'Spanish') },
         { code: 'it', name: t('common.languages.it', 'Italian') },
         { code: 'hi', name: t('common.languages.hi', 'Hindi') },
-        { code: 'ru', name: t('common.languages.ru', 'Russian') }
+        { code: 'ru', name: t('common.languages.ru', 'Russian') },
+        { code: 'pt', name: t('common.languages.pt', 'Portuguese') },
+        { code: 'th', name: t('common.languages.th', 'Thai') },
+        { code: 'sv', name: t('common.languages.sv', 'Swedish') },
+        { code: 'no', name: t('common.languages.no', 'Norwegian') },
+        { code: 'da', name: t('common.languages.da', 'Danish') }
     ];
 
     const minVoteCounts = [0, 50, 100, 500, 1000, 5000, 10000, 20000];
+
+    const productionCompanies = [
+        { id: '420', name: 'Marvel Studios' },
+        { id: '33', name: 'Universal Pictures' },
+        { id: '174', name: 'Warner Bros. Pictures' },
+        { id: '4', name: 'Paramount Pictures' },
+        { id: '127928', name: '20th Century Studios' },
+        { id: '7', name: 'DreamWorks Pictures' },
+        { id: '3', name: 'Pixar' },
+        { id: '2', name: 'Walt Disney Pictures' },
+        { id: '128064', name: 'DC Films' },
+        { id: '5', name: 'Columbia Pictures' },
+        { id: '34', name: 'Sony Pictures' },
+        { id: '923', name: 'Legendary Pictures' },
+        { id: '12', name: 'New Line Cinema' },
+        { id: '10163', name: 'Working Title Films' },
+        { id: '41077', name: 'A24' },
+        { id: '3172', name: 'Blumhouse Productions' },
+        { id: '508', name: 'Regency Enterprises' },
+        { id: '521', name: 'DreamWorks Animation' },
+        { id: '194232', name: 'Apple Studios' }
+    ];
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -146,10 +184,20 @@ export default function MediaDiscovery() {
                 'vote_average.lte': voteAverageRange[1].toString(),
                 'vote_count.gte': minVoteCount.toString(),
                 ...(selectedRegion && { with_origin_country: selectedRegion }),
-                ...(selectedLanguage && { with_original_language: selectedLanguage })
+                ...(selectedLanguage && { with_original_language: selectedLanguage }),
+                ...(selectedCompany && { with_companies: selectedCompany })
             };
 
-            if (selectedDecade) {
+            if (minRuntime !== '') params['with_runtime.gte'] = minRuntime.toString();
+            if (maxRuntime !== '') params['with_runtime.lte'] = maxRuntime.toString();
+
+            if (selectedYear) {
+                if (mediaType === 'movie') {
+                    params['primary_release_year'] = selectedYear;
+                } else {
+                    params['first_air_date_year'] = selectedYear;
+                }
+            } else if (selectedDecade) {
                 const startYear = parseInt(selectedDecade.replace('s', ''));
                 const endYear = startYear + 9;
                 
@@ -184,7 +232,7 @@ export default function MediaDiscovery() {
             setLoading(false);
             setLoadingMore(false);
         }
-    }, [mediaType, sortBy, selectedGenres, selectedDecade, selectedRegion, selectedLanguage, voteAverageRange, minVoteCount, i18n.language]);
+    }, [mediaType, sortBy, selectedGenres, selectedDecade, selectedYear, selectedRegion, selectedLanguage, selectedCompany, voteAverageRange, minVoteCount, minRuntime, maxRuntime, i18n.language]);
 
     // Reset and reload when filters change
     useEffect(() => {
@@ -192,7 +240,7 @@ export default function MediaDiscovery() {
         setPage(1);
         setHasMore(true);
         loadData(1, true);
-    }, [mediaType, sortBy, selectedGenres, selectedDecade, selectedRegion, selectedLanguage, voteAverageRange, minVoteCount, loadData]);
+    }, [mediaType, sortBy, selectedGenres, selectedDecade, selectedYear, selectedRegion, selectedLanguage, selectedCompany, voteAverageRange, minVoteCount, minRuntime, maxRuntime, loadData]);
 
     // Infinite Scroll
     useEffect(() => {
@@ -255,7 +303,9 @@ export default function MediaDiscovery() {
         { value: 'vote_average.desc', label: `${t('common.rating', 'Rating')} (${t('common.desc', 'Desc')})` },
         { value: 'vote_average.asc', label: `${t('common.rating', 'Rating')} (${t('common.asc', 'Asc')})` },
         { value: 'vote_count.desc', label: `${t('common.voteCount', 'Vote Count')} (${t('common.desc', 'Desc')})` },
+        { value: 'vote_count.asc', label: `${t('common.voteCount', 'Vote Count')} (${t('common.asc', 'Asc')})` },
         { value: 'revenue.desc', label: `${t('common.revenue', 'Revenue')} (${t('common.desc', 'Desc')})` },
+        { value: 'revenue.asc', label: `${t('common.revenue', 'Revenue')} (${t('common.asc', 'Asc')})` },
         { value: mediaType === 'movie' ? 'release_date.desc' : 'first_air_date.desc', label: `${t('common.date', 'Date')} (${t('common.desc', 'Desc')})` },
         { value: mediaType === 'movie' ? 'release_date.asc' : 'first_air_date.asc', label: `${t('common.date', 'Date')} (${t('common.asc', 'Asc')})` },
     ];
@@ -455,6 +505,54 @@ export default function MediaDiscovery() {
                             </div>
                         </div>
 
+                        {/* Production Company Filter (Movies only) */}
+                        {mediaType === 'movie' && (
+                            <div style={{ marginBottom: '24px' }}>
+                                <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
+                                    {t('common.productionCompany', 'Production Company')}
+                                </h3>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
+                                    <button
+                                        onClick={() => setSelectedCompany('')}
+                                        style={{
+                                            backgroundColor: !selectedCompany ? '#fff' : '#2a2a2a',
+                                            color: !selectedCompany ? '#000' : '#ccc',
+                                            border: '1px solid #333',
+                                            borderRadius: '20px',
+                                            padding: '6px 14px',
+                                            fontSize: '13px',
+                                            cursor: 'pointer',
+                                            transition: 'all 0.2s',
+                                            fontWeight: 500,
+                                            fontFamily: 'Inter, sans-serif'
+                                        }}
+                                    >
+                                        {t('common.all', 'All')}
+                                    </button>
+                                    {productionCompanies.map(company => (
+                                        <button
+                                            key={company.id}
+                                            onClick={() => setSelectedCompany(company.id === selectedCompany ? '' : company.id)}
+                                            style={{
+                                                backgroundColor: selectedCompany === company.id ? '#fff' : '#2a2a2a',
+                                                color: selectedCompany === company.id ? '#000' : '#ccc',
+                                                border: '1px solid #333',
+                                                borderRadius: '20px',
+                                                padding: '6px 14px',
+                                                fontSize: '13px',
+                                                cursor: 'pointer',
+                                                transition: 'all 0.2s',
+                                                fontWeight: 500,
+                                                fontFamily: 'Inter, sans-serif'
+                                            }}
+                                        >
+                                            {company.name}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
                         {/* Rating Range & Min Vote Count */}
                         <div style={{ marginBottom: '24px' }}>
                             <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
@@ -548,10 +646,69 @@ export default function MediaDiscovery() {
                             </div>
                         </div>
 
-                        {/* Decade Filter */}
+                        {/* Runtime Filter */}
+                        <div style={{ marginBottom: '24px' }}>
+                            <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
+                                {t('common.runtime', 'Runtime')}
+                            </h3>
+                            <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginTop: '12px' }}>
+                                <div style={{ flex: 1, maxWidth: '200px' }}>
+                                    <input
+                                        type="number"
+                                        min="0"
+                                        placeholder={t('common.minRuntime', 'Min Runtime')}
+                                        value={minRuntime}
+                                        onChange={(e) => {
+                                            const val = parseInt(e.target.value);
+                                            setMinRuntime(isNaN(val) ? '' : val);
+                                        }}
+                                        style={{
+                                            width: '100%',
+                                            backgroundColor: '#2a2a2a',
+                                            border: '1px solid #333',
+                                            borderRadius: '8px',
+                                            padding: '8px 12px',
+                                            color: '#fff',
+                                            fontSize: '14px',
+                                            outline: 'none',
+                                            fontFamily: 'Inter, sans-serif',
+                                            boxSizing: 'border-box'
+                                        }}
+                                    />
+                                </div>
+                                <span style={{ color: '#666' }}>-</span>
+                                <div style={{ flex: 1, maxWidth: '200px' }}>
+                                    <input
+                                        type="number"
+                                        min="0"
+                                        placeholder={t('common.maxRuntime', 'Max Runtime')}
+                                        value={maxRuntime}
+                                        onChange={(e) => {
+                                            const val = parseInt(e.target.value);
+                                            setMaxRuntime(isNaN(val) ? '' : val);
+                                        }}
+                                        style={{
+                                            width: '100%',
+                                            backgroundColor: '#2a2a2a',
+                                            border: '1px solid #333',
+                                            borderRadius: '8px',
+                                            padding: '8px 12px',
+                                            color: '#fff',
+                                            fontSize: '14px',
+                                            outline: 'none',
+                                            fontFamily: 'Inter, sans-serif',
+                                            boxSizing: 'border-box'
+                                        }}
+                                    />
+                                </div>
+                                <span style={{ color: '#666', fontSize: '14px' }}>{t('common.minutes', 'min')}</span>
+                            </div>
+                        </div>
+
+                        {/* Decade / Year Filter */}
                         <div>
                             <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                                {t('common.decade', 'Decade')}
+                                {t('common.decade', 'Decade')} / {t('common.year', 'Year')}
                             </h3>
                             <div style={{ 
                                 display: 'flex', 
@@ -563,10 +720,13 @@ export default function MediaDiscovery() {
                                 paddingRight: '8px'
                             }}>
                                 <button
-                                    onClick={() => setSelectedDecade('')}
+                                    onClick={() => {
+                                        setSelectedDecade('');
+                                        setSelectedYear('');
+                                    }}
                                     style={{
-                                        backgroundColor: !selectedDecade ? '#fff' : '#2a2a2a',
-                                        color: !selectedDecade ? '#000' : '#ccc',
+                                        backgroundColor: !selectedDecade && !selectedYear ? '#fff' : '#2a2a2a',
+                                        color: !selectedDecade && !selectedYear ? '#000' : '#ccc',
                                         border: '1px solid #333',
                                         borderRadius: '20px',
                                         padding: '6px 14px',
@@ -583,7 +743,10 @@ export default function MediaDiscovery() {
                                 {decades.map(decade => (
                                     <button
                                         key={decade}
-                                        onClick={() => setSelectedDecade(decade === selectedDecade ? '' : decade)}
+                                        onClick={() => {
+                                            setSelectedDecade(decade === selectedDecade ? '' : decade);
+                                            setSelectedYear('');
+                                        }}
                                         style={{
                                             backgroundColor: selectedDecade === decade ? '#fff' : '#2a2a2a',
                                             color: selectedDecade === decade ? '#000' : '#ccc',
@@ -601,6 +764,35 @@ export default function MediaDiscovery() {
                                         {decade}
                                     </button>
                                 ))}
+                                <input
+                                     type="text"
+                                     inputMode="numeric"
+                                     pattern="[0-9]*"
+                                     placeholder={t('common.enterYear', 'Year')}
+                                     value={selectedYear}
+                                     onChange={(e) => {
+                                         const val = e.target.value;
+                                         if (/^\d*$/.test(val)) {
+                                             setSelectedYear(val);
+                                             if (val) setSelectedDecade('');
+                                         }
+                                     }}
+                                     style={{
+                                         backgroundColor: selectedYear ? '#fff' : '#2a2a2a',
+                                         color: selectedYear ? '#000' : '#ccc',
+                                         border: '1px solid #333',
+                                         borderRadius: '20px',
+                                         padding: '6px 14px',
+                                         fontSize: '13px',
+                                         outline: 'none',
+                                         fontFamily: 'Inter, sans-serif',
+                                         fontWeight: 500,
+                                         width: '70px',
+                                         boxSizing: 'border-box',
+                                         height: 'fit-content',
+                                         textAlign: 'center'
+                                     }}
+                                />
                             </div>
                         </div>
                     </div>
