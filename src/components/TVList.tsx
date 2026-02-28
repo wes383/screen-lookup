@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Film } from 'lucide-react';
-import { 
-    getAiringTodayTV, 
-    getOnTheAirTV, 
-    getPopularTV, 
+import { Film, Loader } from 'lucide-react';
+import {
+    getAiringTodayTV,
+    getOnTheAirTV,
+    getPopularTV,
     getTopRatedTV,
-    getImageUrl, 
-    type SearchResult 
+    getImageUrl,
+    type SearchResult
 } from '../services/tmdb';
 import { getTMDBLanguage } from '../utils/languageMapper';
 
@@ -16,13 +16,13 @@ export default function TVList() {
     const { t, i18n } = useTranslation();
     const { type } = useParams<{ type: string }>();
     const navigate = useNavigate();
-    
+
     const [items, setItems] = useState<SearchResult[]>([]);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [loadingMore, setLoadingMore] = useState(false);
     const [hasMore, setHasMore] = useState(true);
-    
+
     const observerTarget = useRef<HTMLDivElement>(null);
     const itemsRef = useRef<SearchResult[]>([]);
 
@@ -41,7 +41,7 @@ export default function TVList() {
         else if (type === 'top-rated') limit = 240;
         else if (type === 'airing-today') limit = 60;
         else if (type === 'on-the-air') limit = 120;
-        
+
         const currentItems = isInitial ? [] : itemsRef.current;
         if (!isInitial && currentItems.length >= limit) {
             setHasMore(false);
@@ -57,9 +57,9 @@ export default function TVList() {
         try {
             const currentLanguage = getTMDBLanguage(i18n.language);
             const currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            
+
             let data;
-            
+
             switch (type) {
                 case 'airing-today':
                     data = await getAiringTodayTV(currentLanguage, pageNum, currentTimezone);
@@ -76,7 +76,7 @@ export default function TVList() {
                 default:
                     return;
             }
-            
+
             if (isInitial) {
                 const limited = data.results.slice(0, limit);
                 setItems(limited);
@@ -85,9 +85,9 @@ export default function TVList() {
                 const existingIds = new Set(currentItems.map(p => p.id));
                 const newItems = data.results.filter(item => !existingIds.has(item.id));
                 const remaining = limit - currentItems.length;
-                
+
                 const toAdd = remaining === Infinity ? newItems : newItems.slice(0, remaining);
-                
+
                 const finalCount = currentItems.length + toAdd.length;
 
                 setItems(prev => {
@@ -95,14 +95,14 @@ export default function TVList() {
                     const newItems = data.results.filter(item => !existingIds.has(item.id));
                     const remaining = limit - prev.length;
                     if (remaining <= 0) return prev;
-                    
+
                     const toAdd = remaining === Infinity ? newItems : newItems.slice(0, remaining);
                     return [...prev, ...toAdd];
                 });
 
                 setHasMore(pageNum < data.total_pages && finalCount < limit);
             }
-            
+
             setPage(pageNum);
         } catch (error) {
             console.error('Error fetching TV list:', error);
@@ -117,7 +117,7 @@ export default function TVList() {
             navigate('/');
             return;
         }
-        
+
         window.scrollTo(0, 0);
         setItems([]);
         setPage(1);
@@ -261,8 +261,8 @@ export default function TVList() {
                                             }
                                         }}
                                     >
-                                        <div 
-                                            className="glow-overlay" 
+                                        <div
+                                            className="glow-overlay"
                                             style={{
                                                 position: 'absolute',
                                                 top: 0,
@@ -273,7 +273,7 @@ export default function TVList() {
                                                 transition: 'opacity 0.2s',
                                                 pointerEvents: 'none',
                                                 zIndex: 10
-                                            }} 
+                                            }}
                                         />
                                         {getCardImage(item) ? (
                                             <img
@@ -300,7 +300,7 @@ export default function TVList() {
                                             </div>
                                         )}
                                     </div>
-                                    
+
                                     {(item.first_air_date || item.release_date) && type !== 'popular' && type !== 'top-rated' && (
                                         <div style={{
                                             fontSize: '12px',
@@ -315,7 +315,7 @@ export default function TVList() {
                                             })}
                                         </div>
                                     )}
-                                    
+
                                     <div style={{
                                         fontSize: '14px',
                                         fontWeight: '500',
@@ -333,22 +333,20 @@ export default function TVList() {
                                 </div>
                             ))}
                         </div>
-                        
+
                         {hasMore && (
-                            <div 
-                                ref={observerTarget} 
-                                style={{ 
-                                    display: 'flex', 
-                                    justifyContent: 'center', 
+                            <div
+                                ref={observerTarget}
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
                                     padding: '40px',
                                     width: '100%',
                                     minHeight: '100px'
                                 }}
                             >
                                 {loadingMore && (
-                                    <span style={{ color: '#fff', fontSize: '14px' }}>
-                                        {t('common.loading', 'Loading...')}
-                                    </span>
+                                    <Loader size={24} color="#fff" style={{ animation: 'spin 1s linear infinite' }} />
                                 )}
                             </div>
                         )}

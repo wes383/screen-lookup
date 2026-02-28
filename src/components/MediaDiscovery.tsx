@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Film, ArrowUp } from 'lucide-react';
-import { 
-    discoverMedia, 
-    getGenres, 
-    getImageUrl, 
+import { Film, ArrowUp, Loader } from 'lucide-react';
+import {
+    discoverMedia,
+    getGenres,
+    getImageUrl,
     type SearchResult,
     type Genre
 } from '../services/tmdb';
@@ -12,7 +12,7 @@ import { getTMDBLanguage } from '../utils/languageMapper';
 
 export default function MediaDiscovery() {
     const { t, i18n } = useTranslation();
-    
+
     // State
     const [mediaType, setMediaType] = useState<'movie' | 'tv'>('movie');
     const [genres, setGenres] = useState<Genre[]>([]);
@@ -26,28 +26,30 @@ export default function MediaDiscovery() {
     const [maxRuntime, setMaxRuntime] = useState<number | ''>('');
     const [voteAverageRange, setVoteAverageRange] = useState<[number, number]>([0, 10]);
     const [localVoteAverageRange, setLocalVoteAverageRange] = useState<[number, number]>([0, 10]);
-    
+
     useEffect(() => {
         setLocalVoteAverageRange(voteAverageRange);
     }, [voteAverageRange]);
 
     const [minVoteCount, setMinVoteCount] = useState<number>(0);
     const [sortBy, setSortBy] = useState<string>('popularity.desc');
-    
+
     const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
-    
+
     const [items, setItems] = useState<SearchResult[]>([]);
-    const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [loadingMore, setLoadingMore] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [totalResults, setTotalResults] = useState(0);
-    
+
     const observerTarget = useRef<HTMLDivElement>(null);
     const sortDropdownRef = useRef<HTMLDivElement>(null);
-    
+    const loadingRef = useRef(false);
+    const pageRef = useRef(1);
+    const hasMoreRef = useRef(true);
+
     const [showBackToTop, setShowBackToTop] = useState(false);
-    
+
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 300) {
@@ -72,7 +74,7 @@ export default function MediaDiscovery() {
 
     // Constants
     const decades = [
-        '2020s', '2010s', '2000s', '1990s', '1980s', '1970s', 
+        '2020s', '2010s', '2000s', '1990s', '1980s', '1970s',
         '1960s', '1950s', '1940s', '1930s', '1920s', '1910s', '1900s'
     ];
 
@@ -202,7 +204,7 @@ export default function MediaDiscovery() {
             } else if (selectedDecade) {
                 const startYear = parseInt(selectedDecade.replace('s', ''));
                 const endYear = startYear + 9;
-                
+
                 if (mediaType === 'movie') {
                     params['primary_release_date.gte'] = `${startYear}-01-01`;
                     params['primary_release_date.lte'] = `${endYear}-12-31`;
@@ -213,7 +215,7 @@ export default function MediaDiscovery() {
             }
 
             const data = await discoverMedia(mediaType, params, currentLanguage, pageNum);
-            
+
             if (isInitial) {
                 setItems(data.results);
                 setHasMore(pageNum < data.total_pages);
@@ -225,51 +227,59 @@ export default function MediaDiscovery() {
                     return [...prev, ...newItems];
                 });
                 setHasMore(pageNum < data.total_pages);
+                hasMoreRef.current = pageNum < data.total_pages;
             }
-            
-            setPage(pageNum);
+
+            pageRef.current = pageNum;
         } catch (error) {
             console.error('Error discovering media:', error);
         } finally {
             setLoading(false);
             setLoadingMore(false);
+            loadingRef.current = false;
         }
     }, [mediaType, sortBy, selectedGenres, selectedDecade, selectedYear, selectedRegion, selectedLanguage, selectedCompany, voteAverageRange, minVoteCount, minRuntime, maxRuntime, i18n.language]);
 
     // Reset and reload when filters change
     useEffect(() => {
         setItems([]);
-        setPage(1);
+        pageRef.current = 1;
         setHasMore(true);
         loadData(1, true);
     }, [mediaType, sortBy, selectedGenres, selectedDecade, selectedYear, selectedRegion, selectedLanguage, selectedCompany, voteAverageRange, minVoteCount, minRuntime, maxRuntime, loadData]);
 
-    // Infinite Scroll
+    const loadDataRef = useRef(loadData);
+    useEffect(() => {
+        loadDataRef.current = loadData;
+    }, [loadData]);
+
     useEffect(() => {
         const observer = new IntersectionObserver(
             entries => {
-                if (entries[0].isIntersecting && hasMore && !loading && !loadingMore) {
-                    loadData(page + 1, false);
+                if (entries[0].isIntersecting && hasMoreRef.current && !loadingRef.current) {
+                    loadingRef.current = true;
+                    loadDataRef.current(pageRef.current + 1, false);
                 }
             },
             { threshold: 0.1 }
         );
 
-        if (observerTarget.current) {
-            observer.observe(observerTarget.current);
+        const target = observerTarget.current;
+        if (target) {
+            observer.observe(target);
         }
 
         return () => {
-            if (observerTarget.current) {
-                observer.unobserve(observerTarget.current);
+            if (target) {
+                observer.unobserve(target);
             }
         };
-    }, [hasMore, loading, loadingMore, page, loadData]);
+    }, []);
 
     // Handlers
     const toggleGenre = (genreId: number) => {
-        setSelectedGenres(prev => 
-            prev.includes(genreId) 
+        setSelectedGenres(prev =>
+            prev.includes(genreId)
                 ? prev.filter(id => id !== genreId)
                 : [...prev, genreId]
         );
@@ -414,7 +424,7 @@ export default function MediaDiscovery() {
 
                     {/* Additional Filters */}
                     <div style={{ marginTop: '24px', borderTop: '1px solid #333', paddingTop: '24px' }}>
-                        
+
                         {/* Region Filter */}
                         <div style={{ marginBottom: '24px' }}>
                             <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
@@ -566,14 +576,14 @@ export default function MediaDiscovery() {
                                     <div style={{ position: 'relative', marginTop: '12px', padding: '10px 0' }}>
                                         <div className="range-slider-container">
                                             <div className="range-slider-track"></div>
-                                            <div 
+                                            <div
                                                 className="range-slider-range"
-                                                style={{ 
-                                                    left: `${(localVoteAverageRange[0] / 10) * 100}%`, 
-                                                    width: `${((localVoteAverageRange[1] - localVoteAverageRange[0]) / 10) * 100}%` 
+                                                style={{
+                                                    left: `${(localVoteAverageRange[0] / 10) * 100}%`,
+                                                    width: `${((localVoteAverageRange[1] - localVoteAverageRange[0]) / 10) * 100}%`
                                                 }}
                                             ></div>
-                                            
+
                                             <input
                                                 type="range"
                                                 min="0"
@@ -712,10 +722,10 @@ export default function MediaDiscovery() {
                             <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
                                 {t('common.decade', 'Decade')} / {t('common.year', 'Year')}
                             </h3>
-                            <div style={{ 
-                                display: 'flex', 
-                                flexWrap: 'wrap', 
-                                gap: '8px', 
+                            <div style={{
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                gap: '8px',
                                 marginTop: '12px',
                                 maxHeight: '140px',
                                 overflowY: 'auto',
@@ -767,33 +777,33 @@ export default function MediaDiscovery() {
                                     </button>
                                 ))}
                                 <input
-                                     type="text"
-                                     inputMode="numeric"
-                                     pattern="[0-9]*"
-                                     placeholder={t('common.enterYear', 'Year')}
-                                     value={selectedYear}
-                                     onChange={(e) => {
-                                         const val = e.target.value;
-                                         if (/^\d*$/.test(val)) {
-                                             setSelectedYear(val);
-                                             if (val) setSelectedDecade('');
-                                         }
-                                     }}
-                                     style={{
-                                         backgroundColor: selectedYear ? '#fff' : '#2a2a2a',
-                                         color: selectedYear ? '#000' : '#ccc',
-                                         border: '1px solid #333',
-                                         borderRadius: '20px',
-                                         padding: '6px 14px',
-                                         fontSize: '13px',
-                                         outline: 'none',
-                                         fontFamily: 'Inter, sans-serif',
-                                         fontWeight: 500,
-                                         width: '70px',
-                                         boxSizing: 'border-box',
-                                         height: 'fit-content',
-                                         textAlign: 'center'
-                                     }}
+                                    type="text"
+                                    inputMode="numeric"
+                                    pattern="[0-9]*"
+                                    placeholder={t('common.enterYear', 'Year')}
+                                    value={selectedYear}
+                                    onChange={(e) => {
+                                        const val = e.target.value;
+                                        if (/^\d*$/.test(val)) {
+                                            setSelectedYear(val);
+                                            if (val) setSelectedDecade('');
+                                        }
+                                    }}
+                                    style={{
+                                        backgroundColor: selectedYear ? '#fff' : '#2a2a2a',
+                                        color: selectedYear ? '#000' : '#ccc',
+                                        border: '1px solid #333',
+                                        borderRadius: '20px',
+                                        padding: '6px 14px',
+                                        fontSize: '13px',
+                                        outline: 'none',
+                                        fontFamily: 'Inter, sans-serif',
+                                        fontWeight: 500,
+                                        width: '70px',
+                                        boxSizing: 'border-box',
+                                        height: 'fit-content',
+                                        textAlign: 'center'
+                                    }}
                                 />
                             </div>
                         </div>
@@ -801,11 +811,11 @@ export default function MediaDiscovery() {
                 </div>
 
                 {/* Results Header */}
-                <div style={{ 
-                    marginBottom: '16px', 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    alignItems: 'center' 
+                <div style={{
+                    marginBottom: '16px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
                 }}>
                     <div style={{ color: '#999', fontSize: '14px' }}>
                         {t('common.found', 'Found')} {totalResults.toLocaleString()} {mediaType === 'movie' ? t('common.movies', 'Movies') : t('common.tvShows', 'TV Shows')}
@@ -815,7 +825,7 @@ export default function MediaDiscovery() {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                         <span style={{ fontSize: '14px', color: '#999', fontFamily: 'Inter, sans-serif' }}>{t('common.sortBy', 'Sort by')}:</span>
                         <div ref={sortDropdownRef} style={{ position: 'relative' }}>
-                            <button 
+                            <button
                                 onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
                                 style={{
                                     appearance: 'none',
@@ -836,7 +846,7 @@ export default function MediaDiscovery() {
                             >
                                 {getSortLabel(sortBy)}
                             </button>
-                            
+
                             <div style={{
                                 position: 'absolute',
                                 right: '12px',
@@ -846,7 +856,7 @@ export default function MediaDiscovery() {
                                 color: '#999'
                             }}>
                                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                    <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </div>
 
@@ -951,8 +961,8 @@ export default function MediaDiscovery() {
                                             }
                                         }}
                                     >
-                                        <div 
-                                            className="glow-overlay" 
+                                        <div
+                                            className="glow-overlay"
                                             style={{
                                                 position: 'absolute',
                                                 top: 0,
@@ -963,7 +973,7 @@ export default function MediaDiscovery() {
                                                 transition: 'opacity 0.2s',
                                                 pointerEvents: 'none',
                                                 zIndex: 10
-                                            }} 
+                                            }}
                                         />
                                         {getCardImage(item) ? (
                                             <img
@@ -1011,14 +1021,12 @@ export default function MediaDiscovery() {
                             ))}
                         </div>
                     )}
-                    
+
                     {/* Infinite Scroll Target */}
                     {hasMore && (
-                        <div ref={observerTarget} style={{ height: '20px', margin: '20px 0' }}>
+                        <div ref={observerTarget} style={{ height: '20px', margin: '20px 0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             {loadingMore && (
-                                <div style={{ textAlign: 'center', color: '#666', fontSize: '12px' }}>
-                                    {t('common.loading', 'Loading more...')}
-                                </div>
+                                <Loader size={24} color="#fff" style={{ animation: 'spin 1s linear infinite' }} />
                             )}
                         </div>
                     )}

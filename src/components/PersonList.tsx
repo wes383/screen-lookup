@@ -1,18 +1,18 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { User } from 'lucide-react';
+import { User, Loader } from 'lucide-react';
 import { getPopularPeople, getImageUrl, type SearchResult } from '../services/tmdb';
 import { getTMDBLanguage } from '../utils/languageMapper';
 
 export default function PersonList() {
     const { t, i18n } = useTranslation();
-    
+
     const [items, setItems] = useState<SearchResult[]>([]);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [loadingMore, setLoadingMore] = useState(false);
     const [hasMore, setHasMore] = useState(true);
-    
+
     const observerTarget = useRef<HTMLDivElement>(null);
     const itemsRef = useRef<SearchResult[]>([]);
 
@@ -38,7 +38,7 @@ export default function PersonList() {
         try {
             const currentLanguage = getTMDBLanguage(i18n.language);
             const data = await getPopularPeople(currentLanguage, pageNum);
-            
+
             if (isInitial) {
                 const limited = data.results.slice(0, limit);
                 setItems(limited);
@@ -55,14 +55,14 @@ export default function PersonList() {
                     const newItems = data.results.filter(item => !existingIds.has(item.id));
                     const remaining = limit - prev.length;
                     if (remaining <= 0) return prev;
-                    
+
                     const toAdd = newItems.slice(0, remaining);
                     return [...prev, ...toAdd];
                 });
 
                 setHasMore(pageNum < data.total_pages && finalCount < limit);
             }
-            
+
             setPage(pageNum);
         } catch (error) {
             console.error('Error fetching popular people:', error);
@@ -199,8 +199,8 @@ export default function PersonList() {
                                             }
                                         }}
                                     >
-                                        <div 
-                                            className="glow-overlay" 
+                                        <div
+                                            className="glow-overlay"
                                             style={{
                                                 position: 'absolute',
                                                 top: 0,
@@ -211,7 +211,7 @@ export default function PersonList() {
                                                 transition: 'opacity 0.2s',
                                                 pointerEvents: 'none',
                                                 zIndex: 10
-                                            }} 
+                                            }}
                                         />
                                         {getCardImage(item) ? (
                                             <img
@@ -238,7 +238,7 @@ export default function PersonList() {
                                             </div>
                                         )}
                                     </div>
-                                    
+
                                     <div style={{
                                         fontSize: '14px',
                                         fontWeight: '500',
@@ -256,22 +256,20 @@ export default function PersonList() {
                                 </div>
                             ))}
                         </div>
-                        
+
                         {hasMore && (
-                            <div 
-                                ref={observerTarget} 
-                                style={{ 
-                                    display: 'flex', 
-                                    justifyContent: 'center', 
+                            <div
+                                ref={observerTarget}
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
                                     padding: '40px',
                                     width: '100%',
                                     minHeight: '100px'
                                 }}
                             >
                                 {loadingMore && (
-                                    <span style={{ color: '#fff', fontSize: '14px' }}>
-                                        {t('common.loading', 'Loading...')}
-                                    </span>
+                                    <Loader size={24} color="#fff" style={{ animation: 'spin 1s linear infinite' }} />
                                 )}
                             </div>
                         )}

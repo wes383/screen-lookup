@@ -22,6 +22,11 @@ function AppContent() {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
   const isListPage = location.pathname.startsWith('/lists');
+  const isDiscoveryRelatedPage = location.pathname === '/discovery' || 
+                                  location.pathname.startsWith('/trending/') ||
+                                  location.pathname.startsWith('/movies/') ||
+                                  location.pathname.startsWith('/tv-shows/') ||
+                                  location.pathname === '/person/popular';
   const prevPathRef = useRef(location.pathname);
 
 
@@ -52,7 +57,7 @@ function AppContent() {
         <Route path="/tv-shows/:type" element={<TVList />} />
         <Route path="/:imdbId" element={<ImdbRedirect />} />
       </Routes>
-      {!isListPage && <LanguageSwitcher variant={isHomePage ? 'fixed' : 'bottom'} />}
+      {!isListPage && !isDiscoveryRelatedPage && <LanguageSwitcher variant={isHomePage ? 'fixed' : 'bottom'} />}
     </>
   );
 }

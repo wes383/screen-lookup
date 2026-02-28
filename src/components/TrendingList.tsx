@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Film, Tv, User } from 'lucide-react';
+import { Film, Tv, User, Loader } from 'lucide-react';
 import { getTrending, getImageUrl, type SearchResult } from '../services/tmdb';
 import { getTMDBLanguage } from '../utils/languageMapper';
 
@@ -9,14 +9,14 @@ export default function TrendingList() {
     const { t, i18n } = useTranslation();
     const { type } = useParams<{ type: string }>();
     const navigate = useNavigate();
-    
+
     const [items, setItems] = useState<SearchResult[]>([]);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [loadingMore, setLoadingMore] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [timeWindow, setTimeWindow] = useState<'day' | 'week'>('week');
-    
+
     const observerTarget = useRef<HTMLDivElement>(null);
     const itemsRef = useRef<SearchResult[]>([]);
 
@@ -29,7 +29,7 @@ export default function TrendingList() {
 
     const loadData = useCallback(async (pageNum: number, isInitial: boolean) => {
         if (!isValidType) return;
-        
+
         const currentItems = isInitial ? [] : itemsRef.current;
         if (!isInitial && currentItems.length >= 120) {
             setHasMore(false);
@@ -45,9 +45,9 @@ export default function TrendingList() {
         try {
             const currentLanguage = getTMDBLanguage(i18n.language);
             const mediaType = type as 'all' | 'movie' | 'tv' | 'person';
-            
+
             const data = await getTrending(mediaType, timeWindow, currentLanguage, pageNum);
-            
+
             if (isInitial) {
                 const limited = data.results.slice(0, 120);
                 setItems(limited);
@@ -64,14 +64,14 @@ export default function TrendingList() {
                     const newItems = data.results.filter(item => !existingIds.has(item.id));
                     const remaining = 120 - prev.length;
                     if (remaining <= 0) return prev;
-                    
+
                     const toAdd = newItems.slice(0, remaining);
                     return [...prev, ...toAdd];
                 });
 
                 setHasMore(pageNum < data.total_pages && finalCount < 120);
             }
-            
+
             setPage(pageNum);
         } catch (error) {
             console.error('Error fetching trending data:', error);
@@ -86,7 +86,7 @@ export default function TrendingList() {
             navigate('/');
             return;
         }
-        
+
         window.scrollTo(0, 0);
         setItems([]);
         setPage(1);
@@ -170,7 +170,7 @@ export default function TrendingList() {
                     }}>
                         {t('common.trending', 'Trending')} {getTitle()}
                     </h1>
-                    
+
                     <div style={{
                         display: 'flex',
                         backgroundColor: '#2A2A2A',
@@ -273,8 +273,8 @@ export default function TrendingList() {
                                             }
                                         }}
                                     >
-                                        <div 
-                                            className="glow-overlay" 
+                                        <div
+                                            className="glow-overlay"
                                             style={{
                                                 position: 'absolute',
                                                 top: 0,
@@ -285,7 +285,7 @@ export default function TrendingList() {
                                                 transition: 'opacity 0.2s',
                                                 pointerEvents: 'none',
                                                 zIndex: 10
-                                            }} 
+                                            }}
                                         />
                                         {getCardImage(item) ? (
                                             <img
@@ -308,12 +308,12 @@ export default function TrendingList() {
                                                 backgroundColor: '#2A2A2A',
                                                 color: '#666'
                                             }}>
-                                                {item.media_type === 'person' ? <User size={40} /> : 
-                                                 item.media_type === 'tv' ? <Tv size={40} /> : <Film size={40} />}
+                                                {item.media_type === 'person' ? <User size={40} /> :
+                                                    item.media_type === 'tv' ? <Tv size={40} /> : <Film size={40} />}
                                             </div>
                                         )}
                                     </div>
-                                    
+
                                     <div style={{
                                         fontSize: '14px',
                                         fontWeight: '500',
@@ -331,22 +331,20 @@ export default function TrendingList() {
                                 </div>
                             ))}
                         </div>
-                        
+
                         {hasMore && (
-                            <div 
-                                ref={observerTarget} 
-                                style={{ 
-                                    display: 'flex', 
-                                    justifyContent: 'center', 
+                            <div
+                                ref={observerTarget}
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
                                     padding: '40px',
                                     width: '100%',
                                     minHeight: '100px'
                                 }}
                             >
                                 {loadingMore && (
-                                    <span style={{ color: '#fff', fontSize: '14px' }}>
-                                        {t('common.loading', 'Loading...')}
-                                    </span>
+                                    <Loader size={24} color="#fff" style={{ animation: 'spin 1s linear infinite' }} />
                                 )}
                             </div>
                         )}
