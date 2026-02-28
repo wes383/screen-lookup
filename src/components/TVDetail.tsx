@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getTVDetails, getTVLogos, getTVContentRatings, getTVWatchProviders, getTVKeywords, getTVCredits, getTVAlternativeTitles, getTVVideos, getTVSeasonDetails, getTVEpisodeDetails, getImageUrl, getIMDbRating, type TVDetails, type MovieLogo, type WatchProviderData, type WatchProvider, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails } from '../services/tmdb';
 import { X, User, PlayCircle, Film, Star } from 'lucide-react';
@@ -708,7 +708,8 @@ export default function TVDetail() {
                                                         width: '50px',
                                                         height: '50px',
                                                         borderRadius: '50%',
-                                                        objectFit: 'cover'
+                                                        objectFit: 'cover',
+                                                        border: '1px solid rgba(255,255,255,0.3)'
                                                     }}
                                                 />
                                             ) : (
@@ -720,7 +721,8 @@ export default function TVDetail() {
                                                     display: 'flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
-                                                    color: '#888'
+                                                    color: '#888',
+                                                    border: '1px solid rgba(255,255,255,0.3)'
                                                 }}>
                                                     <User size={24} />
                                                 </div>
@@ -761,7 +763,8 @@ export default function TVDetail() {
                                                         width: '50px',
                                                         height: '50px',
                                                         borderRadius: '50%',
-                                                        objectFit: 'cover'
+                                                        objectFit: 'cover',
+                                                        border: '1px solid rgba(255,255,255,0.3)'
                                                     }}
                                                 />
                                             ) : (
@@ -773,7 +776,8 @@ export default function TVDetail() {
                                                     display: 'flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
-                                                    color: '#888'
+                                                    color: '#888',
+                                                    border: '1px solid rgba(255,255,255,0.3)'
                                                 }}>
                                                     <User size={24} />
                                                 </div>
@@ -1142,7 +1146,7 @@ export default function TVDetail() {
                             ) : selectedSeasonDetails ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                                     {selectedSeasonDetails.episodes.map(episode => (
-                                        <div key={episode.id} style={{ display: 'flex', gap: '20px', borderRadius: '12px', backgroundColor: '#222', padding: '16px', border: '1px solid #333' }}>
+                                        <div key={episode.id} style={{ display: 'flex', gap: '20px', borderRadius: '12px', backgroundColor: `rgba(${bgRgb}, 0.6)`, padding: '16px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
                                             <div style={{ minWidth: '227px', width: '227px', height: '127px', backgroundColor: '#000', borderRadius: '8px', overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
                                                 {episode.still_path ? (
                                                     <img

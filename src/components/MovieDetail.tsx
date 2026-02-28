@@ -995,7 +995,8 @@ export default function MovieDetail() {
                                                         width: '50px',
                                                         height: '50px',
                                                         borderRadius: '50%',
-                                                        objectFit: 'cover'
+                                                        objectFit: 'cover',
+                                                        border: '1px solid rgba(255,255,255,0.3)'
                                                     }}
                                                 />
                                             ) : (
@@ -1007,7 +1008,8 @@ export default function MovieDetail() {
                                                     display: 'flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
-                                                    color: '#888'
+                                                    color: '#888',
+                                                    border: '1px solid rgba(255,255,255,0.3)'
                                                 }}>
                                                     <User size={24} />
                                                 </div>
@@ -1046,7 +1048,8 @@ export default function MovieDetail() {
                                                         width: '50px',
                                                         height: '50px',
                                                         borderRadius: '50%',
-                                                        objectFit: 'cover'
+                                                        objectFit: 'cover',
+                                                        border: '1px solid rgba(255,255,255,0.3)'
                                                     }}
                                                 />
                                             ) : (
@@ -1058,7 +1061,8 @@ export default function MovieDetail() {
                                                     display: 'flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
-                                                    color: '#888'
+                                                    color: '#888',
+                                                    border: '1px solid rgba(255,255,255,0.3)'
                                                 }}>
                                                     <User size={24} />
                                                 </div>
