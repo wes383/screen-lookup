@@ -1443,11 +1443,14 @@ export default function MovieDetail() {
                         <div style={{
                             backgroundColor: `rgb(${bgRgb})`,
                             borderRadius: isMobile ? '16px' : '24px',
+                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
                             width: '100%',
                             maxWidth: '800px',
                             height: isMobile ? '85vh' : '90vh',
                             display: 'flex',
-                            flexDirection: 'column'
+                            flexDirection: 'column',
+                            overflow: 'hidden'
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
                                 padding: isMobile ? '16px' : '24px',
@@ -1530,11 +1533,14 @@ export default function MovieDetail() {
                         <div style={{
                             backgroundColor: `rgb(${bgRgb})`,
                             borderRadius: '24px',
+                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
                             width: '100%',
                             maxWidth: '600px',
                             maxHeight: '80vh',
                             display: 'flex',
-                            flexDirection: 'column'
+                            flexDirection: 'column',
+                            overflow: 'hidden'
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
                                 padding: '24px',
@@ -1620,11 +1626,14 @@ export default function MovieDetail() {
                         <div style={{
                             backgroundColor: `rgb(${bgRgb})`,
                             borderRadius: '24px',
+                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
                             width: '100%',
                             maxWidth: '800px',
                             maxHeight: '80vh',
                             display: 'flex',
-                            flexDirection: 'column'
+                            flexDirection: 'column',
+                            overflow: 'hidden'
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
                                 padding: '24px',
@@ -1730,6 +1739,8 @@ export default function MovieDetail() {
                         <div style={{
                             backgroundColor: `rgb(${bgRgb})`,
                             borderRadius: '24px',
+                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
                             width: '100%',
                             maxWidth: '600px',
                             maxHeight: '80vh',
