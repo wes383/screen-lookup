@@ -370,18 +370,18 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
             alignItems: 'center',
             gap: isMobile ? '6px' : '8px',
             padding: isMobile ? '8px 12px' : '10px 16px',
-            backgroundColor: 'rgba(0,0,0,0.5)', /* Kept semi-transparent for the floating variant so it doesn't get lost on busy backgrounds */
+            backgroundColor: 'transparent',
             color: '#fff',
             border: '1px solid transparent',
             borderRadius: '12px',
             cursor: 'pointer',
             fontSize: isMobile ? '13px' : '14px',
             fontWeight: 500,
-            boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+            boxShadow: 'none',
             transition: 'background-color 0.2s'
           }}
-          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.8)'}
-          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.5)'}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
         >
           <Globe size={isMobile ? 16 : 18} />
           <span>{currentLanguage.flag}</span>
