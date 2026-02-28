@@ -330,150 +330,154 @@ export default function Home() {
 
                     {/* Search Results Dropdown */}
                     {isFocused && (
-                        <div
-                            ref={scrollContainerRef}
-                            className="search-results-scrollbar"
-                            style={{
-                                position: 'absolute',
-                                top: '100%',
-                                left: 0,
-                                right: 0,
-                                backgroundColor: '#2A2A2A',
-                                borderRadius: isMobile ? '0 0 20px 20px' : '0 0 24px 24px',
-                                boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
-                                height: isMobile ? '60vh' : '500px',
-                                overflowY: 'auto',
-                                overflowX: 'hidden',
-                                zIndex: 1000
-                            }}>
-                            {isSearching && query.trim().length >= 1 ? (
-                                <div style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    height: '100%',
-                                    color: '#888',
-                                    fontSize: '14px'
+                        <div style={{
+                            position: 'absolute',
+                            top: '100%',
+                            left: 0,
+                            right: 0,
+                            borderRadius: isMobile ? '0 0 20px 20px' : '0 0 24px 24px',
+                            overflow: 'hidden',
+                            boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+                            zIndex: 1000
+                        }}>
+                            <div
+                                ref={scrollContainerRef}
+                                className="search-results-scrollbar"
+                                style={{
+                                    backgroundColor: '#2A2A2A',
+                                    height: isMobile ? '60vh' : '500px',
+                                    overflowY: 'auto',
+                                    overflowX: 'hidden'
                                 }}>
-                                    {t('common.searching')}...
-                                </div>
-                            ) : searchResults.length > 0 ? (
-                                <>
-                                    {searchResults.slice(0, displayCount).map((result) => (
-                                        <div
-                                            key={`${result.media_type}-${result.id}`}
-                                            onClick={() => handleResultClick(result)}
-                                            style={{
-                                                display: 'flex',
-                                                gap: isMobile ? '12px' : '16px',
-                                                padding: isMobile ? '10px 16px' : '12px 20px',
-                                                cursor: 'pointer',
-                                                borderBottom: '1px solid #333',
-                                                transition: 'background-color 0.2s'
-                                            }}
-                                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#333'}
-                                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                                        >
-                                            <div style={{
-                                                width: isMobile ? '45px' : '50px',
-                                                height: isMobile ? '45px' : '50px',
-                                                backgroundColor: '#1a1a1a',
-                                                borderRadius: result.media_type === 'person' ? '50%' : '4px',
-                                                overflow: 'hidden',
-                                                flexShrink: 0,
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center'
-                                            }}>
-                                                {getResultImage(result) ? (
-                                                    <img
-                                                        src={getResultImage(result)!}
-                                                        alt={getResultTitle(result)}
-                                                        style={{
-                                                            width: '100%',
-                                                            height: '100%',
-                                                            objectFit: 'cover'
-                                                        }}
-                                                    />
-                                                ) : (
-                                                    result.media_type === 'person' ? <User size={24} color="#666" /> : <Film size={24} color="#666" />
-                                                )}
-                                            </div>
-                                            <div style={{ flex: 1, minWidth: 0 }}>
+                                {isSearching && query.trim().length >= 1 ? (
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        height: '100%',
+                                        color: '#888',
+                                        fontSize: '14px'
+                                    }}>
+                                        {t('common.searching')}...
+                                    </div>
+                                ) : searchResults.length > 0 ? (
+                                    <>
+                                        {searchResults.slice(0, displayCount).map((result) => (
+                                            <div
+                                                key={`${result.media_type}-${result.id}`}
+                                                onClick={() => handleResultClick(result)}
+                                                style={{
+                                                    display: 'flex',
+                                                    gap: isMobile ? '12px' : '16px',
+                                                    padding: isMobile ? '10px 16px' : '12px 20px',
+                                                    cursor: 'pointer',
+                                                    borderBottom: '1px solid #333',
+                                                    transition: 'background-color 0.2s'
+                                                }}
+                                                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#333'}
+                                                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                                            >
                                                 <div style={{
-                                                    color: '#fff',
-                                                    fontSize: isMobile ? '15px' : '16px',
-                                                    fontWeight: 500,
+                                                    width: isMobile ? '45px' : '50px',
+                                                    height: isMobile ? '45px' : '50px',
+                                                    backgroundColor: '#1a1a1a',
+                                                    borderRadius: result.media_type === 'person' ? '50%' : '4px',
                                                     overflow: 'hidden',
-                                                    textOverflow: 'ellipsis',
-                                                    whiteSpace: 'nowrap',
+                                                    flexShrink: 0,
                                                     display: 'flex',
                                                     alignItems: 'center',
-                                                    gap: isMobile ? '6px' : '8px'
+                                                    justifyContent: 'center'
                                                 }}>
-                                                    <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                                        {getResultTitle(result)}
-                                                    </span>
-                                                    <span style={{
+                                                    {getResultImage(result) ? (
+                                                        <img
+                                                            src={getResultImage(result)!}
+                                                            alt={getResultTitle(result)}
+                                                            style={{
+                                                                width: '100%',
+                                                                height: '100%',
+                                                                objectFit: 'cover'
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        result.media_type === 'person' ? <User size={24} color="#666" /> : <Film size={24} color="#666" />
+                                                    )}
+                                                </div>
+                                                <div style={{ flex: 1, minWidth: 0 }}>
+                                                    <div style={{
+                                                        color: '#fff',
+                                                        fontSize: isMobile ? '15px' : '16px',
+                                                        fontWeight: 500,
+                                                        overflow: 'hidden',
+                                                        textOverflow: 'ellipsis',
+                                                        whiteSpace: 'nowrap',
                                                         display: 'flex',
                                                         alignItems: 'center',
-                                                        gap: '4px',
-                                                        fontSize: isMobile ? '11px' : '12px',
-                                                        color: '#999',
-                                                        backgroundColor: '#1a1a1a',
-                                                        padding: isMobile ? '2px 6px' : '2px 8px',
-                                                        borderRadius: '12px',
-                                                        flexShrink: 0
+                                                        gap: isMobile ? '6px' : '8px'
                                                     }}>
-                                                        {getMediaTypeIcon(result.media_type)}
-                                                        {getMediaTypeLabel(result.media_type)}
-                                                    </span>
-                                                </div>
-                                                <div style={{
-                                                    color: '#999',
-                                                    fontSize: isMobile ? '13px' : '14px',
-                                                    marginTop: '4px'
-                                                }}>
-                                                    {getResultYear(result)}
+                                                        <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                                            {getResultTitle(result)}
+                                                        </span>
+                                                        <span style={{
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            gap: '4px',
+                                                            fontSize: isMobile ? '11px' : '12px',
+                                                            color: '#999',
+                                                            backgroundColor: '#1a1a1a',
+                                                            padding: isMobile ? '2px 6px' : '2px 8px',
+                                                            borderRadius: '12px',
+                                                            flexShrink: 0
+                                                        }}>
+                                                            {getMediaTypeIcon(result.media_type)}
+                                                            {getMediaTypeLabel(result.media_type)}
+                                                        </span>
+                                                    </div>
+                                                    <div style={{
+                                                        color: '#999',
+                                                        fontSize: isMobile ? '13px' : '14px',
+                                                        marginTop: '4px'
+                                                    }}>
+                                                        {getResultYear(result)}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    ))
-                                    }
-                                    {(displayCount < searchResults.length || currentPage < totalPages) && (
-                                        <div style={{
-                                            padding: '16px',
-                                            textAlign: 'center',
-                                            color: '#888',
-                                            fontSize: '14px'
-                                        }}>
-                                            {t('common.loading')}...
-                                        </div>
-                                    )}
-                                </>
-                            ) : query.trim().length >= 1 ? (
-                                <div style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    height: '100%',
-                                    color: '#888',
-                                    fontSize: '14px'
-                                }}>
-                                    {t('common.noResults')}
-                                </div>
-                            ) : (
-                                <div style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    height: '100%',
-                                    color: '#666',
-                                    fontSize: '14px'
-                                }}>
-                                    {t('common.startTyping')}
-                                </div>
-                            )}
+                                        ))
+                                        }
+                                        {(displayCount < searchResults.length || currentPage < totalPages) && (
+                                            <div style={{
+                                                padding: '16px',
+                                                textAlign: 'center',
+                                                color: '#888',
+                                                fontSize: '14px'
+                                            }}>
+                                                {t('common.loading')}...
+                                            </div>
+                                        )}
+                                    </>
+                                ) : query.trim().length >= 1 ? (
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        height: '100%',
+                                        color: '#888',
+                                        fontSize: '14px'
+                                    }}>
+                                        {t('common.noResults')}
+                                    </div>
+                                ) : (
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        height: '100%',
+                                        color: '#666',
+                                        fontSize: '14px'
+                                    }}>
+                                        {t('common.startTyping')}
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     )}
                 </div>
