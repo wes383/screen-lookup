@@ -5,6 +5,10 @@
       "destination": "/api/:path*"
     },
     {
+      "source": "/tmdb-image/:path*",
+      "destination": "/api/tmdb-image?path=/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
