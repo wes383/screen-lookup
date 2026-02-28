@@ -12,6 +12,7 @@ import { getCahiersRanking } from '../utils/cahiersRanking';
 import { getTMDBLanguage, getTMDBImageLanguage, getCountryCode, getDateLocale } from '../utils/languageMapper';
 import { getMovieAwards, type Award } from '../utils/awardsInfo';
 import { translateAward } from '../utils/awardTranslations';
+import { getAverageColor } from '../utils/colorExtractor';
 
 export default function MovieDetail() {
     const { t, i18n } = useTranslation();
@@ -47,9 +48,9 @@ export default function MovieDetail() {
 
     const formatDate = (dateString: string): string => {
         if (!dateString) return '';
-        
+
         const locale = getDateLocale(i18n.language);
-        
+
         return new Intl.DateTimeFormat(locale, {
             year: 'numeric',
             month: 'long',
@@ -84,6 +85,7 @@ export default function MovieDetail() {
     const [cahiersRank, setCahiersRank] = useState<{ rank: number; year: string } | null>(null);
     const [awards, setAwards] = useState<Award[]>([]);
     const [collection, setCollection] = useState<CollectionDetails | null>(null);
+    const [bgRgb, setBgRgb] = useState<string>('18, 18, 18');
 
     useEffect(() => {
         setIsLoading(true);
@@ -187,11 +189,11 @@ export default function MovieDetail() {
                 // Get Sight and Sound ranking
                 const sightAndSoundRanking = getSightAndSoundRanking(movieData.id);
                 setSightAndSoundRank(sightAndSoundRanking);
-                
+
                 // Get AFI ranking
                 const afiRanking = getAFIRanking(movieData.id);
                 setAfiRank(afiRanking);
-                
+
                 // Get Cahiers du Cinéma ranking
                 const cahiersRanking = getCahiersRanking(movieData.id);
                 setCahiersRank(cahiersRanking);
@@ -226,6 +228,35 @@ export default function MovieDetail() {
 
         fetchData();
     }, [id, i18n.language]);
+
+    useEffect(() => {
+        if (!movie) return;
+        const bgUrl = getImageUrl(movie.backdrop_path || movie.poster_path, 'w780');
+        if (bgUrl) {
+            getAverageColor(bgUrl).then((color) => {
+                if (color) {
+                    const darkenFactor = 0.3;
+                    const r = Math.floor(color.r * darkenFactor);
+                    const g = Math.floor(color.g * darkenFactor);
+                    const b = Math.floor(color.b * darkenFactor);
+                    setBgRgb(`${r}, ${g}, ${b}`);
+                    document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+                    document.documentElement.style.setProperty('--scrollbar-bg', `rgb(${r}, ${g}, ${b})`);
+                } else {
+                    setBgRgb('18, 18, 18');
+                    document.body.style.backgroundColor = '#121212';
+                    document.documentElement.style.setProperty('--scrollbar-bg', '#121212');
+                }
+            });
+        }
+    }, [movie]);
+
+    useEffect(() => {
+        return () => {
+            document.body.style.backgroundColor = '#121212';
+            document.documentElement.style.setProperty('--scrollbar-bg', '#121212');
+        };
+    }, []);
 
     const translateJob = (job: string): string => {
         const jobMap: { [key: string]: string } = {
@@ -293,10 +324,11 @@ export default function MovieDetail() {
         <div style={{
             minHeight: '100vh',
             width: '100%',
-            backgroundColor: '#121212',
+            backgroundColor: `rgb(${bgRgb})`,
             fontFamily: 'Inter, sans-serif',
             color: 'white',
-            overflowX: 'hidden'
+            overflowX: 'hidden',
+            transition: 'background-color 0.5s ease'
         }}>
             {/* Hero Section */}
             <div style={{
@@ -323,7 +355,8 @@ export default function MovieDetail() {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(to bottom, transparent 0%, rgba(18,18,18,0.01) 20%, rgba(18,18,18,0.1) 40%, rgba(18,18,18,0.4) 60%, rgba(18,18,18,0.8) 80%, #121212 100%)'
+                    background: `linear-gradient(to bottom, transparent 0%, rgba(${bgRgb}, 0.01) 20%, rgba(${bgRgb}, 0.1) 40%, rgba(${bgRgb}, 0.4) 60%, rgba(${bgRgb}, 0.8) 80%, rgb(${bgRgb}) 100%)`,
+                    transition: 'background 0.5s ease'
                 }} />
             </div>
 
@@ -427,7 +460,7 @@ export default function MovieDetail() {
                             {movie.tagline}
                         </p>
                     )}
-                    
+
                     <h3 style={{
                         fontSize: '1.2rem',
                         marginBottom: '16px',
@@ -536,7 +569,7 @@ export default function MovieDetail() {
                                 )}
                             </div>
                         )}
-                        
+
                         {/* Rankings column */}
                         {(() => {
                             // Translate ranking labels
@@ -618,7 +651,7 @@ export default function MovieDetail() {
                                         'tr': `Cahiers du Cinéma\n${year} En İyi 10`
                                     }
                                 };
-                                
+
                                 const langMap: { [key: string]: string } = {
                                     'zh-CN': 'zh-CN',
                                     'zh-TW': 'zh-TW',
@@ -646,11 +679,11 @@ export default function MovieDetail() {
                                     'tr': 'tr',
                                     'tr-TR': 'tr'
                                 };
-                                
+
                                 const lang = langMap[i18n.language] || 'en';
                                 return labels[name]?.[lang] || labels[name]?.['en'] || '';
                             };
-                            
+
                             // Create array of rankings and sort by rank number
                             const rankings = [];
                             if (afiRank) {
@@ -669,12 +702,12 @@ export default function MovieDetail() {
                             if (cahiersRank) {
                                 rankings.push({ rank: cahiersRank.rank, name: 'cahiers', label: getRankingLabel('cahiers', cahiersRank.year) });
                             }
-                            
+
                             // Sort by rank number (ascending)
                             rankings.sort((a, b) => a.rank - b.rank);
-                            
+
                             if (rankings.length === 0) return null;
-                            
+
                             return isMobile ? (
                                 // Mobile: each ranking on separate line
                                 rankings.map((ranking) => (
@@ -1234,7 +1267,7 @@ export default function MovieDetail() {
 
                 {/* Collection */}
                 {collection && collection.parts.length > 1 && (
-                    <div style={{ 
+                    <div style={{
                         marginTop: '32px',
                         marginLeft: isMobile ? '-20px' : '-80px',
                         marginRight: isMobile ? '-20px' : '-80px',
@@ -1320,8 +1353,8 @@ export default function MovieDetail() {
                                                 }
                                             }}
                                         >
-                                            <div 
-                                                className="glow-overlay" 
+                                            <div
+                                                className="glow-overlay"
                                                 style={{
                                                     position: 'absolute',
                                                     top: 0,
@@ -1332,7 +1365,7 @@ export default function MovieDetail() {
                                                     transition: 'opacity 0.2s',
                                                     pointerEvents: 'none',
                                                     zIndex: 10
-                                                }} 
+                                                }}
                                             />
                                             {part.poster_path ? (
                                                 <img
@@ -1408,7 +1441,7 @@ export default function MovieDetail() {
                         padding: isMobile ? '20px' : '40px'
                     }} onClick={() => setShowFullCast(false)}>
                         <div style={{
-                            backgroundColor: '#1a1a1a',
+                            backgroundColor: `rgb(${bgRgb})`,
                             borderRadius: isMobile ? '16px' : '24px',
                             width: '100%',
                             maxWidth: '800px',
@@ -1495,7 +1528,7 @@ export default function MovieDetail() {
                         padding: '40px'
                     }} onClick={() => setShowAlternativeTitles(false)}>
                         <div style={{
-                            backgroundColor: '#1a1a1a',
+                            backgroundColor: `rgb(${bgRgb})`,
                             borderRadius: '24px',
                             width: '100%',
                             maxWidth: '600px',
@@ -1585,7 +1618,7 @@ export default function MovieDetail() {
                         padding: '40px'
                     }} onClick={() => setShowReleaseDates(false)}>
                         <div style={{
-                            backgroundColor: '#1a1a1a',
+                            backgroundColor: `rgb(${bgRgb})`,
                             borderRadius: '24px',
                             width: '100%',
                             maxWidth: '800px',
@@ -1633,7 +1666,7 @@ export default function MovieDetail() {
                                         </div>
                                     </div>
                                 )}
-                                
+
                                 {releaseDates.length > 0 ? (
                                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}>
                                         {releaseDates.map((country, idx) => (
@@ -1695,7 +1728,7 @@ export default function MovieDetail() {
                         padding: '40px'
                     }} onClick={() => setShowTrailers(false)}>
                         <div style={{
-                            backgroundColor: '#1a1a1a',
+                            backgroundColor: `rgb(${bgRgb})`,
                             borderRadius: '24px',
                             width: '100%',
                             maxWidth: '600px',

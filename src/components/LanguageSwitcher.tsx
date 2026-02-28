@@ -72,7 +72,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
         justifyContent: 'space-between',
         alignItems: isMobile ? 'stretch' : 'flex-start',
         padding: isMobile ? '20px' : '40px 80px',
-        backgroundColor: '#121212',
+        backgroundColor: 'transparent',
         gap: isMobile ? '20px' : '40px'
       }}>
         {/* Top row on mobile */}
@@ -91,9 +91,9 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 padding: '8px 14px',
-                backgroundColor: '#333',
+                backgroundColor: 'transparent',
                 color: '#fff',
-                border: '1px solid #555',
+                border: '1px solid transparent',
                 borderRadius: '12px',
                 cursor: 'pointer',
                 fontSize: '13px',
@@ -101,8 +101,8 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                 transition: 'background-color 0.2s',
                 flexShrink: 0
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#444'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#333'}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
             >
               <Home size={16} />
             </button>
@@ -116,17 +116,17 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                   alignItems: 'center',
                   gap: '6px',
                   padding: '8px 14px',
-                  backgroundColor: '#333',
+                  backgroundColor: 'transparent',
                   color: '#fff',
-                  border: '1px solid #555',
+                  border: '1px solid transparent',
                   borderRadius: '12px',
                   cursor: 'pointer',
                   fontSize: '13px',
                   fontWeight: 500,
                   transition: 'background-color 0.2s'
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#444'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#333'}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >
                 <Globe size={16} />
                 <span>{currentLanguage.flag}</span>
@@ -205,9 +205,9 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
               alignItems: 'center',
               justifyContent: 'center',
               padding: '10px 16px',
-              backgroundColor: '#333',
+              backgroundColor: 'transparent',
               color: '#fff',
-              border: '1px solid #555',
+              border: '1px solid transparent',
               borderRadius: '12px',
               cursor: 'pointer',
               fontSize: '14px',
@@ -216,8 +216,8 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
               flexShrink: 0,
               marginTop: '2px'
             }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#444'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#333'}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
           >
             <Home size={18} />
           </button>
@@ -233,20 +233,20 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
           paddingTop: isMobile ? '0' : '12px',
           flexDirection: 'row'
         }}>
-          <a 
-            href="https://www.themoviedb.org/" 
-            target="_blank" 
+          <a
+            href="https://www.themoviedb.org/"
+            target="_blank"
             rel="noopener noreferrer"
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
+            style={{
+              display: 'flex',
+              alignItems: 'center',
               flexShrink: 0
             }}
           >
-            <img 
-              src={TMDbLogo} 
-              alt="TMDB Logo" 
-              style={{ 
+            <img
+              src={TMDbLogo}
+              alt="TMDB Logo"
+              style={{
                 height: isMobile ? '16px' : '20px',
                 opacity: 0.8,
                 transition: 'opacity 0.2s'
@@ -259,11 +259,13 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
             fontSize: isMobile ? '10px' : '12px',
             color: '#888',
             margin: 0,
-            lineHeight: 1.5,
+            lineHeight: 1.2,
             textAlign: 'left',
             maxWidth: isMobile ? '280px' : 'none'
           }}>
-            This product uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.
+            This product uses TMDB and the TMDB APIs but
+            <br />
+            is not endorsed, certified, or otherwise approved by TMDB.
           </p>
         </div>
 
@@ -277,17 +279,17 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                 alignItems: 'center',
                 gap: '8px',
                 padding: '10px 16px',
-                backgroundColor: '#333',
+                backgroundColor: 'transparent',
                 color: '#fff',
-                border: '1px solid #555',
+                border: '1px solid transparent',
                 borderRadius: '12px',
                 cursor: 'pointer',
                 fontSize: '14px',
                 fontWeight: 500,
                 transition: 'background-color 0.2s'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#444'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#333'}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
             >
               <Globe size={18} />
               <span>{currentLanguage.flag}</span>
@@ -368,15 +370,18 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
             alignItems: 'center',
             gap: isMobile ? '6px' : '8px',
             padding: isMobile ? '8px 12px' : '10px 16px',
-            backgroundColor: '#333',
+            backgroundColor: 'rgba(0,0,0,0.5)', /* Kept semi-transparent for the floating variant so it doesn't get lost on busy backgrounds */
             color: '#fff',
-            border: '1px solid #555',
+            border: '1px solid transparent',
             borderRadius: '12px',
             cursor: 'pointer',
             fontSize: isMobile ? '13px' : '14px',
             fontWeight: 500,
-            boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
+            boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+            transition: 'background-color 0.2s'
           }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.8)'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.5)'}
         >
           <Globe size={isMobile ? 16 : 18} />
           <span>{currentLanguage.flag}</span>

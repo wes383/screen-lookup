@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getTVDetails, getTVLogos, getTVContentRatings, getTVWatchProviders, getTVKeywords, getTVCredits, getTVAlternativeTitles, getTVVideos, getTVSeasonDetails, getTVEpisodeDetails, getImageUrl, getIMDbRating, type TVDetails, type MovieLogo, type WatchProviderData, type WatchProvider, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails } from '../services/tmdb';
 import { X, User, PlayCircle, Film, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLoading } from '../contexts/LoadingContext';
 import { getTMDBLanguage, getTMDBImageLanguage, getCountryCode, getDateLocale } from '../utils/languageMapper';
+import { getAverageColor } from '../utils/colorExtractor';
 
 export default function TVDetail() {
     const { t, i18n } = useTranslation();
@@ -21,7 +22,7 @@ export default function TVDetail() {
 
     const translateStatus = (status: string | undefined): string => {
         if (!status) return t('common.unknown');
-        
+
         const statusMap: { [key: string]: string } = {
             'Returning Series': t('tv.returningSeries'),
             'Planned': t('tv.planned'),
@@ -30,7 +31,7 @@ export default function TVDetail() {
             'Canceled': t('tv.canceled'),
             'Ended': t('tv.ended')
         };
-        
+
         return statusMap[status] || status;
     };
 
@@ -62,9 +63,9 @@ export default function TVDetail() {
 
     const formatDate = (dateString: string): string => {
         if (!dateString) return '';
-        
+
         const locale = getDateLocale(i18n.language);
-        
+
         return new Intl.DateTimeFormat(locale, {
             year: 'numeric',
             month: 'long',
@@ -91,6 +92,7 @@ export default function TVDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [imdbRating, setImdbRating] = useState<{ aggregateRating: number; voteCount: number } | null>(null);
+    const [bgRgb, setBgRgb] = useState<string>('18, 18, 18');
 
     useEffect(() => {
         setIsLoading(true);
@@ -116,7 +118,7 @@ export default function TVDetail() {
             const currentLanguage = getTMDBLanguage(i18n.language);
             const data = await getTVSeasonDetails(id, seasonNumber, currentLanguage);
             setSelectedSeasonDetails(data);
-            
+
             // Fetch IMDb ratings for all episodes
             if (data?.episodes) {
                 const ratingsPromises = data.episodes.map(async (episode) => {
@@ -127,7 +129,7 @@ export default function TVDetail() {
                     }
                     return { episodeId: episode.id, rating: null };
                 });
-                
+
                 const ratings = await Promise.all(ratingsPromises);
                 const ratingsMap: { [key: string]: { aggregateRating: number; voteCount: number } } = {};
                 ratings.forEach(({ episodeId, rating }) => {
@@ -208,6 +210,35 @@ export default function TVDetail() {
             });
     }, [id, i18n.language]);
 
+    useEffect(() => {
+        if (!tv) return;
+        const bgUrl = getImageUrl(tv.backdrop_path || tv.poster_path, 'w780');
+        if (bgUrl) {
+            getAverageColor(bgUrl).then((color) => {
+                if (color) {
+                    const darkenFactor = 0.3;
+                    const r = Math.floor(color.r * darkenFactor);
+                    const g = Math.floor(color.g * darkenFactor);
+                    const b = Math.floor(color.b * darkenFactor);
+                    setBgRgb(`${r}, ${g}, ${b}`);
+                    document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+                    document.documentElement.style.setProperty('--scrollbar-bg', `rgb(${r}, ${g}, ${b})`);
+                } else {
+                    setBgRgb('18, 18, 18');
+                    document.body.style.backgroundColor = '#121212';
+                    document.documentElement.style.setProperty('--scrollbar-bg', '#121212');
+                }
+            });
+        }
+    }, [tv]);
+
+    useEffect(() => {
+        return () => {
+            document.body.style.backgroundColor = '#121212';
+            document.documentElement.style.setProperty('--scrollbar-bg', '#121212');
+        };
+    }, []);
+
     const translateJob = (job: string): string => {
         const jobMap: { [key: string]: string } = {
             'Director': t('person.knownForDirecting'),
@@ -275,10 +306,11 @@ export default function TVDetail() {
         <div style={{
             minHeight: '100vh',
             width: '100%',
-            backgroundColor: '#121212',
+            backgroundColor: `rgb(${bgRgb})`,
             fontFamily: 'Inter, sans-serif',
             color: 'white',
-            overflowX: 'hidden'
+            overflowX: 'hidden',
+            transition: 'background-color 0.5s ease'
         }}>
             {/* Hero Section */}
             <div style={{
@@ -306,7 +338,8 @@ export default function TVDetail() {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(to bottom, transparent 0%, rgba(18,18,18,0.01) 20%, rgba(18,18,18,0.1) 40%, rgba(18,18,18,0.4) 60%, rgba(18,18,18,0.8) 80%, #121212 100%)'
+                    background: `linear-gradient(to bottom, transparent 0%, rgba(${bgRgb}, 0.01) 20%, rgba(${bgRgb}, 0.1) 40%, rgba(${bgRgb}, 0.4) 60%, rgba(${bgRgb}, 0.8) 80%, rgb(${bgRgb}) 100%)`,
+                    transition: 'background 0.5s ease'
                 }} />
             </div>
 
@@ -945,7 +978,7 @@ export default function TVDetail() {
             {/* Full Cast & Crew Modal */}
             {showFullCast && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: isMobile ? '20px' : '40px' }} onClick={() => setShowFullCast(false)}>
-                    <div style={{ backgroundColor: '#1a1a1a', borderRadius: isMobile ? '16px' : '24px', width: '100%', maxWidth: '800px', height: isMobile ? '85vh' : '90vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+                    <div style={{ backgroundColor: `rgb(${bgRgb})`, borderRadius: isMobile ? '16px' : '24px', width: '100%', maxWidth: '800px', height: isMobile ? '85vh' : '90vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
                         <div style={{ padding: isMobile ? '16px' : '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.fullCastAndCrew')}</h2>
                             <button onClick={() => setShowFullCast(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: isMobile ? '20px' : '24px', cursor: 'pointer' }}><X size={isMobile ? 20 : 24} /></button>
@@ -981,7 +1014,7 @@ export default function TVDetail() {
             {/* Alternative Titles Modal */}
             {showAlternativeTitles && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: isMobile ? '20px' : '40px' }} onClick={() => setShowAlternativeTitles(false)}>
-                    <div style={{ backgroundColor: '#1a1a1a', borderRadius: isMobile ? '16px' : '24px', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+                    <div style={{ backgroundColor: `rgb(${bgRgb})`, borderRadius: isMobile ? '16px' : '24px', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
                         <div style={{ padding: isMobile ? '16px' : '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.alternativeTitles')}</h2>
                             <button onClick={() => setShowAlternativeTitles(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: isMobile ? '20px' : '24px', cursor: 'pointer' }}><X size={isMobile ? 20 : 24} /></button>
@@ -1023,7 +1056,7 @@ export default function TVDetail() {
             {/* Trailers Modal */}
             {showTrailers && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowTrailers(false)}>
-                    <div style={{ backgroundColor: '#1a1a1a', borderRadius: '24px', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+                    <div style={{ backgroundColor: `rgb(${bgRgb})`, borderRadius: '24px', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
                         <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h2 style={{ color: '#fff', margin: 0 }}>{t('tv.trailers')}</h2>
                             <button onClick={() => setShowTrailers(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
@@ -1045,7 +1078,7 @@ export default function TVDetail() {
             {/* Content Ratings Modal */}
             {showContentRatings && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowContentRatings(false)}>
-                    <div style={{ backgroundColor: '#1a1a1a', borderRadius: '24px', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+                    <div style={{ backgroundColor: `rgb(${bgRgb})`, borderRadius: '24px', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
                         <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h2 style={{ color: '#fff', margin: 0 }}>{t('tv.contentRatings')}</h2>
                             <button onClick={() => setShowContentRatings(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
@@ -1080,7 +1113,7 @@ export default function TVDetail() {
             {/* Season Details Modal */}
             {showSeasonDetails && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowSeasonDetails(false)}>
-                    <div style={{ backgroundColor: '#1a1a1a', borderRadius: '24px', width: '100%', maxWidth: '900px', height: '90vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+                    <div style={{ backgroundColor: `rgb(${bgRgb})`, borderRadius: '24px', width: '100%', maxWidth: '900px', height: '90vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
                         <div style={{ padding: '20px 24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '76px' }}>
                             <div style={{ flex: 1 }}>
                                 {selectedSeasonDetails ? (

@@ -8,6 +8,7 @@
   color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #121212;
+  --scrollbar-bg: #121212;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -42,6 +43,14 @@ h1 {
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--scrollbar-bg);
 }
 
 ::-webkit-scrollbar-thumb {
