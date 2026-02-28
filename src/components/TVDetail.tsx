@@ -983,7 +983,7 @@ export default function TVDetail() {
             {showFullCast && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: isMobile ? '20px' : '40px' }} onClick={() => setShowFullCast(false)}>
                     <div style={{ backgroundColor: `rgb(${bgRgb})`, borderRadius: isMobile ? '16px' : '24px', border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '800px', height: isMobile ? '85vh' : '90vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: isMobile ? '16px' : '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ padding: isMobile ? '16px' : '24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.fullCastAndCrew')}</h2>
                             <button onClick={() => setShowFullCast(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: isMobile ? '20px' : '24px', cursor: 'pointer' }}><X size={isMobile ? 20 : 24} /></button>
                         </div>
@@ -1019,21 +1019,21 @@ export default function TVDetail() {
             {showAlternativeTitles && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: isMobile ? '20px' : '40px' }} onClick={() => setShowAlternativeTitles(false)}>
                     <div style={{ backgroundColor: `rgb(${bgRgb})`, borderRadius: isMobile ? '16px' : '24px', border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: isMobile ? '16px' : '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ padding: isMobile ? '16px' : '24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.alternativeTitles')}</h2>
                             <button onClick={() => setShowAlternativeTitles(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: isMobile ? '20px' : '24px', cursor: 'pointer' }}><X size={isMobile ? 20 : 24} /></button>
                         </div>
                         <div style={{ padding: isMobile ? '16px' : '24px', overflowY: 'auto' }}>
                             {alternativeTitles.length > 0 ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', paddingBottom: '12px' }}>
                                         <span style={{ color: '#fff', fontWeight: 500 }}>{tv?.original_name}</span>
                                         <span style={{ color: '#999', fontSize: '14px' }}>
                                             {tv?.original_language && (t(`common.languages.${tv.original_language}`) || tv.original_language)} ({t('tv.original')})
                                         </span>
                                     </div>
                                     {alternativeTitles.map((title, idx) => (
-                                        <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
+                                        <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', paddingBottom: '12px' }}>
                                             <span style={{ color: '#fff', fontWeight: 500 }}>{title.title}</span>
                                             <span style={{ color: '#999', fontSize: '14px' }}>
                                                 {(() => {
@@ -1061,14 +1061,14 @@ export default function TVDetail() {
             {showTrailers && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowTrailers(false)}>
                     <div style={{ backgroundColor: `rgb(${bgRgb})`, borderRadius: '24px', border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ padding: '24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h2 style={{ color: '#fff', margin: 0 }}>{t('tv.trailers')}</h2>
                             <button onClick={() => setShowTrailers(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
                         <div style={{ padding: '24px', overflowY: 'auto' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                                 {videos.filter(v => v.site === 'YouTube' && v.type === 'Trailer' && v.official).map((video, idx) => (
-                                    <a key={idx} href={`https://www.youtube.com/watch?v=${video.key}`} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px', textDecoration: 'none', alignItems: 'center' }}>
+                                    <a key={idx} href={`https://www.youtube.com/watch?v=${video.key}`} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', paddingBottom: '12px', textDecoration: 'none', alignItems: 'center' }}>
                                         <span style={{ color: '#fff', fontWeight: 500 }}>{video.name}</span>
                                         <span style={{ color: '#999', fontSize: '14px' }}>{t('common.watch')}</span>
                                     </a>
@@ -1083,7 +1083,7 @@ export default function TVDetail() {
             {showContentRatings && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowContentRatings(false)}>
                     <div style={{ backgroundColor: `rgb(${bgRgb})`, borderRadius: '24px', border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: '24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ padding: '24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h2 style={{ color: '#fff', margin: 0 }}>{t('tv.contentRatings')}</h2>
                             <button onClick={() => setShowContentRatings(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
@@ -1091,7 +1091,7 @@ export default function TVDetail() {
                             {contentRatings.length > 0 ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                     {contentRatings.map((r, idx) => (
-                                        <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
+                                        <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', paddingBottom: '12px' }}>
                                             <span style={{ color: '#fff', fontWeight: 500 }}>
                                                 {(() => {
                                                     const translated = t(`common.countries.${r.iso_3166_1}`);
@@ -1118,7 +1118,7 @@ export default function TVDetail() {
             {showSeasonDetails && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowSeasonDetails(false)}>
                     <div style={{ backgroundColor: `rgb(${bgRgb})`, borderRadius: '24px', border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '900px', height: '90vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: '20px 24px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '76px' }}>
+                        <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '76px' }}>
                             <div style={{ flex: 1 }}>
                                 {selectedSeasonDetails ? (
                                     <>

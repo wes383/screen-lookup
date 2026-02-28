@@ -1458,7 +1458,7 @@ export default function MovieDetail() {
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
                                 padding: isMobile ? '16px' : '24px',
-                                borderBottom: '1px solid #333',
+                                borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 alignItems: 'center'
@@ -1548,7 +1548,7 @@ export default function MovieDetail() {
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
                                 padding: '24px',
-                                borderBottom: '1px solid #333',
+                                borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 alignItems: 'center'
@@ -1578,14 +1578,14 @@ export default function MovieDetail() {
                                 {alternativeTitles.length > 0 ? (
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                                         {/* Original Title */}
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', paddingBottom: '12px' }}>
                                             <span style={{ color: '#fff', fontWeight: 500 }}>{movie?.original_title}</span>
                                             <span style={{ color: '#999', fontSize: '14px' }}>
                                                 {movie?.original_language && (t(`common.languages.${movie.original_language}`) || movie.original_language)} ({t('movie.original')})
                                             </span>
                                         </div>
                                         {alternativeTitles.map((title, idx) => (
-                                            <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px' }}>
+                                            <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', paddingBottom: '12px' }}>
                                                 <span style={{ color: '#fff', fontWeight: 500 }}>{title.title}</span>
                                                 <span style={{ color: '#999', fontSize: '14px' }}>
                                                     {(() => {
@@ -1641,7 +1641,7 @@ export default function MovieDetail() {
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
                                 padding: '24px',
-                                borderBottom: '1px solid #333',
+                                borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 alignItems: 'center'
@@ -1684,7 +1684,7 @@ export default function MovieDetail() {
                                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}>
                                         {releaseDates.map((country, idx) => (
                                             <div key={idx} style={{ marginBottom: '16px' }}>
-                                                <h4 style={{ color: '#fff', fontSize: '16px', marginBottom: '8px', borderBottom: '1px solid #333', paddingBottom: '4px' }}>
+                                                <h4 style={{ color: '#fff', fontSize: '16px', marginBottom: '8px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', paddingBottom: '4px' }}>
                                                     {(() => {
                                                         const translated = t(`common.countries.${country.iso_3166_1}`);
                                                         if (!translated.startsWith('common.countries.')) {
@@ -1753,7 +1753,7 @@ export default function MovieDetail() {
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
                                 padding: '24px',
-                                borderBottom: '1px solid #333',
+                                borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 alignItems: 'center'
@@ -1787,7 +1787,7 @@ export default function MovieDetail() {
                                             href={`https://www.youtube.com/watch?v=${video.key}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '12px', textDecoration: 'none', alignItems: 'center' }}
+                                            style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', paddingBottom: '12px', textDecoration: 'none', alignItems: 'center' }}
                                         >
                                             <span style={{ color: '#fff', fontWeight: 500 }}>{video.name}</span>
                                             <span style={{ color: '#999', fontSize: '14px' }}>{t('common.watch')}</span>
