@@ -140,7 +140,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                   left: isMobile ? 'auto' : 'auto',
                   transform: 'none',
                   marginBottom: '8px',
-                  backgroundColor: '#222',
+                  backgroundColor: 'rgba(255,255,255,0.1)',
                   border: '1px solid #444',
                   borderRadius: '12px',
                   overflow: 'hidden',
@@ -163,7 +163,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                         alignItems: 'center',
                         gap: '12px',
                         padding: '12px 16px',
-                        backgroundColor: i18n.language === language.code ? '#444' : 'transparent',
+                        backgroundColor: i18n.language === language.code ? 'rgba(255,255,255,0.3)' : 'transparent',
                         color: '#fff',
                         border: 'none',
                         cursor: 'pointer',
@@ -173,7 +173,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                       }}
                       onMouseEnter={(e) => {
                         if (i18n.language !== language.code) {
-                          e.currentTarget.style.backgroundColor = '#333';
+                          e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)';
                         }
                       }}
                       onMouseLeave={(e) => {
@@ -301,7 +301,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                 bottom: '100%',
                 right: '0',
                 marginBottom: '8px',
-                backgroundColor: '#222',
+                backgroundColor: 'rgba(255,255,255,0.1)',
                 border: '1px solid #444',
                 borderRadius: '12px',
                 overflow: 'hidden',
@@ -320,7 +320,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                       alignItems: 'center',
                       gap: '12px',
                       padding: '12px 16px',
-                      backgroundColor: i18n.language === language.code ? '#444' : 'transparent',
+                      backgroundColor: i18n.language === language.code ? 'rgba(255,255,255,0.3)' : 'transparent',
                       color: '#fff',
                       border: 'none',
                       cursor: 'pointer',
@@ -330,7 +330,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                     }}
                     onMouseEnter={(e) => {
                       if (i18n.language !== language.code) {
-                        e.currentTarget.style.backgroundColor = '#333';
+                        e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)';
                       }
                     }}
                     onMouseLeave={(e) => {
@@ -395,7 +395,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
             left: isMobile ? 'auto' : 'auto',
             transform: 'none',
             marginBottom: '8px',
-            backgroundColor: '#222',
+            backgroundColor: 'rgba(255,255,255,0.1)',
             border: '1px solid #444',
             borderRadius: '12px',
             overflow: 'hidden',
@@ -418,7 +418,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                   alignItems: 'center',
                   gap: '12px',
                   padding: '12px 16px',
-                  backgroundColor: i18n.language === language.code ? '#444' : 'transparent',
+                  backgroundColor: i18n.language === language.code ? 'rgba(255,255,255,0.3)' : 'transparent',
                   color: '#fff',
                   border: 'none',
                   cursor: 'pointer',
@@ -428,7 +428,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                 }}
                 onMouseEnter={(e) => {
                   if (i18n.language !== language.code) {
-                    e.currentTarget.style.backgroundColor = '#333';
+                    e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)';
                   }
                 }}
                 onMouseLeave={(e) => {

@@ -359,11 +359,25 @@ export default function ListDetail() {
     }, [listData.length]);
 
     const formatTitle = (title: string) => {
-        const pattern = /^(.*), (The|A|An)$/;
-        const match = title.match(pattern);
-        if (match) {
-            return `${match[2]} ${match[1]}`;
+        const enPattern = /^(.*), (The|A|An)$/;
+        const frPattern = /^(.*), (Le|La|Les)$/;
+        const frLPattern = /^(.*), (L')$/;
+        
+        const enMatch = title.match(enPattern);
+        if (enMatch) {
+            return `${enMatch[2]} ${enMatch[1]}`;
         }
+        
+        const frMatch = title.match(frPattern);
+        if (frMatch) {
+            return `${frMatch[2]} ${frMatch[1]}`;
+        }
+        
+        const frLMatch = title.match(frLPattern);
+        if (frLMatch) {
+            return `${frLMatch[2]}${frLMatch[1]}`;
+        }
+        
         return title;
     };
 
