@@ -925,20 +925,29 @@ export default function TVDetail() {
                             { label: t('tv.network'), value: tv.networks.map(n => n.name).join(', ') || t('common.unknown') }
                         ].filter((item): item is { label: string; value: string } => item !== null && item.value !== undefined);
 
-                        const gridCols = infoItems.length <= 4 ? 'auto auto' : 'auto auto auto';
+                        const gridCols = isMobile ? 'auto auto' : (infoItems.length <= 4 ? 'auto auto' : 'auto auto auto');
 
                         return (
                             <div style={{
-                                marginTop: '24px',
+                                marginTop: isMobile ? '20px' : '24px',
                                 display: 'grid',
                                 gridTemplateColumns: gridCols,
-                                gap: '10px 80px',
+                                gap: isMobile ? '10px 40px' : '10px 80px',
                                 justifyContent: 'start'
                             }}>
                                 {infoItems.map((item, index) => (
                                     <div key={index}>
-                                        <h3 style={{ fontSize: '1.2rem', marginBottom: '8px', fontWeight: 600, color: '#fff' }}>{item.label}</h3>
-                                        <p style={{ fontSize: '14px', color: '#ccc' }}>{item.value}</p>
+                                        <h3 style={{
+                                            fontSize: isMobile ? '1rem' : '1.2rem',
+                                            marginBottom: '8px',
+                                            fontWeight: 600,
+                                            color: '#fff'
+                                        }}>
+                                            {item.label}
+                                        </h3>
+                                        <p style={{ fontSize: isMobile ? '13px' : '14px', color: '#ccc' }}>
+                                            {item.value}
+                                        </p>
                                     </div>
                                 ))}
                             </div>
@@ -993,12 +1002,12 @@ export default function TVDetail() {
             {/* Full Cast & Crew Modal */}
             {showFullCast && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: isMobile ? '20px' : '40px' }} onClick={() => setShowFullCast(false)}>
-                    <div style={{ backgroundColor: `rgb(${bgRgb})`, borderRadius: isMobile ? '16px' : '24px', border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '800px', height: isMobile ? '85vh' : '90vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: isMobile ? '16px' : '24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: isMobile ? '16px' : '24px', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '800px', height: isMobile ? '85vh' : '90vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
+                        <div style={{ padding: isMobile ? '22px 16px 16px 16px' : '36px 24px 24px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.fullCastAndCrew')}</h2>
                             <button onClick={() => setShowFullCast(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: isMobile ? '20px' : '24px', cursor: 'pointer' }}><X size={isMobile ? 20 : 24} /></button>
                         </div>
-                        <div style={{ padding: isMobile ? '16px' : '24px', overflowY: 'auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '24px' : '40px' }}>
+                        <div className="modal-scrollbar" style={{ padding: isMobile ? '16px' : '24px', overflowY: 'auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '24px' : '40px' }}>
                             <div>
                                 <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>{t('tv.cast')}</h3>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -1029,12 +1038,12 @@ export default function TVDetail() {
             {/* Alternative Titles Modal */}
             {showAlternativeTitles && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: isMobile ? '20px' : '40px' }} onClick={() => setShowAlternativeTitles(false)}>
-                    <div style={{ backgroundColor: `rgb(${bgRgb})`, borderRadius: isMobile ? '16px' : '24px', border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: isMobile ? '16px' : '24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: isMobile ? '16px' : '24px', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
+                        <div style={{ padding: isMobile ? '22px 16px 16px 16px' : '36px 24px 24px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.alternativeTitles')}</h2>
                             <button onClick={() => setShowAlternativeTitles(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: isMobile ? '20px' : '24px', cursor: 'pointer' }}><X size={isMobile ? 20 : 24} /></button>
                         </div>
-                        <div style={{ padding: isMobile ? '16px' : '24px', overflowY: 'auto' }}>
+                        <div className="modal-scrollbar" style={{ padding: isMobile ? '16px' : '24px', overflowY: 'auto' }}>
                             {alternativeTitles.length > 0 ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', paddingBottom: '12px' }}>
@@ -1071,12 +1080,12 @@ export default function TVDetail() {
             {/* Trailers Modal */}
             {showTrailers && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowTrailers(false)}>
-                    <div style={{ backgroundColor: `rgb(${bgRgb})`, borderRadius: '24px', border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: '24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: '24px', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
+                        <div style={{ padding: '36px 24px 24px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h2 style={{ color: '#fff', margin: 0 }}>{t('tv.trailers')}</h2>
                             <button onClick={() => setShowTrailers(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
-                        <div style={{ padding: '24px', overflowY: 'auto' }}>
+                        <div className="modal-scrollbar" style={{ padding: '24px', overflowY: 'auto' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                                 {videos.filter(v => v.site === 'YouTube' && v.type === 'Trailer' && v.official).map((video, idx) => (
                                     <a key={idx} href={`https://www.youtube.com/watch?v=${video.key}`} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', paddingBottom: '12px', textDecoration: 'none', alignItems: 'center' }}>
@@ -1093,12 +1102,12 @@ export default function TVDetail() {
             {/* Content Ratings Modal */}
             {showContentRatings && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowContentRatings(false)}>
-                    <div style={{ backgroundColor: `rgb(${bgRgb})`, borderRadius: '24px', border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: '24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: '24px', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
+                        <div style={{ padding: '36px 24px 24px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h2 style={{ color: '#fff', margin: 0 }}>{t('tv.contentRatings')}</h2>
                             <button onClick={() => setShowContentRatings(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
-                        <div style={{ padding: '24px', overflowY: 'auto' }}>
+                        <div className="modal-scrollbar" style={{ padding: '24px', overflowY: 'auto' }}>
                             {contentRatings.length > 0 ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                     {contentRatings.map((r, idx) => (
@@ -1128,8 +1137,8 @@ export default function TVDetail() {
             {/* Season Details Modal */}
             {showSeasonDetails && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowSeasonDetails(false)}>
-                    <div style={{ backgroundColor: `rgb(${bgRgb})`, borderRadius: '24px', border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '900px', height: '90vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '76px' }}>
+                    <div style={{ background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: '24px', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '900px', height: '90vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
+                        <div style={{ padding: '32px 24px 20px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '76px' }}>
                             <div style={{ flex: 1 }}>
                                 {selectedSeasonDetails ? (
                                     <>
@@ -1149,7 +1158,7 @@ export default function TVDetail() {
                             <button onClick={() => setShowSeasonDetails(false)} style={{ background: 'none', border: 'none', color: '#999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
 
-                        <div style={{ padding: '24px', overflowY: 'auto', flex: 1 }}>
+                        <div className="modal-scrollbar" style={{ padding: '24px', overflowY: 'auto', flex: 1 }}>
                             {loadingSeason ? (
                                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                                     <p style={{ color: '#fff' }}>{t('common.loading')}</p>
@@ -1157,8 +1166,8 @@ export default function TVDetail() {
                             ) : selectedSeasonDetails ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                                     {selectedSeasonDetails.episodes.map(episode => (
-                                        <div key={episode.id} style={{ display: 'flex', gap: '20px', borderRadius: '12px', backgroundColor: `rgba(${bgRgb}, 0.6)`, padding: '16px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-                                            <div style={{ minWidth: '227px', width: '227px', height: '127px', backgroundColor: '#000', borderRadius: '8px', overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
+                                        <div key={episode.id} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '20px', borderRadius: '12px', background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.6)`, padding: '16px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                                            <div style={{ minWidth: isMobile ? '100%' : '227px', width: isMobile ? '100%' : '227px', height: isMobile ? 'auto' : '127px', aspectRatio: isMobile ? '16/9' : 'auto', backgroundColor: '#000', borderRadius: '8px', overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
                                                 {episode.still_path ? (
                                                     <img
                                                         src={getImageUrl(episode.still_path, 'w500')}

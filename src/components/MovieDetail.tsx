@@ -1467,9 +1467,11 @@ export default function MovieDetail() {
                         padding: isMobile ? '20px' : '40px'
                     }} onClick={() => setShowFullCast(false)}>
                         <div style={{
-                            backgroundColor: `rgb(${bgRgb})`,
+                            background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`,
+                            backdropFilter: 'blur(20px)',
+                            WebkitBackdropFilter: 'blur(20px)',
                             borderRadius: isMobile ? '16px' : '24px',
-                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            border: '1px solid rgba(255, 255, 255, 0.2)',
                             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
                             width: '100%',
                             maxWidth: '800px',
@@ -1479,7 +1481,7 @@ export default function MovieDetail() {
                             overflow: 'hidden'
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
-                                padding: isMobile ? '16px' : '24px',
+                                padding: isMobile ? '22px 16px 16px 16px' : '36px 24px 24px 24px',
                                 borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
                                 display: 'flex',
                                 justifyContent: 'space-between',
@@ -1503,7 +1505,7 @@ export default function MovieDetail() {
                                     <X size={isMobile ? 20 : 24} />
                                 </button>
                             </div>
-                            <div style={{
+                            <div className="modal-scrollbar" style={{
                                 padding: isMobile ? '16px' : '24px',
                                 overflowY: 'auto',
                                 display: 'grid',
@@ -1557,9 +1559,11 @@ export default function MovieDetail() {
                         padding: '40px'
                     }} onClick={() => setShowAlternativeTitles(false)}>
                         <div style={{
-                            backgroundColor: `rgb(${bgRgb})`,
+                            background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`,
+                            backdropFilter: 'blur(20px)',
+                            WebkitBackdropFilter: 'blur(20px)',
                             borderRadius: '24px',
-                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            border: '1px solid rgba(255, 255, 255, 0.2)',
                             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
                             width: '100%',
                             maxWidth: '600px',
@@ -1569,7 +1573,7 @@ export default function MovieDetail() {
                             overflow: 'hidden'
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
-                                padding: '24px',
+                                padding: '36px 24px 24px 24px',
                                 borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
                                 display: 'flex',
                                 justifyContent: 'space-between',
@@ -1593,7 +1597,7 @@ export default function MovieDetail() {
                                     <X size={24} />
                                 </button>
                             </div>
-                            <div style={{
+                            <div className="modal-scrollbar" style={{
                                 padding: '24px',
                                 overflowY: 'auto'
                             }}>
@@ -1650,9 +1654,11 @@ export default function MovieDetail() {
                         padding: '40px'
                     }} onClick={() => setShowReleaseDates(false)}>
                         <div style={{
-                            backgroundColor: `rgb(${bgRgb})`,
+                            background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`,
+                            backdropFilter: 'blur(20px)',
+                            WebkitBackdropFilter: 'blur(20px)',
                             borderRadius: '24px',
-                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            border: '1px solid rgba(255, 255, 255, 0.2)',
                             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
                             width: '100%',
                             maxWidth: '800px',
@@ -1662,7 +1668,7 @@ export default function MovieDetail() {
                             overflow: 'hidden'
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
-                                padding: '24px',
+                                padding: '36px 24px 24px 24px',
                                 borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
                                 display: 'flex',
                                 justifyContent: 'space-between',
@@ -1686,7 +1692,7 @@ export default function MovieDetail() {
                                     <X size={24} />
                                 </button>
                             </div>
-                            <div style={{
+                            <div className="modal-scrollbar" style={{
                                 padding: '24px',
                                 overflowY: 'auto'
                             }}>
@@ -1763,9 +1769,11 @@ export default function MovieDetail() {
                         padding: '40px'
                     }} onClick={() => setShowTrailers(false)}>
                         <div style={{
-                            backgroundColor: `rgb(${bgRgb})`,
+                            background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`,
+                            backdropFilter: 'blur(20px)',
+                            WebkitBackdropFilter: 'blur(20px)',
                             borderRadius: '24px',
-                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            border: '1px solid rgba(255, 255, 255, 0.2)',
                             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
                             width: '100%',
                             maxWidth: '600px',
@@ -1774,7 +1782,7 @@ export default function MovieDetail() {
                             flexDirection: 'column'
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
-                                padding: '24px',
+                                padding: '36px 24px 24px 24px',
                                 borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
                                 display: 'flex',
                                 justifyContent: 'space-between',
@@ -1798,7 +1806,7 @@ export default function MovieDetail() {
                                     <X size={24} />
                                 </button>
                             </div>
-                            <div style={{
+                            <div className="modal-scrollbar" style={{
                                 padding: '24px',
                                 overflowY: 'auto'
                             }}>
