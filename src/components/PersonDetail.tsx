@@ -312,7 +312,7 @@ export default function PersonDetail() {
                 {person.images?.profiles && person.images.profiles.length > 1 && (
                     <div>
                         <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '24px' }}>{t('common.photos')}</h3>
-                        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', maxHeight: '432px', overflow: 'hidden' }}>
+                        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
                             {person.images.profiles.map((img, i) => (
                                 <img
                                     key={i}
