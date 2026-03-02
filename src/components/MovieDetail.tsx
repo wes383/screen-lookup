@@ -70,6 +70,7 @@ export default function MovieDetail() {
     const [alternativeTitles, setAlternativeTitles] = useState<AlternativeTitle[]>([]);
     const [showAlternativeTitles, setShowAlternativeTitles] = useState(false);
     const [showTrailers, setShowTrailers] = useState(false);
+    const [showPoster, setShowPoster] = useState(false);
     const [releaseDates, setReleaseDates] = useState<CountryReleaseDates[]>([]);
     const [showReleaseDates, setShowReleaseDates] = useState(false);
     const [videos, setVideos] = useState<MovieVideo[]>([]);
@@ -139,6 +140,17 @@ export default function MovieDetail() {
             document.body.style.overflow = '';
         };
     }, [showTrailers]);
+
+    useEffect(() => {
+        if (showPoster) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [showPoster]);
 
     useEffect(() => {
         if (!id) return;
@@ -824,6 +836,16 @@ export default function MovieDetail() {
 
                 {/* External Links */}
                 <div style={{ display: 'flex', gap: '16px', marginTop: '32px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                    {movie.poster_path && (
+                        <span
+                            onClick={() => setShowPoster(true)}
+                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px', cursor: 'pointer' }}
+                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                            {t('common.poster')}
+                        </span>
+                    )}
                     {movie.homepage && (
                         <a
                             href={movie.homepage}
@@ -1796,9 +1818,38 @@ export default function MovieDetail() {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                )
+                        </div>
+                    )
             }
+
+            {showPoster && movie.poster_path && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    zIndex: 1000,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: '40px',
+                    overflow: 'hidden'
+                }} onClick={() => setShowPoster(false)}>
+                    <img
+                        src={getImageUrl(movie.poster_path, 'original')}
+                        alt={movie.title}
+                        style={{
+                            maxWidth: '350px',
+                            maxHeight: '90vh',
+                            objectFit: 'contain',
+                            borderRadius: '16px',
+                            boxShadow: '0 0 15px rgba(255,255,255,0.1), 0 8px 32px rgba(0, 0, 0, 0.5)'
+                        }}
+                    />
+                </div>
+            )}
         </div >
     );
 }

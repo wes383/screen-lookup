@@ -86,6 +86,7 @@ export default function TVDetail() {
     const [alternativeTitles, setAlternativeTitles] = useState<AlternativeTitle[]>([]);
     const [showAlternativeTitles, setShowAlternativeTitles] = useState(false);
     const [showTrailers, setShowTrailers] = useState(false);
+    const [showPoster, setShowPoster] = useState(false);
     const [showContentRatings, setShowContentRatings] = useState(false);
     const [videos, setVideos] = useState<MovieVideo[]>([]);
     const [isCertHovered, setIsCertHovered] = useState(false);
@@ -150,9 +151,9 @@ export default function TVDetail() {
         const toggleOverflow = (shouldHide: boolean) => {
             document.body.style.overflow = shouldHide ? 'hidden' : '';
         };
-        toggleOverflow(showFullCast || showAlternativeTitles || showContentRatings || showTrailers || showSeasonDetails);
+        toggleOverflow(showFullCast || showAlternativeTitles || showContentRatings || showTrailers || showSeasonDetails || showPoster);
         return () => { document.body.style.overflow = ''; };
-    }, [showFullCast, showAlternativeTitles, showContentRatings, showTrailers, showSeasonDetails]);
+    }, [showFullCast, showAlternativeTitles, showContentRatings, showTrailers, showSeasonDetails, showPoster]);
 
     useEffect(() => {
         if (!id) return;
@@ -549,6 +550,16 @@ export default function TVDetail() {
 
                 {/* External Links */}
                 <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                    {tv.poster_path && (
+                        <span
+                            onClick={() => setShowPoster(true)}
+                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px', cursor: 'pointer' }}
+                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                            {t('common.poster')}
+                        </span>
+                    )}
                     {tv.homepage && (
                         <a
                             href={tv.homepage}
@@ -836,7 +847,7 @@ export default function TVDetail() {
                                     <div style={{
                                         height: '210px',
                                         backgroundColor: '#333',
-                                        borderRadius: '8px',
+                                        borderRadius: '16px',
                                         overflow: 'hidden',
                                         marginBottom: '8px'
                                     }}>
@@ -1222,6 +1233,35 @@ export default function TVDetail() {
                             )}
                         </div>
                     </div>
+                </div>
+            )}
+
+            {showPoster && tv.poster_path && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    zIndex: 1000,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: '40px',
+                    overflow: 'hidden'
+                }} onClick={() => setShowPoster(false)}>
+                    <img
+                        src={getImageUrl(tv.poster_path, 'original')}
+                        alt={tv.name}
+                        style={{
+                            maxWidth: '350px',
+                            maxHeight: '90vh',
+                            objectFit: 'contain',
+                            borderRadius: '16px',
+                            boxShadow: '0 0 15px rgba(255,255,255,0.1), 0 8px 32px rgba(0, 0, 0, 0.5)'
+                        }}
+                    />
                 </div>
             )}
         </div>
