@@ -19,7 +19,13 @@ export function getTMDBLanguage(i18nLang: string): string {
         'pt': 'pt-PT',
         'pt-PT': 'pt-PT',
         'pt-BR': 'pt-BR',
-        'tr': 'tr-TR'
+        'tr': 'tr-TR',
+        'ar': 'ar-SA',
+        'ar-SA': 'ar-SA',
+        'ar-EG': 'ar-EG',
+        'ar-AE': 'ar-AE',
+        'hi': 'hi-IN',
+        'hi-IN': 'hi-IN'
     };
     
     return languageMap[i18nLang] || 'en-US';
@@ -46,7 +52,13 @@ export function getTMDBImageLanguage(i18nLang: string): string {
         'pt': 'pt',
         'pt-PT': 'pt',
         'pt-BR': 'pt',
-        'tr': 'tr'
+        'tr': 'tr',
+        'ar': 'ar',
+        'ar-SA': 'ar',
+        'ar-EG': 'ar',
+        'ar-AE': 'ar',
+        'hi': 'hi',
+        'hi-IN': 'hi'
     };
     
     return imageLanguageMap[i18nLang] || 'en';
@@ -73,7 +85,13 @@ export function getDateLocale(i18nLang: string): string {
         'pt': 'pt-PT',
         'pt-PT': 'pt-PT',
         'pt-BR': 'pt-BR',
-        'tr': 'tr-TR'
+        'tr': 'tr-TR',
+        'ar': 'ar-SA',
+        'ar-SA': 'ar-SA',
+        'ar-EG': 'ar-EG',
+        'ar-AE': 'ar-AE',
+        'hi': 'hi-IN',
+        'hi-IN': 'hi-IN'
     };
     
     return localeMap[i18nLang] || 'en-US';
@@ -101,7 +119,13 @@ export function getCountryCode(i18nLang: string): string {
         'pt': 'PT',
         'pt-PT': 'PT',
         'pt-BR': 'BR',
-        'tr': 'TR'
+        'tr': 'TR',
+        'ar': 'SA',
+        'ar-SA': 'SA',
+        'ar-EG': 'EG',
+        'ar-AE': 'AE',
+        'hi': 'IN',
+        'hi-IN': 'IN'
     };
     
     return countryMap[i18nLang] || 'US';

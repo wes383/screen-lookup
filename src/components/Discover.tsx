@@ -24,7 +24,7 @@ export default function Discover() {
                         color: '#fff',
                         fontSize: '15px',
                         fontFamily: 'Inter, sans-serif',
-                        textAlign: 'left',
+                        textAlign: 'start',
                         cursor: 'pointer',
                         transition: 'all 0.2s',
                         display: 'flex',
@@ -34,11 +34,9 @@ export default function Discover() {
                     }}
                     onMouseEnter={e => {
                         e.currentTarget.style.backgroundColor = '#333';
-                        e.currentTarget.style.transform = 'translateX(5px)';
                     }}
                     onMouseLeave={e => {
                         e.currentTarget.style.backgroundColor = '#2A2A2A';
-                        e.currentTarget.style.transform = 'translateX(0)';
                     }}
                 >
                     {item.label}

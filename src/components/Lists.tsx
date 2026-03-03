@@ -120,7 +120,8 @@ export default function Lists() {
                     textAlign: 'center',
                     color: '#666',
                     fontSize: '14px',
-                    padding: '20px 0'
+                    padding: '20px 0',
+                    direction: 'ltr'
                 }}>
                     These lists may not be complete or fully accurate.
                 </div>

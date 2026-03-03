@@ -288,7 +288,8 @@ export default function Home() {
                             onFocus={() => setIsFocused(true)}
                             style={{
                                 width: '100%',
-                                padding: isMobile ? '16px 20px 16px 50px' : '20px 30px 20px 60px',
+                                padding: isMobile ? '16px 20px' : '20px 30px',
+                                paddingInlineStart: isMobile ? '50px' : '60px',
                                 borderRadius: isFocused ? (isMobile ? '20px 20px 0 0' : '24px 24px 0 0') : '9999px',
                                 border: 'none',
                                 outline: 'none',
@@ -303,7 +304,7 @@ export default function Home() {
                         <Search
                             style={{
                                 position: 'absolute',
-                                left: isMobile ? '16px' : '24px',
+                                insetInlineStart: isMobile ? '16px' : '24px',
                                 top: '50%',
                                 transform: 'translateY(-50%)',
                                 color: '#888'

@@ -15,6 +15,15 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const getLanguageClass = (code: string): string => {
+    if (code.startsWith('ar')) return 'lang-ar';
+    if (code.startsWith('zh')) return 'lang-zh';
+    if (code.startsWith('ja')) return 'lang-ja';
+    if (code.startsWith('ko')) return 'lang-ko';
+    if (code.startsWith('hi')) return 'lang-hi';
+    return 'lang-west';
+  };
+
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
@@ -59,7 +68,9 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
     { code: 'pt-PT', name: 'Português (PT)', flag: 'PT' },
     { code: 'pt-BR', name: 'Português (BR)', flag: 'BR' },
     { code: 'ru', name: 'Русский', flag: 'RU' },
-    { code: 'tr', name: 'Türkçe', flag: 'TR' }
+    { code: 'tr', name: 'Türkçe', flag: 'TR' },
+    { code: 'hi', name: 'हिन्दी', flag: 'हि' },
+    { code: 'ar', name: 'العربية', flag: 'ع' }
   ];
 
   const currentLanguage = languages.find(l => l.code === i18n.language) || languages[0];
@@ -136,9 +147,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                 <div style={{
                   position: 'absolute',
                   bottom: '100%',
-                  right: isMobile ? '0' : '0',
-                  left: isMobile ? 'auto' : 'auto',
-                  transform: 'none',
+                  insetInlineEnd: isMobile ? '0' : '0',
                   marginBottom: '8px',
                   backgroundColor: 'rgba(255,255,255,0.2)',
                   backdropFilter: 'blur(10px)',
@@ -170,7 +179,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                         border: 'none',
                         cursor: 'pointer',
                         fontSize: '14px',
-                        textAlign: 'left',
+                        textAlign: 'start',
                         transition: 'background-color 0.2s'
                       }}
                       onMouseEnter={(e) => {
@@ -184,10 +193,10 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                         }
                       }}
                     >
-                      <span style={{ fontWeight: i18n.language === language.code ? 600 : 400 }}>
+                      <span className={getLanguageClass(language.code)} style={{ fontWeight: i18n.language === language.code ? 600 : 400 }}>
                         {language.flag}
                       </span>
-                      <span style={{ fontWeight: i18n.language === language.code ? 600 : 400, fontFamily: 'Inter, sans-serif', whiteSpace: 'nowrap' }}>
+                      <span className={getLanguageClass(language.code)} style={{ fontWeight: i18n.language === language.code ? 600 : 400, whiteSpace: 'nowrap' }}>
                         {language.name}
                       </span>
                     </button>
@@ -262,8 +271,9 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
             color: '#888',
             margin: 0,
             lineHeight: 1.2,
-            textAlign: 'left',
-            maxWidth: isMobile ? '280px' : 'none'
+            textAlign: 'start',
+            maxWidth: isMobile ? '280px' : 'none',
+            direction: 'ltr'
           }}>
             This product uses TMDB and the TMDB APIs but
             <br />
@@ -298,23 +308,23 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
             </button>
 
             {isOpen && (
-              <div style={{
-                position: 'absolute',
-                bottom: '100%',
-                right: '0',
-                marginBottom: '8px',
-                backgroundColor: 'rgba(255,255,255,0.2)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                overflow: 'hidden',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
-                zIndex: 9999,
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                gap: '0'
-              }}>
+                <div style={{
+                  position: 'absolute',
+                  bottom: '100%',
+                  insetInlineEnd: '0',
+                  marginBottom: '8px',
+                  backgroundColor: 'rgba(255,255,255,0.2)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                  zIndex: 9999,
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gap: '0'
+                }}>
                 {languages.map(language => (
                   <button
                     key={language.code}
@@ -329,7 +339,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                       border: 'none',
                       cursor: 'pointer',
                       fontSize: '14px',
-                      textAlign: 'left',
+                      textAlign: 'start',
                       transition: 'background-color 0.2s'
                     }}
                     onMouseEnter={(e) => {
@@ -343,10 +353,10 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                       }
                     }}
                   >
-                    <span style={{ fontWeight: i18n.language === language.code ? 600 : 400 }}>
+                    <span className={getLanguageClass(language.code)} style={{ fontWeight: i18n.language === language.code ? 600 : 400 }}>
                       {language.flag}
                     </span>
-                    <span style={{ fontWeight: i18n.language === language.code ? 600 : 400, fontFamily: 'Inter, sans-serif', whiteSpace: 'nowrap' }}>
+                    <span className={getLanguageClass(language.code)} style={{ fontWeight: i18n.language === language.code ? 600 : 400, whiteSpace: 'nowrap' }}>
                       {language.name}
                     </span>
                   </button>
@@ -363,7 +373,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
     <div style={{
       position: 'fixed',
       bottom: isMobile ? '12px' : '20px',
-      right: isMobile ? '12px' : '20px',
+      insetInlineEnd: isMobile ? '12px' : '20px',
       zIndex: 9998
     }}>
       <div style={{ position: 'relative' }} ref={containerRef}>
@@ -395,9 +405,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
           <div style={{
             position: 'absolute',
             bottom: '100%',
-            right: isMobile ? '0' : '0',
-            left: isMobile ? 'auto' : 'auto',
-            transform: 'none',
+            insetInlineEnd: isMobile ? '0' : '0',
             marginBottom: '8px',
             backgroundColor: 'rgba(255,255,255,0.2)',
             backdropFilter: 'blur(10px)',
@@ -429,7 +437,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                   border: 'none',
                   cursor: 'pointer',
                   fontSize: '14px',
-                  textAlign: 'left',
+                  textAlign: 'start',
                   transition: 'background-color 0.2s'
                 }}
                 onMouseEnter={(e) => {
@@ -443,10 +451,10 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                   }
                 }}
               >
-                <span style={{ fontWeight: i18n.language === language.code ? 600 : 400 }}>
+                <span className={getLanguageClass(language.code)} style={{ fontWeight: i18n.language === language.code ? 600 : 400 }}>
                   {language.flag}
                 </span>
-                <span style={{ fontWeight: i18n.language === language.code ? 600 : 400, fontFamily: 'Inter, sans-serif', whiteSpace: 'nowrap' }}>
+                <span className={getLanguageClass(language.code)} style={{ fontWeight: i18n.language === language.code ? 600 : 400, whiteSpace: 'nowrap' }}>
                   {language.name}
                 </span>
               </button>

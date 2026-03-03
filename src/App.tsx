@@ -1,6 +1,7 @@
 import './i18n';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import Home from './components/Home';
 import MovieDetail from './components/MovieDetail';
 import TVDetail from './components/TVDetail';
@@ -20,6 +21,7 @@ import { LoadingProvider } from './contexts/LoadingContext';
 
 function AppContent() {
   const location = useLocation();
+  const { i18n } = useTranslation();
   const isHomePage = location.pathname === '/';
   const isListPage = location.pathname.startsWith('/lists');
   const isDiscoveryRelatedPage = location.pathname === '/discovery' || 
@@ -29,6 +31,11 @@ function AppContent() {
                                   location.pathname === '/person/popular';
   const prevPathRef = useRef(location.pathname);
 
+  useEffect(() => {
+    const isRTL = i18n.language === 'ar' || i18n.language.startsWith('ar-');
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+    document.documentElement.lang = i18n.language;
+  }, [i18n.language]);
 
   useEffect(() => {
     if (prevPathRef.current !== location.pathname) {

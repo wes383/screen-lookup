@@ -13,6 +13,8 @@ import ruTranslation from './locales/ru/translation.json';
 import itTranslation from './locales/it/translation.json';
 import ptTranslation from './locales/pt/translation.json';
 import trTranslation from './locales/tr/translation.json';
+import arTranslation from './locales/ar/translation.json';
+import hiTranslation from './locales/hi/translation.json';
 
 const resources = {
   'en': {
@@ -74,6 +76,24 @@ const resources = {
   },
   'tr': {
     translation: trTranslation
+  },
+  'ar': {
+    translation: arTranslation
+  },
+  'ar-SA': {
+    translation: arTranslation
+  },
+  'ar-EG': {
+    translation: arTranslation
+  },
+  'ar-AE': {
+    translation: arTranslation
+  },
+  'hi': {
+    translation: hiTranslation
+  },
+  'hi-IN': {
+    translation: hiTranslation
   }
 };
 

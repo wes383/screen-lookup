@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, 'Noto Sans SC', 'Noto Sans TC', 'Noto Sans JP', 'Noto Sans KR', 'Noto Sans Devanagari', 'Noto Sans Arabic', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -207,4 +207,87 @@ h1 {
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/* RTL Support for Arabic */
+html[dir="rtl"] {
+  font-family: Inter, 'Noto Sans Arabic', system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+}
+
+html[dir="rtl"] body,
+html[dir="rtl"] body * {
+  font-family: Inter, 'Noto Sans Arabic', system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+}
+
+/* CJK Font Support */
+html[lang="zh-CN"],
+html[lang="zh"] {
+  font-family: Inter, 'Noto Sans SC', system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+}
+
+html[lang="zh-CN"] body,
+html[lang="zh-CN"] body *,
+html[lang="zh"] body,
+html[lang="zh"] body * {
+  font-family: Inter, 'Noto Sans SC', system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+}
+
+html[lang="zh-TW"],
+html[lang="zh-HK"] {
+  font-family: Inter, 'Noto Sans TC', system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+}
+
+html[lang="zh-TW"] body,
+html[lang="zh-TW"] body *,
+html[lang="zh-HK"] body,
+html[lang="zh-HK"] body * {
+  font-family: Inter, 'Noto Sans TC', system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+}
+
+html[lang="ja"] {
+  font-family: Inter, 'Noto Sans JP', system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+}
+
+html[lang="ja"] body,
+html[lang="ja"] body * {
+  font-family: Inter, 'Noto Sans JP', system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+}
+
+html[lang="ko"] {
+  font-family: Inter, 'Noto Sans KR', system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+}
+
+html[lang="ko"] body,
+html[lang="ko"] body * {
+  font-family: Inter, 'Noto Sans KR', system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+}
+
+html[lang="hi"] body,
+html[lang="hi"] body * {
+  font-family: Inter, 'Noto Sans Devanagari', system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+}
+
+/* Language menu specific fonts */
+html[lang] .lang-west {
+  font-family: Inter, sans-serif !important;
+}
+
+html[lang] .lang-ar {
+  font-family: 'Noto Sans Arabic', sans-serif !important;
+}
+
+html[lang] .lang-zh {
+  font-family: 'Noto Sans SC', 'Noto Sans TC', sans-serif !important;
+}
+
+html[lang] .lang-ja {
+  font-family: 'Noto Sans JP', sans-serif !important;
+}
+
+html[lang] .lang-ko {
+  font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+html[lang] .lang-hi {
+  font-family: 'Noto Sans Devanagari', sans-serif !important;
 }

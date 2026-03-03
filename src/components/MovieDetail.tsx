@@ -610,22 +610,26 @@ export default function MovieDetail() {
                                         'it': 'su AFI 100 Anni...\n100 Film',
                                         'pt': 'em AFI 100 Anos...\n100 Filmes',
                                         'ru': 'в AFI 100 лет...\n100 фильмов',
-                                        'tr': 'AFI 100 Yıl...\n100 Film'
+                                        'tr': 'AFI 100 Yıl...\n100 Film',
+                                        'ar': 'في AFI 100 عام...\n100 فيلم',
+                                        'hi': 'AFI 100 वर्षों में...\n100 फिल्में'
                                     },
                                     'sightandsound': {
                                         'en': 'on The Sight and Sound\nGreatest Films of All Time',
-                                        'zh-CN': 'Sight and Sound\n史上最伟大电影',
-                                        'zh-TW': 'Sight and Sound\n史上最偉大電影',
-                                        'zh-HK': 'Sight and Sound\n史上最偉大電影',
-                                        'ja': 'サイト&サウンド\n史上最高の映画',
-                                        'ko': 'Sight and Sound\n역대 최고의 영화',
+                                        'zh-CN': '视与听\n史上最伟大电影',
+                                        'zh-TW': '視與聽\n史上最偉大電影',
+                                        'zh-HK': '視與聽\n史上最偉大電影',
+                                        'ja': 'サイト・アンド・サウンド\n史上最高の映画',
+                                        'ko': '사이트 & 사운드\n역대 최고의 영화',
                                         'es': 'en Sight and Sound\nMejores Películas',
                                         'fr': 'sur Sight and Sound\nMeilleurs Films',
-                                        'de': 'auf Sight and Sound\nBeste Filme',
+                                        'de': 'auf Sight & Sound\nBeste Filme',
                                         'it': 'su Sight and Sound\nMigliori Film',
-                                        'pt': 'em Sight and Sound\nMelhores Filmes',
-                                        'ru': 'в Sight and Sound\nЛучшие фильмы',
-                                        'tr': 'Sight and Sound\nEn İyi Filmler'
+                                        'pt': 'em Sight & Sound\nMelhores Filmes',
+                                        'ru': 'в Sight & Sound\nЛучшие фильмы',
+                                        'tr': 'Sight & Sound\nEn İyi Filmler',
+                                        'ar': 'في سايت آند ساوند\nأعظم الأفلام',
+                                        'hi': 'साइट एंड साउंड\nसर्वकालिक महान फिल्में'
                                     },
                                     'tspdt': {
                                         'en': 'on TSPDT 1000\nGreatest Films',
@@ -640,7 +644,9 @@ export default function MovieDetail() {
                                         'it': 'su TSPDT 1000\nMigliori Film',
                                         'pt': 'em TSPDT 1000\nMelhores Filmes',
                                         'ru': 'в TSPDT 1000\nЛучших фильмов',
-                                        'tr': 'TSPDT 1000\nEn İyi Film'
+                                        'tr': 'TSPDT 1000\nEn İyi Film',
+                                        'ar': 'في TSPDT 1000\nأعظم الأفلام',
+                                        'hi': 'TSPDT 1000\nमहान फिल्में'
                                     },
                                     'tspdt21st': {
                                         'en': "on TSPDT 21st Century's\n1000 Most Acclaimed Films",
@@ -655,7 +661,9 @@ export default function MovieDetail() {
                                         'it': 'su TSPDT XXI Secolo\n1000 Film Acclamati',
                                         'pt': 'em TSPDT Século XXI\n1000 Filmes Aclamados',
                                         'ru': 'в TSPDT XXI век\n1000 признанных фильмов',
-                                        'tr': 'TSPDT 21. Yüzyıl\n1000 Beğenilen Film'
+                                        'tr': 'TSPDT 21. Yüzyıl\n1000 Beğenilen Film',
+                                        'ar': 'في TSPDT القرن 21\n1000 فيلم الأكثر شهرة',
+                                        'hi': 'TSPDT 21वीं सदी की\n1000 सबसे प्रशंसित फिल्में'
                                     },
                                     'cahiers': {
                                         'en': `on Cahiers du Cinéma\n${year} Top 10`,
@@ -670,7 +678,9 @@ export default function MovieDetail() {
                                         'it': `su Cahiers du Cinéma\nTop 10 ${year}`,
                                         'pt': `em Cahiers du Cinéma\nTop 10 de ${year}`,
                                         'ru': year?.endsWith('s') ? `в Cahiers du Cinéma\nТоп-10 ${year.slice(0, -1)}-х` : `в Cahiers du Cinéma\nТоп-10 ${year}`,
-                                        'tr': `Cahiers du Cinéma\n${year} En İyi 10`
+                                        'tr': `Cahiers du Cinéma\n${year} En İyi 10`,
+                                        'ar': `في كاييه دو سينما\nأفضل 10 لسنة ${year}`,
+                                        'hi': `काहिये दु सिनेमा\n${year} की शीर्ष 10`
                                     }
                                 };
 
@@ -699,7 +709,13 @@ export default function MovieDetail() {
                                     'ru': 'ru',
                                     'ru-RU': 'ru',
                                     'tr': 'tr',
-                                    'tr-TR': 'tr'
+                                    'tr-TR': 'tr',
+                                    'ar': 'ar',
+                                    'ar-SA': 'ar',
+                                    'ar-EG': 'ar',
+                                    'ar-AE': 'ar',
+                                    'hi': 'hi',
+                                    'hi-IN': 'hi'
                                 };
 
                                 const lang = langMap[i18n.language] || 'en';
@@ -821,7 +837,7 @@ export default function MovieDetail() {
                                         fontSize: isMobile ? '14px' : '16px',
                                         color: '#999',
                                         fontWeight: 600,
-                                        textAlign: 'left'
+                                        textAlign: 'start'
                                     }}>
                                         {festival === 'Oscar' && t('movie.festivalOscar')}
                                         {festival === 'Cannes' && t('movie.festivalCannes')}
@@ -832,7 +848,7 @@ export default function MovieDetail() {
                                         fontSize: isMobile ? '14px' : '16px',
                                         color: '#fff',
                                         fontWeight: 600,
-                                        textAlign: 'left',
+                                        textAlign: 'start',
                                         lineHeight: 1.4,
                                         whiteSpace: 'pre-wrap'
                                     }}>

@@ -618,7 +618,7 @@ export default function Recommendations() {
                                     cursor: 'pointer',
                                     outline: 'none',
                                     minWidth: '160px',
-                                    textAlign: 'left',
+                                    textAlign: 'start',
                                     display: 'flex',
                                     alignItems: 'center'
                                 }}
@@ -628,7 +628,7 @@ export default function Recommendations() {
                             
                             <div style={{
                                 position: 'absolute',
-                                right: '12px',
+                                insetInlineEnd: '12px',
                                 top: '50%',
                                 transform: 'translateY(-50%)',
                                 pointerEvents: 'none',
@@ -796,7 +796,7 @@ export default function Recommendations() {
                     style={{
                         position: 'fixed',
                         bottom: '30px',
-                        right: '30px',
+                        insetInlineEnd: '30px',
                         backgroundColor: '#fff',
                         color: '#000',
                         border: 'none',

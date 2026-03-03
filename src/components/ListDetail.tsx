@@ -594,8 +594,8 @@ export default function ListDetail() {
                                         marginBottom: '12px',
                                         marginTop: showYearHeader ? '0' : '16px',
                                         fontWeight: 'bold',
-                                        textAlign: 'left',
-                                        paddingLeft: '16px'
+                                        textAlign: 'start',
+                                        paddingInlineStart: '16px'
                                     }}>
                                         {item.Award}
                                     </div>
