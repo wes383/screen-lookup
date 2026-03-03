@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getMovieDetails, getMovieLogos, getMovieCertification, getWatchProviders, getMovieKeywords, getMovieCredits, getMovieAlternativeTitles, getMovieReleaseDates, getMovieVideos, getCollectionDetails, getImageUrl, getIMDbRating, type MovieDetails, type MovieLogo, type WatchProviderData, type Keyword, type MovieCredits, type AlternativeTitle, type CountryReleaseDates, type MovieVideo, type CollectionDetails } from '../services/tmdb';
+import { getMovieDetails, getMovieLogos, getMovieCertification, getWatchProviders, getMovieKeywords, getMovieCredits, getMovieAlternativeTitles, getMovieReleaseDates, getMovieVideos, getCollectionDetails, getImageUrl, getIMDbRating, getWikipediaUrl, type MovieDetails, type MovieLogo, type WatchProviderData, type Keyword, type MovieCredits, type AlternativeTitle, type CountryReleaseDates, type MovieVideo, type CollectionDetails } from '../services/tmdb';
 import { X, User, Film } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLoading } from '../contexts/LoadingContext';
@@ -87,6 +87,7 @@ export default function MovieDetail() {
     const [awards, setAwards] = useState<Award[]>([]);
     const [collection, setCollection] = useState<CollectionDetails | null>(null);
     const [bgRgb, setBgRgb] = useState<string>('18, 18, 18');
+    const [wikipediaUrl, setWikipediaUrl] = useState<string | null>(null);
 
     useEffect(() => {
         setIsLoading(true);
@@ -228,6 +229,15 @@ export default function MovieDetail() {
                     getIMDbRating(movieData.imdb_id).then(rating => {
                         if (rating) setImdbRating(rating);
                     });
+                }
+
+                // Get Wikipedia URL from Wikidata
+                if (movieData.external_ids?.wikidata_id) {
+                    getWikipediaUrl(movieData.external_ids.wikidata_id, i18n.language).then(url => {
+                        setWikipediaUrl(url);
+                    });
+                } else {
+                    setWikipediaUrl(null);
                 }
             } catch (err) {
                 console.error(err);
@@ -834,161 +844,6 @@ export default function MovieDetail() {
                     </div>
                 )}
 
-                {/* External Links */}
-                <div style={{ display: 'flex', gap: '16px', marginTop: '32px', marginBottom: '24px', flexWrap: 'wrap' }}>
-                    {movie.poster_path && (
-                        <span
-                            onClick={() => setShowPoster(true)}
-                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px', cursor: 'pointer' }}
-                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                        >
-                            {t('common.poster')}
-                        </span>
-                    )}
-                    {movie.homepage && (
-                        <a
-                            href={movie.homepage}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                        >
-                            {t('common.homepage')}
-                        </a>
-                    )}
-
-                    {(() => {
-                        const validTrailers = videos.filter(v => v.site === 'YouTube' && v.type === 'Trailer' && v.official);
-                        if (validTrailers.length > 1) {
-                            return (
-                                <span
-                                    onClick={() => setShowTrailers(true)}
-                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px', cursor: 'pointer' }}
-                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                                >
-                                    {t('movie.trailers')}
-                                </span>
-                            );
-                        } else if (validTrailers.length === 1) {
-                            return (
-                                <a
-                                    href={`https://www.youtube.com/watch?v=${validTrailers[0].key}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                                >
-                                    {t('common.trailer')}
-                                </a>
-                            );
-                        }
-                        return null;
-                    })()}
-                    {(i18n.language === 'zh-CN') && (
-                        <a
-                            href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(movie.original_title)}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                        >
-                            {t('common.douban')}
-                        </a>
-                    )}
-                    {movie.imdb_id && (
-                        <a
-                            href={`https://www.imdb.com/title/${movie.imdb_id}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                        >
-                            {t('common.imdb')}
-                        </a>
-                    )}
-                    {movie.imdb_id && (
-                        <a
-                            href={`https://www.imdb.com/title/${movie.imdb_id}/parentalguide`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                        >
-                            Parents Guide
-                        </a>
-                    )}
-                    <a
-                        href={`https://www.themoviedb.org/movie/${movie.id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                    >
-                        {t('common.tmdb')}
-                    </a>
-                    {movie.imdb_id && (
-                        <a
-                            href={`https://trakt.tv/movies/${movie.imdb_id}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                        >
-                            {t('common.trakt')}
-                        </a>
-                    )}
-                    <a
-                        href={`https://letterboxd.com/tmdb/${movie.id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                    >
-                        {t('common.letterboxd')}
-                    </a>
-                    <a
-                        href={`https://www.metacritic.com/search/${encodeURIComponent(englishTitle || movie.original_title)}/?page=1&category=2`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                    >
-                        {t('common.metacritic')}
-                    </a>
-                    <a
-                        href={`https://www.rottentomatoes.com/search?search=${encodeURIComponent(englishTitle || movie.original_title)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                    >
-                        {t('common.rottentomatoes')}
-                    </a>
-                    <a
-                        href={`https://www.justwatch.com/us/search?q=${encodeURIComponent(englishTitle || movie.original_title)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                    >
-                        {t('movie.justWatch')}
-                    </a>
-                </div>
-
-
 
                 <div style={{ maxWidth: '800px' }}>
                     {/* Director */}
@@ -1007,7 +862,7 @@ export default function MovieDetail() {
                                     <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                                         <div
                                             onClick={() => navigate(`/person/${c.id}`)}
-                                            style={{ cursor: 'pointer' }}
+                                            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
                                         >
                                             {c.profile_path ? (
                                                 <img
@@ -1060,7 +915,7 @@ export default function MovieDetail() {
                                     <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                                         <div
                                             onClick={() => navigate(`/person/${c.id}`)}
-                                            style={{ cursor: 'pointer' }}
+                                            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
                                         >
                                             {c.profile_path ? (
                                                 <img
@@ -1090,10 +945,16 @@ export default function MovieDetail() {
                                                 </div>
                                             )}
                                         </div>
-                                        <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline' }}>
+                                        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '2px' : '8px', alignItems: isMobile ? 'flex-start' : 'baseline' }}>
                                             <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: isMobile ? '16px' : '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
-                                            <span style={{ fontSize: isMobile ? '14px' : '16px', color: '#666' }}>{t('common.as')}</span>
-                                            <span style={{ fontSize: isMobile ? '16px' : '18px', color: '#999' }}>{c.character}</span>
+                                            {isMobile ? (
+                                                <span style={{ fontSize: '14px', color: '#999' }}>{t('common.as')} {c.character}</span>
+                                            ) : (
+                                                <>
+                                                    <span style={{ fontSize: '14px', color: '#666' }}>{t('common.as')}</span>
+                                                    <span style={{ fontSize: '18px', color: '#999' }}>{c.character}</span>
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                 ))}
@@ -1289,6 +1150,175 @@ export default function MovieDetail() {
                             </div>
                         </div>
                     )}
+
+                    {/* External Links */}
+                    <div style={{ marginTop: '24px' }}>
+                        <h3 style={{ fontSize: '1.2rem', marginBottom: '16px', fontWeight: 600, color: '#fff' }}>{t('common.externalLinks')}</h3>
+                        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                            {movie.poster_path && (
+                                <span
+                                    onClick={() => setShowPoster(true)}
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px', cursor: 'pointer' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    {t('common.poster')}
+                                </span>
+                            )}
+                            {movie.homepage && (
+                                <a
+                                    href={movie.homepage}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    {t('common.homepage')}
+                                </a>
+                            )}
+
+                            {(() => {
+                                const validTrailers = videos.filter(v => v.site === 'YouTube' && v.type === 'Trailer' && v.official);
+                                if (validTrailers.length > 1) {
+                                    return (
+                                        <span
+                                            onClick={() => setShowTrailers(true)}
+                                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px', cursor: 'pointer' }}
+                                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                        >
+                                            {t('movie.trailers')}
+                                        </span>
+                                    );
+                                } else if (validTrailers.length === 1) {
+                                    return (
+                                        <a
+                                            href={`https://www.youtube.com/watch?v=${validTrailers[0].key}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                        >
+                                            {t('common.trailer')}
+                                        </a>
+                                    );
+                                }
+                                return null;
+                            })()}
+                            {(i18n.language === 'zh-CN') && (
+                                <a
+                                    href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(movie.original_title)}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    {t('common.douban')}
+                                </a>
+                            )}
+                            {movie.imdb_id && (
+                                <a
+                                    href={`https://www.imdb.com/title/${movie.imdb_id}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    {t('common.imdb')}
+                                </a>
+                            )}
+                            {movie.imdb_id && (
+                                <a
+                                    href={`https://www.imdb.com/title/${movie.imdb_id}/parentalguide`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    Parents Guide
+                                </a>
+                            )}
+                            <a
+                                href={`https://www.themoviedb.org/movie/${movie.id}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                            >
+                                {t('common.tmdb')}
+                            </a>
+                            {movie.imdb_id && (
+                                <a
+                                    href={`https://trakt.tv/movies/${movie.imdb_id}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    {t('common.trakt')}
+                                </a>
+                            )}
+                            <a
+                                href={`https://letterboxd.com/tmdb/${movie.id}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                            >
+                                {t('common.letterboxd')}
+                            </a>
+                            <a
+                                href={`https://www.metacritic.com/search/${encodeURIComponent(englishTitle || movie.original_title)}/?page=1&category=2`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                            >
+                                {t('common.metacritic')}
+                            </a>
+                            <a
+                                href={`https://www.rottentomatoes.com/search?search=${encodeURIComponent(englishTitle || movie.original_title)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                            >
+                                {t('common.rottentomatoes')}
+                            </a>
+                            <a
+                                href={`https://www.justwatch.com/us/search?q=${encodeURIComponent(englishTitle || movie.original_title)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                            >
+                                {t('movie.justWatch')}
+                            </a>
+                            {wikipediaUrl && (
+                                <a
+                                    href={wikipediaUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    {t('common.wikipedia')}
+                                </a>
+                            )}
+                        </div>
+                    </div>
                 </div>
 
                 {/* Collection */}
@@ -1481,7 +1511,7 @@ export default function MovieDetail() {
                             overflow: 'hidden'
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
-                                padding: isMobile ? '22px 16px 16px 16px' : '36px 24px 24px 24px',
+                                padding: isMobile ? '16px 12px 12px 12px' : '24px 24px 16px 24px',
                                 borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
                                 display: 'flex',
                                 justifyContent: 'space-between',
@@ -1506,7 +1536,7 @@ export default function MovieDetail() {
                                 </button>
                             </div>
                             <div className="modal-scrollbar" style={{
-                                padding: isMobile ? '16px' : '24px',
+                                padding: isMobile ? '12px' : '24px',
                                 overflowY: 'auto',
                                 display: 'grid',
                                 gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
@@ -1556,13 +1586,13 @@ export default function MovieDetail() {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        padding: '40px'
+                        padding: isMobile ? '20px' : '40px'
                     }} onClick={() => setShowAlternativeTitles(false)}>
                         <div style={{
                             background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`,
                             backdropFilter: 'blur(20px)',
                             WebkitBackdropFilter: 'blur(20px)',
-                            borderRadius: '24px',
+                            borderRadius: isMobile ? '16px' : '24px',
                             border: '1px solid rgba(255, 255, 255, 0.2)',
                             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
                             width: '100%',
@@ -1573,13 +1603,13 @@ export default function MovieDetail() {
                             overflow: 'hidden'
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
-                                padding: '36px 24px 24px 24px',
+                                padding: isMobile ? '16px 12px 12px 12px' : '24px 24px 16px 24px',
                                 borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 alignItems: 'center'
                             }}>
-                                <h2 style={{ color: '#fff', margin: 0 }}>{t('movie.alternativeTitles')}</h2>
+                                <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('movie.alternativeTitles')}</h2>
                                 <button
                                     onClick={() => setShowAlternativeTitles(false)}
                                     style={{
@@ -1598,7 +1628,7 @@ export default function MovieDetail() {
                                 </button>
                             </div>
                             <div className="modal-scrollbar" style={{
-                                padding: '24px',
+                                padding: isMobile ? '12px' : '24px',
                                 overflowY: 'auto'
                             }}>
                                 {alternativeTitles.length > 0 ? (
@@ -1651,13 +1681,13 @@ export default function MovieDetail() {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        padding: '40px'
+                        padding: isMobile ? '20px' : '40px'
                     }} onClick={() => setShowReleaseDates(false)}>
                         <div style={{
                             background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`,
                             backdropFilter: 'blur(20px)',
                             WebkitBackdropFilter: 'blur(20px)',
-                            borderRadius: '24px',
+                            borderRadius: isMobile ? '16px' : '24px',
                             border: '1px solid rgba(255, 255, 255, 0.2)',
                             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
                             width: '100%',
@@ -1668,13 +1698,13 @@ export default function MovieDetail() {
                             overflow: 'hidden'
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
-                                padding: '36px 24px 24px 24px',
+                                padding: isMobile ? '16px 12px 12px 12px' : '24px 24px 16px 24px',
                                 borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 alignItems: 'center'
                             }}>
-                                <h2 style={{ color: '#fff', margin: 0 }}>{t('movie.releaseInformation')}</h2>
+                                <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('movie.releaseInformation')}</h2>
                                 <button
                                     onClick={() => setShowReleaseDates(false)}
                                     style={{
@@ -1693,7 +1723,7 @@ export default function MovieDetail() {
                                 </button>
                             </div>
                             <div className="modal-scrollbar" style={{
-                                padding: '24px',
+                                padding: isMobile ? '12px' : '24px',
                                 overflowY: 'auto'
                             }}>
                                 {/* Primary Release Date */}
@@ -1766,13 +1796,13 @@ export default function MovieDetail() {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        padding: '40px'
+                        padding: isMobile ? '20px' : '40px'
                     }} onClick={() => setShowTrailers(false)}>
                         <div style={{
                             background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`,
                             backdropFilter: 'blur(20px)',
                             WebkitBackdropFilter: 'blur(20px)',
-                            borderRadius: '24px',
+                            borderRadius: isMobile ? '16px' : '24px',
                             border: '1px solid rgba(255, 255, 255, 0.2)',
                             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
                             width: '100%',
@@ -1782,13 +1812,13 @@ export default function MovieDetail() {
                             flexDirection: 'column'
                         }} onClick={e => e.stopPropagation()}>
                             <div style={{
-                                padding: '36px 24px 24px 24px',
+                                padding: isMobile ? '16px 12px 12px 12px' : '24px 24px 16px 24px',
                                 borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 alignItems: 'center'
                             }}>
-                                <h2 style={{ color: '#fff', margin: 0 }}>{t('movie.trailers')}</h2>
+                                <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('movie.trailers')}</h2>
                                 <button
                                     onClick={() => setShowTrailers(false)}
                                     style={{
@@ -1807,7 +1837,7 @@ export default function MovieDetail() {
                                 </button>
                             </div>
                             <div className="modal-scrollbar" style={{
-                                padding: '24px',
+                                padding: isMobile ? '12px' : '24px',
                                 overflowY: 'auto'
                             }}>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -1842,7 +1872,7 @@ export default function MovieDetail() {
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    padding: '40px',
+                    padding: isMobile ? '20px' : '40px',
                     overflow: 'hidden'
                 }} onClick={() => setShowPoster(false)}>
                     <img

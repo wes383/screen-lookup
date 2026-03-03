@@ -486,7 +486,7 @@ export default function Home() {
             {!isFocused && (
                 <div style={{
                     position: 'absolute',
-                    bottom: '40px',
+                    bottom: '80px',
                     left: '50%',
                     transform: 'translateX(-50%)',
                     zIndex: 10,

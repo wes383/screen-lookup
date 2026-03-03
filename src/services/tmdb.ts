@@ -26,6 +26,13 @@ export interface MovieDetails {
         poster_path: string | null;
         backdrop_path: string | null;
     } | null;
+    external_ids?: {
+        imdb_id?: string | null;
+        facebook_id?: string | null;
+        instagram_id?: string | null;
+        twitter_id?: string | null;
+        wikidata_id?: string | null;
+    };
 }
 
 const USE_DIRECT_API = import.meta.env.VITE_USE_DIRECT_API === 'true';
@@ -58,7 +65,10 @@ const buildApiUrl = (path: string, params: Record<string, string> = {}): string 
 };
 
 export const getMovieDetails = async (id: string, language: string = 'en-US'): Promise<MovieDetails> => {
-    const url = buildApiUrl(`movie/${id}`, { language });
+    const url = buildApiUrl(`movie/${id}`, { 
+        append_to_response: 'external_ids',
+        language 
+    });
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -986,5 +996,49 @@ export const getTrending = async (
         return response.json();
     } catch {
         return { page: 1, results: [], total_pages: 0, total_results: 0 };
+    }
+};
+
+// Wikipedia language code mapping
+const wikiLanguageMap: Record<string, string> = {
+    'en': 'en', 'en-US': 'en', 'en-GB': 'en',
+    'zh': 'zh', 'zh-CN': 'zh', 'zh-TW': 'zh', 'zh-HK': 'zh',
+    'ja': 'ja', 'ko': 'ko',
+    'es': 'es', 'es-ES': 'es', 'es-MX': 'es',
+    'fr': 'fr', 'de': 'de', 'it': 'it',
+    'pt': 'pt', 'pt-PT': 'pt', 'pt-BR': 'pt',
+    'ru': 'ru', 'tr': 'tr'
+};
+
+// Get Wikipedia URL from Wikidata ID
+export const getWikipediaUrl = async (wikidataId: string | null | undefined, i18nLang: string): Promise<string | null> => {
+    if (!wikidataId) return null;
+    
+    const wikiLang = wikiLanguageMap[i18nLang] || 'en';
+    
+    try {
+        const response = await fetch(
+            `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${wikidataId}&props=sitelinks&format=json&origin=*`
+        );
+        
+        if (!response.ok) return null;
+        
+        const data = await response.json();
+        const entity = data.entities?.[wikidataId];
+        
+        if (!entity) return null;
+        
+        const sitelinks = entity.sitelinks;
+        
+        const site = sitelinks?.[`${wikiLang}wiki`] || sitelinks?.enwiki;
+        
+        if (!site?.title || !site?.site) return null;
+        
+        const lang = site.site.replace('wiki', '');
+        const encodedTitle = encodeURIComponent(site.title.replace(/ /g, '_'));
+        
+        return `https://${lang}.wikipedia.org/wiki/${encodedTitle}`;
+    } catch {
+        return null;
     }
 };

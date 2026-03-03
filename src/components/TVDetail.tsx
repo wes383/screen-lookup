@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getTVDetails, getTVLogos, getTVContentRatings, getTVWatchProviders, getTVKeywords, getTVCredits, getTVAlternativeTitles, getTVVideos, getTVSeasonDetails, getTVEpisodeDetails, getImageUrl, getIMDbRating, type TVDetails, type MovieLogo, type WatchProviderData, type WatchProvider, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails } from '../services/tmdb';
-import { X, User, PlayCircle, Film, Star } from 'lucide-react';
+import { getTVDetails, getTVLogos, getTVContentRatings, getTVWatchProviders, getTVKeywords, getTVCredits, getTVAlternativeTitles, getTVVideos, getTVSeasonDetails, getTVEpisodeDetails, getImageUrl, getIMDbRating, getWikipediaUrl, type TVDetails, type MovieLogo, type WatchProviderData, type WatchProvider, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails } from '../services/tmdb';
+import { X, User, PlayCircle, Film, Star, ChevronRight, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLoading } from '../contexts/LoadingContext';
 import { getTMDBLanguage, getTMDBImageLanguage, getCountryCode, getDateLocale } from '../utils/languageMapper';
@@ -94,6 +94,8 @@ export default function TVDetail() {
     const [error, setError] = useState('');
     const [imdbRating, setImdbRating] = useState<{ aggregateRating: number; voteCount: number } | null>(null);
     const [bgRgb, setBgRgb] = useState<string>('18, 18, 18');
+    const [showSeasons, setShowSeasons] = useState(false);
+    const [wikipediaUrl, setWikipediaUrl] = useState<string | null>(null);
 
     useEffect(() => {
         setIsLoading(true);
@@ -199,6 +201,15 @@ export default function TVDetail() {
                     getIMDbRating(tvData.external_ids.imdb_id).then(rating => {
                         if (rating) setImdbRating(rating);
                     });
+                }
+
+                // Get Wikipedia URL from Wikidata
+                if (tvData.external_ids?.wikidata_id) {
+                    getWikipediaUrl(tvData.external_ids.wikidata_id, i18n.language).then(url => {
+                        setWikipediaUrl(url);
+                    });
+                } else {
+                    setWikipediaUrl(null);
                 }
             })
             .catch((err) => {
@@ -548,150 +559,6 @@ export default function TVDetail() {
                     </p>
                 </div>
 
-                {/* External Links */}
-                <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', flexWrap: 'wrap' }}>
-                    {tv.poster_path && (
-                        <span
-                            onClick={() => setShowPoster(true)}
-                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px', cursor: 'pointer' }}
-                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                        >
-                            {t('common.poster')}
-                        </span>
-                    )}
-                    {tv.homepage && (
-                        <a
-                            href={tv.homepage}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                        >
-                            {t('common.homepage')}
-                        </a>
-                    )}
-
-                    {(() => {
-                        const validTrailers = videos.filter(v => v.site === 'YouTube' && v.type === 'Trailer' && v.official);
-                        if (validTrailers.length > 1) {
-                            return (
-                                <span
-                                    onClick={() => setShowTrailers(true)}
-                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px', cursor: 'pointer' }}
-                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                                >
-                                    {t('tv.trailers')}
-                                </span>
-                            );
-                        } else if (validTrailers.length === 1) {
-                            return (
-                                <a
-                                    href={`https://www.youtube.com/watch?v=${validTrailers[0].key}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                                >
-                                    {t('common.trailer')}
-                                </a>
-                            );
-                        }
-                        return null;
-                    })()}
-                    {(i18n.language === 'zh-CN') && (
-                        <a
-                            href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(tv.original_name)}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                        >
-                            {t('common.douban')}
-                        </a>
-                    )}
-                    {tv.external_ids?.imdb_id && (
-                        <a
-                            href={`https://www.imdb.com/title/${tv.external_ids.imdb_id}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                        >
-                            {t('common.imdb')}
-                        </a>
-                    )}
-                    {tv.external_ids?.imdb_id && (
-                        <a
-                            href={`https://www.imdb.com/title/${tv.external_ids.imdb_id}/parentalguide`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                        >
-                            Parents Guide
-                        </a>
-                    )}
-                    <a
-                        href={`https://www.themoviedb.org/tv/${tv.id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                    >
-                        {t('common.tmdb')}
-                    </a>
-                    {tv.external_ids?.imdb_id && (
-                        <a
-                            href={`https://trakt.tv/shows/${tv.external_ids.imdb_id}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                        >
-                            {t('common.trakt')}
-                        </a>
-                    )}
-                    <a
-                        href={`https://www.metacritic.com/search/${encodeURIComponent(englishName || tv.original_name)}/?page=1&category=1`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                    >
-                        {t('common.metacritic')}
-                    </a>
-                    <a
-                        href={`https://www.rottentomatoes.com/search?search=${encodeURIComponent(englishName || tv.original_name)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                    >
-                        {t('common.rottentomatoes')}
-                    </a>
-                    <a
-                        href={`https://www.justwatch.com/us/search?q=${encodeURIComponent(englishName || tv.original_name)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
-                        onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                        onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-                    >
-                        {t('tv.justWatch')}
-                    </a>
-                </div>
-
                 <div style={{ maxWidth: '800px' }}>
                     {/* Created By */}
                     {tv.created_by.length > 0 && (
@@ -709,7 +576,7 @@ export default function TVDetail() {
                                     <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                                         <div
                                             onClick={() => navigate(`/person/${c.id}`)}
-                                            style={{ cursor: 'pointer' }}
+                                            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
                                         >
                                             {c.profile_path ? (
                                                 <img
@@ -764,7 +631,7 @@ export default function TVDetail() {
                                     <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                                         <div
                                             onClick={() => navigate(`/person/${c.id}`)}
-                                            style={{ cursor: 'pointer' }}
+                                            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
                                         >
                                             {c.profile_path ? (
                                                 <img
@@ -794,10 +661,16 @@ export default function TVDetail() {
                                                 </div>
                                             )}
                                         </div>
-                                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flex: 1, minWidth: 0 }}>
+                                        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '2px' : '8px', alignItems: isMobile ? 'flex-start' : 'center', flex: 1, minWidth: 0 }}>
                                             <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: isMobile ? '16px' : '18px', color: '#ccc', whiteSpace: 'nowrap', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
-                                            <span style={{ fontSize: isMobile ? '14px' : '16px', color: '#666', whiteSpace: 'nowrap' }}>{t('common.as')}</span>
-                                            <span style={{ fontSize: isMobile ? '16px' : '18px', color: '#999', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flex: 1 }} title={c.character}>{c.character}</span>
+                                            {isMobile ? (
+                                                <span style={{ fontSize: '14px', color: '#999' }}>{t('common.as')} {c.character}</span>
+                                            ) : (
+                                                <>
+                                                    <span style={{ fontSize: '14px', color: '#666', whiteSpace: 'nowrap' }}>{t('common.as')}</span>
+                                                    <span style={{ fontSize: '18px', color: '#999', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flex: 1 }} title={c.character}>{c.character}</span>
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                 ))}
@@ -829,50 +702,63 @@ export default function TVDetail() {
                 {/* Seasons */}
                 {tv.seasons.length > 0 && (
                     <div style={{ marginTop: '32px', marginBottom: '32px' }}>
-                        <h3 style={{
-                            fontSize: '1.2rem',
-                            marginBottom: '16px',
-                            fontWeight: 600,
-                            color: '#fff'
-                        }}>
+                        <h3 
+                            onClick={() => isMobile && setShowSeasons(!showSeasons)}
+                            style={{
+                                fontSize: '1.2rem',
+                                marginBottom: '16px',
+                                fontWeight: 600,
+                                color: '#fff',
+                                cursor: isMobile ? 'pointer' : 'default',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px'
+                            }}>
                             {t('tv.seasons')}
+                            {isMobile && (
+                                <span style={{ display: 'flex', transform: 'translateY(2px)' }}>
+                                    {showSeasons ? <ChevronDown size={20} color="#999" /> : <ChevronRight size={20} color="#999" />}
+                                </span>
+                            )}
                         </h3>
-                        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-                            {tv.seasons.filter(season => season.episode_count > 0).map(season => (
-                                <div
-                                    key={season.id}
-                                    onClick={() => handleSeasonClick(season.season_number)}
-                                    style={{ width: '140px', cursor: 'pointer' }}
-                                >
-                                    <div style={{
-                                        height: '210px',
-                                        backgroundColor: '#333',
-                                        borderRadius: '16px',
-                                        overflow: 'hidden',
-                                        marginBottom: '8px'
-                                    }}>
-                                        {season.poster_path ? (
-                                            <img
-                                                src={getImageUrl(season.poster_path, 'w342')}
-                                                alt={season.name}
-                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                            />
-                                        ) : (
-                                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>
-                                                <Film size={48} />
-                                            </div>
-                                        )}
+                        {(!isMobile || showSeasons) && (
+                            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                                {tv.seasons.filter(season => season.episode_count > 0).map(season => (
+                                    <div
+                                        key={season.id}
+                                        onClick={() => handleSeasonClick(season.season_number)}
+                                        style={{ width: '140px', cursor: 'pointer' }}
+                                    >
+                                        <div style={{
+                                            height: '210px',
+                                            backgroundColor: '#333',
+                                            borderRadius: '16px',
+                                            overflow: 'hidden',
+                                            marginBottom: '8px'
+                                        }}>
+                                            {season.poster_path ? (
+                                                <img
+                                                    src={getImageUrl(season.poster_path, 'w342')}
+                                                    alt={season.name}
+                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                />
+                                            ) : (
+                                                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>
+                                                    <Film size={48} />
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div style={{ fontSize: '14px', color: '#fff', fontWeight: 500 }}>{season.name}</div>
+                                        <div style={{ fontSize: '13px', color: '#999' }}>
+                                            {season.episode_count} {t('tv.episodes')}
+                                        </div>
+                                        <div style={{ fontSize: '13px', color: '#999' }}>
+                                            {season.air_date ? new Date(season.air_date).getFullYear() : t('common.tba')}
+                                        </div>
                                     </div>
-                                    <div style={{ fontSize: '14px', color: '#fff', fontWeight: 500 }}>{season.name}</div>
-                                    <div style={{ fontSize: '13px', color: '#999' }}>
-                                        {season.episode_count} {t('tv.episodes')}
-                                    </div>
-                                    <div style={{ fontSize: '13px', color: '#999' }}>
-                                        {season.air_date ? new Date(season.air_date).getFullYear() : t('common.tba')}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 )}
 
@@ -996,6 +882,165 @@ export default function TVDetail() {
                             </div>
                         </div>
                     )}
+
+                    {/* External Links */}
+                    <div style={{ marginTop: '24px' }}>
+                        <h3 style={{ fontSize: '1.2rem', marginBottom: '16px', fontWeight: 600, color: '#fff' }}>{t('common.externalLinks')}</h3>
+                        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                            {tv.poster_path && (
+                                <span
+                                    onClick={() => setShowPoster(true)}
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px', cursor: 'pointer' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    {t('common.poster')}
+                                </span>
+                            )}
+                            {tv.homepage && (
+                                <a
+                                    href={tv.homepage}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    {t('common.homepage')}
+                                </a>
+                            )}
+
+                            {(() => {
+                                const validTrailers = videos.filter(v => v.site === 'YouTube' && v.type === 'Trailer' && v.official);
+                                if (validTrailers.length > 1) {
+                                    return (
+                                        <span
+                                            onClick={() => setShowTrailers(true)}
+                                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px', cursor: 'pointer' }}
+                                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                        >
+                                            {t('tv.trailers')}
+                                        </span>
+                                    );
+                                } else if (validTrailers.length === 1) {
+                                    return (
+                                        <a
+                                            href={`https://www.youtube.com/watch?v=${validTrailers[0].key}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                            onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                            onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                        >
+                                            {t('common.trailer')}
+                                        </a>
+                                    );
+                                }
+                                return null;
+                            })()}
+                            {(i18n.language === 'zh-CN') && (
+                                <a
+                                    href={`https://www.douban.com/search?cat=1002&q=${encodeURIComponent(tv.original_name)}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    {t('common.douban')}
+                                </a>
+                            )}
+                            {tv.external_ids?.imdb_id && (
+                                <a
+                                    href={`https://www.imdb.com/title/${tv.external_ids.imdb_id}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    {t('common.imdb')}
+                                </a>
+                            )}
+                            {tv.external_ids?.imdb_id && (
+                                <a
+                                    href={`https://www.imdb.com/title/${tv.external_ids.imdb_id}/parentalguide`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    Parents Guide
+                                </a>
+                            )}
+                            <a
+                                href={`https://www.themoviedb.org/tv/${tv.id}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                            >
+                                {t('common.tmdb')}
+                            </a>
+                            {tv.external_ids?.imdb_id && (
+                                <a
+                                    href={`https://trakt.tv/shows/${tv.external_ids.imdb_id}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    {t('common.trakt')}
+                                </a>
+                            )}
+                            <a
+                                href={`https://www.metacritic.com/search/${encodeURIComponent(englishName || tv.original_name)}/?page=1&category=1`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                            >
+                                {t('common.metacritic')}
+                            </a>
+                            <a
+                                href={`https://www.rottentomatoes.com/search?search=${encodeURIComponent(englishName || tv.original_name)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                            >
+                                {t('common.rottentomatoes')}
+                            </a>
+                            <a
+                                href={`https://www.justwatch.com/us/search?q=${encodeURIComponent(englishName || tv.original_name)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                            >
+                                {t('tv.justWatch')}
+                            </a>
+                            {wikipediaUrl && (
+                                <a
+                                    href={wikipediaUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: '#fff', textDecoration: 'none', fontSize: '16px', textUnderlineOffset: '5px' }}
+                                    onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
+                                    onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
+                                >
+                                    {t('common.wikipedia')}
+                                </a>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1003,11 +1048,11 @@ export default function TVDetail() {
             {showFullCast && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: isMobile ? '20px' : '40px' }} onClick={() => setShowFullCast(false)}>
                     <div style={{ background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: isMobile ? '16px' : '24px', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '800px', height: isMobile ? '85vh' : '90vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: isMobile ? '22px 16px 16px 16px' : '36px 24px 24px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ padding: isMobile ? '16px 12px 12px 12px' : '24px 24px 16px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.fullCastAndCrew')}</h2>
                             <button onClick={() => setShowFullCast(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: isMobile ? '20px' : '24px', cursor: 'pointer' }}><X size={isMobile ? 20 : 24} /></button>
                         </div>
-                        <div className="modal-scrollbar" style={{ padding: isMobile ? '16px' : '24px', overflowY: 'auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '24px' : '40px' }}>
+                        <div className="modal-scrollbar" style={{ padding: isMobile ? '12px' : '24px', overflowY: 'auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '24px' : '40px' }}>
                             <div>
                                 <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>{t('tv.cast')}</h3>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -1039,11 +1084,11 @@ export default function TVDetail() {
             {showAlternativeTitles && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: isMobile ? '20px' : '40px' }} onClick={() => setShowAlternativeTitles(false)}>
                     <div style={{ background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: isMobile ? '16px' : '24px', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: isMobile ? '22px 16px 16px 16px' : '36px 24px 24px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ padding: isMobile ? '16px 12px 12px 12px' : '24px 24px 16px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.alternativeTitles')}</h2>
                             <button onClick={() => setShowAlternativeTitles(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: isMobile ? '20px' : '24px', cursor: 'pointer' }}><X size={isMobile ? 20 : 24} /></button>
                         </div>
-                        <div className="modal-scrollbar" style={{ padding: isMobile ? '16px' : '24px', overflowY: 'auto' }}>
+                        <div className="modal-scrollbar" style={{ padding: isMobile ? '12px' : '24px', overflowY: 'auto' }}>
                             {alternativeTitles.length > 0 ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', paddingBottom: '12px' }}>
@@ -1079,13 +1124,13 @@ export default function TVDetail() {
 
             {/* Trailers Modal */}
             {showTrailers && (
-                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowTrailers(false)}>
-                    <div style={{ background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: '24px', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: '36px 24px 24px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <h2 style={{ color: '#fff', margin: 0 }}>{t('tv.trailers')}</h2>
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: isMobile ? '20px' : '40px' }} onClick={() => setShowTrailers(false)}>
+                    <div style={{ background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: isMobile ? '16px' : '24px', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
+                        <div style={{ padding: isMobile ? '16px 12px 12px 12px' : '24px 24px 16px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.trailers')}</h2>
                             <button onClick={() => setShowTrailers(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
-                        <div className="modal-scrollbar" style={{ padding: '24px', overflowY: 'auto' }}>
+                        <div className="modal-scrollbar" style={{ padding: isMobile ? '12px' : '24px', overflowY: 'auto' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                                 {videos.filter(v => v.site === 'YouTube' && v.type === 'Trailer' && v.official).map((video, idx) => (
                                     <a key={idx} href={`https://www.youtube.com/watch?v=${video.key}`} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', paddingBottom: '12px', textDecoration: 'none', alignItems: 'center' }}>
@@ -1101,13 +1146,13 @@ export default function TVDetail() {
 
             {/* Content Ratings Modal */}
             {showContentRatings && (
-                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowContentRatings(false)}>
-                    <div style={{ background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: '24px', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: '36px 24px 24px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <h2 style={{ color: '#fff', margin: 0 }}>{t('tv.contentRatings')}</h2>
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: isMobile ? '20px' : '40px' }} onClick={() => setShowContentRatings(false)}>
+                    <div style={{ background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: isMobile ? '16px' : '24px', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '600px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
+                        <div style={{ padding: isMobile ? '16px 12px 12px 12px' : '24px 24px 16px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.contentRatings')}</h2>
                             <button onClick={() => setShowContentRatings(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
-                        <div className="modal-scrollbar" style={{ padding: '24px', overflowY: 'auto' }}>
+                        <div className="modal-scrollbar" style={{ padding: isMobile ? '12px' : '24px', overflowY: 'auto' }}>
                             {contentRatings.length > 0 ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                     {contentRatings.map((r, idx) => (
@@ -1136,13 +1181,13 @@ export default function TVDetail() {
             )}
             {/* Season Details Modal */}
             {showSeasonDetails && (
-                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }} onClick={() => setShowSeasonDetails(false)}>
-                    <div style={{ background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: '24px', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '900px', height: '90vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
-                        <div style={{ padding: '32px 24px 20px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '76px' }}>
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: isMobile ? '20px' : '40px' }} onClick={() => setShowSeasonDetails(false)}>
+                    <div style={{ background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.25)`, backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: isMobile ? '16px' : '24px', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)', width: '100%', maxWidth: '900px', height: '90vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} onClick={e => e.stopPropagation()}>
+                        <div style={{ padding: isMobile ? '16px 12px 12px 12px' : '24px 24px 16px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <div style={{ flex: 1 }}>
                                 {selectedSeasonDetails ? (
                                     <>
-                                        <h2 style={{ color: '#fff', margin: 0, fontSize: '1.5rem' }}>
+                                        <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>
                                             {selectedSeasonDetails.name}
                                         </h2>
                                         <p style={{ color: '#999', margin: '2px 0 0 0', fontSize: '13px' }}>
@@ -1150,7 +1195,7 @@ export default function TVDetail() {
                                         </p>
                                     </>
                                 ) : (
-                                    <h2 style={{ color: '#fff', margin: 0, fontSize: '1.5rem' }}>
+                                    <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>
                                         {t('tv.seasonDetails')}
                                     </h2>
                                 )}
@@ -1158,7 +1203,7 @@ export default function TVDetail() {
                             <button onClick={() => setShowSeasonDetails(false)} style={{ background: 'none', border: 'none', color: '#999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
 
-                        <div className="modal-scrollbar" style={{ padding: '24px', overflowY: 'auto', flex: 1 }}>
+                        <div className="modal-scrollbar" style={{ padding: isMobile ? '12px' : '24px', overflowY: 'auto', flex: 1 }}>
                             {loadingSeason ? (
                                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                                     <p style={{ color: '#fff' }}>{t('common.loading')}</p>
@@ -1167,26 +1212,30 @@ export default function TVDetail() {
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                                     {selectedSeasonDetails.episodes.map(episode => (
                                         <div key={episode.id} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '20px', borderRadius: '12px', background: `linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), rgba(${bgRgb}, 0.6)`, padding: '16px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-                                            <div style={{ minWidth: isMobile ? '100%' : '227px', width: isMobile ? '100%' : '227px', height: isMobile ? 'auto' : '127px', aspectRatio: isMobile ? '16/9' : 'auto', backgroundColor: '#000', borderRadius: '8px', overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
-                                                {episode.still_path ? (
-                                                    <img
-                                                        src={getImageUrl(episode.still_path, 'w500')}
-                                                        alt={episode.name}
-                                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                                    />
-                                                ) : (
-                                                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>
-                                                        <PlayCircle size={32} />
+                                            <div style={{ minWidth: isMobile ? '100%' : '227px', width: isMobile ? '100%' : '227px', height: isMobile ? 'auto' : '127px', position: 'relative', backgroundColor: '#000', borderRadius: '8px', overflow: 'hidden', flexShrink: 0 }}>
+                                                <div style={{ ...isMobile ? { width: '100%', paddingTop: '56.25%' } : { width: '100%', height: '127px' } }}>
+                                                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+                                                        {episode.still_path ? (
+                                                            <img
+                                                                src={getImageUrl(episode.still_path, 'w500')}
+                                                                alt={episode.name}
+                                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                            />
+                                                        ) : (
+                                                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>
+                                                                <PlayCircle size={32} />
+                                                            </div>
+                                                        )}
+                                                        <div style={{ position: 'absolute', bottom: '8px', left: '8px', padding: '2px 6px', background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', borderRadius: '4px', color: '#000', fontSize: '12px', fontWeight: 500 }}>
+                                                            {episode.episode_number}
+                                                        </div>
                                                     </div>
-                                                )}
-                                                <div style={{ position: 'absolute', bottom: '8px', left: '8px', padding: '2px 6px', background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', borderRadius: '4px', color: '#000', fontSize: '12px', fontWeight: 500 }}>
-                                                    {episode.episode_number}
                                                 </div>
                                             </div>
                                             <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px', gap: '24px' }}>
+                                                <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'flex-start', marginBottom: '12px', gap: isMobile ? '0' : '24px' }}>
                                                     <h3 style={{ color: '#fff', margin: 0, fontSize: '1.1rem', flex: 1 }}>{episode.name}</h3>
-                                                    {episodeImdbRatings[episode.id] && (
+                                                    {!isMobile && episodeImdbRatings[episode.id] && (
                                                         <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
                                                             <Star size={14} fill="#fff" color="#fff" />
                                                             <span style={{ fontSize: '14px', color: '#fff', fontWeight: 500 }}>{episodeImdbRatings[episode.id].aggregateRating.toFixed(1)}</span>
@@ -1215,7 +1264,37 @@ export default function TVDetail() {
                                                 <p style={{ color: '#ccc', fontSize: '14px', lineHeight: 1.5, margin: 0, flex: 1 }}>
                                                     {episode.overview || t('common.noOverview')}
                                                 </p>
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '8px' }}>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '8px', flexWrap: 'wrap' }}>
+                                                    {isMobile && episodeImdbRatings[episode.id] && (
+                                                        <>
+                                                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                                                <Star size={14} fill="#fff" color="#fff" />
+                                                                <span style={{ fontSize: '14px', color: '#fff', fontWeight: 500 }}>{episodeImdbRatings[episode.id].aggregateRating.toFixed(1)}</span>
+                                                                {episodeImdbRatings[episode.id].voteCount > 0 && (
+                                                                    <span style={{ fontSize: '13px', color: '#666' }}>
+                                                                        ({(() => {
+                                                                            const count = episodeImdbRatings[episode.id].voteCount;
+                                                                            if (count < 1000) {
+                                                                                return count.toString();
+                                                                            } else if (count < 10000) {
+                                                                                const k = count / 1000;
+                                                                                return `${k.toFixed(1)}K`;
+                                                                            } else if (count < 1000000) {
+                                                                                const k = Math.round(count / 1000);
+                                                                                return `${k}K`;
+                                                                            } else {
+                                                                                const m = count / 1000000;
+                                                                                return `${m.toFixed(1)}M`;
+                                                                            }
+                                                                        })()})
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                            {(episode.runtime > 0 || episode.air_date) && (
+                                                                <span style={{ fontSize: '13px', color: '#666' }}>•</span>
+                                                            )}
+                                                        </>
+                                                    )}
                                                     {episode.runtime > 0 && (
                                                         <span style={{ fontSize: '13px', color: '#999' }}>{episode.runtime}m</span>
                                                     )}
@@ -1257,7 +1336,7 @@ export default function TVDetail() {
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    padding: '40px',
+                    padding: isMobile ? '20px' : '40px',
                     overflow: 'hidden'
                 }} onClick={() => setShowPoster(false)}>
                     <img
