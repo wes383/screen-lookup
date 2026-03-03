@@ -10,7 +10,7 @@ A modern, multilingual web application for looking up information about movies, 
 - **Person Profiles**: Actor and filmmaker filmographies and biographies
 - **Film Lists**: Curated collections from prestigious sources
 - **Discovery**: Trending content and personalized recommendations
-- **Multilingual Support**: 12 languages including English, Chinese, Japanese, French, German, Spanish, Russian, and more
+- **Multilingual Support**: 14 languages including English, Chinese, French, German, Spanish, Russian, Arabic and more
 
 ## Getting Started
 
