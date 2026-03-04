@@ -1,6 +1,6 @@
 # Screen Lookup
 
-[https://screen-lookup.vercel.app/](https://screen-lookup.vercel.app/)
+[https://screen-lookup.wesluma.com/](https://screen-lookup.wesluma.com/)
 
 A modern, multilingual web application for looking up information about movies, TV shows, and people, powered by TMDB API.
 
