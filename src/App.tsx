@@ -2,6 +2,7 @@ import './i18n';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Analytics } from '@vercel/analytics/react';
 import Home from './components/Home';
 import MovieDetail from './components/MovieDetail';
 import TVDetail from './components/TVDetail';
@@ -75,6 +76,7 @@ function App() {
       <LoadingProvider>
         <AppContent />
       </LoadingProvider>
+      <Analytics />
     </Router>
   );
 }
