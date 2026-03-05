@@ -9,6 +9,10 @@
       "destination": "/api/tmdb-image?path=/:path*"
     },
     {
+      "source": "/google*.html",
+      "destination": "/google*.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
