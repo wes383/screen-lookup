@@ -970,11 +970,11 @@ export default function MovieDetail() {
                                         <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '2px' : '8px', alignItems: isMobile ? 'flex-start' : 'baseline' }}>
                                             <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: isMobile ? '16px' : '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
                                             {isMobile ? (
-                                                <span style={{ fontSize: '14px', color: '#999' }}>{t('common.as')} {c.character}</span>
+                                                <span style={{ fontSize: '14px', color: '#999', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100%' }}>{t('common.as')} {c.character}</span>
                                             ) : (
                                                 <>
                                                     <span style={{ fontSize: '14px', color: '#666' }}>{t('common.as')}</span>
-                                                    <span style={{ fontSize: '18px', color: '#999' }}>{c.character}</span>
+                                                    <span style={{ fontSize: '18px', color: '#999', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '300px' }}>{c.character}</span>
                                                 </>
                                             )}
                                         </div>

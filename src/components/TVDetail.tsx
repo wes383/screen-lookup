@@ -670,7 +670,7 @@ export default function TVDetail() {
                                         <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '2px' : '8px', alignItems: isMobile ? 'flex-start' : 'center', flex: 1, minWidth: 0 }}>
                                             <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: isMobile ? '16px' : '18px', color: '#ccc', whiteSpace: 'nowrap', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
                                             {isMobile ? (
-                                                <span style={{ fontSize: '14px', color: '#999' }}>{t('common.as')} {c.character}</span>
+                                                <span style={{ fontSize: '14px', color: '#999', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100%' }} title={c.character}>{t('common.as')} {c.character}</span>
                                             ) : (
                                                 <>
                                                     <span style={{ fontSize: '14px', color: '#666', whiteSpace: 'nowrap' }}>{t('common.as')}</span>
@@ -733,10 +733,10 @@ export default function TVDetail() {
                                     <div
                                         key={season.id}
                                         onClick={() => handleSeasonClick(season.season_number)}
-                                        style={{ width: '140px', cursor: 'pointer' }}
+                                        style={{ width: isMobile ? '100px' : '140px', cursor: 'pointer' }}
                                     >
                                         <div style={{
-                                            height: '210px',
+                                            height: isMobile ? '150px' : '210px',
                                             backgroundColor: '#333',
                                             borderRadius: '16px',
                                             overflow: 'hidden',
@@ -750,15 +750,15 @@ export default function TVDetail() {
                                                 />
                                             ) : (
                                                 <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>
-                                                    <Film size={48} />
+                                                    <Film size={isMobile ? 36 : 48} />
                                                 </div>
                                             )}
                                         </div>
-                                        <div style={{ fontSize: '14px', color: '#fff', fontWeight: 500 }}>{season.name}</div>
-                                        <div style={{ fontSize: '13px', color: '#999' }}>
+                                        <div style={{ fontSize: isMobile ? '12px' : '14px', color: '#fff', fontWeight: 500 }}>{season.name}</div>
+                                        <div style={{ fontSize: isMobile ? '11px' : '13px', color: '#999' }}>
                                             {season.episode_count} {t('tv.episodes')}
                                         </div>
-                                        <div style={{ fontSize: '13px', color: '#999' }}>
+                                        <div style={{ fontSize: isMobile ? '11px' : '13px', color: '#999' }}>
                                             {season.air_date ? new Date(season.air_date).getFullYear() : t('common.tba')}
                                         </div>
                                     </div>
