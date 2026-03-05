@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUp } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 import tspdtData from '../assets/tspdt-1000-greatest-films-2026.json';
 import tspdt21stData from '../assets/tspdt-21st-centurys-top-1000.json';
@@ -470,14 +471,19 @@ export default function Recommendations() {
     };
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            backgroundColor: '#121212',
-            color: '#fff',
-            padding: '20px',
-            boxSizing: 'border-box',
-            fontFamily: 'Inter, sans-serif'
-        }}>
+        <>
+            <Helmet>
+                <title>Recommendations - Screen Lookup</title>
+                <meta name="description" content="Discover highly recommended movies from prestigious film lists including TSPDT, Sight & Sound, AFI, and more." />
+            </Helmet>
+            <div style={{
+                minHeight: '100vh',
+                backgroundColor: '#121212',
+                color: '#fff',
+                padding: '20px',
+                boxSizing: 'border-box',
+                fontFamily: 'Inter, sans-serif'
+            }}>
             <div style={{
                 maxWidth: '1000px',
                 margin: '0 auto',
@@ -819,5 +825,6 @@ export default function Recommendations() {
                 </button>
             )}
         </div>
+        </>
     );
 }

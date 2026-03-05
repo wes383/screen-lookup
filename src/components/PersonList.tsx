@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { User, Loader } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import { getPopularPeople, getImageUrl, type SearchResult } from '../services/tmdb';
 import { getTMDBLanguage } from '../utils/languageMapper';
 
@@ -118,13 +119,18 @@ export default function PersonList() {
     const isMobile = window.innerWidth <= 768;
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            backgroundColor: '#121212',
-            color: '#fff',
-            padding: isMobile ? '80px 16px 20px' : '100px 40px 40px',
-            boxSizing: 'border-box'
-        }}>
+        <>
+            <Helmet>
+                <title>Popular People - Screen Lookup</title>
+                <meta name="description" content="Browse popular actors, directors, and other film industry professionals from around the world." />
+            </Helmet>
+            <div style={{
+                minHeight: '100vh',
+                backgroundColor: '#121212',
+                color: '#fff',
+                padding: isMobile ? '80px 16px 20px' : '100px 40px 40px',
+                boxSizing: 'border-box'
+            }}>
             <div style={{
                 maxWidth: '1200px',
                 margin: '0 auto'
@@ -277,5 +283,6 @@ export default function PersonList() {
                 )}
             </div>
         </div>
+        </>
     );
 }

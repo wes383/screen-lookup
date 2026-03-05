@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Film, ArrowUp, Loader } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import {
     discoverMedia,
     getGenres,
@@ -323,14 +324,19 @@ export default function MediaDiscovery() {
     ];
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            backgroundColor: '#121212',
-            color: '#fff',
-            padding: '20px',
-            boxSizing: 'border-box',
-            fontFamily: 'Inter, sans-serif'
-        }}>
+        <>
+            <Helmet>
+                <title>Media Discovery - Screen Lookup</title>
+                <meta name="description" content="Discover movies and TV shows by genre, decade, and more. Find your next favorite film or series." />
+            </Helmet>
+            <div style={{
+                minHeight: '100vh',
+                backgroundColor: '#121212',
+                color: '#fff',
+                padding: '20px',
+                boxSizing: 'border-box',
+                fontFamily: 'Inter, sans-serif'
+            }}>
             <div style={{
                 maxWidth: '1000px',
                 margin: '0 auto',
@@ -1063,5 +1069,6 @@ export default function MediaDiscovery() {
                 </button>
             )}
         </div>
+        </>
     );
 }

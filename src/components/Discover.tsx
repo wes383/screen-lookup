@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 
 export default function Discover() {
     const { t } = useTranslation();
@@ -88,14 +89,19 @@ export default function Discover() {
     ];
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            backgroundColor: '#121212',
-            color: '#fff',
-            padding: isMobile ? '80px 16px 40px' : '100px 40px 40px',
-            boxSizing: 'border-box',
-            display: 'flex',
-            flexDirection: 'column',
+        <>
+            <Helmet>
+                <title>Discover - Screen Lookup</title>
+                <meta name="description" content="Discover new movies and TV shows. Browse by genre, popularity, and more." />
+            </Helmet>
+            <div style={{
+                minHeight: '100vh',
+                backgroundColor: '#121212',
+                color: '#fff',
+                padding: isMobile ? '80px 16px 40px' : '100px 40px 40px',
+                boxSizing: 'border-box',
+                display: 'flex',
+                flexDirection: 'column',
             alignItems: 'center',
             fontFamily: 'Inter, sans-serif'
         }}>
@@ -214,5 +220,6 @@ export default function Discover() {
                 )}
             </div>
         </div>
+        </>
     );
 }

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Film, Tv, User, Loader } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import { getTrending, getImageUrl, type SearchResult } from '../services/tmdb';
 import { getTMDBLanguage } from '../utils/languageMapper';
 
@@ -144,13 +145,18 @@ export default function TrendingList() {
     if (!isValidType) return null;
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            backgroundColor: '#121212',
-            color: '#fff',
-            padding: isMobile ? '80px 16px 20px' : '100px 40px 40px',
-            boxSizing: 'border-box'
-        }}>
+        <>
+            <Helmet>
+                <title>{type ? `Trending ${type.charAt(0).toUpperCase() + type.slice(1)} - Screen Lookup` : 'Trending - Screen Lookup'}</title>
+                <meta name="description" content={type ? `Discover trending ${type} from around the world` : 'Discover trending movies, TV shows, and people from around the world'} />
+            </Helmet>
+            <div style={{
+                minHeight: '100vh',
+                backgroundColor: '#121212',
+                color: '#fff',
+                padding: isMobile ? '80px 16px 20px' : '100px 40px 40px',
+                boxSizing: 'border-box'
+            }}>
             <div style={{
                 maxWidth: '1200px',
                 margin: '0 auto'
@@ -352,5 +358,6 @@ export default function TrendingList() {
                 )}
             </div>
         </div>
+        </>
     );
 }

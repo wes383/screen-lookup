@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getTVDetails, getTVLogos, getTVContentRatings, getTVWatchProviders, getTVKeywords, getTVCredits, getTVAlternativeTitles, getTVVideos, getTVSeasonDetails, getTVEpisodeDetails, getImageUrl, getIMDbRating, getWikipediaUrl, type TVDetails, type MovieLogo, type WatchProviderData, type WatchProvider, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails } from '../services/tmdb';
 import { X, User, PlayCircle, Film, Star, ChevronRight, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 import { useLoading } from '../contexts/LoadingContext';
 import { getTMDBLanguage, getTMDBImageLanguage, getCountryCode, getDateLocale } from '../utils/languageMapper';
 import { getAverageColor } from '../utils/colorExtractor';
@@ -315,14 +316,19 @@ export default function TVDetail() {
     const runtime = tv.episode_run_time?.[0] || 0;
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            width: '100%',
-            backgroundColor: `rgb(${bgRgb})`,
-            fontFamily: 'Inter, sans-serif',
-            color: 'white',
-            overflowX: 'hidden',
-            transition: 'background-color 0.5s ease'
+        <>
+            <Helmet>
+                <title>{tv ? `${tv.name} (${tv.first_air_date?.split('-')[0]}) - Screen Lookup` : 'TV Show Details - Screen Lookup'}</title>
+                <meta name="description" content={tv ? tv.overview : 'View detailed information about this TV show including cast, crew, ratings, and more.'} />
+            </Helmet>
+            <div style={{
+                minHeight: '100vh',
+                width: '100%',
+                backgroundColor: `rgb(${bgRgb})`,
+                fontFamily: 'Inter, sans-serif',
+                color: 'white',
+                overflowX: 'hidden',
+                transition: 'background-color 0.5s ease'
         }}>
             {/* Hero Section */}
             <div style={{
@@ -1353,5 +1359,6 @@ export default function TVDetail() {
                 </div>
             )}
         </div>
+        </>
     );
 }

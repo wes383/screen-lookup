@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 
 export default function Lists() {
     const { t } = useTranslation();
@@ -59,13 +60,18 @@ export default function Lists() {
     ];
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            backgroundColor: '#121212',
-            color: '#fff',
-            padding: '20px',
-            boxSizing: 'border-box'
-        }}>
+        <>
+            <Helmet>
+                <title>Movie Lists - Screen Lookup</title>
+                <meta name="description" content="Explore curated movie lists including Academy Award winners, Cannes Film Festival selections, and more." />
+            </Helmet>
+            <div style={{
+                minHeight: '100vh',
+                backgroundColor: '#121212',
+                color: '#fff',
+                padding: '20px',
+                boxSizing: 'border-box'
+            }}>
             <div style={{
                 maxWidth: '800px',
                 margin: '0 auto',
@@ -127,5 +133,6 @@ export default function Lists() {
                 </div>
             </div>
         </div>
+        </>
     );
 }

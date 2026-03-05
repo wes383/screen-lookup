@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getMovieDetails, getMovieLogos, getMovieCertification, getWatchProviders, getMovieKeywords, getMovieCredits, getMovieAlternativeTitles, getMovieReleaseDates, getMovieVideos, getCollectionDetails, getImageUrl, getIMDbRating, getWikipediaUrl, type MovieDetails, type MovieLogo, type WatchProviderData, type Keyword, type MovieCredits, type AlternativeTitle, type CountryReleaseDates, type MovieVideo, type CollectionDetails } from '../services/tmdb';
 import { X, User, Film } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 import { useLoading } from '../contexts/LoadingContext';
 import { getTSPDTRanking } from '../utils/tspdtRanking';
 import { getTSPDT21stRanking } from '../utils/tspdt21stRanking';
@@ -343,14 +344,19 @@ export default function MovieDetail() {
     const backgroundUrl = getImageUrl(movie.backdrop_path || movie.poster_path, 'original');
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            width: '100%',
-            backgroundColor: `rgb(${bgRgb})`,
-            fontFamily: 'Inter, sans-serif',
-            color: 'white',
-            overflowX: 'hidden',
-            transition: 'background-color 0.5s ease'
+        <>
+            <Helmet>
+                <title>{movie ? `${movie.title} (${movie.release_date?.split('-')[0]}) - Screen Lookup` : 'Movie Details - Screen Lookup'}</title>
+                <meta name="description" content={movie ? movie.overview : 'View detailed information about this movie including cast, crew, ratings, and more.'} />
+            </Helmet>
+            <div style={{
+                minHeight: '100vh',
+                width: '100%',
+                backgroundColor: `rgb(${bgRgb})`,
+                fontFamily: 'Inter, sans-serif',
+                color: 'white',
+                overflowX: 'hidden',
+                transition: 'background-color 0.5s ease'
         }}>
             {/* Hero Section */}
             <div style={{
@@ -1905,5 +1911,6 @@ export default function MovieDetail() {
                 </div>
             )}
         </div >
+        </>
     );
 }

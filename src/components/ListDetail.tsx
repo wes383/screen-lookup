@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowDown01, ArrowDown10 } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 import tspdtData from '../assets/tspdt-1000-greatest-films-2026.json';
 import tspdt21stData from '../assets/tspdt-21st-centurys-top-1000.json';
@@ -407,13 +408,18 @@ export default function ListDetail() {
     };
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            backgroundColor: '#121212',
-            color: '#fff',
-            padding: '20px',
-            boxSizing: 'border-box'
-        }}>
+        <>
+            <Helmet>
+                <title>{title ? `${title} - Screen Lookup` : 'Movie List - Screen Lookup'}</title>
+                <meta name="description" content={title ? `View the ${title} list` : 'View curated movie lists'} />
+            </Helmet>
+            <div style={{
+                minHeight: '100vh',
+                backgroundColor: '#121212',
+                color: '#fff',
+                padding: '20px',
+                boxSizing: 'border-box'
+            }}>
             <div style={{
                 maxWidth: '800px',
                 margin: '0 auto',
@@ -661,5 +667,6 @@ export default function ListDetail() {
                 </div>
             </div>
         </div>
+        </>
     );
 }

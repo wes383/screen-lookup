@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getPersonDetails, getImageUrl, type PersonDetails, type PersonCreditItem } from '../services/tmdb';
 import { User, Film } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 import { useLoading } from '../contexts/LoadingContext';
 import { getTMDBLanguage, getDateLocale } from '../utils/languageMapper';
 
@@ -164,7 +165,12 @@ export default function PersonDetail() {
         .sort((a, b) => (b.vote_count || 0) - (a.vote_count || 0));
 
     return (
-        <div style={{ minHeight: '100vh', backgroundColor: '#121212', color: '#fff', fontFamily: 'Inter, sans-serif' }}>
+        <>
+            <Helmet>
+                <title>{person ? `${person.name} - Screen Lookup` : 'Person Details - Screen Lookup'}</title>
+                <meta name="description" content={person ? person.biography || `View filmography and details about ${person.name}` : 'View detailed information about this person including their filmography and biography.'} />
+            </Helmet>
+            <div style={{ minHeight: '100vh', backgroundColor: '#121212', color: '#fff', fontFamily: 'Inter, sans-serif' }}>
             {/* Header Section */}
             <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '24px' : '40px', padding: isMobile ? '40px 20px' : '60px 80px', alignItems: 'flex-start' }}>
                 {/* Profile Image */}
@@ -326,5 +332,6 @@ export default function PersonDetail() {
                 )}
             </div>
         </div>
+        </>
     );
 }

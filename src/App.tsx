@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Analytics } from '@vercel/analytics/react';
+import { HelmetProvider } from 'react-helmet-async';
 import Home from './components/Home';
 import MovieDetail from './components/MovieDetail';
 import TVDetail from './components/TVDetail';
@@ -72,12 +73,14 @@ function AppContent() {
 
 function App() {
   return (
-    <Router>
-      <LoadingProvider>
-        <AppContent />
-      </LoadingProvider>
-      <Analytics />
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <LoadingProvider>
+          <AppContent />
+        </LoadingProvider>
+        <Analytics />
+      </Router>
+    </HelmetProvider>
   );
 }
 

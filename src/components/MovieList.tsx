@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Film, Loader } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import {
     getNowPlayingMovies,
     getPopularMovies,
@@ -172,13 +173,18 @@ export default function MovieList() {
     if (!isValidType) return null;
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            backgroundColor: '#121212',
-            color: '#fff',
-            padding: isMobile ? '80px 16px 20px' : '100px 40px 40px',
-            boxSizing: 'border-box'
-        }}>
+        <>
+            <Helmet>
+                <title>{type ? `${type.charAt(0).toUpperCase() + type.slice(1).replace(/-/g, ' ')} Movies - Screen Lookup` : 'Movies - Screen Lookup'}</title>
+                <meta name="description" content={type ? `Browse ${type.replace(/-/g, ' ')} movies` : 'Browse movies by category including now playing, popular, top rated, and upcoming'} />
+            </Helmet>
+            <div style={{
+                minHeight: '100vh',
+                backgroundColor: '#121212',
+                color: '#fff',
+                padding: isMobile ? '80px 16px 20px' : '100px 40px 40px',
+                boxSizing: 'border-box'
+            }}>
             <div style={{
                 maxWidth: '1200px',
                 margin: '0 auto'
@@ -351,5 +357,6 @@ export default function MovieList() {
                 )}
             </div>
         </div>
+        </>
     );
 }

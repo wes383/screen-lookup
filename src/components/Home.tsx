@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Film, Tv, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 import { searchMulti, getImageUrl, findByImdbId, getMovieDetails, getTVDetails, getPersonDetails, type SearchResult } from '../services/tmdb';
 import { getTMDBLanguage } from '../utils/languageMapper';
 
@@ -248,19 +249,24 @@ export default function Home() {
     const isMobile = window.innerWidth <= 768;
 
     return (
-        <div style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: '#121212',
-            overflow: 'hidden',
-            display: 'flex',
-            alignItems: 'flex-start',
-            justifyContent: 'center',
-            paddingTop: isMobile ? '20vh' : 'calc(50vh - 285px)'
-        }}>
+        <>
+            <Helmet>
+                <title>Screen Lookup - Discover Movies & TV Shows</title>
+                <meta name="description" content="A multilingual movie and TV show information lookup application. Discover trending films, popular TV series, and explore curated movie lists from around the world." />
+            </Helmet>
+            <div style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: '#121212',
+                overflow: 'hidden',
+                display: 'flex',
+                alignItems: 'flex-start',
+                justifyContent: 'center',
+                paddingTop: isMobile ? '20vh' : 'calc(50vh - 285px)'
+            }}>
             <div style={{
                 padding: isMobile ? '0 16px' : '0 20px',
                 width: '100%',
@@ -550,6 +556,7 @@ export default function Home() {
                 </div>
             )}
         </div>
+        </>
     );
 }
 
