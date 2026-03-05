@@ -9,8 +9,8 @@
       "destination": "/api/tmdb-image?path=/:path*"
     },
     {
-      "source": "/google*.html",
-      "destination": "/google*.html"
+      "source": "/:file(google.*\\.html)",
+      "destination": "/:file"
     },
     {
       "source": "/(.*)",
