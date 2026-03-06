@@ -29,7 +29,12 @@ export const getAverageColor = (
             resolve(null);
         };
 
-        const proxyUrl = imageUrl.replace('https://image.tmdb.org', '/tmdb-image');
-        img.src = proxyUrl;
+        try {
+            const url = new URL(imageUrl);
+            const proxyUrl = `/api/tmdb-image?path=${encodeURIComponent(url.pathname)}`;
+            img.src = proxyUrl;
+        } catch {
+            img.src = imageUrl;
+        }
     });
 };
