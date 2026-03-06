@@ -37,3 +37,9 @@ A modern, multilingual web application for looking up information about movies, 
    ```bash
    npm run dev
    ```
+
+4. Build for production
+   ```bash
+   npm run build
+   npm start
+   ```
