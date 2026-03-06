@@ -172,9 +172,8 @@ export default function MovieDetail() {
                 const currentLanguage = getTMDBLanguage(i18n.language);
                 const imageLanguage = getTMDBImageLanguage(i18n.language);
                 const countryCode = getCountryCode(i18n.language);
-
-                const [movieData, logos, cert, providers, kw, creds, altTitles, releases, vids, englishData] = await Promise.all([
-                    getMovieDetails(id, currentLanguage),
+                const movieData = await getMovieDetails(id, currentLanguage);
+                const optionalResults = await Promise.allSettled([
                     getMovieLogos(id, imageLanguage),
                     getMovieCertification(id, countryCode),
                     getWatchProviders(id, countryCode),
@@ -186,8 +185,30 @@ export default function MovieDetail() {
                     getMovieDetails(id, 'en-US')
                 ]);
 
+                const [
+                    logosResult,
+                    certResult,
+                    providersResult,
+                    keywordsResult,
+                    creditsResult,
+                    altTitlesResult,
+                    releasesResult,
+                    videosResult,
+                    englishDataResult
+                ] = optionalResults;
+
+                const logos = logosResult.status === 'fulfilled' ? logosResult.value : [];
+                const cert = certResult.status === 'fulfilled' ? certResult.value : null;
+                const providers = providersResult.status === 'fulfilled' ? providersResult.value : null;
+                const kw = keywordsResult.status === 'fulfilled' ? keywordsResult.value : [];
+                const creds = creditsResult.status === 'fulfilled' ? creditsResult.value : { cast: [], crew: [] };
+                const altTitles = altTitlesResult.status === 'fulfilled' ? altTitlesResult.value : [];
+                const releases = releasesResult.status === 'fulfilled' ? releasesResult.value : [];
+                const vids = videosResult.status === 'fulfilled' ? videosResult.value : [];
+                const englishData = englishDataResult.status === 'fulfilled' ? englishDataResult.value : null;
+
                 setMovie(movieData);
-                setEnglishTitle(englishData.title);
+                setEnglishTitle(englishData?.title || movieData.title);
                 const currentLogo = logos.find(l => l.iso_639_1 === imageLanguage) || logos[0] || null;
                 setLogo(currentLogo);
                 setCertification(cert);
@@ -230,12 +251,16 @@ export default function MovieDetail() {
                     } catch (err) {
                         console.error('Failed to fetch collection details:', err);
                     }
+                } else {
+                    setCollection(null);
                 }
 
                 if (movieData.imdb_id) {
                     getIMDbRating(movieData.imdb_id).then(rating => {
                         if (rating) setImdbRating(rating);
                     });
+                } else {
+                    setImdbRating(null);
                 }
 
                 // Get Wikipedia URL from Wikidata

@@ -167,28 +167,49 @@ export default function TVDetail() {
     useEffect(() => {
         if (!id) return;
 
-        setLoading(true);
-        setIsLoading(true);
-        setError('');
+        const fetchData = async () => {
+            setLoading(true);
+            setIsLoading(true);
+            setError('');
 
-        const currentLanguage = getTMDBLanguage(i18n.language);
-        const imageLanguage = getTMDBImageLanguage(i18n.language);
-        const countryCode = getCountryCode(i18n.language);
+            try {
+                const currentLanguage = getTMDBLanguage(i18n.language);
+                const imageLanguage = getTMDBImageLanguage(i18n.language);
+                const countryCode = getCountryCode(i18n.language);
+                const tvData = await getTVDetails(id, currentLanguage);
+                const optionalResults = await Promise.allSettled([
+                    getTVLogos(id, imageLanguage),
+                    getTVContentRatings(id),
+                    getTVWatchProviders(id, countryCode),
+                    getTVKeywords(id),
+                    getTVCredits(id, currentLanguage),
+                    getTVAlternativeTitles(id),
+                    getTVVideos(id),
+                    getTVDetails(id, 'en-US')
+                ]);
 
-        Promise.all([
-            getTVDetails(id, currentLanguage),
-            getTVLogos(id, imageLanguage),
-            getTVContentRatings(id),
-            getTVWatchProviders(id, countryCode),
-            getTVKeywords(id),
-            getTVCredits(id, currentLanguage),
-            getTVAlternativeTitles(id),
-            getTVVideos(id),
-            getTVDetails(id, 'en-US')
-        ])
-            .then(([tvData, logos, ratings, providers, kw, creds, altTitles, vids, englishData]) => {
+                const [
+                    logosResult,
+                    ratingsResult,
+                    providersResult,
+                    keywordsResult,
+                    creditsResult,
+                    altTitlesResult,
+                    videosResult,
+                    englishDataResult
+                ] = optionalResults;
+
+                const logos = logosResult.status === 'fulfilled' ? logosResult.value : [];
+                const ratings = ratingsResult.status === 'fulfilled' ? ratingsResult.value : [];
+                const providers = providersResult.status === 'fulfilled' ? providersResult.value : null;
+                const kw = keywordsResult.status === 'fulfilled' ? keywordsResult.value : [];
+                const creds = creditsResult.status === 'fulfilled' ? creditsResult.value : { cast: [], crew: [] };
+                const altTitles = altTitlesResult.status === 'fulfilled' ? altTitlesResult.value : [];
+                const vids = videosResult.status === 'fulfilled' ? videosResult.value : [];
+                const englishData = englishDataResult.status === 'fulfilled' ? englishDataResult.value : null;
+
                 setTV(tvData);
-                setEnglishName(englishData.name);
+                setEnglishName(englishData?.name || tvData.name);
                 const currentLogo = logos.find(l => l.iso_639_1 === imageLanguage) || logos[0] || null;
                 setLogo(currentLogo);
 
@@ -208,6 +229,8 @@ export default function TVDetail() {
                     getIMDbRating(tvData.external_ids.imdb_id).then(rating => {
                         if (rating) setImdbRating(rating);
                     });
+                } else {
+                    setImdbRating(null);
                 }
 
                 // Get Wikipedia URL from Wikidata
@@ -218,15 +241,16 @@ export default function TVDetail() {
                 } else {
                     setWikipediaUrl(null);
                 }
-            })
-            .catch((err) => {
+            } catch (err) {
                 console.error(err);
                 setError('Failed to load TV details.');
-            })
-            .finally(() => {
+            } finally {
                 setLoading(false);
                 setIsLoading(false);
-            });
+            }
+        };
+
+        fetchData();
     }, [id, i18n.language]);
 
     useEffect(() => {
