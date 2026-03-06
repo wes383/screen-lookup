@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/tmdb-image/:path*",
-      "destination": "/api/tmdb-image?path=/:path*"
-    }
-  ]
-}
