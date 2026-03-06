@@ -1,10 +1,17 @@
-import { useNavigate } from 'react-router-dom';
+'use client'
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet-async';
 
 export default function Lists() {
     const { t } = useTranslation();
-    const navigate = useNavigate();
+    const router = useRouter();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const lists = [
         {
@@ -61,10 +68,6 @@ export default function Lists() {
 
     return (
         <>
-            <Helmet>
-                <title>Movie Lists - Screen Lookup</title>
-                <meta name="description" content="Explore curated movie lists including Academy Award winners, Cannes Film Festival selections, and more." />
-            </Helmet>
             <div style={{
                 minHeight: '100vh',
                 backgroundColor: '#121212',
@@ -82,7 +85,7 @@ export default function Lists() {
                     fontWeight: 'bold',
                     marginBottom: '32px'
                 }}>
-                    {t('common.lists', 'Lists')}
+                    {mounted ? t('common.lists', 'Lists') : 'Lists'}
                 </h1>
 
                 <div style={{
@@ -93,7 +96,7 @@ export default function Lists() {
                     {lists.map(list => (
                         <div
                             key={list.id}
-                            onClick={() => navigate(`/lists/${list.id}`)}
+                            onClick={() => router.push(`/lists/${list.id}`)}
                             style={{
                                 backgroundColor: '#1a1a1a',
                                 borderRadius: '12px',

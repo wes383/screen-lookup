@@ -1,18 +1,20 @@
+'use client'
+
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useRouter } from 'next/navigation';
 import { findByImdbId } from '../services/tmdb';
 import { useTranslation } from 'react-i18next';
 
 export default function ImdbRedirect() {
     const { imdbId } = useParams<{ imdbId: string }>();
-    const navigate = useNavigate();
+    const router = useRouter();
     const { t } = useTranslation();
     const [error, setError] = useState(false);
 
     useEffect(() => {
         const redirect = async () => {
             if (!imdbId) {
-                navigate('/');
+                router.push('/');
                 return;
             }
 
@@ -22,14 +24,14 @@ export default function ImdbRedirect() {
             const result = await findByImdbId(formattedImdbId);
 
             if (result.type && result.id) {
-                navigate(`/${result.type}/${result.id}`, { replace: true });
+                router.replace(`/${result.type}/${result.id}`);
             } else {
                 setError(true);
             }
         };
 
         redirect();
-    }, [imdbId, navigate]);
+    }, [imdbId, router]);
 
     if (error) {
         return (
@@ -46,7 +48,7 @@ export default function ImdbRedirect() {
                     {t('common.notFound') || 'Content not found'}
                 </p>
                 <button
-                    onClick={() => navigate('/')}
+                    onClick={() => router.push('/')}
                     style={{
                         padding: '8px 16px',
                         borderRadius: '4px',

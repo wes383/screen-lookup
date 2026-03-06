@@ -1,8 +1,9 @@
+'use client'
+
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Globe, Home } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import TMDbLogo from '../assets/tmdb-logo.svg';
+import { useRouter } from 'next/navigation';
 
 interface LanguageSwitcherProps {
   variant?: 'fixed' | 'bottom';
@@ -10,9 +11,10 @@ interface LanguageSwitcherProps {
 
 const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
   const { i18n } = useTranslation();
-  const navigate = useNavigate();
+  const router = useRouter();
+  const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const getLanguageClass = (code: string): string => {
@@ -23,6 +25,10 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
     if (code.startsWith('hi')) return 'lang-hi';
     return 'lang-west';
   };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -73,7 +79,9 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
     { code: 'ar', name: 'العربية', flag: 'ع' }
   ];
 
-  const currentLanguage = languages.find(l => l.code === i18n.language) || languages[0];
+  const currentLanguage = mounted 
+    ? (languages.find(l => l.code === i18n.language) || languages[0])
+    : languages[0];
 
   if (variant === 'bottom') {
     return (
@@ -96,7 +104,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
           }}>
             {/* Home Button */}
             <button
-              onClick={() => navigate('/')}
+              onClick={() => router.push('/')}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -210,7 +218,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
         {/* Desktop layout: Home button */}
         {!isMobile && (
           <button
-            onClick={() => navigate('/')}
+            onClick={() => router.push('/')}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -255,7 +263,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
             }}
           >
             <img
-              src={TMDbLogo}
+              src="/tmdb-logo.svg"
               alt="TMDB Logo"
               style={{
                 height: isMobile ? '16px' : '20px',

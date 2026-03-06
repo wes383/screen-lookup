@@ -35,8 +35,8 @@ export interface MovieDetails {
     };
 }
 
-const USE_DIRECT_API = import.meta.env.VITE_USE_DIRECT_API === 'true';
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+const USE_DIRECT_API = process.env.NEXT_PUBLIC_USE_DIRECT_API === 'true';
+const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
 // Helper function to build API URL
@@ -52,7 +52,7 @@ const buildApiUrl = (path: string, params: Record<string, string> = {}): string 
         
         return url.toString();
     } else {
-        // Production mode: use serverless function
+        // Production mode: use API route
         const url = new URL('/api/tmdb', window.location.origin);
         url.searchParams.append('path', path);
         

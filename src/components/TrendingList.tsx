@@ -1,15 +1,17 @@
+'use client'
+
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Film, Tv, User, Loader } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
 import { getTrending, getImageUrl, type SearchResult } from '../services/tmdb';
 import { getTMDBLanguage } from '../utils/languageMapper';
 
 export default function TrendingList() {
     const { t, i18n } = useTranslation();
     const { type } = useParams<{ type: string }>();
-    const navigate = useNavigate();
+    const router = useRouter();
+    const [mounted, setMounted] = useState(false);
 
     const [items, setItems] = useState<SearchResult[]>([]);
     const [page, setPage] = useState(1);
@@ -20,6 +22,10 @@ export default function TrendingList() {
 
     const observerTarget = useRef<HTMLDivElement>(null);
     const itemsRef = useRef<SearchResult[]>([]);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         itemsRef.current = items;
@@ -84,7 +90,7 @@ export default function TrendingList() {
 
     useEffect(() => {
         if (!isValidType) {
-            navigate('/');
+            router.push('/');
             return;
         }
 
@@ -93,7 +99,7 @@ export default function TrendingList() {
         setPage(1);
         setHasMore(true);
         loadData(1, true);
-    }, [type, timeWindow, i18n.language, isValidType, navigate, loadData]);
+    }, [type, timeWindow, i18n.language, isValidType, router, loadData]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -117,6 +123,15 @@ export default function TrendingList() {
     }, [hasMore, loading, loadingMore, page, loadData]);
 
     const getTitle = () => {
+        if (!mounted) {
+            switch (type) {
+                case 'movie': return 'Movies';
+                case 'tv': return 'TV Shows';
+                case 'person': return 'People';
+                case 'all': return 'All';
+                default: return '';
+            }
+        }
         switch (type) {
             case 'movie': return t('common.movies', 'Movies');
             case 'tv': return t('common.tvShows', 'TV Shows');
@@ -140,16 +155,19 @@ export default function TrendingList() {
         window.open(url, '_blank', 'noopener,noreferrer');
     };
 
-    const isMobile = window.innerWidth <= 768;
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     if (!isValidType) return null;
 
     return (
         <>
-            <Helmet>
-                <title>{type ? `Trending ${type.charAt(0).toUpperCase() + type.slice(1)} - Screen Lookup` : 'Trending - Screen Lookup'}</title>
-                <meta name="description" content={type ? `Discover trending ${type} from around the world` : 'Discover trending movies, TV shows, and people from around the world'} />
-            </Helmet>
             <div style={{
                 minHeight: '100vh',
                 backgroundColor: '#121212',
@@ -174,7 +192,7 @@ export default function TrendingList() {
                         fontWeight: 'bold',
                         margin: 0
                     }}>
-                        {t('common.trending', 'Trending')} {getTitle()}
+                        {mounted ? t('common.trending', 'Trending') : 'Trending'} {getTitle()}
                     </h1>
 
                     <div style={{
@@ -199,7 +217,7 @@ export default function TrendingList() {
                                 transition: 'all 0.2s'
                             }}
                         >
-                            {t('common.today', 'Today')}
+                            {mounted ? t('common.today', 'Today') : 'Today'}
                         </button>
                         <button
                             onClick={() => setTimeWindow('week')}
@@ -216,7 +234,7 @@ export default function TrendingList() {
                                 transition: 'all 0.2s'
                             }}
                         >
-                            {t('common.thisWeek', 'This Week')}
+                            {mounted ? t('common.thisWeek', 'This Week') : 'This Week'}
                         </button>
                     </div>
                 </div>

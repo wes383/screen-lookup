@@ -1,9 +1,10 @@
+'use client'
+
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useRouter } from 'next/navigation';
 import { getMovieDetails, getMovieLogos, getMovieCertification, getWatchProviders, getMovieKeywords, getMovieCredits, getMovieAlternativeTitles, getMovieReleaseDates, getMovieVideos, getCollectionDetails, getImageUrl, getIMDbRating, getWikipediaUrl, type MovieDetails, type MovieLogo, type WatchProviderData, type Keyword, type MovieCredits, type AlternativeTitle, type CountryReleaseDates, type MovieVideo, type CollectionDetails } from '../services/tmdb';
 import { X, User, Film } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet-async';
 import { useLoading } from '../contexts/LoadingContext';
 import { getTSPDTRanking } from '../utils/tspdtRanking';
 import { getTSPDT21stRanking } from '../utils/tspdt21stRanking';
@@ -19,8 +20,13 @@ export default function MovieDetail() {
     const { t, i18n } = useTranslation();
     const { setIsLoading } = useLoading();
     const { id } = useParams<{ id: string }>();
-    const navigate = useNavigate();
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const router = useRouter();
+    const [mounted, setMounted] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -325,7 +331,7 @@ export default function MovieDetail() {
     if (loading) {
         return (
             <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', backgroundColor: '#121212', zIndex: 9999 }}>
-                {t('common.loading')}
+                {mounted ? t('common.loading') : 'Loading...'}
             </div>
         );
     }
@@ -333,9 +339,9 @@ export default function MovieDetail() {
     if (error || !movie) {
         return (
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white', backgroundColor: '#121212' }}>
-                <p>{error || t('movie.notFound')}</p>
-                <button onClick={() => navigate('/')} style={{ marginTop: '20px', padding: '8px 16px', borderRadius: '4px', border: 'none', background: '#333', color: 'white', cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>
-                    {t('common.goBack')}
+                <p>{error || (mounted ? t('movie.notFound') : 'Movie not found')}</p>
+                <button onClick={() => router.push('/')} style={{ marginTop: '20px', padding: '8px 16px', borderRadius: '4px', border: 'none', background: '#333', color: 'white', cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>
+                    {mounted ? t('common.goBack') : 'Go Back'}
                 </button>
             </div>
         );
@@ -345,10 +351,6 @@ export default function MovieDetail() {
 
     return (
         <>
-            <Helmet>
-                <title>{movie ? `${movie.title} (${movie.release_date?.split('-')[0]}) - Screen Lookup` : 'Movie Details - Screen Lookup'}</title>
-                <meta name="description" content={movie ? movie.overview : 'View detailed information about this movie including cast, crew, ratings, and more.'} />
-            </Helmet>
             <div style={{
                 minHeight: '100vh',
                 width: '100%',
@@ -883,7 +885,7 @@ export default function MovieDetail() {
                                 {credits.crew.filter(c => c.job === 'Director').map(c => (
                                     <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                                         <div
-                                            onClick={() => navigate(`/person/${c.id}`)}
+                                            onClick={() => router.push(`/person/${c.id}`)}
                                             style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
                                         >
                                             {c.profile_path ? (
@@ -914,7 +916,7 @@ export default function MovieDetail() {
                                                 </div>
                                             )}
                                         </div>
-                                        <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: isMobile ? '16px' : '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
+                                        <span onClick={() => router.push(`/person/${c.id}`)} style={{ fontSize: isMobile ? '16px' : '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
                                     </div>
                                 ))}
                             </div>
@@ -936,7 +938,7 @@ export default function MovieDetail() {
                                 {credits.cast.slice(0, 10).map(c => (
                                     <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                                         <div
-                                            onClick={() => navigate(`/person/${c.id}`)}
+                                            onClick={() => router.push(`/person/${c.id}`)}
                                             style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
                                         >
                                             {c.profile_path ? (
@@ -968,7 +970,7 @@ export default function MovieDetail() {
                                             )}
                                         </div>
                                         <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '2px' : '8px', alignItems: isMobile ? 'flex-start' : 'baseline' }}>
-                                            <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: isMobile ? '16px' : '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
+                                            <span onClick={() => router.push(`/person/${c.id}`)} style={{ fontSize: isMobile ? '16px' : '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
                                             {isMobile ? (
                                                 <span style={{ fontSize: '14px', color: '#999', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100%' }}>{t('common.as')} {c.character}</span>
                                             ) : (
@@ -1387,7 +1389,7 @@ export default function MovieDetail() {
                                         key={part.id}
                                         onClick={() => {
                                             window.scrollTo(0, 0);
-                                            navigate(`/movie/${part.id}`);
+                                            router.push(`/movie/${part.id}`);
                                         }}
                                         style={{
                                             cursor: 'pointer',
@@ -1569,7 +1571,7 @@ export default function MovieDetail() {
                                     <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>{t('movie.cast')}</h3>
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                         {credits.cast.map(c => (
-                                            <div key={c.id} onClick={() => navigate(`/person/${c.id}`)} style={{ cursor: 'pointer' }}>
+                                            <div key={c.id} onClick={() => router.push(`/person/${c.id}`)} style={{ cursor: 'pointer' }}>
                                                 <div style={{ color: '#ccc', fontWeight: 500, textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</div>
                                                 <div style={{ color: '#666', fontSize: '14px' }}>{c.character}</div>
                                             </div>
@@ -1582,7 +1584,7 @@ export default function MovieDetail() {
                                     <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>{t('movie.crew')}</h3>
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                         {credits.crew.map((c, idx) => (
-                                            <div key={`${c.id}-${idx}`} onClick={() => navigate(`/person/${c.id}`)} style={{ cursor: 'pointer' }}>
+                                            <div key={`${c.id}-${idx}`} onClick={() => router.push(`/person/${c.id}`)} style={{ cursor: 'pointer' }}>
                                                 <div style={{ color: '#ccc', fontWeight: 500, textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</div>
                                                 <div style={{ color: '#666', fontSize: '14px' }}>{translateJob(c.job)} ({translateDepartment(c.department)})</div>
                                             </div>

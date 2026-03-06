@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { User, Loader } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
 import { getPopularPeople, getImageUrl, type SearchResult } from '../services/tmdb';
 import { getTMDBLanguage } from '../utils/languageMapper';
 
 export default function PersonList() {
     const { t, i18n } = useTranslation();
+    const [mounted, setMounted] = useState(false);
 
     const [items, setItems] = useState<SearchResult[]>([]);
     const [page, setPage] = useState(1);
@@ -16,6 +16,10 @@ export default function PersonList() {
 
     const observerTarget = useRef<HTMLDivElement>(null);
     const itemsRef = useRef<SearchResult[]>([]);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         itemsRef.current = items;
@@ -116,14 +120,17 @@ export default function PersonList() {
         window.open(url, '_blank', 'noopener,noreferrer');
     };
 
-    const isMobile = window.innerWidth <= 768;
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     return (
         <>
-            <Helmet>
-                <title>Popular People - Screen Lookup</title>
-                <meta name="description" content="Browse popular actors, directors, and other film industry professionals from around the world." />
-            </Helmet>
             <div style={{
                 minHeight: '100vh',
                 backgroundColor: '#121212',
@@ -143,14 +150,14 @@ export default function PersonList() {
                         fontWeight: 'bold',
                         margin: 0
                     }}>
-                        {t('common.popular', 'Popular')} {t('common.people', 'People')}
+                        {mounted ? `${t('common.popular', 'Popular')} ${t('common.people', 'People')}` : 'Popular People'}
                     </h1>
                 </div>
 
                 {loading ? (
                     <div style={{ display: 'flex', justifyContent: 'center', padding: '50px' }}>
                         <span style={{ color: '#fff', fontSize: '14px' }}>
-                            {t('common.loading', 'Loading...')}
+                            {mounted ? t('common.loading', 'Loading...') : 'Loading...'}
                         </span>
                     </div>
                 ) : (

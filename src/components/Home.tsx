@@ -1,13 +1,15 @@
+'use client'
+
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Search, Film, Tv, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet-async';
 import { searchMulti, getImageUrl, findByImdbId, getMovieDetails, getTVDetails, getPersonDetails, type SearchResult } from '../services/tmdb';
 import { getTMDBLanguage } from '../utils/languageMapper';
 
 export default function Home() {
     const { t, i18n } = useTranslation();
+    const [mounted, setMounted] = useState(false);
     const [query, setQuery] = useState('');
     const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
     const [isSearching, setIsSearching] = useState(false);
@@ -19,7 +21,11 @@ export default function Home() {
     const searchTimeoutRef = useRef<number | undefined>(undefined);
     const resultsRef = useRef<HTMLDivElement>(null);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
-    const navigate = useNavigate();
+    const router = useRouter();
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -170,12 +176,12 @@ export default function Home() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (query.trim() && searchResults.length > 0) {
-            navigate(`/${searchResults[0].media_type}/${searchResults[0].id}`);
+            router.push(`/${searchResults[0].media_type}/${searchResults[0].id}`);
         }
     };
 
     const handleResultClick = (result: SearchResult) => {
-        navigate(`/${result.media_type}/${result.id}`);
+        router.push(`/${result.media_type}/${result.id}`);
         setIsFocused(false);
         setQuery('');
     };
@@ -246,14 +252,17 @@ export default function Home() {
         return date ? new Date(date).getFullYear() : '';
     };
 
-    const isMobile = window.innerWidth <= 768;
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     return (
         <>
-            <Helmet>
-                <title>Screen Lookup - Discover Movies & TV Shows</title>
-                <meta name="description" content="A multilingual movie and TV show information lookup application. Discover trending films, popular TV series, and explore curated movie lists from around the world." />
-            </Helmet>
             <div style={{
                 position: 'fixed',
                 top: 0,
@@ -280,7 +289,7 @@ export default function Home() {
                         fontSize: '14px',
                         fontFamily: 'Inter, sans-serif'
                     }}>
-                        {t('common.searchPlaceholder')}
+                        {mounted ? t('common.searchPlaceholder') : 'Search movies, TV shows, or people'}
                     </div>
                 )}
 
@@ -288,7 +297,7 @@ export default function Home() {
                     <form onSubmit={handleSubmit} style={{ position: 'relative' }}>
                         <input
                             type="text"
-                            placeholder={isMobile ? '' : t('common.searchPlaceholder')}
+                            placeholder={isMobile ? '' : (mounted ? t('common.searchPlaceholder') : 'Search movies, TV shows, or people')}
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             onFocus={() => setIsFocused(true)}
@@ -330,7 +339,7 @@ export default function Home() {
                                 fontFamily: 'Inter, sans-serif',
                                 padding: isMobile ? '0 8px' : '0'
                             }}>
-                                {t('common.imdbIdHint')}
+                                {mounted ? t('common.imdbIdHint') : 'You can also search by IMDb ID'}
                             </div>
                         </>
                     )}
@@ -501,7 +510,7 @@ export default function Home() {
                     gap: '16px'
                 }}>
                     <button
-                        onClick={() => navigate('/discover')}
+                        onClick={() => router.push('/discover')}
                         style={{
                             backgroundColor: 'rgba(255, 255, 255, 0.1)',
                             border: 'none',
@@ -524,11 +533,11 @@ export default function Home() {
                             e.currentTarget.style.transform = 'scale(1)';
                         }}
                     >
-                        {t('common.discover', 'Discover')}
+                        {mounted ? t('common.discover', 'Discover') : 'Discover'}
                     </button>
 
                     <button
-                        onClick={() => navigate('/lists')}
+                        onClick={() => router.push('/lists')}
                         style={{
                             backgroundColor: 'rgba(255, 255, 255, 0.1)',
                             border: 'none',
@@ -551,7 +560,7 @@ export default function Home() {
                             e.currentTarget.style.transform = 'scale(1)';
                         }}
                     >
-                        {t('common.lists', 'Lists')}
+                        {mounted ? t('common.lists', 'Lists') : 'Lists'}
                     </button>
                 </div>
             )}

@@ -1,7 +1,8 @@
+'use client'
+
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Film, ArrowUp, Loader } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
 import {
     discoverMedia,
     getGenres,
@@ -13,6 +14,7 @@ import { getTMDBLanguage } from '../utils/languageMapper';
 
 export default function MediaDiscovery() {
     const { t, i18n } = useTranslation();
+    const [mounted, setMounted] = useState(false);
 
     // State
     const [mediaType, setMediaType] = useState<'movie' | 'tv'>('movie');
@@ -71,7 +73,18 @@ export default function MediaDiscovery() {
         });
     };
 
-    const isMobile = window.innerWidth <= 768;
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     // Constants
     const decades = [
@@ -79,7 +92,31 @@ export default function MediaDiscovery() {
         '1960s', '1950s', '1940s', '1930s', '1920s', '1910s', '1900s'
     ];
 
-    const regions = [
+    const regionDefaults = [
+        { code: 'US', name: 'United States' },
+        { code: 'CN', name: 'China' },
+        { code: 'JP', name: 'Japan' },
+        { code: 'KR', name: 'South Korea' },
+        { code: 'GB', name: 'United Kingdom' },
+        { code: 'FR', name: 'France' },
+        { code: 'DE', name: 'Germany' },
+        { code: 'IN', name: 'India' },
+        { code: 'ES', name: 'Spain' },
+        { code: 'IT', name: 'Italy' },
+        { code: 'CA', name: 'Canada' },
+        { code: 'AU', name: 'Australia' },
+        { code: 'HK', name: 'Hong Kong' },
+        { code: 'TW', name: 'Taiwan' },
+        { code: 'RU', name: 'Russia' },
+        { code: 'BR', name: 'Brazil' },
+        { code: 'MX', name: 'Mexico' },
+        { code: 'TH', name: 'Thailand' },
+        { code: 'SE', name: 'Sweden' },
+        { code: 'NO', name: 'Norway' },
+        { code: 'DK', name: 'Denmark' }
+    ];
+
+    const regions = mounted ? [
         { code: 'US', name: t('common.countries.US', 'United States') },
         { code: 'CN', name: t('common.countries.CN', 'China') },
         { code: 'JP', name: t('common.countries.JP', 'Japan') },
@@ -101,9 +138,27 @@ export default function MediaDiscovery() {
         { code: 'SE', name: t('common.countries.SE', 'Sweden') },
         { code: 'NO', name: t('common.countries.NO', 'Norway') },
         { code: 'DK', name: t('common.countries.DK', 'Denmark') }
+    ] : regionDefaults;
+
+    const languageDefaults = [
+        { code: 'en', name: 'English' },
+        { code: 'zh', name: 'Chinese' },
+        { code: 'ja', name: 'Japanese' },
+        { code: 'ko', name: 'Korean' },
+        { code: 'fr', name: 'French' },
+        { code: 'de', name: 'German' },
+        { code: 'es', name: 'Spanish' },
+        { code: 'it', name: 'Italian' },
+        { code: 'hi', name: 'Hindi' },
+        { code: 'ru', name: 'Russian' },
+        { code: 'pt', name: 'Portuguese' },
+        { code: 'th', name: 'Thai' },
+        { code: 'sv', name: 'Swedish' },
+        { code: 'no', name: 'Norwegian' },
+        { code: 'da', name: 'Danish' }
     ];
 
-    const languages = [
+    const languages = mounted ? [
         { code: 'en', name: t('common.languages.en', 'English') },
         { code: 'zh', name: t('common.languages.zh', 'Chinese') },
         { code: 'ja', name: t('common.languages.ja', 'Japanese') },
@@ -119,7 +174,7 @@ export default function MediaDiscovery() {
         { code: 'sv', name: t('common.languages.sv', 'Swedish') },
         { code: 'no', name: t('common.languages.no', 'Norwegian') },
         { code: 'da', name: t('common.languages.da', 'Danish') }
-    ];
+    ] : languageDefaults;
 
     const minVoteCounts = [0, 50, 100, 500, 1000, 5000, 10000, 20000];
 
@@ -301,16 +356,31 @@ export default function MediaDiscovery() {
     };
 
     const getSortLabel = (option: string) => {
-        const order = option.includes('desc') ? t('common.desc', 'Desc') : t('common.asc', 'Asc');
-        if (option.includes('popularity')) return `${t('common.popularity', 'Popularity')} (${order})`;
-        if (option.includes('vote_average')) return `${t('common.rating', 'Rating')} (${order})`;
-        if (option.includes('vote_count')) return `${t('common.voteCount', 'Vote Count')} (${order})`;
-        if (option.includes('revenue')) return `${t('common.revenue', 'Revenue')} (${order})`;
-        if (option.includes('date')) return `${t('common.date', 'Date')} (${order})`;
+        const order = option.includes('desc') 
+            ? (mounted ? t('common.desc', 'Desc') : 'Desc') 
+            : (mounted ? t('common.asc', 'Asc') : 'Asc');
+        if (option.includes('popularity')) return `${mounted ? t('common.popularity', 'Popularity') : 'Popularity'} (${order})`;
+        if (option.includes('vote_average')) return `${mounted ? t('common.rating', 'Rating') : 'Rating'} (${order})`;
+        if (option.includes('vote_count')) return `${mounted ? t('common.voteCount', 'Vote Count') : 'Vote Count'} (${order})`;
+        if (option.includes('revenue')) return `${mounted ? t('common.revenue', 'Revenue') : 'Revenue'} (${order})`;
+        if (option.includes('date')) return `${mounted ? t('common.date', 'Date') : 'Date'} (${order})`;
         return option;
     };
 
-    const sortOptions = [
+    const sortOptionDefaults = [
+        { value: 'popularity.desc', label: 'Popularity (Desc)' },
+        { value: 'popularity.asc', label: 'Popularity (Asc)' },
+        { value: 'vote_average.desc', label: 'Rating (Desc)' },
+        { value: 'vote_average.asc', label: 'Rating (Asc)' },
+        { value: 'vote_count.desc', label: 'Vote Count (Desc)' },
+        { value: 'vote_count.asc', label: 'Vote Count (Asc)' },
+        { value: 'revenue.desc', label: 'Revenue (Desc)' },
+        { value: 'revenue.asc', label: 'Revenue (Asc)' },
+        { value: mediaType === 'movie' ? 'release_date.desc' : 'first_air_date.desc', label: 'Date (Desc)' },
+        { value: mediaType === 'movie' ? 'release_date.asc' : 'first_air_date.asc', label: 'Date (Asc)' },
+    ];
+
+    const sortOptions = mounted ? [
         { value: 'popularity.desc', label: `${t('common.popularity', 'Popularity')} (${t('common.desc', 'Desc')})` },
         { value: 'popularity.asc', label: `${t('common.popularity', 'Popularity')} (${t('common.asc', 'Asc')})` },
         { value: 'vote_average.desc', label: `${t('common.rating', 'Rating')} (${t('common.desc', 'Desc')})` },
@@ -321,14 +391,10 @@ export default function MediaDiscovery() {
         { value: 'revenue.asc', label: `${t('common.revenue', 'Revenue')} (${t('common.asc', 'Asc')})` },
         { value: mediaType === 'movie' ? 'release_date.desc' : 'first_air_date.desc', label: `${t('common.date', 'Date')} (${t('common.desc', 'Desc')})` },
         { value: mediaType === 'movie' ? 'release_date.asc' : 'first_air_date.asc', label: `${t('common.date', 'Date')} (${t('common.asc', 'Asc')})` },
-    ];
+    ] : sortOptionDefaults;
 
     return (
         <>
-            <Helmet>
-                <title>Media Discovery - Screen Lookup</title>
-                <meta name="description" content="Discover movies and TV shows by genre, decade, and more. Find your next favorite film or series." />
-            </Helmet>
             <div style={{
                 minHeight: '100vh',
                 backgroundColor: '#121212',
@@ -344,7 +410,7 @@ export default function MediaDiscovery() {
             }}>
                 <div style={{ marginBottom: '24px' }}>
                     <h1 style={{ fontSize: '28px', fontWeight: 'bold', margin: 0 }}>
-                        {t('common.mediaFilter', 'Media Filter')}
+                        {mounted ? t('common.mediaFilter', 'Media Filter') : 'Media Filter'}
                     </h1>
                 </div>
 
@@ -359,7 +425,7 @@ export default function MediaDiscovery() {
                     {/* Media Type */}
                     <div style={{ marginBottom: '24px' }}>
                         <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                            {t('common.mediaType', 'Media Type')}
+                            {mounted ? t('common.mediaType', 'Media Type') : 'Media Type'}
                         </h3>
                         <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
                             <button
@@ -377,7 +443,7 @@ export default function MediaDiscovery() {
                                     fontFamily: 'Inter, sans-serif'
                                 }}
                             >
-                                {t('common.movies', 'Movies')}
+                                {mounted ? t('common.movies', 'Movies') : 'Movies'}
                             </button>
                             <button
                                 onClick={() => setMediaType('tv')}
@@ -394,7 +460,7 @@ export default function MediaDiscovery() {
                                     fontFamily: 'Inter, sans-serif'
                                 }}
                             >
-                                {t('common.tvShows', 'TV Shows')}
+                                {mounted ? t('common.tvShows', 'TV Shows') : 'TV Shows'}
                             </button>
                         </div>
                     </div>
@@ -402,7 +468,7 @@ export default function MediaDiscovery() {
                     {/* Genres */}
                     <div>
                         <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                            {t('common.genres', 'Genres')}
+                            {mounted ? t('common.genres', 'Genres') : 'Genres'}
                         </h3>
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
                             {genres.map(genre => (
@@ -422,7 +488,7 @@ export default function MediaDiscovery() {
                                         fontFamily: 'Inter, sans-serif'
                                     }}
                                 >
-                                    {t(`common.genreNames.${genre.id}`, genre.name)}
+                                    {mounted ? t(`common.genreNames.${genre.id}`, genre.name) : genre.name}
                                 </button>
                             ))}
                         </div>
@@ -434,7 +500,7 @@ export default function MediaDiscovery() {
                         {/* Region Filter */}
                         <div style={{ marginBottom: '24px' }}>
                             <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                                {t('common.region', 'Region')}
+                                {mounted ? t('common.region', 'Region') : 'Region'}
                             </h3>
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
                                 <button
@@ -452,7 +518,7 @@ export default function MediaDiscovery() {
                                         fontFamily: 'Inter, sans-serif'
                                     }}
                                 >
-                                    {t('common.all', 'All')}
+                                    {mounted ? t('common.all', 'All') : 'All'}
                                 </button>
                                 {regions.map(region => (
                                     <button
@@ -480,7 +546,7 @@ export default function MediaDiscovery() {
                         {/* Language Filter */}
                         <div style={{ marginBottom: '24px' }}>
                             <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                                {t('common.language', 'Language')}
+                                {mounted ? t('common.language', 'Language') : 'Language'}
                             </h3>
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
                                 <button
@@ -498,7 +564,7 @@ export default function MediaDiscovery() {
                                         fontFamily: 'Inter, sans-serif'
                                     }}
                                 >
-                                    {t('common.all', 'All')}
+                                    {mounted ? t('common.all', 'All') : 'All'}
                                 </button>
                                 {languages.map(lang => (
                                     <button
@@ -527,7 +593,7 @@ export default function MediaDiscovery() {
                         {mediaType === 'movie' && (
                             <div style={{ marginBottom: '24px' }}>
                                 <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                                    {t('common.productionCompany', 'Production Company')}
+                                    {mounted ? t('common.productionCompany', 'Production Company') : 'Production Company'}
                                 </h3>
                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
                                     <button
@@ -545,7 +611,7 @@ export default function MediaDiscovery() {
                                             fontFamily: 'Inter, sans-serif'
                                         }}
                                     >
-                                        {t('common.all', 'All')}
+                                        {mounted ? t('common.all', 'All') : 'All'}
                                     </button>
                                     {productionCompanies.map(company => (
                                         <button
@@ -577,7 +643,7 @@ export default function MediaDiscovery() {
                                 {/* Rating Range */}
                                 <div style={{ flex: 1, minWidth: '200px' }}>
                                     <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                                        {t('common.ratingRange', 'Rating Range')} ({localVoteAverageRange[0]} - {localVoteAverageRange[1]})
+                                        {mounted ? t('common.ratingRange', 'Rating Range') : 'Rating Range'} ({localVoteAverageRange[0]} - {localVoteAverageRange[1]})
                                     </h3>
                                     <div style={{ position: 'relative', marginTop: '12px', padding: '10px 0' }}>
                                         <div className="range-slider-container">
@@ -636,7 +702,7 @@ export default function MediaDiscovery() {
                                 {/* Min Vote Count */}
                                 <div style={{ flex: 1, minWidth: '200px' }}>
                                     <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                                        {t('common.minVoteCount', 'Min Vote Count')}
+                                        {mounted ? t('common.minVoteCount', 'Min Vote Count') : 'Min Vote Count'}
                                     </h3>
                                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
                                         {minVoteCounts.map(count => (
@@ -656,7 +722,7 @@ export default function MediaDiscovery() {
                                                     fontFamily: 'Inter, sans-serif'
                                                 }}
                                             >
-                                                {count === 0 ? t('common.any', 'Any') : `>${count}`}
+                                                {count === 0 ? (mounted ? t('common.any', 'Any') : 'Any') : `>${count}`}
                                             </button>
                                         ))}
                                     </div>
@@ -667,14 +733,14 @@ export default function MediaDiscovery() {
                         {/* Runtime Filter */}
                         <div style={{ marginBottom: '24px' }}>
                             <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                                {t('common.runtime', 'Runtime')}
+                                {mounted ? t('common.runtime', 'Runtime') : 'Runtime'}
                             </h3>
                             <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginTop: '12px' }}>
                                 <div style={{ flex: 1, maxWidth: '200px' }}>
                                     <input
                                         type="number"
                                         min="0"
-                                        placeholder={t('common.minRuntime', 'Min Runtime')}
+                                        placeholder={mounted ? t('common.minRuntime', 'Min Runtime') : 'Min Runtime'}
                                         value={minRuntime}
                                         onChange={(e) => {
                                             const val = parseInt(e.target.value);
@@ -699,7 +765,7 @@ export default function MediaDiscovery() {
                                     <input
                                         type="number"
                                         min="0"
-                                        placeholder={t('common.maxRuntime', 'Max Runtime')}
+                                        placeholder={mounted ? t('common.maxRuntime', 'Max Runtime') : 'Max Runtime'}
                                         value={maxRuntime}
                                         onChange={(e) => {
                                             const val = parseInt(e.target.value);
@@ -719,14 +785,14 @@ export default function MediaDiscovery() {
                                         }}
                                     />
                                 </div>
-                                <span style={{ color: '#666', fontSize: '14px' }}>{t('common.minutes', 'min')}</span>
+                                <span style={{ color: '#666', fontSize: '14px' }}>{mounted ? t('common.minutes', 'min') : 'min'}</span>
                             </div>
                         </div>
 
                         {/* Decade / Year Filter */}
                         <div>
                             <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                                {t('common.decade', 'Decade')} / {t('common.year', 'Year')}
+                                {mounted ? t('common.decade', 'Decade') : 'Decade'} / {mounted ? t('common.year', 'Year') : 'Year'}
                             </h3>
                             <div style={{
                                 display: 'flex',
@@ -756,7 +822,7 @@ export default function MediaDiscovery() {
                                         height: 'fit-content'
                                     }}
                                 >
-                                    {t('common.all', 'All')}
+                                    {mounted ? t('common.all', 'All') : 'All'}
                                 </button>
                                 {decades.map(decade => (
                                     <button
@@ -786,7 +852,7 @@ export default function MediaDiscovery() {
                                     type="text"
                                     inputMode="numeric"
                                     pattern="[0-9]*"
-                                    placeholder={t('common.enterYear', 'Year')}
+                                    placeholder={mounted ? t('common.enterYear', 'Year') : 'Year'}
                                     value={selectedYear}
                                     onChange={(e) => {
                                         const val = e.target.value;
@@ -824,12 +890,12 @@ export default function MediaDiscovery() {
                     alignItems: 'center'
                 }}>
                     <div style={{ color: '#999', fontSize: '14px' }}>
-                        {t('common.found', 'Found')} {totalResults.toLocaleString()} {mediaType === 'movie' ? t('common.movies', 'Movies') : t('common.tvShows', 'TV Shows')}
+                        {mounted ? t('common.found', 'Found') : 'Found'} {totalResults.toLocaleString()} {mounted ? (mediaType === 'movie' ? t('common.movies', 'Movies') : t('common.tvShows', 'TV Shows')) : (mediaType === 'movie' ? 'Movies' : 'TV Shows')}
                     </div>
 
                     {/* Sort Controls */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <span style={{ fontSize: '14px', color: '#999', fontFamily: 'Inter, sans-serif' }}>{t('common.sortBy', 'Sort by')}:</span>
+                        <span style={{ fontSize: '14px', color: '#999', fontFamily: 'Inter, sans-serif' }}>{mounted ? t('common.sortBy', 'Sort by') : 'Sort by'}:</span>
                         <div ref={sortDropdownRef} style={{ position: 'relative' }}>
                             <button
                                 onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}

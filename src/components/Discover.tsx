@@ -1,11 +1,25 @@
-import { useNavigate } from 'react-router-dom';
+'use client'
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet-async';
 
 export default function Discover() {
     const { t } = useTranslation();
-    const navigate = useNavigate();
-    const isMobile = window.innerWidth <= 768;
+    const router = useRouter();
+    const [mounted, setMounted] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     const renderSectionItems = (items: { label: string; path: string }[]) => (
         <div style={{
@@ -16,7 +30,7 @@ export default function Discover() {
             {items.map((item, itemIndex) => (
                 <button
                     key={itemIndex}
-                    onClick={() => navigate(item.path)}
+                    onClick={() => router.push(item.path)}
                     style={{
                         backgroundColor: '#2A2A2A',
                         border: 'none',
@@ -46,7 +60,7 @@ export default function Discover() {
         </div>
     );
 
-    const sections = [
+    const sections = mounted ? [
         {
             title: t('common.explore', 'Explore'),
             items: [
@@ -86,14 +100,50 @@ export default function Discover() {
                 { label: t('common.popular', 'Popular'), path: '/person/popular' },
             ]
         }
+    ] : [
+        {
+            title: 'Explore',
+            items: [
+                { label: 'Media Filter', path: '/discovery' },
+            ]
+        },
+        {
+            title: 'Trending',
+            items: [
+                { label: 'All', path: '/trending/all' },
+                { label: 'Movies', path: '/trending/movie' },
+                { label: 'TV Shows', path: '/trending/tv' },
+                { label: 'People', path: '/trending/person' },
+            ]
+        },
+        {
+            title: 'Movies',
+            items: [
+                { label: 'Now Playing', path: '/movies/now-playing' },
+                { label: 'Popular', path: '/movies/popular' },
+                { label: 'Top Rated', path: '/movies/top-rated' },
+                { label: 'Upcoming', path: '/movies/upcoming' },
+            ]
+        },
+        {
+            title: 'TV Shows',
+            items: [
+                { label: 'Airing Today', path: '/tv-shows/airing-today' },
+                { label: 'On The Air', path: '/tv-shows/on-the-air' },
+                { label: 'Popular', path: '/tv-shows/popular' },
+                { label: 'Top Rated', path: '/tv-shows/top-rated' },
+            ]
+        },
+        {
+            title: 'People',
+            items: [
+                { label: 'Popular', path: '/person/popular' },
+            ]
+        }
     ];
 
     return (
         <>
-            <Helmet>
-                <title>Discover - Screen Lookup</title>
-                <meta name="description" content="Discover new movies and TV shows. Browse by genre, popularity, and more." />
-            </Helmet>
             <div style={{
                 minHeight: '100vh',
                 backgroundColor: '#121212',
@@ -115,7 +165,7 @@ export default function Discover() {
                     marginBottom: '40px',
                     textAlign: 'center'
                 }}>
-                    {t('common.discover', 'Discover')}
+                    {mounted ? t('common.discover', 'Discover') : 'Discover'}
                 </h1>
 
                 {isMobile ? (

@@ -1,8 +1,9 @@
+'use client'
+
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Film, Loader } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
 import {
     getAiringTodayTV,
     getOnTheAirTV,
@@ -16,7 +17,8 @@ import { getTMDBLanguage } from '../utils/languageMapper';
 export default function TVList() {
     const { t, i18n } = useTranslation();
     const { type } = useParams<{ type: string }>();
-    const navigate = useNavigate();
+    const router = useRouter();
+    const [mounted, setMounted] = useState(false);
 
     const [items, setItems] = useState<SearchResult[]>([]);
     const [page, setPage] = useState(1);
@@ -26,6 +28,10 @@ export default function TVList() {
 
     const observerTarget = useRef<HTMLDivElement>(null);
     const itemsRef = useRef<SearchResult[]>([]);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         itemsRef.current = items;
@@ -115,7 +121,7 @@ export default function TVList() {
 
     useEffect(() => {
         if (!isValidType) {
-            navigate('/');
+            router.push('/');
             return;
         }
 
@@ -124,7 +130,7 @@ export default function TVList() {
         setPage(1);
         setHasMore(true);
         loadData(1, true);
-    }, [type, i18n.language, isValidType, navigate, loadData]);
+    }, [type, i18n.language, isValidType, router, loadData]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -148,6 +154,15 @@ export default function TVList() {
     }, [hasMore, loading, loadingMore, page, loadData]);
 
     const getTitle = () => {
+        if (!mounted) {
+            switch (type) {
+                case 'airing-today': return 'Airing Today';
+                case 'on-the-air': return 'On The Air';
+                case 'popular': return 'Popular';
+                case 'top-rated': return 'Top Rated';
+                default: return '';
+            }
+        }
         switch (type) {
             case 'airing-today': return t('common.airingToday', 'Airing Today');
             case 'on-the-air': return t('common.onTheAir', 'On The Air');
@@ -171,16 +186,19 @@ export default function TVList() {
         window.open(url, '_blank', 'noopener,noreferrer');
     };
 
-    const isMobile = window.innerWidth <= 768;
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     if (!isValidType) return null;
 
     return (
         <>
-            <Helmet>
-                <title>{type ? `${type.charAt(0).toUpperCase() + type.slice(1).replace(/-/g, ' ')} TV Shows - Screen Lookup` : 'TV Shows - Screen Lookup'}</title>
-                <meta name="description" content={type ? `Browse ${type.replace(/-/g, ' ')} TV shows` : 'Browse TV shows by category including airing today, on the air, popular, and top rated'} />
-            </Helmet>
             <div style={{
                 minHeight: '100vh',
                 backgroundColor: '#121212',
@@ -205,14 +223,14 @@ export default function TVList() {
                         fontWeight: 'bold',
                         margin: 0
                     }}>
-                        {getTitle()} {t('common.tvShows', 'TV Shows')}
+                        {getTitle()} {mounted ? t('common.tvShows', 'TV Shows') : 'TV Shows'}
                     </h1>
                 </div>
 
                 {loading ? (
                     <div style={{ display: 'flex', justifyContent: 'center', padding: '50px' }}>
                         <span style={{ color: '#fff', fontSize: '14px' }}>
-                            {t('common.loading', 'Loading...')}
+                            {mounted ? t('common.loading', 'Loading...') : 'Loading...'}
                         </span>
                     </div>
                 ) : (

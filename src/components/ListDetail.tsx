@@ -1,7 +1,9 @@
+'use client'
+
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { ArrowDown01, ArrowDown10 } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
 
 import tspdtData from '../assets/tspdt-1000-greatest-films-2026.json';
 import tspdt21stData from '../assets/tspdt-21st-centurys-top-1000.json';
@@ -80,7 +82,7 @@ const getAwardImportance = (award: string | undefined, type: string | undefined)
 
 export default function ListDetail() {
     const { type } = useParams<{ type: string }>();
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const [listData, setListData] = useState<ListItem[]>([]);
     const [title, setTitle] = useState('');
@@ -225,7 +227,7 @@ export default function ListDetail() {
                 setIsAscending(false);
                 break;
             default:
-                navigate('/lists');
+                router.push('/lists');
                 return;
         }
 
@@ -235,7 +237,7 @@ export default function ListDetail() {
         if (type !== 'cahiers' && type !== 'oscar' && type !== 'cannes' && type !== 'venice' && type !== 'berlinale') {
             setIsAscending(true);
         }
-    }, [type, navigate]);
+    }, [type, router]);
 
     const handleSort = () => {
         const newIsAscending = !isAscending;
@@ -409,10 +411,6 @@ export default function ListDetail() {
 
     return (
         <>
-            <Helmet>
-                <title>{title ? `${title} - Screen Lookup` : 'Movie List - Screen Lookup'}</title>
-                <meta name="description" content={title ? `View the ${title} list` : 'View curated movie lists'} />
-            </Helmet>
             <div style={{
                 minHeight: '100vh',
                 backgroundColor: '#121212',
@@ -609,7 +607,7 @@ export default function ListDetail() {
 
                                 <Link
                                     id={`rank-${item.rank}`}
-                                    to={item.title.includes('[TV]') ? `/tv/${item.tmdb_id}` : `/movie/${item.tmdb_id}`}
+                                    href={item.title.includes('[TV]') ? `/tv/${item.tmdb_id}` : `/movie/${item.tmdb_id}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     style={{

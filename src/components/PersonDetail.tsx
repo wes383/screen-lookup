@@ -1,9 +1,10 @@
+'use client'
+
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useRouter } from 'next/navigation';
 import { getPersonDetails, getImageUrl, type PersonDetails, type PersonCreditItem } from '../services/tmdb';
 import { User, Film } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet-async';
 import { useLoading } from '../contexts/LoadingContext';
 import { getTMDBLanguage, getDateLocale } from '../utils/languageMapper';
 
@@ -11,11 +12,16 @@ export default function PersonDetail() {
     const { t, i18n } = useTranslation();
     const { setIsLoading } = useLoading();
     const { id } = useParams<{ id: string }>();
-    const navigate = useNavigate();
+    const router = useRouter();
+    const [mounted, setMounted] = useState(false);
     const [person, setPerson] = useState<PersonDetails | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -49,7 +55,7 @@ export default function PersonDetail() {
     if (loading) {
         return (
             <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: '#121212', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#fff', zIndex: 9999 }}>
-                {t('common.loading')}
+                {mounted ? t('common.loading') : 'Loading...'}
             </div>
         );
     }
@@ -57,7 +63,7 @@ export default function PersonDetail() {
     if (error || !person) {
         return (
             <div style={{ minHeight: '100vh', backgroundColor: '#121212', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#fff' }}>
-                {error || t('person.notFound')}
+                {error || (mounted ? t('person.notFound') : 'Person not found')}
             </div>
         );
     }
@@ -166,10 +172,6 @@ export default function PersonDetail() {
 
     return (
         <>
-            <Helmet>
-                <title>{person ? `${person.name} - Screen Lookup` : 'Person Details - Screen Lookup'}</title>
-                <meta name="description" content={person ? person.biography || `View filmography and details about ${person.name}` : 'View detailed information about this person including their filmography and biography.'} />
-            </Helmet>
             <div style={{ minHeight: '100vh', backgroundColor: '#121212', color: '#fff', fontFamily: 'Inter, sans-serif' }}>
             {/* Header Section */}
             <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '24px' : '40px', padding: isMobile ? '40px 20px' : '60px 80px', alignItems: 'flex-start' }}>
@@ -292,7 +294,7 @@ export default function PersonDetail() {
                                 return (
                                     <div
                                         key={`${credit.media_type}-${credit.id}`}
-                                        onClick={() => navigate(`/${credit.media_type}/${credit.id}`)}
+                                        onClick={() => router.push(`/${credit.media_type}/${credit.id}`)}
                                         style={{ cursor: 'pointer' }}
                                     >
                                         <div style={{ height: isMobile ? '180px' : '210px', backgroundColor: '#333', borderRadius: '8px', overflow: 'hidden', marginBottom: '8px' }}>

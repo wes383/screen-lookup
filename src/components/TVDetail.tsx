@@ -1,9 +1,10 @@
+'use client'
+
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useRouter } from 'next/navigation';
 import { getTVDetails, getTVLogos, getTVContentRatings, getTVWatchProviders, getTVKeywords, getTVCredits, getTVAlternativeTitles, getTVVideos, getTVSeasonDetails, getTVEpisodeDetails, getImageUrl, getIMDbRating, getWikipediaUrl, type TVDetails, type MovieLogo, type WatchProviderData, type WatchProvider, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails } from '../services/tmdb';
 import { X, User, PlayCircle, Film, Star, ChevronRight, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet-async';
 import { useLoading } from '../contexts/LoadingContext';
 import { getTMDBLanguage, getTMDBImageLanguage, getCountryCode, getDateLocale } from '../utils/languageMapper';
 import { getAverageColor } from '../utils/colorExtractor';
@@ -12,8 +13,13 @@ export default function TVDetail() {
     const { t, i18n } = useTranslation();
     const { setIsLoading } = useLoading();
     const { id } = useParams<{ id: string }>();
-    const navigate = useNavigate();
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const router = useRouter();
+    const [mounted, setMounted] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -296,7 +302,7 @@ export default function TVDetail() {
     if (loading) {
         return (
             <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', backgroundColor: '#121212', zIndex: 9999 }}>
-                {t('common.loading')}
+                {mounted ? t('common.loading') : 'Loading...'}
             </div>
         );
     }
@@ -304,9 +310,9 @@ export default function TVDetail() {
     if (error || !tv) {
         return (
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white', backgroundColor: '#121212' }}>
-                <p>{error || t('tv.notFound')}</p>
-                <button onClick={() => navigate('/')} style={{ marginTop: '20px', padding: '8px 16px', borderRadius: '4px', border: 'none', background: '#333', color: 'white', cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>
-                    {t('common.goBack')}
+                <p>{error || (mounted ? t('tv.notFound') : 'TV show not found')}</p>
+                <button onClick={() => router.push('/')} style={{ marginTop: '20px', padding: '8px 16px', borderRadius: '4px', border: 'none', background: '#333', color: 'white', cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>
+                    {mounted ? t('common.goBack') : 'Go Back'}
                 </button>
             </div>
         );
@@ -317,10 +323,6 @@ export default function TVDetail() {
 
     return (
         <>
-            <Helmet>
-                <title>{tv ? `${tv.name} (${tv.first_air_date?.split('-')[0]}) - Screen Lookup` : 'TV Show Details - Screen Lookup'}</title>
-                <meta name="description" content={tv ? tv.overview : 'View detailed information about this TV show including cast, crew, ratings, and more.'} />
-            </Helmet>
             <div style={{
                 minHeight: '100vh',
                 width: '100%',
@@ -581,7 +583,7 @@ export default function TVDetail() {
                                 {tv.created_by.map(c => (
                                     <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                                         <div
-                                            onClick={() => navigate(`/person/${c.id}`)}
+                                            onClick={() => router.push(`/person/${c.id}`)}
                                             style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
                                         >
                                             {c.profile_path ? (
@@ -612,7 +614,7 @@ export default function TVDetail() {
                                                 </div>
                                             )}
                                         </div>
-                                        <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
+                                        <span onClick={() => router.push(`/person/${c.id}`)} style={{ fontSize: '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
                                     </div>
                                 ))}
                             </div>
@@ -636,7 +638,7 @@ export default function TVDetail() {
                                 {credits.cast.slice(0, 10).map(c => (
                                     <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                                         <div
-                                            onClick={() => navigate(`/person/${c.id}`)}
+                                            onClick={() => router.push(`/person/${c.id}`)}
                                             style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
                                         >
                                             {c.profile_path ? (
@@ -668,7 +670,7 @@ export default function TVDetail() {
                                             )}
                                         </div>
                                         <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '2px' : '8px', alignItems: isMobile ? 'flex-start' : 'center', flex: 1, minWidth: 0 }}>
-                                            <span onClick={() => navigate(`/person/${c.id}`)} style={{ fontSize: isMobile ? '16px' : '18px', color: '#ccc', whiteSpace: 'nowrap', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
+                                            <span onClick={() => router.push(`/person/${c.id}`)} style={{ fontSize: isMobile ? '16px' : '18px', color: '#ccc', whiteSpace: 'nowrap', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
                                             {isMobile ? (
                                                 <span style={{ fontSize: '14px', color: '#999', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100%' }} title={c.character}>{t('common.as')} {c.character}</span>
                                             ) : (
@@ -1063,7 +1065,7 @@ export default function TVDetail() {
                                 <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>{t('tv.cast')}</h3>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                     {credits.cast.map(c => (
-                                        <div key={c.id} onClick={() => navigate(`/person/${c.id}`)} style={{ cursor: 'pointer' }}>
+                                        <div key={c.id} onClick={() => router.push(`/person/${c.id}`)} style={{ cursor: 'pointer' }}>
                                             <div style={{ color: '#ccc', fontWeight: 500, textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</div>
                                             <div style={{ color: '#666', fontSize: '14px' }}>{c.character}</div>
                                         </div>
@@ -1074,7 +1076,7 @@ export default function TVDetail() {
                                 <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>{t('tv.crew')}</h3>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                     {credits.crew.map((c, idx) => (
-                                        <div key={`${c.id}-${idx}`} onClick={() => navigate(`/person/${c.id}`)} style={{ cursor: 'pointer' }}>
+                                        <div key={`${c.id}-${idx}`} onClick={() => router.push(`/person/${c.id}`)} style={{ cursor: 'pointer' }}>
                                             <div style={{ color: '#ccc', fontWeight: 500, textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</div>
                                             <div style={{ color: '#666', fontSize: '14px' }}>{translateJob(c.job)} ({translateDepartment(c.department)})</div>
                                         </div>
