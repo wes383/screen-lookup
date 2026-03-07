@@ -30,7 +30,11 @@ export default function Discover() {
             {items.map((item, itemIndex) => (
                 <button
                     key={itemIndex}
+                    className="nav-button"
                     onClick={() => router.push(item.path)}
+                    onMouseEnter={() => {
+                        router.prefetch(item.path);
+                    }}
                     style={{
                         backgroundColor: '#2A2A2A',
                         border: 'none',
@@ -46,12 +50,6 @@ export default function Discover() {
                         alignItems: 'center',
                         justifyContent: 'flex-start',
                         fontWeight: 500
-                    }}
-                    onMouseEnter={e => {
-                        e.currentTarget.style.backgroundColor = '#333';
-                    }}
-                    onMouseLeave={e => {
-                        e.currentTarget.style.backgroundColor = '#2A2A2A';
                     }}
                 >
                     {item.label}

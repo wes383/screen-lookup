@@ -291,3 +291,11 @@ html[lang] .lang-ko {
 html[lang] .lang-hi {
   font-family: 'Noto Sans Devanagari', sans-serif !important;
 }
+
+.nav-button {
+  transition: background-color 0.2s;
+}
+
+.nav-button:hover {
+  background-color: #333 !important;
+}

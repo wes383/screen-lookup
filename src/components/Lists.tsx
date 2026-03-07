@@ -97,6 +97,13 @@ export default function Lists() {
                         <div
                             key={list.id}
                             onClick={() => router.push(`/lists/${list.id}`)}
+                            onMouseEnter={e => {
+                                router.prefetch(`/lists/${list.id}`);
+                                e.currentTarget.style.backgroundColor = '#252525';
+                            }}
+                            onMouseLeave={e => {
+                                e.currentTarget.style.backgroundColor = '#1a1a1a';
+                            }}
                             style={{
                                 backgroundColor: '#1a1a1a',
                                 borderRadius: '12px',
@@ -104,12 +111,6 @@ export default function Lists() {
                                 cursor: 'pointer',
                                 transition: 'background-color 0.2s',
                                 border: '1px solid #333'
-                            }}
-                            onMouseEnter={e => {
-                                e.currentTarget.style.backgroundColor = '#252525';
-                            }}
-                            onMouseLeave={e => {
-                                e.currentTarget.style.backgroundColor = '#1a1a1a';
                             }}
                         >
                             <h2 style={{

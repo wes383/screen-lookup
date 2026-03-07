@@ -511,6 +511,15 @@ export default function Home() {
                 }}>
                     <button
                         onClick={() => router.push('/discover')}
+                        onMouseEnter={e => {
+                            router.prefetch('/discover');
+                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                            e.currentTarget.style.transform = 'scale(1.05)';
+                        }}
+                        onMouseLeave={e => {
+                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                            e.currentTarget.style.transform = 'scale(1)';
+                        }}
                         style={{
                             backgroundColor: 'rgba(255, 255, 255, 0.1)',
                             border: 'none',
@@ -523,14 +532,6 @@ export default function Home() {
                             cursor: 'pointer',
                             transition: 'all 0.2s',
                             backdropFilter: 'blur(10px)'
-                        }}
-                        onMouseEnter={e => {
-                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-                            e.currentTarget.style.transform = 'scale(1.05)';
-                        }}
-                        onMouseLeave={e => {
-                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                            e.currentTarget.style.transform = 'scale(1)';
                         }}
                     >
                         {mounted ? t('common.discover', 'Discover') : 'Discover'}
@@ -538,6 +539,15 @@ export default function Home() {
 
                     <button
                         onClick={() => router.push('/lists')}
+                        onMouseEnter={e => {
+                            router.prefetch('/lists');
+                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                            e.currentTarget.style.transform = 'scale(1.05)';
+                        }}
+                        onMouseLeave={e => {
+                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                            e.currentTarget.style.transform = 'scale(1)';
+                        }}
                         style={{
                             backgroundColor: 'rgba(255, 255, 255, 0.1)',
                             border: 'none',
@@ -550,14 +560,6 @@ export default function Home() {
                             cursor: 'pointer',
                             transition: 'all 0.2s',
                             backdropFilter: 'blur(10px)'
-                        }}
-                        onMouseEnter={e => {
-                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-                            e.currentTarget.style.transform = 'scale(1.05)';
-                        }}
-                        onMouseLeave={e => {
-                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                            e.currentTarget.style.transform = 'scale(1)';
                         }}
                     >
                         {mounted ? t('common.lists', 'Lists') : 'Lists'}
