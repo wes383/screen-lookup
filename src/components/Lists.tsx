@@ -1,12 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 
 export default function Lists() {
     const { t } = useTranslation();
-    const router = useRouter();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -94,23 +93,19 @@ export default function Lists() {
                     gap: '12px'
                 }}>
                     {lists.map(list => (
-                        <div
+                        <Link
                             key={list.id}
-                            onClick={() => router.push(`/lists/${list.id}`)}
-                            onMouseEnter={e => {
-                                router.prefetch(`/lists/${list.id}`);
-                                e.currentTarget.style.backgroundColor = '#252525';
-                            }}
-                            onMouseLeave={e => {
-                                e.currentTarget.style.backgroundColor = '#1a1a1a';
-                            }}
+                            href={`/lists/${list.id}`}
+                            className="list-item-link"
                             style={{
                                 backgroundColor: '#1a1a1a',
                                 borderRadius: '12px',
                                 padding: '24px',
                                 cursor: 'pointer',
                                 transition: 'background-color 0.2s',
-                                border: '1px solid #333'
+                                border: '1px solid #333',
+                                textDecoration: 'none',
+                                display: 'block'
                             }}
                         >
                             <h2 style={{
@@ -121,7 +116,7 @@ export default function Lists() {
                             }}>
                                 {list.name}
                             </h2>
-                        </div>
+                        </Link>
                     ))}
                 </div>
 

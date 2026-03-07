@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Search, Film, Tv, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { searchMulti, getImageUrl, findByImdbId, getMovieDetails, getTVDetails, getPersonDetails, type SearchResult } from '../services/tmdb';
@@ -509,17 +510,9 @@ export default function Home() {
                     display: 'flex',
                     gap: '16px'
                 }}>
-                    <button
-                        onClick={() => router.push('/discover')}
-                        onMouseEnter={e => {
-                            router.prefetch('/discover');
-                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-                            e.currentTarget.style.transform = 'scale(1.05)';
-                        }}
-                        onMouseLeave={e => {
-                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                            e.currentTarget.style.transform = 'scale(1)';
-                        }}
+                    <Link
+                        href="/discover"
+                        className="home-nav-link"
                         style={{
                             backgroundColor: 'rgba(255, 255, 255, 0.1)',
                             border: 'none',
@@ -531,23 +524,16 @@ export default function Home() {
                             fontFamily: 'Inter, sans-serif',
                             cursor: 'pointer',
                             transition: 'all 0.2s',
-                            backdropFilter: 'blur(10px)'
+                            backdropFilter: 'blur(10px)',
+                            textDecoration: 'none'
                         }}
                     >
                         {mounted ? t('common.discover', 'Discover') : 'Discover'}
-                    </button>
+                    </Link>
 
-                    <button
-                        onClick={() => router.push('/lists')}
-                        onMouseEnter={e => {
-                            router.prefetch('/lists');
-                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-                            e.currentTarget.style.transform = 'scale(1.05)';
-                        }}
-                        onMouseLeave={e => {
-                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                            e.currentTarget.style.transform = 'scale(1)';
-                        }}
+                    <Link
+                        href="/lists"
+                        className="home-nav-link"
                         style={{
                             backgroundColor: 'rgba(255, 255, 255, 0.1)',
                             border: 'none',
@@ -559,11 +545,12 @@ export default function Home() {
                             fontFamily: 'Inter, sans-serif',
                             cursor: 'pointer',
                             transition: 'all 0.2s',
-                            backdropFilter: 'blur(10px)'
+                            backdropFilter: 'blur(10px)',
+                            textDecoration: 'none'
                         }}
                     >
                         {mounted ? t('common.lists', 'Lists') : 'Lists'}
-                    </button>
+                    </Link>
                 </div>
             )}
         </div>

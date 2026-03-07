@@ -299,3 +299,20 @@ html[lang] .lang-hi {
 .nav-button:hover {
   background-color: #333 !important;
 }
+
+.home-nav-link {
+  transition: all 0.2s;
+}
+
+.home-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  transform: scale(1.05);
+}
+
+.list-item-link {
+  transition: background-color 0.2s;
+}
+
+.list-item-link:hover {
+  background-color: #252525 !important;
+}

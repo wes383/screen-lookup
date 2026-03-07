@@ -1,12 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 
 export default function Discover() {
     const { t } = useTranslation();
-    const router = useRouter();
     const [mounted, setMounted] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
@@ -28,13 +27,10 @@ export default function Discover() {
             gap: '12px'
         }}>
             {items.map((item, itemIndex) => (
-                <button
+                <Link
                     key={itemIndex}
+                    href={item.path}
                     className="nav-button"
-                    onClick={() => router.push(item.path)}
-                    onMouseEnter={() => {
-                        router.prefetch(item.path);
-                    }}
                     style={{
                         backgroundColor: '#2A2A2A',
                         border: 'none',
@@ -49,11 +45,12 @@ export default function Discover() {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'flex-start',
-                        fontWeight: 500
+                        fontWeight: 500,
+                        textDecoration: 'none'
                     }}
                 >
                     {item.label}
-                </button>
+                </Link>
             ))}
         </div>
     );
