@@ -101,11 +101,22 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: typeof window !== 'undefined' ? localStorage.getItem('language') || 'en' : 'en',
+    lng: 'en',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false
     }
   });
+
+if (typeof window !== 'undefined') {
+  const savedLanguage = localStorage.getItem('language');
+  if (savedLanguage && savedLanguage !== i18n.language) {
+    i18n.changeLanguage(savedLanguage);
+  }
+  
+  i18n.on('languageChanged', (lng) => {
+    localStorage.setItem('language', lng);
+  });
+}
 
 export default i18n;
