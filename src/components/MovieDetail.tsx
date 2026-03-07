@@ -282,7 +282,7 @@ export default function MovieDetail() {
         };
 
         fetchData();
-    }, [id, i18n.language]);
+    }, [id, i18n.language, setIsLoading]);
 
     useEffect(() => {
         if (!movie) return;
@@ -949,87 +949,91 @@ export default function MovieDetail() {
                         </div>
                     )}
 
-                    {/* Cast */}
-                    {credits.cast.length > 0 && (
-                        <div style={{ marginTop: '32px' }}>
-                            <h3 style={{
-                                fontSize: '1.2rem',
-                                marginBottom: '16px',
-                                fontWeight: 600,
-                                color: '#fff'
-                            }}>
-                                {t('movie.cast')}
-                            </h3>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                                {credits.cast.slice(0, 10).map(c => (
-                                    <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                                        <div
-                                            onClick={() => router.push(`/person/${c.id}`)}
-                                            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-                                        >
-                                            {c.profile_path ? (
-                                                <img
-                                                    src={getImageUrl(c.profile_path, 'w185')}
-                                                    alt={c.name}
-                                                    style={{
-                                                        width: '50px',
-                                                        height: '50px',
-                                                        borderRadius: '50%',
-                                                        objectFit: 'cover',
-                                                        border: '1px solid rgba(255,255,255,0.3)'
-                                                    }}
-                                                />
-                                            ) : (
-                                                <div style={{
+                </div>
+
+                {/* Cast */}
+                {credits.cast.length > 0 && (
+                    <div style={{ marginTop: '32px' }}>
+                        <h3 style={{
+                            fontSize: '1.2rem',
+                            marginBottom: '16px',
+                            fontWeight: 600,
+                            color: '#fff'
+                        }}>
+                            {t('movie.cast')}
+                        </h3>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%' }}>
+                            {credits.cast.slice(0, 10).map(c => (
+                                <div key={c.id} style={{ display: 'flex', gap: '16px', alignItems: 'center', width: '100%' }}>
+                                    <div
+                                        onClick={() => router.push(`/person/${c.id}`)}
+                                        style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                                    >
+                                        {c.profile_path ? (
+                                            <img
+                                                src={getImageUrl(c.profile_path, 'w185')}
+                                                alt={c.name}
+                                                style={{
                                                     width: '50px',
                                                     height: '50px',
                                                     borderRadius: '50%',
-                                                    backgroundColor: '#333',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    color: '#888',
+                                                    objectFit: 'cover',
                                                     border: '1px solid rgba(255,255,255,0.3)'
-                                                }}>
-                                                    <User size={24} />
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '2px' : '8px', alignItems: isMobile ? 'flex-start' : 'baseline' }}>
-                                            <span onClick={() => router.push(`/person/${c.id}`)} style={{ fontSize: isMobile ? '16px' : '18px', color: '#ccc', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
-                                            {isMobile ? (
-                                                <span style={{ fontSize: '14px', color: '#999', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100%' }}>{t('common.as')} {c.character}</span>
-                                            ) : (
-                                                <>
-                                                    <span style={{ fontSize: '14px', color: '#666' }}>{t('common.as')}</span>
-                                                    <span style={{ fontSize: '18px', color: '#999', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '300px' }}>{c.character}</span>
-                                                </>
-                                            )}
-                                        </div>
+                                                }}
+                                            />
+                                        ) : (
+                                            <div style={{
+                                                width: '50px',
+                                                height: '50px',
+                                                borderRadius: '50%',
+                                                backgroundColor: '#333',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                color: '#888',
+                                                border: '1px solid rgba(255,255,255,0.3)'
+                                            }}>
+                                                <User size={24} />
+                                            </div>
+                                        )}
                                     </div>
-                                ))}
-                            </div>
-                            <button
-                                onClick={() => setShowFullCast(true)}
-                                onMouseEnter={() => setIsFullCastHovered(true)}
-                                onMouseLeave={() => setIsFullCastHovered(false)}
-                                style={{
-                                    marginTop: '16px',
-                                    background: 'none',
-                                    border: 'none',
-                                    color: 'rgba(255, 255, 255, 0.8)',
-                                    fontSize: '18px',
-                                    cursor: 'pointer',
-                                    textDecoration: isFullCastHovered ? 'underline' : 'none',
-                                    textUnderlineOffset: '4px',
-                                    padding: 0,
-                                    fontFamily: 'Inter, sans-serif'
-                                }}
-                            >
-                                {t('movie.fullCastAndCrew')}
-                            </button>
+                                    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '2px' : '8px', alignItems: isMobile ? 'flex-start' : 'center', flex: 1, minWidth: 0, width: '100%' }}>
+                                        <span onClick={() => router.push(`/person/${c.id}`)} style={{ fontSize: isMobile ? '16px' : '18px', color: '#ccc', whiteSpace: 'nowrap', cursor: 'pointer', textUnderlineOffset: '4px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>{c.name}</span>
+                                        {isMobile ? (
+                                            <span style={{ fontSize: '14px', color: '#999', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100%' }} title={c.character}>{t('common.as')} {c.character}</span>
+                                        ) : (
+                                            <>
+                                                <span style={{ fontSize: '14px', color: '#666', whiteSpace: 'nowrap' }}>{t('common.as')}</span>
+                                                <span style={{ fontSize: '18px', color: '#999', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flex: 1, minWidth: 0 }} title={c.character}>{c.character}</span>
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                    )}
+                        <button
+                            onClick={() => setShowFullCast(true)}
+                            onMouseEnter={() => setIsFullCastHovered(true)}
+                            onMouseLeave={() => setIsFullCastHovered(false)}
+                            style={{
+                                marginTop: '16px',
+                                background: 'none',
+                                border: 'none',
+                                color: 'rgba(255, 255, 255, 0.8)',
+                                fontSize: '18px',
+                                cursor: 'pointer',
+                                textDecoration: isFullCastHovered ? 'underline' : 'none',
+                                textUnderlineOffset: '4px',
+                                padding: 0,
+                                fontFamily: 'Inter, sans-serif'
+                            }}
+                        >
+                            {t('movie.fullCastAndCrew')}
+                        </button>
+                    </div>
+                )}
+
+                <div style={{ maxWidth: '800px' }}>
 
                     {watchProviders && (watchProviders.flatrate || watchProviders.rent || watchProviders.buy) && (
                         <div style={{ marginTop: '32px' }}>
@@ -1174,8 +1178,8 @@ export default function MovieDetail() {
                         </div>
                     )}
 
-                    {/* Keywords */}
-                    {keywords.length > 0 && (
+                {/* Keywords */}
+                {keywords.length > 0 && (
                         <div style={{ marginTop: '24px' }}>
                             <h3 style={{
                                 fontSize: '1.2rem',

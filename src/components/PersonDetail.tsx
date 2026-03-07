@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { getPersonDetails, getImageUrl, type PersonDetails, type PersonCreditItem } from '../services/tmdb';
 import { User, Film } from 'lucide-react';
@@ -13,15 +13,15 @@ export default function PersonDetail() {
     const { setIsLoading } = useLoading();
     const { id } = useParams<{ id: string }>();
     const router = useRouter();
-    const [mounted, setMounted] = useState(false);
+    const isHydrated = useSyncExternalStore(
+        () => () => {},
+        () => true,
+        () => false
+    );
     const [person, setPerson] = useState<PersonDetails | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -51,12 +51,12 @@ export default function PersonDetail() {
             setIsLoading(false);
         };
         fetchData();
-    }, [id, i18n.language]);
+    }, [id, i18n.language, setIsLoading]);
 
     if (loading) {
         return (
             <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: '#121212', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#fff', zIndex: 9999 }}>
-                {mounted ? t('common.loading') : 'Loading...'}
+                {isHydrated ? t('common.loading') : 'Loading...'}
             </div>
         );
     }
@@ -64,7 +64,7 @@ export default function PersonDetail() {
     if (error || !person) {
         return (
             <div style={{ minHeight: '100vh', backgroundColor: '#121212', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#fff' }}>
-                {error || (mounted ? t('person.notFound') : 'Person not found')}
+                {error || (isHydrated ? t('person.notFound') : 'Person not found')}
             </div>
         );
     }
