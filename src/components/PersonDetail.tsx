@@ -25,6 +25,7 @@ export default function PersonDetail() {
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
@@ -297,7 +298,7 @@ export default function PersonDetail() {
                                         onClick={() => router.push(`/${credit.media_type}/${credit.id}`)}
                                         style={{ cursor: 'pointer' }}
                                     >
-                                        <div style={{ height: isMobile ? '180px' : '210px', backgroundColor: '#333', borderRadius: '8px', overflow: 'hidden', marginBottom: '8px' }}>
+                                        <div style={{ width: '100%', aspectRatio: '2 / 3', backgroundColor: '#333', borderRadius: '8px', overflow: 'hidden', marginBottom: '8px' }}>
                                             {credit.poster_path ? (
                                                 <img src={getImageUrl(credit.poster_path, 'w342')} alt={credit.title || credit.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                             ) : (
