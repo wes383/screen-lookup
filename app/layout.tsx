@@ -13,9 +13,6 @@ export const metadata: Metadata = {
   publisher: 'Screen Lookup',
   formatDetection: { email: false, address: false, telephone: false },
   metadataBase: new URL('/', 'https://screen-lookup.wesluma.com'),
-  alternates: {
-    canonical: 'https://screen-lookup.wesluma.com',
-  },
   robots: {
     index: true,
     follow: true,
