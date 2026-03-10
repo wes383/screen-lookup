@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, ChevronDown, ChevronUp } from 'lucide-react';
 
 import tspdtData from '../assets/tspdt-1000-greatest-films-2026.json';
 import tspdt21stData from '../assets/tspdt-21st-centurys-top-1000.json';
@@ -96,6 +96,26 @@ export default function Recommendations() {
     const [filteredMovies, setFilteredMovies] = useState<MovieItem[]>([]);
     const [displayCount, setDisplayCount] = useState(50);
     const [showBackToTop, setShowBackToTop] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+    const [collapsedSections, setCollapsedSections] = useState({
+        lists: true,
+        awards: true,
+        genres: true
+    });
+
+    const toggleSection = (section: string) => {
+        setCollapsedSections(prev => ({
+            ...prev,
+            [section]: !prev[section as keyof typeof prev]
+        }));
+    };
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -501,10 +521,25 @@ export default function Recommendations() {
                     border: '1px solid #333'
                 }}>
                     <div style={{ marginBottom: '24px' }}>
-                        <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                            Lists
-                        </h3>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginTop: '12px' }}>
+                        <div
+                            onClick={() => isMobile && toggleSection('lists')}
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                cursor: isMobile ? 'pointer' : 'default'
+                            }}
+                        >
+                            <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
+                                Lists
+                            </h3>
+                            {isMobile && (
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    {collapsedSections.lists ? <ChevronDown size={20} color="#999" /> : <ChevronUp size={20} color="#999" />}
+                                </div>
+                            )}
+                        </div>
+                        <div style={{ display: isMobile && collapsedSections.lists ? 'none' : 'flex', flexWrap: 'wrap', gap: '12px', marginTop: '12px' }}>
                             {LIST_OPTIONS.map(option => (
                                 <button
                                     key={option.id}
@@ -529,10 +564,25 @@ export default function Recommendations() {
                     </div>
 
                     <div>
-                        <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold' }}>
-                            Awards
-                        </h3>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                        <div
+                            onClick={() => isMobile && toggleSection('awards')}
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                cursor: isMobile ? 'pointer' : 'default'
+                            }}
+                        >
+                            <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
+                                Awards
+                            </h3>
+                            {isMobile && (
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    {collapsedSections.awards ? <ChevronDown size={20} color="#999" /> : <ChevronUp size={20} color="#999" />}
+                                </div>
+                            )}
+                        </div>
+                        <div style={{ display: isMobile && collapsedSections.awards ? 'none' : 'flex', flexDirection: 'column', gap: '20px' }}>
                             {Object.entries(AWARD_CATEGORIES).map(([key, category]) => (
                                 <div key={key}>
                                     <div style={{ fontSize: '16px', marginBottom: '8px', color: '#999' }}>{category.name}</div>
@@ -564,10 +614,25 @@ export default function Recommendations() {
                     </div>
 
                     <div style={{ marginTop: '24px' }}>
-                        <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold' }}>
-                            Genres
-                        </h3>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                        <div
+                            onClick={() => isMobile && toggleSection('genres')}
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                cursor: isMobile ? 'pointer' : 'default'
+                            }}
+                        >
+                            <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
+                                Genres
+                            </h3>
+                            {isMobile && (
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    {collapsedSections.genres ? <ChevronDown size={20} color="#999" /> : <ChevronUp size={20} color="#999" />}
+                                </div>
+                            )}
+                        </div>
+                        <div style={{ display: isMobile && collapsedSections.genres ? 'none' : 'flex', flexWrap: 'wrap', gap: '8px' }}>
                             {allGenres.map(genre => (
                                 <button
                                     key={genre}

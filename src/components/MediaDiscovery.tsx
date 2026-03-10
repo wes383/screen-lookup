@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Film, ArrowUp, Loader } from 'lucide-react';
+import { Film, ArrowUp, Loader, ChevronDown, ChevronUp } from 'lucide-react';
 import {
     discoverMedia,
     getGenres,
@@ -74,6 +74,23 @@ export default function MediaDiscovery() {
     };
 
     const [isMobile, setIsMobile] = useState(false);
+
+    const [collapsedSections, setCollapsedSections] = useState({
+        genres: true,
+        region: true,
+        language: true,
+        productionCompany: true,
+        ratingRange: true,
+        runtime: true,
+        decade: true
+    });
+
+    const toggleSection = (section: string) => {
+        setCollapsedSections(prev => ({
+            ...prev,
+            [section]: !prev[section as keyof typeof prev]
+        }));
+    };
 
     useEffect(() => {
         setMounted(true);
@@ -467,10 +484,25 @@ export default function MediaDiscovery() {
 
                     {/* Genres */}
                     <div>
-                        <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                            {mounted ? t('common.genres', 'Genres') : 'Genres'}
-                        </h3>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
+                        <div
+                            onClick={() => isMobile && toggleSection('genres')}
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                cursor: isMobile ? 'pointer' : 'default'
+                            }}
+                        >
+                            <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
+                                {mounted ? t('common.genres', 'Genres') : 'Genres'}
+                            </h3>
+                            {isMobile && (
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    {collapsedSections.genres ? <ChevronDown size={20} color="#999" /> : <ChevronUp size={20} color="#999" />}
+                                </div>
+                            )}
+                        </div>
+                        <div style={{ display: isMobile && collapsedSections.genres ? 'none' : 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
                             {genres.map(genre => (
                                 <button
                                     key={genre.id}
@@ -499,10 +531,25 @@ export default function MediaDiscovery() {
 
                         {/* Region Filter */}
                         <div style={{ marginBottom: '24px' }}>
-                            <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                                {mounted ? t('common.region', 'Region') : 'Region'}
-                            </h3>
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
+                            <div
+                                onClick={() => isMobile && toggleSection('region')}
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    cursor: isMobile ? 'pointer' : 'default'
+                                }}
+                            >
+                                <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
+                                    {mounted ? t('common.region', 'Region') : 'Region'}
+                                </h3>
+                                {isMobile && (
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        {collapsedSections.region ? <ChevronDown size={20} color="#999" /> : <ChevronUp size={20} color="#999" />}
+                                    </div>
+                                )}
+                            </div>
+                            <div style={{ display: isMobile && collapsedSections.region ? 'none' : 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
                                 <button
                                     onClick={() => setSelectedRegion('')}
                                     style={{
@@ -545,10 +592,25 @@ export default function MediaDiscovery() {
 
                         {/* Language Filter */}
                         <div style={{ marginBottom: '24px' }}>
-                            <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                                {mounted ? t('common.language', 'Language') : 'Language'}
-                            </h3>
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
+                            <div
+                                onClick={() => isMobile && toggleSection('language')}
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    cursor: isMobile ? 'pointer' : 'default'
+                                }}
+                            >
+                                <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
+                                    {mounted ? t('common.language', 'Language') : 'Language'}
+                                </h3>
+                                {isMobile && (
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        {collapsedSections.language ? <ChevronDown size={20} color="#999" /> : <ChevronUp size={20} color="#999" />}
+                                    </div>
+                                )}
+                            </div>
+                            <div style={{ display: isMobile && collapsedSections.language ? 'none' : 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
                                 <button
                                     onClick={() => setSelectedLanguage('')}
                                     style={{
@@ -592,10 +654,25 @@ export default function MediaDiscovery() {
                         {/* Production Company Filter (Movies only) */}
                         {mediaType === 'movie' && (
                             <div style={{ marginBottom: '24px' }}>
-                                <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                                    {mounted ? t('common.productionCompany', 'Production Company') : 'Production Company'}
-                                </h3>
-                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
+                                <div
+                                    onClick={() => isMobile && toggleSection('productionCompany')}
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        cursor: isMobile ? 'pointer' : 'default'
+                                    }}
+                                >
+                                    <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
+                                        {mounted ? t('common.productionCompany', 'Production Company') : 'Production Company'}
+                                    </h3>
+                                    {isMobile && (
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                            {collapsedSections.productionCompany ? <ChevronDown size={20} color="#999" /> : <ChevronUp size={20} color="#999" />}
+                                        </div>
+                                    )}
+                                </div>
+                                <div style={{ display: isMobile && collapsedSections.productionCompany ? 'none' : 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
                                     <button
                                         onClick={() => setSelectedCompany('')}
                                         style={{
@@ -639,12 +716,28 @@ export default function MediaDiscovery() {
 
                         {/* Rating Range & Min Vote Count */}
                         <div style={{ marginBottom: '24px' }}>
-                            <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+                            <div
+                                onClick={() => isMobile && toggleSection('ratingRange')}
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    cursor: isMobile ? 'pointer' : 'default',
+                                    marginBottom: isMobile && collapsedSections.ratingRange ? '0' : '24px'
+                                }}
+                            >
+                                <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
+                                    {mounted ? t('common.ratingRange', 'Rating Range') : 'Rating Range'} ({localVoteAverageRange[0]} - {localVoteAverageRange[1]})
+                                </h3>
+                                {isMobile && (
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        {collapsedSections.ratingRange ? <ChevronDown size={20} color="#999" /> : <ChevronUp size={20} color="#999" />}
+                                    </div>
+                                )}
+                            </div>
+                            <div style={{ display: isMobile && collapsedSections.ratingRange ? 'none' : 'flex', gap: '24px', flexWrap: 'wrap' }}>
                                 {/* Rating Range */}
                                 <div style={{ flex: 1, minWidth: '200px' }}>
-                                    <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                                        {mounted ? t('common.ratingRange', 'Rating Range') : 'Rating Range'} ({localVoteAverageRange[0]} - {localVoteAverageRange[1]})
-                                    </h3>
                                     <div style={{ position: 'relative', marginTop: '12px', padding: '10px 0' }}>
                                         <div className="range-slider-container">
                                             <div className="range-slider-track"></div>
@@ -732,10 +825,25 @@ export default function MediaDiscovery() {
 
                         {/* Runtime Filter */}
                         <div style={{ marginBottom: '24px' }}>
-                            <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                                {mounted ? t('common.runtime', 'Runtime') : 'Runtime'}
-                            </h3>
-                            <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginTop: '12px' }}>
+                            <div
+                                onClick={() => isMobile && toggleSection('runtime')}
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    cursor: isMobile ? 'pointer' : 'default'
+                                }}
+                            >
+                                <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
+                                    {mounted ? t('common.runtime', 'Runtime') : 'Runtime'}
+                                </h3>
+                                {isMobile && (
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        {collapsedSections.runtime ? <ChevronDown size={20} color="#999" /> : <ChevronUp size={20} color="#999" />}
+                                    </div>
+                                )}
+                            </div>
+                            <div style={{ display: isMobile && collapsedSections.runtime ? 'none' : 'flex', gap: '12px', alignItems: 'center', marginTop: '12px' }}>
                                 <div style={{ flex: 1, maxWidth: '200px' }}>
                                     <input
                                         type="number"
@@ -791,15 +899,29 @@ export default function MediaDiscovery() {
 
                         {/* Decade / Year Filter */}
                         <div>
-                            <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
-                                {mounted ? t('common.decade', 'Decade') : 'Decade'} / {mounted ? t('common.year', 'Year') : 'Year'}
-                            </h3>
+                            <div
+                                onClick={() => isMobile && toggleSection('decade')}
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    cursor: isMobile ? 'pointer' : 'default'
+                                }}
+                            >
+                                <h3 style={{ fontSize: '18px', marginBottom: '12px', fontWeight: 'bold', margin: 0 }}>
+                                    {mounted ? t('common.decade', 'Decade') : 'Decade'} / {mounted ? t('common.year', 'Year') : 'Year'}
+                                </h3>
+                                {isMobile && (
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        {collapsedSections.decade ? <ChevronDown size={20} color="#999" /> : <ChevronUp size={20} color="#999" />}
+                                    </div>
+                                )}
+                            </div>
                             <div style={{
-                                display: 'flex',
+                                display: isMobile && collapsedSections.decade ? 'none' : 'flex',
                                 flexWrap: 'wrap',
                                 gap: '8px',
                                 marginTop: '12px',
-                                maxHeight: '140px',
                                 overflowY: 'auto',
                                 paddingRight: '8px'
                             }}>
@@ -985,7 +1107,7 @@ export default function MediaDiscovery() {
                     ) : (
                         <div style={{
                             display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
+                            gridTemplateColumns: isMobile ? 'repeat(auto-fill, minmax(100px, 1fr))' : 'repeat(auto-fill, minmax(160px, 1fr))',
                             gap: isMobile ? '16px' : '24px'
                         }}>
                             {items.map((item) => (

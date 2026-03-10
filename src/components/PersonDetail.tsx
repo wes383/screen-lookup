@@ -186,7 +186,7 @@ export default function PersonDetail() {
             {/* Header Section */}
             <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '24px' : '40px', padding: isMobile ? '40px 20px' : '60px 80px', alignItems: 'flex-start' }}>
                 {/* Profile Image */}
-                <div style={{ flexShrink: 0, width: isMobile ? '200px' : '300px', margin: isMobile ? '0 auto' : '0' }}>
+                <div style={{ flexShrink: 0, width: isMobile ? '160px' : '300px', margin: isMobile ? '0 auto' : '0' }}>
                     {person.profile_path ? (
                         <img
                             src={getImageUrl(person.profile_path, 'h632')}
@@ -292,7 +292,7 @@ export default function PersonDetail() {
                 {sortedCredits.length > 0 && (
                     <div style={{ marginBottom: isMobile ? '32px' : '48px' }}>
                         <h3 style={{ fontSize: isMobile ? '1.2rem' : '1.5rem', fontWeight: 600, marginBottom: isMobile ? '16px' : '24px' }}>{t('person.filmography')}</h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(auto-fill, minmax(120px, 1fr))' : 'repeat(auto-fill, minmax(140px, 1fr))', gap: isMobile ? '12px' : '16px' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(auto-fill, minmax(100px, 1fr))' : 'repeat(auto-fill, minmax(140px, 1fr))', gap: isMobile ? '12px' : '16px' }}>
                             {sortedCredits.map(credit => {
                                 // Translate job titles
                                 const translatedJobs = credit.job?.split(', ').map(job => {
@@ -341,7 +341,7 @@ export default function PersonDetail() {
                 {person.images?.profiles && person.images.profiles.length > 1 && (
                     <div>
                         <h3 style={{ fontSize: isMobile ? '1.2rem' : '1.5rem', fontWeight: 600, marginBottom: isMobile ? '16px' : '24px' }}>{t('common.photos')}</h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(auto-fill, minmax(120px, 1fr))' : 'repeat(auto-fill, minmax(140px, 1fr))', gap: isMobile ? '12px' : '16px' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(auto-fill, minmax(100px, 1fr))' : 'repeat(auto-fill, minmax(140px, 1fr))', gap: isMobile ? '12px' : '16px' }}>
                             {person.images.profiles.map((img, i) => (
                                 <img
                                     key={i}

@@ -166,7 +166,7 @@ export default function PersonList() {
                     <>
                         <div style={{
                             display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
+                            gridTemplateColumns: isMobile ? 'repeat(auto-fill, minmax(100px, 1fr))' : 'repeat(auto-fill, minmax(160px, 1fr))',
                             gap: isMobile ? '16px' : '24px'
                         }}>
                             {items.map((item) => (
