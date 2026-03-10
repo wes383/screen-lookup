@@ -7,9 +7,17 @@ import { useTranslation } from 'react-i18next';
 export default function Lists() {
     const { t } = useTranslation();
     const [mounted, setMounted] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
         setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     const lists = [
@@ -80,7 +88,7 @@ export default function Lists() {
                 paddingTop: '20px'
             }}>
                 <h1 style={{
-                    fontSize: '32px',
+                    fontSize: isMobile ? '26px' : '32px',
                     fontWeight: 'bold',
                     marginBottom: '32px'
                 }}>
@@ -100,19 +108,23 @@ export default function Lists() {
                             style={{
                                 backgroundColor: '#1a1a1a',
                                 borderRadius: '12px',
-                                padding: '24px',
+                                padding: isMobile ? '14px 16px' : '24px',
                                 cursor: 'pointer',
                                 transition: 'background-color 0.2s',
                                 border: '1px solid #333',
                                 textDecoration: 'none',
-                                display: 'block'
+                                display: 'flex',
+                                alignItems: 'center',
+                                minHeight: 0
                             }}
                         >
                             <h2 style={{
-                                fontSize: '18px',
+                                fontSize: isMobile ? '16px' : '18px',
                                 fontWeight: 'bold',
                                 color: '#fff',
-                                margin: 0
+                                margin: 0,
+                                lineHeight: 1.3,
+                                flex: 1
                             }}>
                                 {list.name}
                             </h2>

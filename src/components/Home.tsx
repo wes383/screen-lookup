@@ -508,18 +508,26 @@ export default function Home() {
                     transform: 'translateX(-50%)',
                     zIndex: 10,
                     display: 'flex',
-                    gap: '16px'
+                    gap: isMobile ? '12px' : '16px',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                    maxWidth: '90vw'
                 }}>
                     <Link
                         href="/discover"
                         className="home-nav-link"
                         style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: 'auto',
+                            minHeight: isMobile ? '0' : undefined,
                             backgroundColor: 'rgba(255, 255, 255, 0.1)',
                             border: 'none',
                             borderRadius: '30px',
-                            padding: '12px 32px',
+                            padding: isMobile ? '10px 22px' : '12px 32px',
                             color: '#fff',
-                            fontSize: '18px',
+                            fontSize: isMobile ? '16px' : '18px',
                             fontWeight: '500',
                             fontFamily: 'Inter, sans-serif',
                             cursor: 'pointer',
@@ -535,12 +543,17 @@ export default function Home() {
                         href="/lists"
                         className="home-nav-link"
                         style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: 'auto',
+                            minHeight: isMobile ? '0' : undefined,
                             backgroundColor: 'rgba(255, 255, 255, 0.1)',
                             border: 'none',
                             borderRadius: '30px',
-                            padding: '12px 32px',
+                            padding: isMobile ? '10px 22px' : '12px 32px',
                             color: '#fff',
-                            fontSize: '18px',
+                            fontSize: isMobile ? '16px' : '18px',
                             fontWeight: '500',
                             fontFamily: 'Inter, sans-serif',
                             cursor: 'pointer',

@@ -33,6 +33,7 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
+    handleResize();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
@@ -166,11 +167,12 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                   boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
                   zIndex: 9999,
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(2, 1fr)',
-                  gap: '0',
+                  gridTemplateColumns: isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(2, max-content)',
+                  columnGap: isMobile ? '0' : '16px',
+                  rowGap: '0',
                   maxHeight: isMobile ? '60vh' : 'none',
                   overflowY: isMobile ? 'auto' : 'visible',
-                  width: isMobile ? 'calc(100vw - 40px)' : 'auto',
+                  width: isMobile ? 'calc(100vw - 40px)' : 'max-content',
                   maxWidth: isMobile ? '400px' : 'none'
                 }}>
                   {languages.map(language => (
@@ -186,9 +188,10 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                         color: '#fff',
                         border: 'none',
                         cursor: 'pointer',
-                        fontSize: '14px',
+                        fontSize: isMobile ? '13px' : '14px',
                         textAlign: 'start',
-                        transition: 'background-color 0.2s'
+                        transition: 'background-color 0.2s',
+                        minWidth: 0
                       }}
                       onMouseEnter={(e) => {
                         if (i18n.language !== language.code) {
@@ -204,7 +207,17 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                       <span className={getLanguageClass(language.code)} style={{ fontWeight: i18n.language === language.code ? 600 : 400 }}>
                         {language.flag}
                       </span>
-                      <span className={getLanguageClass(language.code)} style={{ fontWeight: i18n.language === language.code ? 600 : 400, whiteSpace: 'nowrap' }}>
+                      <span
+                        className={getLanguageClass(language.code)}
+                        style={{
+                          fontWeight: i18n.language === language.code ? 600 : 400,
+                          whiteSpace: isMobile ? 'normal' : 'nowrap',
+                          overflowWrap: 'anywhere',
+                          lineHeight: isMobile ? 1.2 : undefined,
+                          flex: 1,
+                          minWidth: 0
+                        }}
+                      >
                         {language.name}
                       </span>
                     </button>
@@ -330,8 +343,9 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                   boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
                   zIndex: 9999,
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(2, 1fr)',
-                  gap: '0'
+                  gridTemplateColumns: isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(2, max-content)',
+                  columnGap: isMobile ? '0' : '16px',
+                  rowGap: '0'
                 }}>
                 {languages.map(language => (
                   <button
@@ -346,9 +360,10 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                       color: '#fff',
                       border: 'none',
                       cursor: 'pointer',
-                      fontSize: '14px',
+                      fontSize: isMobile ? '13px' : '14px',
                       textAlign: 'start',
-                      transition: 'background-color 0.2s'
+                      transition: 'background-color 0.2s',
+                      minWidth: 0
                     }}
                     onMouseEnter={(e) => {
                       if (i18n.language !== language.code) {
@@ -364,7 +379,17 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                     <span className={getLanguageClass(language.code)} style={{ fontWeight: i18n.language === language.code ? 600 : 400 }}>
                       {language.flag}
                     </span>
-                    <span className={getLanguageClass(language.code)} style={{ fontWeight: i18n.language === language.code ? 600 : 400, whiteSpace: 'nowrap' }}>
+                    <span
+                      className={getLanguageClass(language.code)}
+                      style={{
+                        fontWeight: i18n.language === language.code ? 600 : 400,
+                        whiteSpace: isMobile ? 'normal' : 'nowrap',
+                        overflowWrap: 'anywhere',
+                        lineHeight: isMobile ? 1.2 : undefined,
+                        flex: 1,
+                        minWidth: 0
+                      }}
+                    >
                       {language.name}
                     </span>
                   </button>
@@ -424,11 +449,12 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
             boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
             zIndex: 9999,
             display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '0',
+            gridTemplateColumns: isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(2, max-content)',
+            columnGap: isMobile ? '0' : '16px',
+            rowGap: '0',
             maxHeight: isMobile ? '60vh' : 'none',
             overflowY: isMobile ? 'auto' : 'visible',
-            width: isMobile ? 'calc(100vw - 40px)' : 'auto',
+            width: isMobile ? 'calc(100vw - 40px)' : 'max-content',
             maxWidth: isMobile ? '400px' : 'none'
           }}>
             {languages.map(language => (
@@ -444,9 +470,10 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                   color: '#fff',
                   border: 'none',
                   cursor: 'pointer',
-                  fontSize: '14px',
+                  fontSize: isMobile ? '13px' : '14px',
                   textAlign: 'start',
-                  transition: 'background-color 0.2s'
+                  transition: 'background-color 0.2s',
+                  minWidth: 0
                 }}
                 onMouseEnter={(e) => {
                   if (i18n.language !== language.code) {
@@ -462,7 +489,17 @@ const LanguageSwitcher = ({ variant = 'fixed' }: LanguageSwitcherProps) => {
                 <span className={getLanguageClass(language.code)} style={{ fontWeight: i18n.language === language.code ? 600 : 400 }}>
                   {language.flag}
                 </span>
-                <span className={getLanguageClass(language.code)} style={{ fontWeight: i18n.language === language.code ? 600 : 400, whiteSpace: 'nowrap' }}>
+                <span
+                  className={getLanguageClass(language.code)}
+                  style={{
+                    fontWeight: i18n.language === language.code ? 600 : 400,
+                    whiteSpace: isMobile ? 'normal' : 'nowrap',
+                    overflowWrap: 'anywhere',
+                    lineHeight: isMobile ? 1.2 : undefined,
+                    flex: 1,
+                    minWidth: 0
+                  }}
+                >
                   {language.name}
                 </span>
               </button>

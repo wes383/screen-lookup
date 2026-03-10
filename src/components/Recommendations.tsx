@@ -710,7 +710,8 @@ export default function Recommendations() {
                                 transition: 'background-color 0.2s',
                                 border: '1px solid #333',
                                 textDecoration: 'none',
-                                color: 'inherit'
+                                color: 'inherit',
+                                minHeight: 0
                             }}
                             onMouseEnter={e => e.currentTarget.style.backgroundColor = '#252525'}
                             onMouseLeave={e => e.currentTarget.style.backgroundColor = '#1a1a1a'}
