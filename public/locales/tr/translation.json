@@ -78,6 +78,7 @@
     "biography": "Biyografi",
     "born": "Doğum",
     "died": "Ölüm",
+    "aged": "{{age}} yaşında",
     "birthplace": "Doğum Yeri",
     "yearsOld": "yaşında",
     "instagram": "Instagram",

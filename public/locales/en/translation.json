@@ -78,6 +78,7 @@
     "biography": "Biography",
     "born": "Born",
     "died": "Died",
+    "aged": "aged {{age}}",
     "birthplace": "Birthplace",
     "yearsOld": "years old",
     "instagram": "Instagram",

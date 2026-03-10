@@ -220,7 +220,10 @@ export default function PersonDetail() {
                         {person.deathday && (
                             <div>
                                 <span style={{ color: '#888' }}>{t('common.died')}: </span>
-                                <span>{formatDate(person.deathday)}</span>
+                                <span>
+                                    {formatDate(person.deathday)}
+                                    {person.birthday && ` (${t('common.aged', { age: calculateAge(person.birthday, person.deathday) })})`}
+                                </span>
                             </div>
                         )}
                         {person.place_of_birth && (

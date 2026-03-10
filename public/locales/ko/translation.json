@@ -78,6 +78,7 @@
     "biography": "약력",
     "born": "생년월일",
     "died": "사망일",
+    "aged": "향년 {{age}}세",
     "birthplace": "출생지",
     "yearsOld": "세",
     "instagram": "Instagram",

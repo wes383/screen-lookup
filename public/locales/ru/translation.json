@@ -78,6 +78,7 @@
     "biography": "Биография",
     "born": "Дата рождения",
     "died": "Дата смерти",
+    "aged": "в возрасте {{age}} лет",
     "birthplace": "Место рождения",
     "yearsOld": "лет",
     "instagram": "Instagram",

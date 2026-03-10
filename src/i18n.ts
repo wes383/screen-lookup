@@ -35,7 +35,6 @@ if (isServer) {
       backend: {
         loadPath: '/locales/{{lng}}/translation.json'
       },
-      load: 'languageOnly',
       interpolation: {
         escapeValue: false
       },

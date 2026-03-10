@@ -41,6 +41,7 @@
     "biography": "簡介",
     "born": "生日",
     "died": "逝世",
+    "aged": "享年 {{age}} 歲",
     "birthplace": "出生地",
     "yearsOld": "歲",
     "instagram": "Instagram",

@@ -78,6 +78,7 @@
     "biography": "略歴",
     "born": "生年月日",
     "died": "没年月日",
+    "aged": "享年{{age}}歳",
     "birthplace": "出生地",
     "yearsOld": "歳",
     "instagram": "Instagram",
