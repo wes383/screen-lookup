@@ -81,6 +81,7 @@ export default function PersonDetail() {
     };
 
     const genderText = person.gender === 1 ? t('person.female') : person.gender === 2 ? t('person.male') : person.gender === 3 ? t('person.nonBinary') : t('common.unknown');
+    const showAge = Boolean(person.birthday && !person.deathday);
 
     const translateKnownFor = (department: string | undefined): string => {
         if (!department) return t('common.unknown');
@@ -210,7 +211,10 @@ export default function PersonDetail() {
                         {person.birthday && (
                             <div>
                                 <span style={{ color: '#888' }}>{t('common.born')}: </span>
-                                <span>{formatDate(person.birthday)} ({calculateAge(person.birthday, person.deathday)} {t('common.yearsOld')})</span>
+                                <span>
+                                    {formatDate(person.birthday)}
+                                    {showAge && ` (${calculateAge(person.birthday, person.deathday)} ${t('common.yearsOld')})`}
+                                </span>
                             </div>
                         )}
                         {person.deathday && (
