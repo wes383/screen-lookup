@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { getPersonDetails, getImageUrl, type PersonDetails, type PersonCreditItem } from '../services/tmdb';
+import { getPersonDetails, getImageUrl, getWikipediaUrl, type PersonDetails, type PersonCreditItem } from '../services/tmdb';
 import { User, Film } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLoading } from '../contexts/LoadingContext';
@@ -22,6 +22,7 @@ export default function PersonDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [isMobile, setIsMobile] = useState(false);
+    const [wikipediaUrl, setWikipediaUrl] = useState<string | null>(null);
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -44,6 +45,13 @@ export default function PersonDetail() {
             const data = await getPersonDetails(id, currentLanguage);
             if (data) {
                 setPerson(data);
+                if (data.external_ids?.wikidata_id) {
+                    getWikipediaUrl(data.external_ids.wikidata_id, i18n.language).then(url => {
+                        setWikipediaUrl(url);
+                    });
+                } else {
+                    setWikipediaUrl(null);
+                }
             } else {
                 setError('Person not found');
             }
@@ -258,6 +266,11 @@ export default function PersonDetail() {
                         {person.external_ids?.twitter_id && (
                             <a href={`https://twitter.com/${person.external_ids.twitter_id}`} target="_blank" rel="noopener noreferrer" style={{ color: '#fff', textDecoration: 'none', fontSize: '16px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>
                                 {t('common.twitter')}
+                            </a>
+                        )}
+                        {wikipediaUrl && (
+                            <a href={wikipediaUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#fff', textDecoration: 'none', fontSize: '16px' }} onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}>
+                                {t('common.wikipedia')}
                             </a>
                         )}
                     </div>

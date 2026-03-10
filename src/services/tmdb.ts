@@ -616,6 +616,7 @@ export interface PersonDetails {
         twitter_id: string | null;
         tiktok_id: string | null;
         youtube_id: string | null;
+        wikidata_id: string | null;
     };
     images?: {
         profiles: PersonImage[];
