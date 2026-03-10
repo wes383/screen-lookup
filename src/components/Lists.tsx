@@ -114,8 +114,7 @@ export default function Lists() {
                                 border: '1px solid #333',
                                 textDecoration: 'none',
                                 display: 'flex',
-                                alignItems: 'center',
-                                minHeight: 0
+                                alignItems: 'center'
                             }}
                         >
                             <h2 style={{

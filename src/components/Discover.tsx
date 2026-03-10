@@ -46,8 +46,7 @@ export default function Discover() {
                         alignItems: 'center',
                         justifyContent: 'flex-start',
                         fontWeight: 500,
-                        textDecoration: 'none',
-                        minHeight: 0
+                        textDecoration: 'none'
                     }}
                 >
                     {item.label}
