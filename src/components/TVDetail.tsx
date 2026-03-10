@@ -213,6 +213,7 @@ export default function TVDetail() {
                 setEnglishName(englishData?.name || tvData.name);
                 const currentLogo = logos.find(l => l.iso_639_1 === imageLanguage) || logos[0] || null;
                 setLogo(currentLogo);
+                setShowSeasons(tvData.seasons.filter(s => s.episode_count > 0).length < 10);
 
                 setContentRatings(ratings);
                 const countryRating = ratings.find(r => r.iso_3166_1 === countryCode)?.rating ||
