@@ -35,6 +35,31 @@ export interface MovieDetails {
     };
 }
 
+export interface MovieDetailsCombined extends MovieDetails {
+    credits?: {
+        cast: CastMember[];
+        crew: CrewMember[];
+    };
+    keywords?: {
+        keywords: Keyword[];
+    };
+    videos?: {
+        results: MovieVideo[];
+    };
+    'release_dates'?: {
+        results: CountryReleaseDates[];
+    };
+    'alternative_titles'?: {
+        titles: AlternativeTitle[];
+    };
+    'watch/providers'?: {
+        results: { [country: string]: WatchProviderData };
+    };
+    images?: {
+        logos: MovieLogo[];
+    };
+}
+
 const USE_DIRECT_API = process.env.NEXT_PUBLIC_USE_DIRECT_API === 'true';
 const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
@@ -68,6 +93,26 @@ export const getMovieDetails = async (id: string, language: string = 'en-US'): P
     const url = buildApiUrl(`movie/${id}`, { 
         append_to_response: 'external_ids',
         language 
+    });
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch movie details');
+    }
+
+    return response.json();
+};
+
+export const getMovieDetailsCombined = async (
+    id: string, 
+    language: string = 'en-US',
+    imageLanguage: string = 'en',
+    country: string = 'US'
+): Promise<MovieDetailsCombined> => {
+    const url = buildApiUrl(`movie/${id}`, { 
+        append_to_response: 'external_ids,credits,keywords,videos,release_dates,alternative_titles,watch/providers,images',
+        language,
+        include_image_language: imageLanguage
     });
     const response = await fetch(url);
 
@@ -404,10 +449,62 @@ export interface TVDetails {
     } | null;
 }
 
+export interface TVDetailsCombined extends TVDetails {
+    aggregate_credits?: {
+        cast: Array<{
+            id: number;
+            name: string;
+            profile_path: string | null;
+            roles: Array<{ character: string; episode_count: number }>;
+        }>;
+        crew: Array<{
+            id: number;
+            name: string;
+            profile_path: string | null;
+            department: string;
+            jobs: Array<{ job: string; episode_count: number; department?: string }>;
+        }>;
+    };
+    keywords?: {
+        results: Keyword[];
+    };
+    videos?: {
+        results: MovieVideo[];
+    };
+    'content_ratings'?: {
+        results: ContentRating[];
+    };
+    'alternative_titles'?: {
+        results: AlternativeTitle[];
+    };
+    'watch/providers'?: {
+        results: { [country: string]: WatchProviderData };
+    };
+    images?: {
+        logos: MovieLogo[];
+    };
+}
+
 export const getTVDetails = async (id: string, language: string = 'en-US'): Promise<TVDetails> => {
     const url = buildApiUrl(`tv/${id}`, { 
         append_to_response: 'external_ids',
         language 
+    });
+
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Failed to fetch TV details');
+    return response.json();
+};
+
+export const getTVDetailsCombined = async (
+    id: string, 
+    language: string = 'en-US',
+    imageLanguage: string = 'en'
+): Promise<TVDetailsCombined> => {
+    const url = buildApiUrl(`tv/${id}`, { 
+        append_to_response: 'external_ids,aggregate_credits,keywords,videos,content_ratings,alternative_titles,watch/providers,images',
+        language,
+        include_image_language: imageLanguage
     });
 
     const response = await fetch(url);

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { getMovieDetails, getMovieLogos, getMovieCertification, getWatchProviders, getMovieKeywords, getMovieCredits, getMovieAlternativeTitles, getMovieReleaseDates, getMovieVideos, getCollectionDetails, getImageUrl, getIMDbRating, getWikipediaUrl, type MovieDetails, type MovieLogo, type WatchProviderData, type Keyword, type MovieCredits, type AlternativeTitle, type CountryReleaseDates, type MovieVideo, type CollectionDetails } from '../services/tmdb';
+import { getMovieDetailsCombined, getMovieDetails, getMovieCertification, getWatchProviders, getMovieKeywords, getMovieCredits, getMovieAlternativeTitles, getMovieReleaseDates, getMovieVideos, getCollectionDetails, getImageUrl, getIMDbRating, getWikipediaUrl, type MovieDetails, type MovieLogo, type WatchProviderData, type Keyword, type MovieCredits, type AlternativeTitle, type CountryReleaseDates, type MovieVideo, type CollectionDetails, type MovieDetailsCombined } from '../services/tmdb';
 import { X, User, Film } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLoading } from '../contexts/LoadingContext';
@@ -124,81 +124,77 @@ export default function MovieDetail() {
                 const currentLanguage = getTMDBLanguage(i18n.language);
                 const imageLanguage = getTMDBImageLanguage(i18n.language);
                 const countryCode = getCountryCode(i18n.language);
-                const movieData = await getMovieDetails(id, currentLanguage);
-                const optionalResults = await Promise.allSettled([
-                    getMovieLogos(id, imageLanguage),
-                    getMovieCertification(id, countryCode),
-                    getWatchProviders(id, countryCode),
-                    getMovieKeywords(id),
-                    getMovieCredits(id, currentLanguage),
-                    getMovieAlternativeTitles(id),
-                    getMovieReleaseDates(id),
-                    getMovieVideos(id),
-                    getMovieDetails(id, 'en-US')
-                ]);
 
-                const [
-                    logosResult,
-                    certResult,
-                    providersResult,
-                    keywordsResult,
-                    creditsResult,
-                    altTitlesResult,
-                    releasesResult,
-                    videosResult,
-                    englishDataResult
-                ] = optionalResults;
+                const combinedData = await getMovieDetailsCombined(id, currentLanguage, imageLanguage, countryCode);
+                const englishData = currentLanguage !== 'en-US' ? await getMovieDetails(id, 'en-US') : null;
 
-                const logos = logosResult.status === 'fulfilled' ? logosResult.value : [];
-                const cert = certResult.status === 'fulfilled' ? certResult.value : null;
-                const providers = providersResult.status === 'fulfilled' ? providersResult.value : null;
-                const kw = keywordsResult.status === 'fulfilled' ? keywordsResult.value : [];
-                const creds = creditsResult.status === 'fulfilled' ? creditsResult.value : { cast: [], crew: [] };
-                const altTitles = altTitlesResult.status === 'fulfilled' ? altTitlesResult.value : [];
-                const releases = releasesResult.status === 'fulfilled' ? releasesResult.value : [];
-                const vids = videosResult.status === 'fulfilled' ? videosResult.value : [];
-                const englishData = englishDataResult.status === 'fulfilled' ? englishDataResult.value : null;
+                setMovie(combinedData);
+                setEnglishTitle(englishData?.title || combinedData.title);
 
-                setMovie(movieData);
-                setEnglishTitle(englishData?.title || movieData.title);
+                const logos = combinedData.images?.logos || [];
                 const currentLogo = logos.find(l => l.iso_639_1 === imageLanguage) || logos[0] || null;
                 setLogo(currentLogo);
+
+                const releaseDates = combinedData['release_dates']?.results || [];
+                const cert = (() => {
+                    const countryRelease = releaseDates.find(r => r.iso_3166_1 === countryCode);
+                    if (countryRelease?.release_dates?.length) {
+                        const c = countryRelease.release_dates.find(rd => rd.certification)?.certification;
+                        if (c) return c;
+                    }
+                    const usRelease = releaseDates.find(r => r.iso_3166_1 === 'US');
+                    if (usRelease?.release_dates?.length) {
+                        const c = usRelease.release_dates.find(rd => rd.certification)?.certification;
+                        if (c) return c;
+                    }
+                    for (const result of releaseDates) {
+                        const c = result.release_dates?.find(rd => rd.certification)?.certification;
+                        if (c) return c;
+                    }
+                    return null;
+                })();
                 setCertification(cert);
+                setReleaseDates(releaseDates);
+
+                const providers = combinedData['watch/providers']?.results?.[countryCode] || null;
                 setWatchProviders(providers);
+
+                const kw = combinedData.keywords?.keywords || [];
                 setKeywords(kw);
+
+                const creds: MovieCredits = {
+                    cast: combinedData.credits?.cast || [],
+                    crew: combinedData.credits?.crew || []
+                };
                 setCredits(creds);
+
+                const altTitles = combinedData['alternative_titles']?.titles || [];
                 setAlternativeTitles(altTitles);
-                setReleaseDates(releases);
+
+                const vids = combinedData.videos?.results || [];
                 setVideos(vids);
 
-                // Get TSPDT ranking
-                const tspdtRanking = getTSPDTRanking(movieData.id);
+                const tspdtRanking = getTSPDTRanking(combinedData.id);
                 setTspdtRank(tspdtRanking);
 
-                // Get TSPDT 21st Century ranking
-                const tspdt21stRanking = getTSPDT21stRanking(movieData.id);
+                const tspdt21stRanking = getTSPDT21stRanking(combinedData.id);
                 setTspdt21stRank(tspdt21stRanking);
 
-                // Get Sight and Sound ranking
-                const sightAndSoundRanking = getSightAndSoundRanking(movieData.id);
+                const sightAndSoundRanking = getSightAndSoundRanking(combinedData.id);
                 setSightAndSoundRank(sightAndSoundRanking);
 
-                // Get AFI ranking
-                const afiRanking = getAFIRanking(movieData.id);
+                const afiRanking = getAFIRanking(combinedData.id);
                 setAfiRank(afiRanking);
 
-                // Get Cahiers du Cinéma ranking
-                const cahiersRanking = getCahiersRanking(movieData.id);
+                const cahiersRanking = getCahiersRanking(combinedData.id);
                 setCahiersRank(cahiersRanking);
 
-                // Get awards information
-                const movieAwards = getMovieAwards(movieData.id);
+                const movieAwards = getMovieAwards(combinedData.id);
                 setAwards(movieAwards);
 
-                // Get collection details if movie belongs to a collection
-                if (movieData.belongs_to_collection) {
+                if (combinedData.belongs_to_collection) {
                     try {
-                        const collectionData = await getCollectionDetails(movieData.belongs_to_collection.id, currentLanguage);
+                        const collectionData = await getCollectionDetails(combinedData.belongs_to_collection.id, currentLanguage);
                         setCollection(collectionData);
                     } catch (err) {
                         console.error('Failed to fetch collection details:', err);
@@ -207,17 +203,16 @@ export default function MovieDetail() {
                     setCollection(null);
                 }
 
-                if (movieData.imdb_id) {
-                    getIMDbRating(movieData.imdb_id).then(rating => {
+                if (combinedData.imdb_id) {
+                    getIMDbRating(combinedData.imdb_id).then(rating => {
                         if (rating) setImdbRating(rating);
                     });
                 } else {
                     setImdbRating(null);
                 }
 
-                // Get Wikipedia URL from Wikidata
-                if (movieData.external_ids?.wikidata_id) {
-                    getWikipediaUrl(movieData.external_ids.wikidata_id, i18n.language).then(url => {
+                if (combinedData.external_ids?.wikidata_id) {
+                    getWikipediaUrl(combinedData.external_ids.wikidata_id, i18n.language).then(url => {
                         setWikipediaUrl(url);
                     });
                 } else {

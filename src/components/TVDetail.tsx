@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { getTVDetails, getTVLogos, getTVContentRatings, getTVWatchProviders, getTVKeywords, getTVCredits, getTVAlternativeTitles, getTVVideos, getTVSeasonDetails, getTVEpisodeDetails, getImageUrl, getIMDbRating, getWikipediaUrl, type TVDetails, type MovieLogo, type WatchProviderData, type WatchProvider, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails } from '../services/tmdb';
-import { X, User, PlayCircle, Film, Star, ChevronRight, ChevronDown } from 'lucide-react';
+import { getTVDetailsCombined, getTVDetails, getTVSeasonDetails, getImageUrl, getIMDbRating, getWikipediaUrl, type TVDetails, type MovieLogo, type WatchProviderData, type WatchProvider, type Keyword, type MovieCredits, type AlternativeTitle, type ContentRating, type MovieVideo, type SeasonDetails, type TVDetailsCombined } from '../services/tmdb';
+import { X, User, PlayCircle, Film, ChevronRight, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLoading } from '../contexts/LoadingContext';
 import { getTMDBLanguage, getTMDBImageLanguage, getCountryCode, getDateLocale } from '../utils/languageMapper';
@@ -117,39 +117,15 @@ export default function TVDetail() {
     const [selectedSeasonDetails, setSelectedSeasonDetails] = useState<SeasonDetails | null>(null);
     const [showSeasonDetails, setShowSeasonDetails] = useState(false);
     const [loadingSeason, setLoadingSeason] = useState(false);
-    const [episodeImdbRatings, setEpisodeImdbRatings] = useState<{ [key: string]: { aggregateRating: number; voteCount: number } }>({});
-
     const handleSeasonClick = async (seasonNumber: number) => {
         if (!id) return;
         setLoadingSeason(true);
         setSelectedSeasonDetails(null);
-        setEpisodeImdbRatings({});
         setShowSeasonDetails(true);
         try {
             const currentLanguage = getTMDBLanguage(i18n.language);
             const data = await getTVSeasonDetails(id, seasonNumber, currentLanguage);
             setSelectedSeasonDetails(data);
-
-            // Fetch IMDb ratings for all episodes
-            if (data?.episodes) {
-                const ratingsPromises = data.episodes.map(async (episode) => {
-                    const episodeDetails = await getTVEpisodeDetails(id, seasonNumber, episode.episode_number, currentLanguage);
-                    if (episodeDetails?.external_ids?.imdb_id) {
-                        const rating = await getIMDbRating(episodeDetails.external_ids.imdb_id);
-                        return { episodeId: episode.id, rating };
-                    }
-                    return { episodeId: episode.id, rating: null };
-                });
-
-                const ratings = await Promise.all(ratingsPromises);
-                const ratingsMap: { [key: string]: { aggregateRating: number; voteCount: number } } = {};
-                ratings.forEach(({ episodeId, rating }) => {
-                    if (rating) {
-                        ratingsMap[episodeId] = rating;
-                    }
-                });
-                setEpisodeImdbRatings(ratingsMap);
-            }
         } catch (err) {
             console.error(err);
         } finally {
@@ -177,67 +153,63 @@ export default function TVDetail() {
                 const currentLanguage = getTMDBLanguage(i18n.language);
                 const imageLanguage = getTMDBImageLanguage(i18n.language);
                 const countryCode = getCountryCode(i18n.language);
-                const tvData = await getTVDetails(id, currentLanguage);
-                const optionalResults = await Promise.allSettled([
-                    getTVLogos(id, imageLanguage),
-                    getTVContentRatings(id),
-                    getTVWatchProviders(id, countryCode),
-                    getTVKeywords(id),
-                    getTVCredits(id, currentLanguage),
-                    getTVAlternativeTitles(id),
-                    getTVVideos(id),
-                    getTVDetails(id, 'en-US')
-                ]);
 
-                const [
-                    logosResult,
-                    ratingsResult,
-                    providersResult,
-                    keywordsResult,
-                    creditsResult,
-                    altTitlesResult,
-                    videosResult,
-                    englishDataResult
-                ] = optionalResults;
+                const combinedData = await getTVDetailsCombined(id, currentLanguage, imageLanguage);
+                const englishData = currentLanguage !== 'en-US' ? await getTVDetails(id, 'en-US') : null;
 
-                const logos = logosResult.status === 'fulfilled' ? logosResult.value : [];
-                const ratings = ratingsResult.status === 'fulfilled' ? ratingsResult.value : [];
-                const providers = providersResult.status === 'fulfilled' ? providersResult.value : null;
-                const kw = keywordsResult.status === 'fulfilled' ? keywordsResult.value : [];
-                const creds = creditsResult.status === 'fulfilled' ? creditsResult.value : { cast: [], crew: [] };
-                const altTitles = altTitlesResult.status === 'fulfilled' ? altTitlesResult.value : [];
-                const vids = videosResult.status === 'fulfilled' ? videosResult.value : [];
-                const englishData = englishDataResult.status === 'fulfilled' ? englishDataResult.value : null;
+                setTV(combinedData);
+                setEnglishName(englishData?.name || combinedData.name);
 
-                setTV(tvData);
-                setEnglishName(englishData?.name || tvData.name);
+                const logos = combinedData.images?.logos || [];
                 const currentLogo = logos.find(l => l.iso_639_1 === imageLanguage) || logos[0] || null;
                 setLogo(currentLogo);
-                setShowSeasons(tvData.seasons.filter(s => s.episode_count > 0).length < 10);
 
+                setShowSeasons(combinedData.seasons.filter(s => s.episode_count > 0).length < 10);
+
+                const ratings = combinedData['content_ratings']?.results || [];
                 setContentRatings(ratings);
                 const countryRating = ratings.find(r => r.iso_3166_1 === countryCode)?.rating ||
                     ratings.find(r => r.iso_3166_1 === 'US')?.rating ||
                     ratings[0]?.rating || null;
                 setContentRating(countryRating);
 
+                const providers = combinedData['watch/providers']?.results?.[countryCode] || null;
                 setWatchProviders(providers);
+
+                const kw = combinedData.keywords?.results || [];
                 setKeywords(kw);
-                setCredits(creds);
+
+                const cast = (combinedData.aggregate_credits?.cast || []).map((c: any) => ({
+                    id: c.id,
+                    name: c.name,
+                    profile_path: c.profile_path,
+                    character: c.roles?.map((r: any) => `${r.character} (${r.episode_count} eps)`).join(', ') || ''
+                }));
+                const crew = (combinedData.aggregate_credits?.crew || []).map((c: any) => ({
+                    id: c.id,
+                    name: c.name,
+                    profile_path: c.profile_path,
+                    job: c.jobs?.map((j: any) => `${j.job} (${j.episode_count} eps)`).join(', ') || '',
+                    department: c.department || (c.jobs?.[0]?.department) || ''
+                }));
+                setCredits({ cast, crew });
+
+                const altTitles = combinedData['alternative_titles']?.results || [];
                 setAlternativeTitles(altTitles);
+
+                const vids = combinedData.videos?.results || [];
                 setVideos(vids);
 
-                if (tvData.external_ids?.imdb_id) {
-                    getIMDbRating(tvData.external_ids.imdb_id).then(rating => {
+                if (combinedData.external_ids?.imdb_id) {
+                    getIMDbRating(combinedData.external_ids.imdb_id).then(rating => {
                         if (rating) setImdbRating(rating);
                     });
                 } else {
                     setImdbRating(null);
                 }
 
-                // Get Wikipedia URL from Wikidata
-                if (tvData.external_ids?.wikidata_id) {
-                    getWikipediaUrl(tvData.external_ids.wikidata_id, i18n.language).then(url => {
+                if (combinedData.external_ids?.wikidata_id) {
+                    getWikipediaUrl(combinedData.external_ids.wikidata_id, i18n.language).then(url => {
                         setWikipediaUrl(url);
                     });
                 } else {
@@ -1258,68 +1230,13 @@ export default function TVDetail() {
                                                 </div>
                                             </div>
                                             <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                                                <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'flex-start', marginBottom: '12px', gap: isMobile ? '0' : '24px' }}>
-                                                    <h3 style={{ color: '#fff', margin: 0, fontSize: '1.1rem', flex: 1 }}>{episode.name}</h3>
-                                                    {!isMobile && episodeImdbRatings[episode.id] && (
-                                                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
-                                                            <Star size={14} fill="#fff" color="#fff" />
-                                                            <span style={{ fontSize: '14px', color: '#fff', fontWeight: 500 }}>{episodeImdbRatings[episode.id].aggregateRating.toFixed(1)}</span>
-                                                            {episodeImdbRatings[episode.id].voteCount > 0 && (
-                                                                <span style={{ fontSize: '13px', color: '#666' }}>
-                                                                    ({(() => {
-                                                                        const count = episodeImdbRatings[episode.id].voteCount;
-                                                                        if (count < 1000) {
-                                                                            return count.toString();
-                                                                        } else if (count < 10000) {
-                                                                            const k = count / 1000;
-                                                                            return `${k.toFixed(1)}K`;
-                                                                        } else if (count < 1000000) {
-                                                                            const k = Math.round(count / 1000);
-                                                                            return `${k}K`;
-                                                                        } else {
-                                                                            const m = count / 1000000;
-                                                                            return `${m.toFixed(1)}M`;
-                                                                        }
-                                                                    })()})
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                    )}
+                                                <div style={{ marginBottom: '12px' }}>
+                                                    <h3 style={{ color: '#fff', margin: 0, fontSize: '1.1rem' }}>{episode.name}</h3>
                                                 </div>
                                                 <p style={{ color: '#ccc', fontSize: '14px', lineHeight: 1.5, margin: 0, flex: 1 }}>
                                                     {episode.overview || t('common.noOverview')}
                                                 </p>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '8px', flexWrap: 'wrap' }}>
-                                                    {isMobile && episodeImdbRatings[episode.id] && (
-                                                        <>
-                                                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                                                <Star size={14} fill="#fff" color="#fff" />
-                                                                <span style={{ fontSize: '14px', color: '#fff', fontWeight: 500 }}>{episodeImdbRatings[episode.id].aggregateRating.toFixed(1)}</span>
-                                                                {episodeImdbRatings[episode.id].voteCount > 0 && (
-                                                                    <span style={{ fontSize: '13px', color: '#666' }}>
-                                                                        ({(() => {
-                                                                            const count = episodeImdbRatings[episode.id].voteCount;
-                                                                            if (count < 1000) {
-                                                                                return count.toString();
-                                                                            } else if (count < 10000) {
-                                                                                const k = count / 1000;
-                                                                                return `${k.toFixed(1)}K`;
-                                                                            } else if (count < 1000000) {
-                                                                                const k = Math.round(count / 1000);
-                                                                                return `${k}K`;
-                                                                            } else {
-                                                                                const m = count / 1000000;
-                                                                                return `${m.toFixed(1)}M`;
-                                                                            }
-                                                                        })()})
-                                                                    </span>
-                                                                )}
-                                                            </div>
-                                                            {(episode.runtime > 0 || episode.air_date) && (
-                                                                <span style={{ fontSize: '13px', color: '#666' }}>•</span>
-                                                            )}
-                                                        </>
-                                                    )}
                                                     {episode.runtime > 0 && (
                                                         <span style={{ fontSize: '13px', color: '#999' }}>{episode.runtime}m</span>
                                                     )}
