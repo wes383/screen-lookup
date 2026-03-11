@@ -107,59 +107,10 @@ export default function MovieDetail() {
     }, []);
 
     useEffect(() => {
-        if (showFullCast) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => {
-            document.body.style.overflow = '';
-        };
-    }, [showFullCast]);
-
-    useEffect(() => {
-        if (showAlternativeTitles) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => {
-            document.body.style.overflow = '';
-        };
-    }, [showAlternativeTitles]);
-
-    useEffect(() => {
-        if (showReleaseDates) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => {
-            document.body.style.overflow = '';
-        };
-    }, [showReleaseDates]);
-
-    useEffect(() => {
-        if (showTrailers) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => {
-            document.body.style.overflow = '';
-        };
-    }, [showTrailers]);
-
-    useEffect(() => {
-        if (showPoster) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => {
-            document.body.style.overflow = '';
-        };
-    }, [showPoster]);
+        const shouldHide = showFullCast || showAlternativeTitles || showReleaseDates || showTrailers || showPoster;
+        document.body.style.overflow = shouldHide ? 'hidden' : '';
+        return () => { document.body.style.overflow = ''; };
+    }, [showFullCast, showAlternativeTitles, showReleaseDates, showTrailers, showPoster]);
 
     useEffect(() => {
         if (!id) return;
@@ -471,15 +422,8 @@ export default function MovieDetail() {
                                 onMouseLeave={() => setIsCertHovered(false)}
                                 style={{
                                     cursor: 'pointer',
-                                    border: '1.5px solid rgba(255, 255, 255, 0.6)',
-                                    padding: '0px 6px',
-                                    borderRadius: '4px',
-                                    backgroundColor: isCertHovered ? 'rgba(255, 255, 255, 0.9)' : 'transparent',
-                                    color: isCertHovered ? '#121212' : 'inherit',
-                                    transition: 'background-color 0.2s, color 0.2s',
-                                    display: 'inline-block',
-                                    fontSize: '16px',
-                                    textShadow: 'none'
+                                    textDecoration: isCertHovered ? 'underline' : 'none',
+                                    textUnderlineOffset: '4px'
                                 }}>
                                 {certification}
                             </span>
@@ -1592,6 +1536,7 @@ export default function MovieDetail() {
                             <div className="modal-scrollbar" style={{
                                 padding: isMobile ? '12px' : '24px',
                                 overflowY: 'auto',
+                                overscrollBehavior: 'contain',
                                 display: 'grid',
                                 gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
                                 gap: isMobile ? '24px' : '40px'
@@ -1683,7 +1628,8 @@ export default function MovieDetail() {
                             </div>
                             <div className="modal-scrollbar" style={{
                                 padding: isMobile ? '12px' : '24px',
-                                overflowY: 'auto'
+                                overflowY: 'auto',
+                                overscrollBehavior: 'contain'
                             }}>
                                 {alternativeTitles.length > 0 ? (
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -1778,7 +1724,8 @@ export default function MovieDetail() {
                             </div>
                             <div className="modal-scrollbar" style={{
                                 padding: isMobile ? '12px' : '24px',
-                                overflowY: 'auto'
+                                overflowY: 'auto',
+                                overscrollBehavior: 'contain'
                             }}>
                                 {/* Primary Release Date */}
                                 {movie.release_date && (
@@ -1892,7 +1839,8 @@ export default function MovieDetail() {
                             </div>
                             <div className="modal-scrollbar" style={{
                                 padding: isMobile ? '12px' : '24px',
-                                overflowY: 'auto'
+                                overflowY: 'auto',
+                                overscrollBehavior: 'contain'
                             }}>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                                     {videos.filter(v => v.site === 'YouTube' && v.type === 'Trailer' && v.official).map((video, idx) => (

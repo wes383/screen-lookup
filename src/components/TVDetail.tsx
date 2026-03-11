@@ -444,15 +444,8 @@ export default function TVDetail() {
                                 onMouseLeave={() => setIsCertHovered(false)}
                                 style={{
                                     cursor: 'pointer',
-                                    border: '1.5px solid rgba(255, 255, 255, 0.6)',
-                                    padding: '0px 6px',
-                                    borderRadius: '4px',
-                                    backgroundColor: isCertHovered ? 'rgba(255, 255, 255, 0.9)' : 'transparent',
-                                    color: isCertHovered ? '#121212' : 'inherit',
-                                    transition: 'background-color 0.2s, color 0.2s',
-                                    display: 'inline-block',
-                                    fontSize: '16px',
-                                    textShadow: 'none'
+                                    textDecoration: isCertHovered ? 'underline' : 'none',
+                                    textUnderlineOffset: '4px'
                                 }}>
                                 {contentRating}
                             </span>
@@ -1084,7 +1077,7 @@ export default function TVDetail() {
                             <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.fullCastAndCrew')}</h2>
                             <button onClick={() => setShowFullCast(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: isMobile ? '20px' : '24px', cursor: 'pointer' }}><X size={isMobile ? 20 : 24} /></button>
                         </div>
-                        <div className="modal-scrollbar" style={{ padding: isMobile ? '12px' : '24px', overflowY: 'auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '24px' : '40px' }}>
+                        <div className="modal-scrollbar" style={{ padding: isMobile ? '12px' : '24px', overflowY: 'auto', overscrollBehavior: 'contain', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '24px' : '40px' }}>
                             <div>
                                 <h3 style={{ color: '#fff', marginBottom: '16px', fontSize: '1.2rem' }}>{t('tv.cast')}</h3>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -1120,7 +1113,7 @@ export default function TVDetail() {
                             <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.alternativeTitles')}</h2>
                             <button onClick={() => setShowAlternativeTitles(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: isMobile ? '20px' : '24px', cursor: 'pointer' }}><X size={isMobile ? 20 : 24} /></button>
                         </div>
-                        <div className="modal-scrollbar" style={{ padding: isMobile ? '12px' : '24px', overflowY: 'auto' }}>
+                        <div className="modal-scrollbar" style={{ padding: isMobile ? '12px' : '24px', overflowY: 'auto', overscrollBehavior: 'contain' }}>
                             {alternativeTitles.length > 0 ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', paddingBottom: '12px' }}>
@@ -1162,7 +1155,7 @@ export default function TVDetail() {
                             <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.trailers')}</h2>
                             <button onClick={() => setShowTrailers(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
-                        <div className="modal-scrollbar" style={{ padding: isMobile ? '12px' : '24px', overflowY: 'auto' }}>
+                        <div className="modal-scrollbar" style={{ padding: isMobile ? '12px' : '24px', overflowY: 'auto', overscrollBehavior: 'contain' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                                 {videos.filter(v => v.site === 'YouTube' && v.type === 'Trailer' && v.official).map((video, idx) => (
                                     <a key={idx} href={`https://www.youtube.com/watch?v=${video.key}`} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', paddingBottom: '12px', textDecoration: 'none', alignItems: 'center' }}>
@@ -1184,7 +1177,7 @@ export default function TVDetail() {
                             <h2 style={{ color: '#fff', margin: 0, fontSize: isMobile ? '1.2rem' : '1.5rem' }}>{t('tv.contentRatings')}</h2>
                             <button onClick={() => setShowContentRatings(false)} style={{ background: 'none', border: 'none', color: '999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
-                        <div className="modal-scrollbar" style={{ padding: isMobile ? '12px' : '24px', overflowY: 'auto' }}>
+                        <div className="modal-scrollbar" style={{ padding: isMobile ? '12px' : '24px', overflowY: 'auto', overscrollBehavior: 'contain' }}>
                             {contentRatings.length > 0 ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                     {contentRatings.map((r, idx) => (
@@ -1235,7 +1228,7 @@ export default function TVDetail() {
                             <button onClick={() => setShowSeasonDetails(false)} style={{ background: 'none', border: 'none', color: '#999', fontSize: '24px', cursor: 'pointer' }}><X size={24} /></button>
                         </div>
 
-                        <div className="modal-scrollbar" style={{ padding: isMobile ? '12px' : '24px', overflowY: 'auto', flex: 1 }}>
+                        <div className="modal-scrollbar" style={{ padding: isMobile ? '12px' : '24px', overflowY: 'auto', overscrollBehavior: 'contain', flex: 1 }}>
                             {loadingSeason ? (
                                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                                     <p style={{ color: '#fff' }}>{t('common.loading')}</p>
