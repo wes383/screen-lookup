@@ -19,10 +19,11 @@ export default function Home() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
-    const searchTimeoutRef = useRef<number | undefined>(undefined);
+    const [lastSearchedQuery, setLastSearchedQuery] = useState('');
     const resultsRef = useRef<HTMLDivElement>(null);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
+    const shouldShowDropdown = isFocused && (isSearching || searchResults.length > 0 || lastSearchedQuery.trim().length > 0);
 
     useEffect(() => {
         setMounted(true);
@@ -58,11 +59,11 @@ export default function Home() {
                 if (displayCount < searchResults.length) {
                     setDisplayCount(prev => Math.min(prev + 10, searchResults.length));
                 }
-                else if (currentPage < totalPages && !isLoadingMore) {
+                else if (currentPage < totalPages && !isLoadingMore && lastSearchedQuery.trim().length > 0) {
                     setIsLoadingMore(true);
                     const currentLanguage = getTMDBLanguage(i18n.language);
                     const nextPage = currentPage + 1;
-                    const results = await searchMulti(query.trim(), currentLanguage, nextPage);
+                    const results = await searchMulti(lastSearchedQuery.trim(), currentLanguage, nextPage);
                     const filtered = results.results.filter(r => r.media_type === 'movie' || r.media_type === 'tv' || r.media_type === 'person');
                     setSearchResults(prev => [...prev, ...filtered]);
                     setCurrentPage(nextPage);
@@ -74,27 +75,40 @@ export default function Home() {
 
         scrollContainer.addEventListener('scroll', handleScroll);
         return () => scrollContainer.removeEventListener('scroll', handleScroll);
-    }, [displayCount, searchResults.length, currentPage, totalPages, isLoadingMore, query, i18n.language]);
+    }, [displayCount, searchResults.length, currentPage, totalPages, isLoadingMore, lastSearchedQuery, i18n.language]);
 
     useEffect(() => {
-        if (searchTimeoutRef.current) {
-            clearTimeout(searchTimeoutRef.current);
-        }
-
         if (query.trim().length < 1) {
             setSearchResults([]);
             setIsSearching(false);
             setDisplayCount(10);
             setCurrentPage(1);
             setTotalPages(1);
+            setLastSearchedQuery('');
+        }
+    }, [query]);
+
+    const runSearch = async () => {
+        const trimmedQuery = query.trim();
+        if (trimmedQuery.length < 1) {
+            setSearchResults([]);
+            setIsSearching(false);
+            setDisplayCount(10);
+            setCurrentPage(1);
+            setTotalPages(1);
+            setLastSearchedQuery('');
             return;
         }
 
+        setIsFocused(true);
         setIsSearching(true);
         setDisplayCount(10);
         setCurrentPage(1);
-        searchTimeoutRef.current = setTimeout(async () => {
-            const trimmedQuery = query.trim();
+        setTotalPages(1);
+        setLastSearchedQuery(trimmedQuery);
+        setSearchResults([]);
+
+        try {
             const currentLanguage = getTMDBLanguage(i18n.language);
 
             // Check if query is an IMDb ID
@@ -102,60 +116,61 @@ export default function Home() {
             if (imdbIdPattern.test(trimmedQuery)) {
                 const result = await findByImdbId(trimmedQuery);
                 if (result.type && result.id) {
-                    try {
-                        if (result.type === 'movie') {
-                            const movieDetails = await getMovieDetails(result.id.toString(), currentLanguage);
-                            const searchResult: SearchResult = {
-                                id: movieDetails.id,
-                                media_type: 'movie',
-                                title: movieDetails.title,
-                                original_title: movieDetails.original_title,
-                                poster_path: movieDetails.poster_path,
-                                backdrop_path: movieDetails.backdrop_path,
-                                release_date: movieDetails.release_date,
-                                vote_average: movieDetails.vote_average,
-                                popularity: movieDetails.vote_average,
-                                overview: movieDetails.overview
-                            };
-                            setSearchResults([searchResult]);
-                        } else if (result.type === 'tv') {
-                            const tvDetails = await getTVDetails(result.id.toString(), currentLanguage);
-                            const searchResult: SearchResult = {
-                                id: tvDetails.id,
-                                media_type: 'tv',
-                                name: tvDetails.name,
-                                original_name: tvDetails.original_name,
-                                poster_path: tvDetails.poster_path,
-                                backdrop_path: tvDetails.backdrop_path,
-                                first_air_date: tvDetails.first_air_date,
-                                vote_average: tvDetails.vote_average,
-                                popularity: tvDetails.vote_average,
-                                overview: tvDetails.overview
-                            };
-                            setSearchResults([searchResult]);
-                        } else if (result.type === 'person') {
-                            const personDetails = await getPersonDetails(result.id.toString(), currentLanguage);
-                            if (personDetails) {
-                                const searchResult: SearchResult = {
-                                    id: personDetails.id,
-                                    media_type: 'person',
-                                    name: personDetails.name,
-                                    profile_path: personDetails.profile_path,
-                                    poster_path: null,
-                                    known_for_department: personDetails.known_for_department,
-                                    popularity: personDetails.popularity,
-                                    backdrop_path: null,
-                                    vote_average: 0,
-                                    overview: personDetails.biography || ''
-                                };
-                                setSearchResults([searchResult]);
-                            }
-                        }
-                        setTotalPages(1);
+                    if (result.type === 'movie') {
+                        const movieDetails = await getMovieDetails(result.id.toString(), currentLanguage);
+                        const searchResult: SearchResult = {
+                            id: movieDetails.id,
+                            media_type: 'movie',
+                            title: movieDetails.title,
+                            original_title: movieDetails.original_title,
+                            poster_path: movieDetails.poster_path,
+                            backdrop_path: movieDetails.backdrop_path,
+                            release_date: movieDetails.release_date,
+                            vote_average: movieDetails.vote_average,
+                            popularity: movieDetails.vote_average,
+                            overview: movieDetails.overview
+                        };
+                        setSearchResults([searchResult]);
                         setIsSearching(false);
                         return;
-                    } catch (error) {
-                        console.error('Error fetching IMDb ID details:', error);
+                    }
+                    if (result.type === 'tv') {
+                        const tvDetails = await getTVDetails(result.id.toString(), currentLanguage);
+                        const searchResult: SearchResult = {
+                            id: tvDetails.id,
+                            media_type: 'tv',
+                            name: tvDetails.name,
+                            original_name: tvDetails.original_name,
+                            poster_path: tvDetails.poster_path,
+                            backdrop_path: tvDetails.backdrop_path,
+                            first_air_date: tvDetails.first_air_date,
+                            vote_average: tvDetails.vote_average,
+                            popularity: tvDetails.vote_average,
+                            overview: tvDetails.overview
+                        };
+                        setSearchResults([searchResult]);
+                        setIsSearching(false);
+                        return;
+                    }
+                    if (result.type === 'person') {
+                        const personDetails = await getPersonDetails(result.id.toString(), currentLanguage);
+                        if (personDetails) {
+                            const searchResult: SearchResult = {
+                                id: personDetails.id,
+                                media_type: 'person',
+                                name: personDetails.name,
+                                profile_path: personDetails.profile_path,
+                                poster_path: null,
+                                known_for_department: personDetails.known_for_department,
+                                popularity: personDetails.popularity,
+                                backdrop_path: null,
+                                vote_average: 0,
+                                overview: personDetails.biography || ''
+                            };
+                            setSearchResults([searchResult]);
+                            setIsSearching(false);
+                            return;
+                        }
                     }
                 }
             }
@@ -164,21 +179,16 @@ export default function Home() {
             const filtered = results.results.filter(r => r.media_type === 'movie' || r.media_type === 'tv' || r.media_type === 'person');
             setSearchResults(filtered);
             setTotalPages(results.total_pages);
+        } catch (error) {
+            console.error('Error fetching search results:', error);
+        } finally {
             setIsSearching(false);
-        }, 300) as unknown as number;
-
-        return () => {
-            if (searchTimeoutRef.current) {
-                clearTimeout(searchTimeoutRef.current);
-            }
-        };
-    }, [query, i18n.language]);
+        }
+    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (query.trim() && searchResults.length > 0) {
-            router.push(`/${searchResults[0].media_type}/${searchResults[0].id}`);
-        }
+        runSearch();
     };
 
     const handleResultClick = (result: SearchResult) => {
@@ -305,8 +315,8 @@ export default function Home() {
                             style={{
                                 width: '100%',
                                 padding: isMobile ? '16px 20px' : '20px 30px',
-                                paddingInlineStart: isMobile ? '50px' : '60px',
-                                borderRadius: isFocused ? (isMobile ? '20px 20px 0 0' : '24px 24px 0 0') : '9999px',
+                                paddingInlineEnd: isMobile ? '110px' : '130px',
+                                borderRadius: shouldShowDropdown ? (isMobile ? '20px 20px 0 0' : '24px 24px 0 0') : '9999px',
                                 border: 'none',
                                 outline: 'none',
                                 backgroundColor: '#2A2A2A',
@@ -317,16 +327,32 @@ export default function Home() {
                                 boxSizing: 'border-box'
                             }}
                         />
-                        <Search
+                        <button
+                            type="submit"
+                            aria-label={mounted ? t('common.search', 'Search') : 'Search'}
                             style={{
                                 position: 'absolute',
-                                insetInlineStart: isMobile ? '16px' : '24px',
+                                insetInlineEnd: isMobile ? '10px' : '16px',
                                 top: '50%',
                                 transform: 'translateY(-50%)',
-                                color: '#888'
+                                backgroundColor: '#3a3a3a',
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: '9999px',
+                                padding: isMobile ? '8px 12px' : '10px 16px',
+                                fontSize: isMobile ? '12px' : '14px',
+                                fontFamily: 'Inter, sans-serif',
+                                cursor: 'pointer',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                transition: 'background-color 0.2s'
                             }}
-                            size={isMobile ? 22 : 28}
-                        />
+                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#4a4a4a'}
+                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#3a3a3a'}
+                        >
+                            <Search size={isMobile ? 18 : 20} />
+                        </button>
                     </form>
 
                     {/* IMDb ID hint */}
@@ -346,7 +372,7 @@ export default function Home() {
                     )}
 
                     {/* Search Results Dropdown */}
-                    {isFocused && (
+                    {shouldShowDropdown && (
                         <div style={{
                             position: 'absolute',
                             top: '100%',
@@ -379,9 +405,9 @@ export default function Home() {
                                     </div>
                                 ) : searchResults.length > 0 ? (
                                     <>
-                                        {searchResults.slice(0, displayCount).map((result) => (
+                                        {searchResults.slice(0, displayCount).map((result, index) => (
                                             <div
-                                                key={`${result.media_type}-${result.id}`}
+                                                key={`${result.media_type}-${result.id}-${index}`}
                                                 onClick={() => handleResultClick(result)}
                                                 style={{
                                                     display: 'flex',
@@ -471,7 +497,7 @@ export default function Home() {
                                             </div>
                                         )}
                                     </>
-                                ) : query.trim().length >= 1 ? (
+                                ) : lastSearchedQuery.trim().length >= 1 ? (
                                     <div style={{
                                         display: 'flex',
                                         alignItems: 'center',
@@ -482,18 +508,7 @@ export default function Home() {
                                     }}>
                                         {t('common.noResults')}
                                     </div>
-                                ) : (
-                                    <div style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        height: '100%',
-                                        color: '#666',
-                                        fontSize: '14px'
-                                    }}>
-                                        {t('common.startTyping')}
-                                    </div>
-                                )}
+                                ) : null}
                             </div>
                         </div>
                     )}
