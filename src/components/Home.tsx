@@ -292,13 +292,14 @@ export default function Home() {
                 width: '100%',
                 maxWidth: '600px'
             }}>
-                {isMobile && !isFocused && (
+                {isMobile && (
                     <div style={{
                         textAlign: 'center',
                         marginBottom: '12px',
                         color: '#999',
                         fontSize: '14px',
-                        fontFamily: 'Inter, sans-serif'
+                        fontFamily: 'Inter, sans-serif',
+                        visibility: isFocused ? 'hidden' : 'visible'
                     }}>
                         {mounted ? t('common.searchPlaceholder') : 'Search movies, TV shows, or people'}
                     </div>
@@ -332,14 +333,14 @@ export default function Home() {
                             aria-label={mounted ? t('common.search', 'Search') : 'Search'}
                             style={{
                                 position: 'absolute',
-                                insetInlineEnd: isMobile ? '10px' : '16px',
+                                insetInlineEnd: isMobile ? '6px' : '16px',
                                 top: '50%',
                                 transform: 'translateY(-50%)',
                                 backgroundColor: '#3a3a3a',
                                 color: '#fff',
                                 border: 'none',
                                 borderRadius: '9999px',
-                                padding: isMobile ? '8px 12px' : '10px 16px',
+                                padding: '10px 16px',
                                 fontSize: isMobile ? '12px' : '14px',
                                 fontFamily: 'Inter, sans-serif',
                                 cursor: 'pointer',
@@ -351,7 +352,7 @@ export default function Home() {
                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#4a4a4a'}
                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#3a3a3a'}
                         >
-                            <Search size={isMobile ? 18 : 20} />
+                            <Search size={20} />
                         </button>
                     </form>
 
