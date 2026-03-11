@@ -572,7 +572,7 @@ export default function Home() {
                 style={{
                     position: 'fixed',
                     bottom: isMobile ? '0px' : '20px',
-                    left: isMobile ? '18px' : '20px',
+                    insetInlineStart: isMobile ? '18px' : '20px',
                     color: '#888',
                     fontSize: '14px',
                     fontFamily: 'Inter, sans-serif',

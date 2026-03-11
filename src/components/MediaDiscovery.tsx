@@ -237,7 +237,7 @@ export default function MediaDiscovery() {
             const currentLanguage = getTMDBLanguage(i18n.language);
             const genreList = await getGenres(mediaType, currentLanguage);
             setGenres(genreList);
-            setSelectedGenres([]);
+            setSelectedGenres(prev => (prev.length ? [] : prev));
         };
         fetchGenres();
         // Reset production company when switching media type
