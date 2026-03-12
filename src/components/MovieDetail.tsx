@@ -455,23 +455,6 @@ export default function MovieDetail() {
                             {movie.tagline}
                         </p>
                     )}
-
-                    <h3 style={{
-                        fontSize: '1.2rem',
-                        marginBottom: '16px',
-                        fontWeight: 600,
-                        color: '#fff'
-                    }}>
-                        {t('movie.overview')}
-                    </h3>
-                    <p style={{
-                        fontSize: '1.125rem',
-                        lineHeight: 1.6,
-                        color: '#ccc',
-                        marginBottom: '24px'
-                    }}>
-                        {movie.overview}
-                    </p>
                 </div>
 
                 {(movie.vote_average > 0 || imdbRating || tspdtRank || tspdt21stRank || sightAndSoundRank || afiRank) && (
@@ -833,6 +816,24 @@ export default function MovieDetail() {
                     </div>
                 )}
 
+                <div style={{ maxWidth: '800px' }}>
+                    <h3 style={{
+                        fontSize: '1.2rem',
+                        marginBottom: '16px',
+                        fontWeight: 600,
+                        color: '#fff'
+                    }}>
+                        {t('movie.overview')}
+                    </h3>
+                    <p style={{
+                        fontSize: '1.125rem',
+                        lineHeight: 1.6,
+                        color: '#ccc',
+                        marginBottom: '24px'
+                    }}>
+                        {movie.overview}
+                    </p>
+                </div>
 
                 <div style={{ maxWidth: '800px' }}>
                     {/* Director */}
