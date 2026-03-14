@@ -301,7 +301,7 @@ export default function Home() {
         const randomMovieIndex = Math.floor(Math.random() * randomList.length);
         const randomMovie = randomList[randomMovieIndex];
         if (randomMovie && randomMovie.tmdb_id) {
-            router.push(`/movie/${randomMovie.tmdb_id}`);
+            window.open(`/movie/${randomMovie.tmdb_id}`, '_blank');
         }
     };
 
