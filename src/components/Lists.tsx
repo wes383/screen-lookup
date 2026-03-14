@@ -95,6 +95,15 @@ export default function Lists() {
                     {mounted ? t('common.lists', 'Lists') : 'Lists'}
                 </h1>
 
+                <p style={{
+                    margin: '0 0 24px 0',
+                    fontSize: '14px',
+                    color: '#999',
+                    lineHeight: 1.5
+                }}>
+                    The lists are only available in English and may not be complete or entirely accurate.
+                </p>
+
                 <div style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -129,17 +138,6 @@ export default function Lists() {
                             </h2>
                         </Link>
                     ))}
-                </div>
-
-                <div style={{
-                    marginTop: '40px',
-                    textAlign: 'center',
-                    color: '#666',
-                    fontSize: '14px',
-                    padding: '20px 0',
-                    direction: 'ltr'
-                }}>
-                    These lists may not be complete or fully accurate.
                 </div>
             </div>
         </div>
