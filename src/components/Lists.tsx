@@ -101,7 +101,7 @@ export default function Lists() {
                     color: '#999',
                     lineHeight: 1.5
                 }}>
-                    The lists are only available in English and may not be complete or entirely accurate.
+                    {mounted ? t('common.listsEnglishOnly', 'The lists are only available in English and may not be complete or entirely accurate.') : 'The lists are only available in English and may not be complete or entirely accurate.'}
                 </p>
 
                 <div style={{

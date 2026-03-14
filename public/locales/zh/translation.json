@@ -29,6 +29,7 @@
     "discover": "发现",
     "lists": "列表",
     "random": "随机",
+    "listsEnglishOnly": "列表仅提供英文版本，可能不完整或不完全准确。",
     "mediaFilter": "媒体筛选",
     "filters": "筛选",
     "mediaType": "媒体类型",

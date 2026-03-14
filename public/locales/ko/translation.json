@@ -29,6 +29,7 @@
     "discover": "발견",
     "lists": "목록",
     "random": "무작위",
+    "listsEnglishOnly": "목록은 영어로만 제공되며 완전하지 않거나 정확하지 않을 수 있습니다.",
     "mediaFilter": "미디어 필터",
     "filters": "필터",
     "mediaType": "미디어 유형",

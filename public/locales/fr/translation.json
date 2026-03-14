@@ -29,6 +29,7 @@
     "discover": "Découvrir",
     "lists": "Listes",
     "random": "Aléatoire",
+    "listsEnglishOnly": "Les listes ne sont disponibles qu'en anglais et peuvent être incomplètes ou inexactes.",
     "mediaFilter": "Filtre média",
     "filters": "Filtres",
     "mediaType": "Type de média",
