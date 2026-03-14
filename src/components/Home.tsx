@@ -3,10 +3,33 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Search, Film, Tv, User } from 'lucide-react';
+import { Search, Film, Tv, User, Shuffle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { searchMulti, getImageUrl, findByImdbId, getMovieDetails, getTVDetails, getPersonDetails, type SearchResult } from '../services/tmdb';
 import { getTMDBLanguage } from '../utils/languageMapper';
+import afi100Movies from '../assets/afi-100-years-100-movies-10th-anniversary.json';
+import berlinaleAwards from '../assets/berlinale_awards.json';
+import cahiersTop10 from '../assets/cahiers-du-cinema-top-10.json';
+import cannesAwards from '../assets/cannes_awards.json';
+import oscarWinners from '../assets/oscar_winners.json';
+import sightAndSound250 from '../assets/sight-and-sound-2022-top-250.json';
+import tspdt1000 from '../assets/tspdt-1000-greatest-films-2026.json';
+import tspdt21st from '../assets/tspdt-21st-centurys-top-1000.json';
+import veniceAwards from '../assets/venice_awards.json';
+
+type MovieWithTmdbId = { tmdb_id: number };
+
+const allLists: MovieWithTmdbId[][] = [
+    afi100Movies as MovieWithTmdbId[],
+    berlinaleAwards as MovieWithTmdbId[],
+    cahiersTop10 as MovieWithTmdbId[],
+    cannesAwards as MovieWithTmdbId[],
+    oscarWinners as MovieWithTmdbId[],
+    sightAndSound250 as MovieWithTmdbId[],
+    tspdt1000 as MovieWithTmdbId[],
+    tspdt21st as MovieWithTmdbId[],
+    veniceAwards as MovieWithTmdbId[],
+];
 
 export default function Home() {
     const { t, i18n } = useTranslation();
@@ -271,6 +294,16 @@ export default function Home() {
         window.addEventListener('resize', checkMobile);
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
+
+    const handleRandomMovie = () => {
+        const randomListIndex = Math.floor(Math.random() * allLists.length);
+        const randomList = allLists[randomListIndex];
+        const randomMovieIndex = Math.floor(Math.random() * randomList.length);
+        const randomMovie = randomList[randomMovieIndex];
+        if (randomMovie && randomMovie.tmdb_id) {
+            router.push(`/movie/${randomMovie.tmdb_id}`);
+        }
+    };
 
     return (
         <>
@@ -578,6 +611,32 @@ export default function Home() {
                     >
                         {mounted ? t('common.lists', 'Lists') : 'Lists'}
                     </Link>
+
+                    <button
+                        onClick={handleRandomMovie}
+                        className="home-nav-link"
+                        style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '8px',
+                            width: 'auto',
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            border: 'none',
+                            borderRadius: '30px',
+                            padding: isMobile ? '10px 22px' : '12px 32px',
+                            color: '#fff',
+                            fontSize: isMobile ? '16px' : '18px',
+                            fontWeight: '500',
+                            fontFamily: 'Inter, sans-serif',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                            backdropFilter: 'blur(10px)'
+                        }}
+                    >
+                        <Shuffle size={isMobile ? 16 : 18} />
+                        {mounted ? t('common.random', 'Random') : 'Random'}
+                    </button>
                 </div>
             )}
 
