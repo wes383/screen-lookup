@@ -193,7 +193,13 @@ export const awardTranslations: { [key: string]: { [lang: string]: string } } = 
         'it': 'Miglior canzone', 'pt': 'Melhor canção original', 'ru': 'Лучшая песня к фильму', 'tr': 'En İyi Özgün Şarkı',
         'ar': 'أفضل أغنية أصلية', 'hi': 'सर्वश्रेष्ठ मूल गीत'
     },
-    
+    'Casting': { 
+    'zh': '最佳选角', 'zh-HK': '最佳選角', 'zh-TW': '最佳選角', 'en': 'Casting', 'ja': 'キャスティング賞', 'ko': '캐스팅상',
+    'es': 'Mejor dirección de casting', 'fr': 'Meilleur casting', 'de': 'Bestes Casting',
+    'it': 'Miglior casting', 'pt': 'Melhor elenco', 'ru': 'Лучший подбор актёров', 'tr': 'En İyi Cast',
+    'ar': 'أفضل اختيار طاقم', 'hi': 'सर्वश्रेष्ठ कास्टिंग'
+    },
+
     // Cannes Awards
     "Palme d'Or": { 
         'zh': '金棕榈奖', 'zh-HK': '金棕櫚獎', 'zh-TW': '金棕櫚獎', 'en': "Palme d'Or", 'ja': 'パルム・ドール', 'ko': '황금종려상',

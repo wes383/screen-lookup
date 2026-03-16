@@ -27614,5 +27614,330 @@
             "Romance"
         ],
         "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "ACTOR IN A LEADING ROLE",
+        "Film": "Sinners",
+        "Director": "Ryan Coogler",
+        "tmdb_id": 1233413,
+        "genres": [
+            "Horror",
+            "Action",
+            "Thriller"
+        ],
+        "name": "Michael B. Jordan"
+    },
+    {
+        "Year": "2025",
+        "Award": "ACTOR IN A SUPPORTING ROLE",
+        "Film": "One Battle after Another",
+        "Director": "Paul Thomas Anderson",
+        "tmdb_id": 1054867,
+        "genres": [
+            "Thriller",
+            "Crime",
+            "Action",
+            "Comedy"
+        ],
+        "name": "Sean Penn"
+    },
+    {
+        "Year": "2025",
+        "Award": "ACTRESS IN A LEADING ROLE",
+        "Film": "Hamnet",
+        "Director": "Chloé Zhao",
+        "tmdb_id": 858024,
+        "genres": [
+            "Drama",
+            "Romance",
+            "History"
+        ],
+        "name": "Jessie Buckley"
+    },
+    {
+        "Year": "2025",
+        "Award": "ACTRESS IN A SUPPORTING ROLE",
+        "Film": "Weapons",
+        "Director": "Zach Cregger",
+        "tmdb_id": 1078605,
+        "genres": [
+            "Horror",
+            "Mystery"
+        ],
+        "name": "Amy Madigan"
+    },
+    {
+        "Year": "2025",
+        "Award": "ANIMATED FEATURE FILM",
+        "Film": "KPop Demon Hunters",
+        "Director": "Maggie Kang, Chris Appelhans",
+        "tmdb_id": 803796,
+        "genres": [
+            "Fantasy",
+            "Music",
+            "Comedy",
+            "Animation"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "ANIMATED SHORT FILM",
+        "Film": "The Girl Who Cried Pearls",
+        "Director": "Chris Lavis, Maciek Szczerbowski",
+        "tmdb_id": 1142149,
+        "genres": [
+            "Animation",
+            "Drama",
+            "Fantasy"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "CASTING",
+        "Film": "One Battle after Another",
+        "Director": "Paul Thomas Anderson",
+        "tmdb_id": 1054867,
+        "genres": [
+            "Thriller",
+            "Crime",
+            "Action",
+            "Comedy"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "CINEMATOGRAPHY",
+        "Film": "Sinners",
+        "Director": "Ryan Coogler",
+        "tmdb_id": 1233413,
+        "genres": [
+            "Horror",
+            "Action",
+            "Thriller"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "COSTUME DESIGN",
+        "Film": "Frankenstein",
+        "Director": "Guillermo del Toro",
+        "tmdb_id": 1062722,
+        "genres": [
+            "Drama",
+            "Fantasy",
+            "Horror"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "DIRECTING",
+        "Film": "One Battle after Another",
+        "Director": "Paul Thomas Anderson",
+        "tmdb_id": 1054867,
+        "genres": [
+            "Thriller",
+            "Crime",
+            "Action",
+            "Comedy"
+        ],
+        "name": "Paul Thomas Anderson"
+    },
+    {
+        "Year": "2025",
+        "Award": "DOCUMENTARY FEATURE FILM",
+        "Film": "Mr. Nobody Against Putin",
+        "Director": "David Borenstein, Pavel Talankin",
+        "tmdb_id": 1393151,
+        "genres": [
+            "Documentary",
+            "History"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "DOCUMENTARY SHORT FILM",
+        "Film": "All the Empty Rooms",
+        "Director": "Joshua Seftel",
+        "tmdb_id": 1525091,
+        "genres": [
+            "Documentary"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "FILM EDITING",
+        "Film": "One Battle after Another",
+        "Director": "Paul Thomas Anderson",
+        "tmdb_id": 1054867,
+        "genres": [
+            "Thriller",
+            "Crime",
+            "Action",
+            "Comedy"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "INTERNATIONAL FEATURE FILM",
+        "Film": "Sentimental Value",
+        "Director": "Joachim Trier",
+        "tmdb_id": 1124566,
+        "genres": [
+            "Drama"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "LIVE ACTION SHORT FILM",
+        "Film": "The Singers",
+        "Director": "Sam A. Davis",
+        "tmdb_id": 1442908,
+        "genres": [
+            "Music",
+            "Drama",
+            "Comedy"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "LIVE ACTION SHORT FILM",
+        "Film": "Two People Exchanging Saliva",
+        "Director": "Alexandre Singh, Natalie Musteata",
+        "tmdb_id": 1340625,
+        "genres": [
+            "Drama",
+            "Fantasy",
+            "Science Fiction"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "MAKEUP AND HAIRSTYLING",
+        "Film": "Frankenstein",
+        "Director": "Guillermo del Toro",
+        "tmdb_id": 1062722,
+        "genres": [
+            "Drama",
+            "Fantasy",
+            "Horror"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "MUSIC (Original Score)",
+        "Film": "Sinners",
+        "Director": "Ryan Coogler",
+        "tmdb_id": 1233413,
+        "genres": [
+            "Horror",
+            "Action",
+            "Thriller"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "MUSIC (Original Song)",
+        "Film": "KPop Demon Hunters",
+        "Director": "Maggie Kang, Chris Appelhans",
+        "tmdb_id": 803796,
+        "genres": [
+            "Fantasy",
+            "Music",
+            "Comedy",
+            "Animation"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "BEST PICTURE",
+        "Film": "One Battle after Another",
+        "Director": "Paul Thomas Anderson",
+        "tmdb_id": 1054867,
+        "genres": [
+            "Thriller",
+            "Crime",
+            "Action",
+            "Comedy"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "PRODUCTION DESIGN",
+        "Film": "Frankenstein",
+        "Director": "Guillermo del Toro",
+        "tmdb_id": 1062722,
+        "genres": [
+            "Drama",
+            "Fantasy",
+            "Horror"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "SOUND",
+        "Film": "F1",
+        "Director": "Joseph Kosinski",
+        "tmdb_id": 911430,
+        "genres": [
+            "Action", 
+            "Drama"],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "VISUAL EFFECTS",
+        "Film": "Avatar: Fire and Ash",
+        "Director": "James Cameron",
+        "tmdb_id": 83533,
+        "genres": [
+            "Science Fiction",
+            "Adventure",
+            "Fantasy"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "WRITING (Adapted Screenplay)",
+        "Film": "One Battle after Another",
+        "Director": "Paul Thomas Anderson",
+        "tmdb_id": 1054867,
+        "genres": [
+            "Thriller",
+            "Crime",
+            "Action",
+            "Comedy"
+        ],
+        "name": ""
+    },
+    {
+        "Year": "2025",
+        "Award": "WRITING (Original Screenplay)",
+        "Film": "Sinners",
+        "Director": "Ryan Coogler",
+        "tmdb_id": 1233413,
+        "genres": [
+            "Horror",
+            "Action",
+            "Thriller"
+        ],
+        "name": ""
     }
 ]
