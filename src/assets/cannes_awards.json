@@ -6339,5 +6339,105 @@
       "Crime",
       "Mystery"
     ]
+  },
+  {
+    "Year": 2026,
+    "Award": "Palme d'Or",
+    "Film": "Fjord",
+    "Director": "Cristian Mungiu",
+    "tmdb_id": 1401459,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2026,
+    "Award": "Grand Prix",
+    "Film": "Minotaure",
+    "Director": "Andrey Zvyagintsev",
+    "tmdb_id": 848700,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2026,
+    "Award": "Best Director",
+    "Film": "La Bola Negra",
+    "Director": "Javier Ambrossi and Javier Calvo",
+    "tmdb_id": 1422041,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2026,
+    "Award": "Best Director",
+    "Film": "Fatherland",
+    "Director": "Paweł Pawlikowski",
+    "tmdb_id": 1437696,
+    "genres": [
+      "Drama",
+      "History"
+    ]
+  },
+  {
+    "Year": 2026,
+    "Award": "Best Screenplay",
+    "Film": "Notre Salut",
+    "Director": "Emmanuel Marre",
+    "tmdb_id": 1318864,
+    "genres": [
+      "History",
+      "Comedy",
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2026,
+    "Award": "Best Actor",
+    "Film": "Coward",
+    "Director": "Lukas Dhont",
+    "tmdb_id": 1437981,
+    "genres": [
+      "Drama",
+      "Romance",
+      "War"
+    ]
+  },
+  {
+    "Year": 2026,
+    "Award": "Best Actress",
+    "Film": "All of a Sudden",
+    "Director": "Ryusuke Hamaguchi",
+    "tmdb_id": 1476614,
+    "genres": [
+      "Drama"
+    ]
+  },
+  {
+    "Year": 2026,
+    "Award": "Jury Prize",
+    "Film": "The Dreamed Adventure",
+    "Director": "Valeska Grisebach",
+    "tmdb_id": 1013822,
+    "genres": [
+      "Drama",
+      "Adventure",
+      "Thriller",
+      "Crime",
+      "Romance"
+    ]
+  },
+  {
+    "Year": 2026,
+    "Award": "Caméra d'Or",
+    "Film": "Ben'Imana",
+    "Director": "Marie-Clémentine Dusabejambo",
+    "tmdb_id": 1405200,
+    "genres": [
+      "Drama",
+      "Science Fiction"
+    ]
   }
 ]
