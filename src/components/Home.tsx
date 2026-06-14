@@ -640,26 +640,7 @@ export default function Home() {
                 </div>
             )}
 
-            <a
-                href="https://github.com/wes383/screen-lookup"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                    position: 'fixed',
-                    bottom: isMobile ? '0px' : '20px',
-                    insetInlineStart: isMobile ? '18px' : '20px',
-                    color: '#888',
-                    fontSize: '14px',
-                    fontFamily: 'Inter, sans-serif',
-                    textDecoration: 'none',
-                    transition: 'color 0.2s',
-                    zIndex: 100
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
-                onMouseLeave={(e) => e.currentTarget.style.color = '#888'}
-            >
-                GitHub
-            </a>
+
         </div>
         </>
     );
