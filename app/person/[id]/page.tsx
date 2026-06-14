@@ -8,17 +8,17 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     
     if (!person) {
         return {
-            title: 'Person Not Found - Screen Lookup',
+            title: 'Person Not Found - Kino',
         }
     }
     
     const ogImage = getImageUrl(person.profile_path, 'w500')
     const description = person.biography 
         ? person.biography.slice(0, 160) + (person.biography.length > 160 ? '...' : '')
-        : `${person.name} - View filmography, biography, and more on Screen Lookup.`
+        : `${person.name} - View filmography, biography, and more on Kino.`
     
     return {
-        title: `${person.name} - Screen Lookup`,
+        title: `${person.name} - Kino`,
         description,
         keywords: [
             person.name,
@@ -29,15 +29,15 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
             'filmography'
         ].filter(Boolean),
         openGraph: {
-            title: `${person.name} - Screen Lookup`,
+            title: `${person.name} - Kino`,
             description,
             type: 'profile',
             images: ogImage ? [{ url: ogImage, alt: person.name }] : [],
-            siteName: 'Screen Lookup',
+            siteName: 'Kino',
         },
         twitter: {
             card: 'summary_large_image',
-            title: `${person.name} - Screen Lookup`,
+            title: `${person.name} - Kino`,
             description,
             images: ogImage ? [ogImage] : [],
         },

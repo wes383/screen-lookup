@@ -8,7 +8,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     
     if (!tv) {
         return {
-            title: 'TV Show Not Found - Screen Lookup',
+            title: 'TV Show Not Found - Kino',
         }
     }
     
@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     const ogImage = getImageUrl(tv.poster_path, 'w500')
     
     return {
-        title: `${title} - Screen Lookup`,
-        description: tv.overview || `${tv.name} - View details, cast, ratings, seasons, and more on Screen Lookup.`,
+        title: `${title} - Kino`,
+        description: tv.overview || `${tv.name} - View details, cast, ratings, seasons, and more on Kino.`,
         keywords: [
             tv.name,
             tv.original_name,
@@ -28,16 +28,16 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
             'streaming'
         ].filter(Boolean),
         openGraph: {
-            title: `${title} - Screen Lookup`,
-            description: tv.overview || `${tv.name} - View details, cast, ratings, seasons, and more on Screen Lookup.`,
+            title: `${title} - Kino`,
+            description: tv.overview || `${tv.name} - View details, cast, ratings, seasons, and more on Kino.`,
             type: 'video.tv_show',
             images: ogImage ? [{ url: ogImage, alt: tv.name }] : [],
-            siteName: 'Screen Lookup',
+            siteName: 'Kino',
         },
         twitter: {
             card: 'summary_large_image',
-            title: `${title} - Screen Lookup`,
-            description: tv.overview || `${tv.name} - View details, cast, ratings, seasons, and more on Screen Lookup.`,
+            title: `${title} - Kino`,
+            description: tv.overview || `${tv.name} - View details, cast, ratings, seasons, and more on Kino.`,
             images: ogImage ? [ogImage] : [],
         },
         robots: {

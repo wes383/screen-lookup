@@ -3,19 +3,19 @@ import MovieList from '../../../src/components/MovieList'
 
 const movieListTitles: Record<string, { title: string; description: string }> = {
     'popular': {
-        title: 'Popular Movies - Screen Lookup',
+        title: 'Popular Movies - Kino',
         description: 'Discover the most popular movies right now. See what\'s trending and being watched worldwide.',
     },
     'top-rated': {
-        title: 'Top Rated Movies - Screen Lookup',
+        title: 'Top Rated Movies - Kino',
         description: 'The highest-rated movies of all time. Explore critically acclaimed films loved by audiences.',
     },
     'now-playing': {
-        title: 'Now Playing in Theaters - Screen Lookup',
+        title: 'Now Playing in Theaters - Kino',
         description: 'Movies currently playing in theaters. Find showtimes and discover new releases.',
     },
     'upcoming': {
-        title: 'Upcoming Movies - Screen Lookup',
+        title: 'Upcoming Movies - Kino',
         description: 'Coming soon to theaters. Preview the most anticipated upcoming movie releases.',
     },
 }
@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: { params: Promise<{ type: str
     
     if (!listInfo) {
         return {
-            title: 'Movies - Screen Lookup',
-            description: 'Browse movies on Screen Lookup.',
+            title: 'Movies - Kino',
+            description: 'Browse movies on Kino.',
         }
     }
     
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: { params: Promise<{ type: str
             title: listInfo.title,
             description: listInfo.description,
             type: 'website',
-            siteName: 'Screen Lookup',
+            siteName: 'Kino',
         },
         robots: {
             index: true,

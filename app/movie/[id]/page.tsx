@@ -8,7 +8,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     
     if (!movie) {
         return {
-            title: 'Movie Not Found - Screen Lookup',
+            title: 'Movie Not Found - Kino',
         }
     }
     
@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     const ogImage = getImageUrl(movie.poster_path, 'w500')
     
     return {
-        title: `${title} - Screen Lookup`,
-        description: movie.overview || `${movie.title} - View details, cast, ratings, and more on Screen Lookup.`,
+        title: `${title} - Kino`,
+        description: movie.overview || `${movie.title} - View details, cast, ratings, and more on Kino.`,
         keywords: [
             movie.title,
             movie.original_title,
@@ -28,16 +28,16 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
             'cinema'
         ].filter(Boolean),
         openGraph: {
-            title: `${title} - Screen Lookup`,
-            description: movie.overview || `${movie.title} - View details, cast, ratings, and more on Screen Lookup.`,
+            title: `${title} - Kino`,
+            description: movie.overview || `${movie.title} - View details, cast, ratings, and more on Kino.`,
             type: 'video.movie',
             images: ogImage ? [{ url: ogImage, alt: movie.title }] : [],
-            siteName: 'Screen Lookup',
+            siteName: 'Kino',
         },
         twitter: {
             card: 'summary_large_image',
-            title: `${title} - Screen Lookup`,
-            description: movie.overview || `${movie.title} - View details, cast, ratings, and more on Screen Lookup.`,
+            title: `${title} - Kino`,
+            description: movie.overview || `${movie.title} - View details, cast, ratings, and more on Kino.`,
             images: ogImage ? [ogImage] : [],
         },
         robots: {

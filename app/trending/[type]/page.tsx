@@ -3,19 +3,19 @@ import TrendingList from '../../../src/components/TrendingList'
 
 const trendingTitles: Record<string, { title: string; description: string }> = {
     'all': {
-        title: 'Trending Movies & TV Shows - Screen Lookup',
+        title: 'Trending Movies & TV Shows - Kino',
         description: 'Discover what\'s trending in movies and TV shows. See the most popular content right now.',
     },
     'movie': {
-        title: 'Trending Movies - Screen Lookup',
+        title: 'Trending Movies - Kino',
         description: 'Discover the hottest trending movies. See what films are gaining popularity right now.',
     },
     'tv': {
-        title: 'Trending TV Shows - Screen Lookup',
+        title: 'Trending TV Shows - Kino',
         description: 'Discover the hottest trending TV shows. See what series are gaining popularity right now.',
     },
     'person': {
-        title: 'Trending People - Screen Lookup',
+        title: 'Trending People - Kino',
         description: 'Discover trending actors, directors, and filmmakers. See who\'s making waves in entertainment.',
     },
 }
@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: { params: Promise<{ type: str
     
     if (!listInfo) {
         return {
-            title: 'Trending - Screen Lookup',
-            description: 'See what\'s trending on Screen Lookup.',
+            title: 'Trending - Kino',
+            description: 'See what\'s trending on Kino.',
         }
     }
     
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: { params: Promise<{ type: str
             title: listInfo.title,
             description: listInfo.description,
             type: 'website',
-            siteName: 'Screen Lookup',
+            siteName: 'Kino',
         },
         robots: {
             index: true,

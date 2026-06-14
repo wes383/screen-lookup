@@ -1,6 +1,6 @@
-# Screen Lookup
+# Kino
 
-[https://screen-lookup.wesluma.com/](https://screen-lookup.wesluma.com/)
+[https://kino.wesluma.com/](https://kino.wesluma.com/)
 
 A modern, multilingual web application for looking up information about movies, TV shows, and people, powered by TMDB API.
 
@@ -24,8 +24,8 @@ A modern, multilingual web application for looking up information about movies, 
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/wes383/screen-lookup.git
-   cd screen-lookup
+   git clone https://github.com/wes383/kino.git
+   cd kino
    ```
 
 2. Install dependencies

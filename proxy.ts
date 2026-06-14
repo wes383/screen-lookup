@@ -6,7 +6,7 @@ export function proxy(request: NextRequest) {
     const url = request.nextUrl
 
     if (host === 'screen-lookup.vercel.app') {
-        url.host = 'screen-lookup.wesluma.com'
+        url.host = 'kino.wesluma.com'
         url.protocol = 'https'
         return NextResponse.redirect(url, 301)
     }

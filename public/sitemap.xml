@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://screen-lookup.wesluma.com/</loc>
+    <loc>https://kino.wesluma.com/</loc>
     <lastmod>2026-03-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://screen-lookup.wesluma.com/discover</loc>
+    <loc>https://kino.wesluma.com/discover</loc>
     <lastmod>2026-03-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://screen-lookup.wesluma.com/discovery</loc>
+    <loc>https://kino.wesluma.com/discovery</loc>
     <lastmod>2026-03-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://screen-lookup.wesluma.com/lists</loc>
+    <loc>https://kino.wesluma.com/lists</loc>
     <lastmod>2026-03-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://screen-lookup.wesluma.com/lists/recommendations</loc>
+    <loc>https://kino.wesluma.com/lists/recommendations</loc>
     <lastmod>2026-03-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://screen-lookup.wesluma.com/person/popular</loc>
+    <loc>https://kino.wesluma.com/person/popular</loc>
     <lastmod>2026-03-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
